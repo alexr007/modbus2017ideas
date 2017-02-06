@@ -17,6 +17,7 @@ public interface Channel {
     // DI, AI
     public Values fail() throws ModBusInvalidFunction, InvalidModBusResponse, SerialPortException;
     // DI, DOS
+    // TODO doubtful if channel==0
     public boolean opened() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction;
     public boolean closed() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction;
     // DOS
