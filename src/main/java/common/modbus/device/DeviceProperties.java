@@ -9,7 +9,7 @@ import common.modbus.device.SignalType;
 public class DeviceProperties {
     // Signal type: Analog / Digital
     private final SignalType signalType;
-    // Port type: Input / Output / Relay
+    // DRPort type: Input / Output / Relay
     private final PortType portType;
     // Channels count
     private final int channels;

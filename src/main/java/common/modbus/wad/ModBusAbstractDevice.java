@@ -19,7 +19,7 @@ public abstract class ModBusAbstractDevice {
         this.builder = new ModBusRequestBuilder(deviceId);
     }
 
-    public abstract Channel channel(int chan);
+    public abstract WAD_Channel channel(int chan);
 
     public MbResponse run(MbRequest req) throws SerialPortException {
         return modbus.run(req);

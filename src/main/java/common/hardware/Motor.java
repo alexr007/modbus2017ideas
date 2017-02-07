@@ -6,27 +6,20 @@ import jssc.SerialPortException;
 
 /**
  * Created by alexr on 07.02.2017.
- *
- * Реализация клапана
- * ========================
- *
- * клапан может быть:
- * - открыт
- * - зкрыт
- *
  */
-public class Valve extends AbstractPerformer implements Switch {
+public class Motor extends AbstractPerformer implements Switch {
 
-    public Valve(DRPort port) {
+    public Motor(DRPort port) {
         super(port);
     }
 
+    @Override
     public void on() throws SerialPortException, ModBusInvalidFunction {
         port.on();
     }
 
+    @Override
     public void off() throws SerialPortException, ModBusInvalidFunction {
         port.off();
     }
-
 }

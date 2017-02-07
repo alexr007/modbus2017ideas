@@ -5,12 +5,11 @@ import common.modbus.command.MbMerged;
 import common.modbus.response.*;
 import common.primitives.Word;
 import jssc.SerialPortException;
-import common.modbus.MbResponse;
 
 /**
  * Created by alexr on 22.01.2017.
  */
-final public class WAD_AO_Channel implements Channel {
+final public class WAD_AO_Channel implements WAD_Channel {
     private final int channel;
     private final ModBusAbstractDevice device;
 

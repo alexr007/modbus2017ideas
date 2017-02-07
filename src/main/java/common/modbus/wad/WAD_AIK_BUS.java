@@ -34,7 +34,7 @@ final public class WAD_AIK_BUS extends ModBusAbstractDevice implements WAD_func_
     }
 
     @Override
-    public Channel channel(int chan) {
+    public WAD_Channel channel(int chan) {
         return new WAD_AIK_Channel(chan, this);
     }
 }

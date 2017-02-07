@@ -16,7 +16,7 @@ public class COMPort {
     // readed get
     private byte[] readed;
     // locker for multithreading
-    private Object locker = new Object();
+    private final Object locker = new Object();
 
     /*
      * Ctor with COMPortProperties
@@ -83,7 +83,7 @@ public class COMPort {
     }
 
     /*
-     * Inner class to implement read from serial Port
+     * Inner class to implement read from serial DRPort
      * in different thread
      *
      */

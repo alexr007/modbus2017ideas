@@ -28,7 +28,7 @@ final public class WAD_DI_BUS extends ModBusAbstractDevice implements WAD_func_c
     }
 
     @Override
-    public Channel channel(int chan) {
+    public WAD_Channel channel(int chan) {
         return new WAD_DI_Channel(chan, this);
     }
 

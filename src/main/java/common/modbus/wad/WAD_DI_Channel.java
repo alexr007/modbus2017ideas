@@ -7,7 +7,7 @@ import jssc.SerialPortException;
 /**
  * Created by alexr on 22.01.2017.
  */
-final public class WAD_DI_Channel implements Channel {
+final public class WAD_DI_Channel implements WAD_Channel {
     private final int channel;
     private final ModBusAbstractDevice device;
 

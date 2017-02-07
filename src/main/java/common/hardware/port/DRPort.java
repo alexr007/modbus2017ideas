@@ -1,4 +1,4 @@
-package common.hardware;
+package common.hardware.port;
 
 import common.modbus.wad.ModBusAbstractDevice;
 import common.modbus.wad.ModBusInvalidFunction;
@@ -14,11 +14,8 @@ import jssc.SerialPortException;
  *
  */
 public class DRPort extends Port {
-
     public DRPort(ModBusAbstractDevice device, Channel channel) {
         super(device, channel);
-        this.device = device;
-        this.channel = channel;
     }
 
     public void on() throws SerialPortException, ModBusInvalidFunction {

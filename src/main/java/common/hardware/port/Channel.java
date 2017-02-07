@@ -1,4 +1,4 @@
-package common.hardware;
+package common.hardware.port;
 
 /**
  * Created by alexr on 07.02.2017.

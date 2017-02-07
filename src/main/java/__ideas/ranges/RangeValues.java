@@ -8,7 +8,7 @@ This is decorator class for guava.Range
 
 public class RangeValues {
 
-    public final Range<Integer> range;
+    private final Range<Integer> range;
 
     public RangeValues(Integer min, Integer max) {
         this.range = Range.closed(min, max);

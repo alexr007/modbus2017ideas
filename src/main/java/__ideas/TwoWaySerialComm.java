@@ -16,7 +16,7 @@ public class TwoWaySerialComm {
         CommPortIdentifier portIdentifier = CommPortIdentifier
                 .getPortIdentifier( portName );
         if( portIdentifier.isCurrentlyOwned() ) {
-            System.out.println( "Error: Port is currently in use" );
+            System.out.println( "Error: DRPort is currently in use" );
         } else {
             int timeout = 2000;
             CommPort commPort = portIdentifier.open( this.getClass().getName(), timeout );

@@ -1,4 +1,4 @@
-package common.hardware;
+package common.hardware.port;
 
 import common.modbus.wad.ModBusAbstractDevice;
 
@@ -9,7 +9,7 @@ public abstract class Port {
     protected final ModBusAbstractDevice device;
     protected final Channel channel;
 
-    protected Port(ModBusAbstractDevice device, Channel channel) {
+    public Port(ModBusAbstractDevice device, Channel channel) {
         this.device = device;
         this.channel = channel;
     }
