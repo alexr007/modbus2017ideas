@@ -23,11 +23,6 @@ public interface Channel {
     // DOS
     public void on() throws SerialPortException, ModBusInvalidFunction;
     public void off() throws SerialPortException, ModBusInvalidFunction;
-    // incredible idea )
-    //public void on(int channels) throws SerialPortException;
-    //public void on(int[] channels) throws SerialPortException;
-    //public void off(int channels) throws SerialPortException;
-    //public void off(int[] channels) throws SerialPortException;
     // AO, DOS
     public void set(int val) throws SerialPortException, ModBusInvalidFunction;
     public void set(int[] val) throws SerialPortException, ModBusInvalidFunction;
