@@ -16,6 +16,7 @@ import common.device.Device__;
 import common.modbus.device.PortType;
 import common.modbus.device.SignalType;
 import common.modbus.response.InvalidModBusResponse;
+import common.modbus.response.Values;
 import common.modbus.wad.ModBusInvalidFunction;
 import common.modbus.wad.WAD_AO_BUS;
 import common.modbus.wad.WAD_DOS_BUS;
@@ -174,6 +175,10 @@ public class FactoryCore {
     public static void main(String[] args) {
         Percentage percentage = new Percentage(new RangeValues(15000, 45000));
         System.out.println(percentage.get(25));
+        Values.Single single = new Values.Single(1);
+        Values.Multiple multiple = new Values.Multiple(new int[]{1, 2, 3});
+        System.out.println(single);
+        System.out.println(multiple);
     }
 
 }

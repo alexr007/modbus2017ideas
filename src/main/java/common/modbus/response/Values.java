@@ -6,16 +6,17 @@ import java.util.Arrays;
 
 /**
  * Created by alexr on 22.01.2017.
+ *
  */
 public interface Values {
 
-    public boolean has();
-    public boolean single();
-    public int get();
-    public int get(int index);
-    public int count();
+    boolean has();
+    boolean single();
+    int get();
+    int get(int index);
+    int count();
 
-    public class None implements  Values {
+    class None implements  Values {
         @Override
         public boolean has() {
             return false;
@@ -42,7 +43,7 @@ public interface Values {
         }
     }
 
-    public class Single implements  Values {
+    class Single implements  Values {
         private final int value;
 
         public Single(int value) {
@@ -73,9 +74,14 @@ public interface Values {
         public int count() {
             return 1;
         }
+
+        @Override
+        public String toString() {
+            return "Single:"+get();
+        }
     }
 
-    public class Multiple implements Values {
+    class Multiple implements Values {
         private final int[] values;
 
         public Multiple(int[] values) {
@@ -113,8 +119,8 @@ public interface Values {
 
         @Override
         public String toString() {
-            return new IterableToString<Integer>(
-                Arrays.stream(values).boxed().toArray( Integer[]::new )
+            return "Multiple:" + new IterableToString<Integer>(
+                Arrays.stream(values).boxed().toArray(Integer[]::new)
             ).toString();
         }
     }
