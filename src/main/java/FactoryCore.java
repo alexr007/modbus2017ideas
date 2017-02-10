@@ -17,7 +17,6 @@ import common.hw.port.Channel;
 import common.hw.port.DRPort;
 import common.hw.modbus.command.MbData;
 import common.hw.modbus.device.DeviceProperties;
-import common.device.Device__;
 import common.hw.modbus.device.PortType;
 import common.hw.modbus.device.SignalType;
 import common.hw.modbus.response.InvalidModBusResponse;
@@ -46,26 +45,6 @@ public class FactoryCore {
         new FtCli(new TkWebApp(), args).start(Exit.NEVER);
     }
 
-    public static void main2(String[] args) {
-        DeviceProperties ai4 = new DeviceProperties(SignalType.Analog, PortType.Input, 4);
-        DeviceProperties ai16 = new DeviceProperties(SignalType.Analog, PortType.Input, 16);
-        DeviceProperties ao4 = new DeviceProperties(SignalType.Analog, PortType.Output, 4);
-        DeviceProperties ao6 = new DeviceProperties(SignalType.Analog, PortType.Output, 6);
-
-        DeviceProperties di8 = new DeviceProperties(SignalType.Digital, PortType.Input, 8);
-        DeviceProperties di14 = new DeviceProperties(SignalType.Digital, PortType.Input, 14);
-        DeviceProperties do4 = new DeviceProperties(SignalType.Digital, PortType.Output, 4);
-        DeviceProperties do8 = new DeviceProperties(SignalType.Digital, PortType.Output, 8);
-        DeviceProperties do12 = new DeviceProperties(SignalType.Digital, PortType.Output, 12);
-        System.out.println(ai4);
-        System.out.println(di14);
-
-        Device__ i1 = new Device__(1, "WAD-AIK-BUS", ai4, "4separate");
-        Device__ o11 = new Device__(0x11, "WAD-DOS12-BUS", do12, "12common");
-        System.out.println(i1);
-        System.out.println(o11);
-
-    }
 
     // multi threading sample
     public static void main3(String[] args) {
@@ -225,7 +204,7 @@ public class FactoryCore {
                 )));
 
         devices.add("11_DOS", WADdeviceType.DOS, new Channel(0x11) );
-        devices.get("11_DOS").channel(7).on();
+        devices.get("11_DOS").channel(7).off();
         devices.finish();
     }
 }
