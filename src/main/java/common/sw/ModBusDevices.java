@@ -19,21 +19,21 @@ public class ModBusDevices {
         this.modBus = modBus;
     }
 
-    public void add(String deviceName, WADdeviceType type, Channel channel) throws Exception {
+    public void add(String deviceName, WADdeviceType type, int channel) throws Exception {
         if (findDuplicates(deviceName)) {
             throw new Exception("duplicate module name");
         }
         ModBusAbstractDevice device = null;
         switch (type) {
-            case AIK: device = new WAD_AIK_BUS(modBus, channel.get());
+            case AIK: device = new WAD_AIK_BUS(modBus, channel);
                 break;
-            case AO: device = new WAD_AO_BUS(modBus, channel.get());
+            case AO: device = new WAD_AO_BUS(modBus, channel);
                 break;
-            case DI: device = new WAD_DI_BUS(modBus, channel.get());
+            case DI: device = new WAD_DI_BUS(modBus, channel);
                 break;
-            case DI14: device = new WAD_DI14_BUS(modBus, channel.get());
+            case DI14: device = new WAD_DI14_BUS(modBus, channel);
                 break;
-            case DOS: device = new WAD_DOS_BUS(modBus, channel.get());
+            case DOS: device = new WAD_DOS_BUS(modBus, channel);
                 break;
             default: break;
         }

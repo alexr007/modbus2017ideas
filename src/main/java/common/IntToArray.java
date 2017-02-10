@@ -2,6 +2,14 @@ package common;
 
 /**
  * Created by alexr on 22.01.2017.
+ *
+ * convert bits of integer value
+ * to array of values 0-1
+ * 1 -> {0,1}
+ * 2 -> {1,0}
+ * 9 -> {1,0,0,1}
+ * maximum array length is 16
+ *
  */
 public class IntToArray {
     private final int values;

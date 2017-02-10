@@ -2,6 +2,8 @@ package common;
 
 import common.sw.primitives.Bytes;
 
+import java.util.Arrays;
+
 /**
  * Created by alexr on 18.01.2017.
  */

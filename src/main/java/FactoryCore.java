@@ -1,3 +1,4 @@
+import common.IterableToString;
 import common.hw.modbus.wad.*;
 import common.sw.ModBusDevices;
 import common.sw.ranges.Percentage;
@@ -175,7 +176,7 @@ public class FactoryCore {
         );
 
         ModBusDevices devices = new ModBusDevices(modBus);
-        devices.add("01_DOS", WADdeviceType.DOS, new Channel(1) );
+        devices.add("01_DOS", WADdeviceType.DOS, 1 );
         ModBusAbstractDevice dev = devices.get("01_DOS");
         System.out.println(dev);
 /*
@@ -203,8 +204,14 @@ public class FactoryCore {
                     new COMPortProperties(57600)
                 )));
 
-        devices.add("11_DOS", WADdeviceType.DOS, new Channel(0x11) );
-        devices.get("11_DOS").channel(7).off();
+        devices.add("11_DOS", WADdeviceType.DOS, 0x11 );
+        devices.get("11_DOS").channel(6).off();
         devices.finish();
+    }
+
+    public static void main8(String[] args) {
+        System.out.println(
+            new BytesAsHex(new byte[] {1,1,2,2,3,3})
+        );
     }
 }
