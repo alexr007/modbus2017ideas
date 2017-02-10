@@ -205,7 +205,11 @@ public class FactoryCore {
                 )));
 
         devices.add("11_DOS", WADdeviceType.DOS, 0x11 );
-        devices.get("11_DOS").channel(6).off();
+        devices.add("12_DOS", WADdeviceType.DOS, 0x11 );
+        devices.get("11_DOS").channel(6).on();
+
+
+
         devices.finish();
     }
 
