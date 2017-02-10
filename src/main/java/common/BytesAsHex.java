@@ -1,6 +1,6 @@
 package common;
 
-import common.primitives.Bytes;
+import common.sw.primitives.Bytes;
 
 /**
  * Created by alexr on 18.01.2017.

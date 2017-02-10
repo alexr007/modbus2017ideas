@@ -1,9 +1,9 @@
 package common.debug;
 
 import common.BytesAsHex;
-import common.primitives.Bytes;
-import common.modbus.MbRequest;
-import common.modbus.MbResponse;
+import common.sw.primitives.Bytes;
+import common.hw.modbus.MbRequest;
+import common.hw.modbus.MbResponse;
 
 /**
  * Created by alexr on 21.01.2017.

@@ -1,7 +1,7 @@
 package common.device;
 
 import common.IntAsHex;
-import common.modbus.device.DeviceProperties;
+import common.hw.modbus.device.DeviceProperties;
 
 /**
  * Created by alexr on 15.01.2017.
