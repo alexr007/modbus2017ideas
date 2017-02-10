@@ -36,4 +36,8 @@ public class ModBus {
         }
         return response;
     }
+
+    public void finish() throws SerialPortException {
+        comPort.close();
+    }
 }

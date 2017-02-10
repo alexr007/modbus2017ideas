@@ -1,11 +1,10 @@
 package common.hw.modbus.wad;
 
-import common.hw.modbus.ModBusRequestBuilder;
+import common.IntAsHex;
+import common.hw.modbus.*;
 import common.hw.modbus.device.DeviceProperties;
+import common.hw.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
-import common.hw.modbus.MbRequest;
-import common.hw.modbus.MbResponse;
-import common.hw.modbus.ModBus;
 
 public abstract class ModBusAbstractDevice {
     private final ModBus modbus;
@@ -20,8 +19,17 @@ public abstract class ModBusAbstractDevice {
     }
 
     public abstract WAD_Channel channel(int chan);
+    public abstract int temperature() throws SerialPortException, InvalidModBusResponse, InvalidModBusFunction;
 
     public MbResponse run(MbRequest req) throws SerialPortException {
         return modbus.run(req);
     }
+
+    @Override
+    public String toString() {
+        return
+            this.getClass().toString()
+            +" id:"+new IntAsHex(deviceId).toString();
+    }
+
 }

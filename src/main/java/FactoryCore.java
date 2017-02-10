@@ -1,3 +1,5 @@
+import common.hw.modbus.wad.*;
+import common.sw.ModBusDevices;
 import common.sw.ranges.Percentage;
 import common.sw.ranges.RangeValues;
 import _learn.th.Locker;
@@ -20,10 +22,8 @@ import common.hw.modbus.device.PortType;
 import common.hw.modbus.device.SignalType;
 import common.hw.modbus.response.InvalidModBusResponse;
 import common.hw.modbus.response.Values;
-import common.hw.modbus.wad.ModBusInvalidFunction;
-import common.hw.modbus.wad.WAD_AO_BUS;
-import common.hw.modbus.wad.WAD_DOS_BUS;
 import common.sw.primitives.Word;
+import common.sw.threads.DecisionModule;
 import jssc.SerialPortException;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
@@ -186,10 +186,46 @@ public class FactoryCore {
         System.out.println(multiple);
     }
 
-    public static void main(String[] args) {
-        Locker locker = new Locker();
+    public static void main7(String[] args) throws Exception {
+        //Locker locker = new Locker();
+        ModBus modBus = new ModBus(
+            new COMPort(
+                "COM25",
+                new COMPortProperties(57600)
+            )
+        );
+
+        ModBusDevices devices = new ModBusDevices(modBus);
+        devices.add("01_DOS", WADdeviceType.DOS, new Channel(1) );
+        ModBusAbstractDevice dev = devices.get("01_DOS");
+        System.out.println(dev);
+/*
+        DecisionModule dm = new DecisionModule(100, devices) {
+            private int counter = 0;
+
+            @Override
+            protected void task() {
+                System.out.println("Thread:" + this.getClass() + ", val:" + counter++);
+                if (counter == 100) { finish();}
+            }
+        };
+        new Thread(dm).start();
         new Thread(new Thread1s(locker)).start();
         new Thread(new Thread2s(locker)).start();
         //new Thread(new Thread3s()).run();
+        */
+    }
+
+    public static void main(String[] args) throws Exception {
+        ModBusDevices devices = new ModBusDevices(
+            new ModBus(
+                new COMPort(
+                    "COM25",
+                    new COMPortProperties(57600)
+                )));
+
+        devices.add("11_DOS", WADdeviceType.DOS, new Channel(0x11) );
+        devices.get("11_DOS").channel(7).on();
+        devices.finish();
     }
 }

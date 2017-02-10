@@ -1,9 +1,13 @@
 package common.hw.modbus.wad;
 
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.device.DeviceProperties;
 import common.hw.modbus.device.PortType;
 import common.hw.modbus.device.SignalType;
 import common.hw.modbus.ModBus;
+import common.hw.modbus.response.InvalidModBusResponse;
+import common.hw.modbus.response.InvalidModBusResponseCRC;
+import jssc.SerialPortException;
 
 /**
  * Created by alexr on 06.02.2017.
@@ -25,5 +29,10 @@ final public class WAD_DI14_BUS extends ModBusAbstractDevice implements WAD_func
     @Override
     public WAD_Channel channel(int chan) {
         return new WAD_DI14_Channel(chan, this);
+    }
+
+    @Override
+    public int temperature() throws SerialPortException, InvalidModBusResponse, InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 }
