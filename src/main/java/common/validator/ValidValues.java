@@ -1,6 +1,6 @@
-package __ideas.validator;
+package common.validator;
 
-import __ideas.ranges.RangeValues;
+import common.ranges.RangeValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;

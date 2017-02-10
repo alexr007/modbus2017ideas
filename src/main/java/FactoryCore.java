@@ -1,5 +1,8 @@
-import __ideas.ranges.Percentage;
-import __ideas.ranges.RangeValues;
+import common.ranges.Percentage;
+import common.ranges.RangeValues;
+import _learn.th.Locker;
+import _learn.th.Thread1s;
+import _learn.th.Thread2s;
 import common.BytesAsHex;
 import common.comport.COMPort;
 import common.comport.COMPortProperties;
@@ -71,9 +74,9 @@ public class FactoryCore {
         Consumer consumer = new Consumer(store);
         new Thread(producer).start();
         new Thread(consumer).start();
-
     }
 
+    // BytesAsHex
     public static void main4(String[] args) {
         MbData mbData = new MbData(new Word(65535));
         System.out.println(
@@ -81,6 +84,7 @@ public class FactoryCore {
         );
     }
 
+    // modbus
     public static void main5(String[] args) throws SerialPortException, InvalidModBusResponse, ModBusInvalidFunction, InterruptedException {
         ModBus modBus = new ModBus(
             new COMPort(
@@ -172,7 +176,8 @@ public class FactoryCore {
         System.out.println("port closed");
     }
 
-    public static void main(String[] args) {
+    // Percentage
+    public static void main6(String[] args) {
         Percentage percentage = new Percentage(new RangeValues(15000, 45000));
         System.out.println(percentage.get(25));
         Values.Single single = new Values.Single(1);
@@ -181,4 +186,10 @@ public class FactoryCore {
         System.out.println(multiple);
     }
 
+    public static void main(String[] args) {
+        Locker locker = new Locker();
+        new Thread(new Thread1s(locker)).start();
+        new Thread(new Thread2s(locker)).start();
+        //new Thread(new Thread3s()).run();
+    }
 }

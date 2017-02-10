@@ -1,4 +1,4 @@
-package __ideas.filters;
+package filters;
 
 import java.util.concurrent.LinkedBlockingQueue;
 

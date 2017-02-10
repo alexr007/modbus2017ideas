@@ -1,4 +1,4 @@
-package __ideas.ranges;
+package common.ranges;
 
 import com.google.common.collect.Range;
 
