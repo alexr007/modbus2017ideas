@@ -1,16 +1,16 @@
 package common.hw.port;
 
-import common.hw.modbus.wad.ModBusAbstractDevice;
+import common.hw.modbus.response.InvalidModBusResponse;
+import common.hw.modbus.response.Values;
+import common.hw.modbus.wad.ModBusInvalidFunction;
+import jssc.SerialPortException;
 
 /**
  * Created by alexr on 07.02.2017.
  */
-public abstract class Port {
-    protected final ModBusAbstractDevice device;
-    protected final Channel channel;
-
-    public Port(ModBusAbstractDevice device, Channel channel) {
-        this.device = device;
-        this.channel = channel;
-    }
+interface Port {
+    Values get() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction;
+    void set (int value) throws Exception;
+    void on() throws Exception;
+    void off() throws Exception;
 }

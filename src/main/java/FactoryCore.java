@@ -1,11 +1,10 @@
-import common.IterableToString;
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 import common.hw.modbus.wad.*;
 import common.sw.ModBusDevices;
+import common.sw.ModBusChannels;
 import common.sw.ranges.Percentage;
 import common.sw.ranges.RangeValues;
-import _learn.th.Locker;
-import _learn.th.Thread1s;
-import _learn.th.Thread2s;
 import common.BytesAsHex;
 import common.hw.comport.COMPort;
 import common.hw.comport.COMPortProperties;
@@ -17,13 +16,10 @@ import common.hw.port.AOPort;
 import common.hw.port.Channel;
 import common.hw.port.DRPort;
 import common.hw.modbus.command.MbData;
-import common.hw.modbus.device.DeviceProperties;
-import common.hw.modbus.device.PortType;
-import common.hw.modbus.device.SignalType;
 import common.hw.modbus.response.InvalidModBusResponse;
 import common.hw.modbus.response.Values;
 import common.sw.primitives.Word;
-import common.sw.threads.DecisionModule;
+import jssc.SerialPort;
 import jssc.SerialPortException;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
@@ -32,6 +28,7 @@ import web.tk.TkWebApp;
 import _learn.mt.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static java.lang.Thread.sleep;
 
@@ -65,7 +62,7 @@ public class FactoryCore {
     }
 
     // modbus
-    public static void main5(String[] args) throws SerialPortException, InvalidModBusResponse, ModBusInvalidFunction, InterruptedException {
+    public static void main5(String[] args) throws Exception {
         ModBus modBus = new ModBus(
             new COMPort(
                 "COM25",
@@ -201,13 +198,33 @@ public class FactoryCore {
             new ModBus(
                 new COMPort(
                     "COM25",
-                    new COMPortProperties(57600)
+                    new COMPortProperties(SerialPort.BAUDRATE_57600)
                 )));
+        devices.add("DOS_1", WADdeviceType.DOS, 0x11 );
+        devices.add("DOS_2", WADdeviceType.DOS, 0x12 );
+        devices.add("DOS_3", WADdeviceType.DOS, 0x13 );
+        devices.add("DOS_4", WADdeviceType.DOS, 0x14 );
+        devices.add("DOS_5", WADdeviceType.DOS, 0x15 );
+        devices.add("DI14_1", WADdeviceType.DI14, 0x21 );
+        devices.add("DI14_2", WADdeviceType.DI14, 0x22 );
+        devices.add("DI14_3", WADdeviceType.DI14, 0x23 );
+        devices.add("DI14_4", WADdeviceType.DI14, 0x24 );
+        devices.add("AIK_1", WADdeviceType.AIK, 0x31 );
+        devices.add("AIK_2", WADdeviceType.AIK, 0x32 );
+        devices.add("AO_1", WADdeviceType.AO, 0x41 );
+        devices.add("AO_2", WADdeviceType.AO, 0x42 );
 
-        devices.add("11_DOS", WADdeviceType.DOS, 0x11 );
-        devices.add("12_DOS", WADdeviceType.DOS, 0x11 );
-        devices.get("11_DOS").channel(6).on();
+        ModBusChannels sensors = new ModBusChannels(devices);
+        sensors.add("T1", "DOS_1", 2);
+        sensors.add("T2", "DOS_1", 3);
+        ModBusChannels performers = new ModBusChannels(devices);
+        performers.add("Transporter1", "DOS_1", 4);
+        performers.add("Transporter2", "DOS_1", 5);
 
+        Values t1 = sensors.get("T1").get();
+        Values t2 = sensors.get("T2").get();
+        performers.get("Transporter1").off();
+        performers.get("Transporter2").on();
 
 
         devices.finish();
@@ -217,5 +234,21 @@ public class FactoryCore {
         System.out.println(
             new BytesAsHex(new byte[] {1,1,2,2,3,3})
         );
+    }
+
+    public static void main9(String[] args) {
+        final Iterable<String> words = Arrays.asList("abc","cde","fxp","qwer","asdf","zxcv");
+        final Iterable<String> transformed = Iterables.transform(words,
+            new Function<String, String>() {
+                @Override
+                public String apply(String item) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(item.substring(0,1).toUpperCase());
+                    sb.append(item.substring(1));
+                    return sb.toString();
+                }
+            });
+
+        System.out.println(transformed);
     }
 }

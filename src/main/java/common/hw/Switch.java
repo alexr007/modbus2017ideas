@@ -8,6 +8,6 @@ import jssc.SerialPortException;
  *
  */
 public interface Switch {
-    void on() throws SerialPortException, ModBusInvalidFunction;
-    void off() throws SerialPortException, ModBusInvalidFunction;
+    void on() throws Exception;
+    void off() throws Exception;
 }

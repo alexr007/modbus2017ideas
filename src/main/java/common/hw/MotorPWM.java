@@ -18,17 +18,17 @@ public class MotorPWM extends AbstractPerformer implements Switch,PWM
     }
 
     @Override
-    public void run(int value) throws SerialPortException, ModBusInvalidFunction {
-        portValue.run(value);
+    public void run(int value) throws Exception {
+        portValue.set(value);
     }
 
     @Override
-    public void on() throws SerialPortException, ModBusInvalidFunction {
+    public void on() throws Exception {
         port.on();
     }
 
     @Override
-    public void off() throws SerialPortException, ModBusInvalidFunction {
+    public void off() throws Exception {
         port.off();
     }
 }

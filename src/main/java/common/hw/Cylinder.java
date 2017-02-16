@@ -23,17 +23,17 @@ public class Cylinder {
         this.valveToClose = valveToClose;
     }
 
-    public void open() throws SerialPortException, ModBusInvalidFunction {
+    public void open() throws Exception {
         valveToClose.off();
         valveToOpen.on();
     }
 
-    public void close() throws SerialPortException, ModBusInvalidFunction {
+    public void close() throws Exception {
         valveToOpen.off();
         valveToClose.on();
     }
 
-    public void stop() throws SerialPortException, ModBusInvalidFunction {
+    public void stop() throws Exception {
         valveToOpen.off();
         valveToClose.off();
     }

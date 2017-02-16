@@ -21,11 +21,11 @@ public class Valve extends AbstractPerformer implements Switch {
         super(port);
     }
 
-    public void on() throws SerialPortException, ModBusInvalidFunction {
+    public void on() throws Exception {
         port.on();
     }
 
-    public void off() throws SerialPortException, ModBusInvalidFunction {
+    public void off() throws Exception {
         port.off();
     }
 

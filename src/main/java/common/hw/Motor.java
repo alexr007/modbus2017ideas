@@ -14,12 +14,12 @@ public class Motor extends AbstractPerformer implements Switch {
     }
 
     @Override
-    public void on() throws SerialPortException, ModBusInvalidFunction {
+    public void on() throws Exception {
         port.on();
     }
 
     @Override
-    public void off() throws SerialPortException, ModBusInvalidFunction {
+    public void off() throws Exception {
         port.off();
     }
 }

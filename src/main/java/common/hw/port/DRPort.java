@@ -1,5 +1,7 @@
 package common.hw.port;
 
+import common.hw.modbus.response.InvalidModBusResponse;
+import common.hw.modbus.response.Values;
 import common.hw.modbus.wad.ModBusAbstractDevice;
 import common.hw.modbus.wad.ModBusInvalidFunction;
 import jssc.SerialPortException;
@@ -13,16 +15,32 @@ import jssc.SerialPortException;
  * и собственно с ним работать
  *
  */
-public class DRPort extends Port {
+public class DRPort implements Port {
+    private final ModBusAbstractDevice device;
+    private final Channel channel;
+
     public DRPort(ModBusAbstractDevice device, Channel channel) {
-        super(device, channel);
+        this.device = device;
+        this.channel = channel;
     }
 
-    public void on() throws SerialPortException, ModBusInvalidFunction {
+    @Override
+    public Values get() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction {
+        return device.channel(channel.get()).get();
+    }
+
+    @Override
+    public void set(int value) throws Exception {
+        device.channel(channel.get()).set(value);
+    }
+
+    @Override
+    public void on() throws Exception {
         device.channel(channel.get()).on();
     }
 
-    public void off() throws SerialPortException, ModBusInvalidFunction {
+    @Override
+    public void off() throws Exception {
         device.channel(channel.get()).off();
     }
 }

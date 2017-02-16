@@ -3,10 +3,7 @@ package common.sw;
 import common.IntAsHex;
 import common.hw.modbus.ModBus;
 import common.hw.modbus.wad.*;
-import common.hw.port.Channel;
 import jssc.SerialPortException;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -46,7 +43,10 @@ public class ModBusDevices {
         devices.put(deviceName, device);
     }
 
-    public ModBusAbstractDevice get(String deviceName) {
+    public ModBusAbstractDevice get(String deviceName) throws Exception {
+        if (!devices.containsKey(deviceName)) {
+            throw new Exception("Module Name NotFound:"+deviceName);
+        }
         return devices.get(deviceName);
     }
 
