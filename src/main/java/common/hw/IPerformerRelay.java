@@ -13,5 +13,4 @@ public interface IPerformerRelay {
     void on();
     // just set 0
     void off();
-
 }

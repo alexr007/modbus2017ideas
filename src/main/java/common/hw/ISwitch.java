@@ -5,7 +5,9 @@ import jssc.SerialPortException;
 
 /**
  * Created by alexr on 07.02.2017.
+ *
  */
-public interface PWM {
-    void run(int value) throws Exception;
+public interface ISwitch {
+    void on() throws Exception;
+    void off() throws Exception;
 }

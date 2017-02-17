@@ -1,7 +1,4 @@
-package common.hw;
-
-import common.hw.modbus.wad.ModBusInvalidFunction;
-import jssc.SerialPortException;
+package entities;
 
 /**
  * Created by alexr on 07.02.2017.
@@ -14,7 +11,7 @@ import jssc.SerialPortException;
  * один - на открытие
  *
  */
-public class Cylinder {
+public class Cylinder extends AbstractEntity {
     private final Valve valveToOpen;
     private final Valve valveToClose;
 

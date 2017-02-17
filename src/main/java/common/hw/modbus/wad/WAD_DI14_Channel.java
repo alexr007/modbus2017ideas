@@ -48,6 +48,13 @@ final public class WAD_DI14_Channel implements WAD_Channel {
     }
 
     @Override
+    /*
+     * 1FFF
+     * Состояние «Обрыв лини» по всем каналам
+     * 1 - обрыв
+     * 0 - все ОК
+     *
+     */
     public Values fail() throws ModBusInvalidFunction, InvalidModBusResponse, SerialPortException {
         if (channel==0) {
             return failMultiple();

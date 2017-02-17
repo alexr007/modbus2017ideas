@@ -10,4 +10,6 @@ public class En {
     public static final String T2 = "T2";
     public static final String Transporter1 = "Transporter1";
     public static final String Transporter2 = "Transporter2";
+    public static final String Transporter2speed = "Transporter2speed";
+    public static final String Cylinder1 = "Cylinder1";
 }

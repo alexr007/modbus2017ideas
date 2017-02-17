@@ -3,18 +3,16 @@ import com.google.common.collect.Iterables;
 import common.hw.modbus.wad.*;
 import common.sw.ModBusDevices;
 import common.sw.ModBusChannels;
+import common.sw.ModBusEntities;
 import common.sw.ranges.Percentage;
 import common.sw.ranges.RangeValues;
 import common.BytesAsHex;
 import common.hw.comport.COMPort;
 import common.hw.comport.COMPortProperties;
 import common.debug.PH;
-import common.hw.Cylinder;
-import common.hw.MotorPWM;
-import common.hw.Valve;
-import common.hw.port.AOPort;
-import common.hw.port.Channel;
-import common.hw.port.DRPort;
+import entities.Cylinder;
+import entities.MotorPWM;
+import entities.Valve;
 import common.hw.modbus.command.MbData;
 import common.hw.modbus.response.Values;
 import common.sw.primitives.Word;
@@ -84,75 +82,6 @@ public class FactoryCore {
         System.out.println(
             dos.channel(0).get()
         );
-
-        Cylinder cylinder = new Cylinder(
-            new Valve(new DRPort(dos, new Channel(1))),
-            new Valve(new DRPort(dos, new Channel(2)))
-        );
-
-        cylinder.open();
-        sleep(1000);
-        cylinder.close();
-        sleep(1000);
-        cylinder.stop();
-
-        MotorPWM air1 = new MotorPWM(
-            new DRPort(dos, new Channel(1)),
-            new AOPort(ao, new Channel(1)));
-        MotorPWM air2 = new MotorPWM(
-            new DRPort(dos, new Channel(2)),
-            new AOPort(ao, new Channel(2)));
-        MotorPWM air3 = new MotorPWM(
-            new DRPort(dos, new Channel(3)),
-            new AOPort(ao, new Channel(3)));
-        air1.off();
-        air2.off();
-        air3.off();
-        air1.on();
-        air2.on();
-        air3.on();
-        air1.run(1000);
-        air2.run(2000);
-        air3.run(3000);
-
-
-/*
-        for (int i = 1; i <= 4; i++) {
-            DOS.channel(i).off();
-        }
-
-        Values values = DOS.channel(0).get();
-        System.out.println(values.single());
-        System.out.println(values.get(1));
-        System.out.println(values.get(2));
-        System.out.println(values.get(3));
-        System.out.println(values.get(4));
-        System.out.println(values.get(5));
-        System.out.println(values.get(6));
-        System.out.println(values.get(7));
-        System.out.println(values.get(8));
-*/
-
-        //DOS.channel(0).set(new int[]{1,0,0,0,0,0,0,0});
-
-        //WAD_Channel chan = dos.channel(1);
-
-        //new PH("get",chan.get());
-        //chan.on();
-        //chan.fail();
-        //new PH("opened",chan.opened());
-        //new PH("closed",chan.closed());
-        //chan.on();
-        //chan.off();
-        //chan.set(100);
-
-
-
-
-        delta = System.currentTimeMillis() - millis;
-        System.out.println("delta:" + delta);
-        modBus.close();
-        System.out.println("port closed");
     }
 
     // Percentage
@@ -196,13 +125,14 @@ public class FactoryCore {
     }
 
     public static void main(String[] args) throws Exception {
-        // initialization
+        // BUS initialization
         ModBusDevices devices = new ModBusDevices(
             new ModBus(
                 new COMPort(
                     Dv.COM25,
                     new COMPortProperties(SerialPort.BAUDRATE_57600)
                 )));
+        // DEVICES initialization
         devices.add(Dv.DOS1, WADdeviceType.DOS, Id.x11 );
         devices.add(Dv.DOS2, WADdeviceType.DOS, Id.x12 );
         devices.add(Dv.DOS3, WADdeviceType.DOS, Id.x13 );
@@ -216,17 +146,61 @@ public class FactoryCore {
         devices.add(Dv.AIK2, WADdeviceType.AIK, Id.x32 );
         devices.add(Dv.AO1, WADdeviceType.AO, Id.x41 );
         devices.add(Dv.AO2, WADdeviceType.AO, Id.x42 );
-        ModBusChannels sensors = new ModBusChannels(devices);
-        sensors.add(En.T1, Dv.DOS1, Ch.n1);
-        sensors.add(En.T1, Dv.DOS1, Ch.n2);
-        ModBusChannels performers = new ModBusChannels(devices);
-        performers.add(En.Transporter1, Dv.DOS1, Ch.n4);
-        performers.add(En.Transporter2, Dv.DOS1, Ch.n5);
+        ModBusChannels channels = new ModBusChannels(devices);
+        // CHANNELS initialization
+        channels.add(En.T1, Dv.DOS1, Ch.n1);
+        channels.add(En.T2, Dv.DOS1, Ch.n2);
+        channels.add(En.Transporter1, Dv.DOS1, Ch.n4);
+        channels.add(En.Transporter2, Dv.DOS1, Ch.n5);
+        channels.add(En.Transporter2speed, Dv.DOS1, Ch.n6);
         // work begins here !
-        Values t1 = sensors.get(En.T1).get();
-        Values t2 = sensors.get(En.T2).get();
-        performers.get(En.Transporter1).off();
-        performers.get(En.Transporter2).on();
+/*
+        Values t1 = channels.get(En.T1).get();
+        Values t2 = channels.get(En.T2).get();
+        channels.get(En.Transporter1).off();
+        channels.get(En.Transporter2).on();
+*/
+        ModBusEntities entities = new ModBusEntities(channels);
+        entities.add(En.Cylinder1,
+            new Cylinder(
+                new Valve(devices.get(Dv.DOS1).channel(1)),
+                new Valve(devices.get(Dv.DOS1).channel(2))
+                //new Valve(channels.get("chan3"))
+            )
+        );
+        // ENTITIES initialization
+
+        System.out.println(
+            entities.get(En.Cylinder1)
+        );
+        ((Cylinder) entities.get(En.Cylinder1)).open();
+        //cylinder.close();
+        //cylinder.stop();
+/*
+        MotorPWM air1 = new MotorPWM(
+            channels.get("AIR1"),
+            channels.get("AIR1speed")
+        );
+        MotorPWM air2 = new MotorPWM(
+            devices.get("dev1").channel(1),
+            devices.get("dev2").channel(1)
+        );
+        MotorPWM air3 = new MotorPWM(
+            devices.get("dev1").channel(1),
+            devices.get("dev2").channel(1)
+        );
+        air1.off();
+        air2.off();
+        air3.off();
+        air1.on();
+        air2.on();
+        air3.on();
+        air1.run(1000);
+        air2.run(2000);
+        air3.run(3000);
+*/
+
+
 
 
         devices.finish();

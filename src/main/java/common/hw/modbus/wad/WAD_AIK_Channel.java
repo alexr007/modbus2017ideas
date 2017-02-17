@@ -59,13 +59,23 @@ final public class WAD_AIK_Channel implements WAD_Channel {
     }
 
     @Override
+    /*
+     * Младшие четыре бита регистра статуса указывают
+     * на наличие связи с соответствующим каналом
+     *
+     * логика отличная !!! от логики DI, DI14, DIO
+     * это НЕ обрыв линии
+     *
+     * 1 - ЕСТЬ связь с контроллером порта
+     * 0 - НЕТ связи с контроллером порта (порт сгорел)
+     */
     public Values fail() throws ModBusInvalidFunction, InvalidModBusResponse, SerialPortException {
         if (channel==0) {
             return
-                new Values.Multiple(new IntToArray(getFailAll(),4).get());
+                new Values.Multiple(new IntToArray((~getFailAll())&0b1111,4).get());
         } else
             return
-                new Values.Single(getFailAll() >> (channel-1) & 0b1);
+                new Values.Single((~getFailAll()) >> (channel-1) & 0b1);
     }
 
     private int getFailAll() throws SerialPortException, InvalidModBusResponse {
