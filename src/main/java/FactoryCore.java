@@ -16,11 +16,13 @@ import common.hw.port.AOPort;
 import common.hw.port.Channel;
 import common.hw.port.DRPort;
 import common.hw.modbus.command.MbData;
-import common.hw.modbus.response.InvalidModBusResponse;
 import common.hw.modbus.response.Values;
 import common.sw.primitives.Word;
+import constants.Ch;
+import constants.En;
+import constants.Id;
+import constants.Dv;
 import jssc.SerialPort;
-import jssc.SerialPortException;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
 import common.hw.modbus.ModBus;
@@ -194,37 +196,37 @@ public class FactoryCore {
     }
 
     public static void main(String[] args) throws Exception {
+        // initialization
         ModBusDevices devices = new ModBusDevices(
             new ModBus(
                 new COMPort(
-                    "COM25",
+                    Dv.COM25,
                     new COMPortProperties(SerialPort.BAUDRATE_57600)
                 )));
-        devices.add("DOS_1", WADdeviceType.DOS, 0x11 );
-        devices.add("DOS_2", WADdeviceType.DOS, 0x12 );
-        devices.add("DOS_3", WADdeviceType.DOS, 0x13 );
-        devices.add("DOS_4", WADdeviceType.DOS, 0x14 );
-        devices.add("DOS_5", WADdeviceType.DOS, 0x15 );
-        devices.add("DI14_1", WADdeviceType.DI14, 0x21 );
-        devices.add("DI14_2", WADdeviceType.DI14, 0x22 );
-        devices.add("DI14_3", WADdeviceType.DI14, 0x23 );
-        devices.add("DI14_4", WADdeviceType.DI14, 0x24 );
-        devices.add("AIK_1", WADdeviceType.AIK, 0x31 );
-        devices.add("AIK_2", WADdeviceType.AIK, 0x32 );
-        devices.add("AO_1", WADdeviceType.AO, 0x41 );
-        devices.add("AO_2", WADdeviceType.AO, 0x42 );
-
+        devices.add(Dv.DOS1, WADdeviceType.DOS, Id.x11 );
+        devices.add(Dv.DOS2, WADdeviceType.DOS, Id.x12 );
+        devices.add(Dv.DOS3, WADdeviceType.DOS, Id.x13 );
+        devices.add(Dv.DOS4, WADdeviceType.DOS, Id.x14 );
+        devices.add(Dv.DOS5, WADdeviceType.DOS, Id.x15 );
+        devices.add(Dv.DI1, WADdeviceType.DI14, Id.x21 );
+        devices.add(Dv.DI2, WADdeviceType.DI14, Id.x22 );
+        devices.add(Dv.DI3, WADdeviceType.DI14, Id.x23 );
+        devices.add(Dv.DI4, WADdeviceType.DI14, Id.x24 );
+        devices.add(Dv.AIK1, WADdeviceType.AIK, Id.x31 );
+        devices.add(Dv.AIK2, WADdeviceType.AIK, Id.x32 );
+        devices.add(Dv.AO1, WADdeviceType.AO, Id.x41 );
+        devices.add(Dv.AO2, WADdeviceType.AO, Id.x42 );
         ModBusChannels sensors = new ModBusChannels(devices);
-        sensors.add("T1", "DOS_1", 2);
-        sensors.add("T2", "DOS_1", 3);
+        sensors.add(En.T1, Dv.DOS1, Ch.n1);
+        sensors.add(En.T1, Dv.DOS1, Ch.n2);
         ModBusChannels performers = new ModBusChannels(devices);
-        performers.add("Transporter1", "DOS_1", 4);
-        performers.add("Transporter2", "DOS_1", 5);
-
-        Values t1 = sensors.get("T1").get();
-        Values t2 = sensors.get("T2").get();
-        performers.get("Transporter1").off();
-        performers.get("Transporter2").on();
+        performers.add(En.Transporter1, Dv.DOS1, Ch.n4);
+        performers.add(En.Transporter2, Dv.DOS1, Ch.n5);
+        // work begins here !
+        Values t1 = sensors.get(En.T1).get();
+        Values t2 = sensors.get(En.T2).get();
+        performers.get(En.Transporter1).off();
+        performers.get(En.Transporter2).on();
 
 
         devices.finish();
