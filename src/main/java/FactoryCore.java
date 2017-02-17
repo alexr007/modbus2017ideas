@@ -174,6 +174,7 @@ public class FactoryCore {
             entities.get(En.Cylinder1)
         );
         ((Cylinder) entities.get(En.Cylinder1)).open();
+        entities.getCylinder(En.Cylinder1).open();
         //cylinder.close();
         //cylinder.stop();
 /*

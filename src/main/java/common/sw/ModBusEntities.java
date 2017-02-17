@@ -30,4 +30,9 @@ public class ModBusEntities {
         return entities.get(entityName);
     }
 
+    public Cylinder getCylinder(String entityName) throws Exception {
+        AbstractEntity ae = this.get(entityName);
+        //String name = ae.getClass().getSimpleName();
+        return (Cylinder)ae ;
+    }
 }
