@@ -1,7 +1,6 @@
 package common.sw;
 
 import entities.AbstractEntity;
-import entities.Cylinder;
 
 import java.util.HashMap;
 
@@ -30,9 +29,4 @@ public class ModBusEntities {
         return entities.get(entityName);
     }
 
-    public Cylinder getCylinder(String entityName) throws Exception {
-        AbstractEntity ae = this.get(entityName);
-        //String name = ae.getClass().getSimpleName();
-        return (Cylinder)ae ;
-    }
 }

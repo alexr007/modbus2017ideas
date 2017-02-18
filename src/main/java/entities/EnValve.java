@@ -1,7 +1,11 @@
 package entities;
 
 import common.hw.ISwitch;
+import common.hw.modbus.response.InvalidModBusResponse;
+import common.hw.modbus.response.Values;
+import common.hw.modbus.wad.ModBusInvalidFunction;
 import common.hw.modbus.wad.WAD_Channel;
+import jssc.SerialPortException;
 
 /**
  * Created by alexr on 07.02.2017.
@@ -14,11 +18,16 @@ import common.hw.modbus.wad.WAD_Channel;
  * - зкрыт
  *
  */
-public class Valve  extends AbstractEntity implements ISwitch {
+public class EnValve extends AbstractEntity implements ISwitch {
     private final WAD_Channel channel;
 
-    public Valve(WAD_Channel channel) {
+    public EnValve(WAD_Channel channel) {
         this.channel = channel;
+    }
+
+    @Override
+    public Values get() throws InvalidEntityFunction, InvalidModBusResponse, SerialPortException, ModBusInvalidFunction {
+        throw new InvalidEntityFunction();
     }
 
     public void on() throws Exception {

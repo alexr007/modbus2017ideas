@@ -6,7 +6,7 @@ package common.hw.modbus.device;
 public class DeviceProperties {
     // Signal type: Analog / Digital
     private final SignalType signalType;
-    // DRPort type: Input / Output / Relay
+    // DRPort type: Input / Output / EnRelay
     private final PortType portType;
     // Channels count
     private final int channels;

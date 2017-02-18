@@ -7,12 +7,12 @@ import common.hw.modbus.wad.WAD_Channel;
 /**
  * Created by alexr on 07.02.2017.
  */
-public class MotorPWM  extends AbstractEntity implements ISwitch, IPWM
+public class EnMotorPWM extends AbstractEntity implements ISwitch, IPWM
 {
     private final WAD_Channel channel;
     private final WAD_Channel channelValue;
 
-    public MotorPWM(WAD_Channel channel, WAD_Channel channelValue) {
+    public EnMotorPWM(WAD_Channel channel, WAD_Channel channelValue) {
         this.channel = channel;
         this.channelValue = channelValue;
     }

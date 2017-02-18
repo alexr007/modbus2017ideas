@@ -1,3 +1,4 @@
+import _learn.learn2.Body;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import common.hw.modbus.wad.*;
@@ -10,9 +11,8 @@ import common.BytesAsHex;
 import common.hw.comport.COMPort;
 import common.hw.comport.COMPortProperties;
 import common.debug.PH;
-import entities.Cylinder;
-import entities.MotorPWM;
-import entities.Valve;
+import entities.EnCylinder;
+import entities.EnValve;
 import common.hw.modbus.command.MbData;
 import common.hw.modbus.response.Values;
 import common.sw.primitives.Word;
@@ -162,10 +162,10 @@ public class FactoryCore {
 */
         ModBusEntities entities = new ModBusEntities(channels);
         entities.add(En.Cylinder1,
-            new Cylinder(
-                new Valve(devices.get(Dv.DOS1).channel(1)),
-                new Valve(devices.get(Dv.DOS1).channel(2))
-                //new Valve(channels.get("chan3"))
+            new EnCylinder(
+                new EnValve(devices.get(Dv.DOS1).channel(1)),
+                new EnValve(devices.get(Dv.DOS1).channel(2))
+                //new EnValve(channels.get("chan3"))
             )
         );
         // ENTITIES initialization
@@ -173,20 +173,21 @@ public class FactoryCore {
         System.out.println(
             entities.get(En.Cylinder1)
         );
-        ((Cylinder) entities.get(En.Cylinder1)).open();
-        entities.getCylinder(En.Cylinder1).open();
+
+        entities.get(En.Cylinder1).run(1);
+        //entities.getCylinder(En.Cylinder1).open();
         //cylinder.close();
         //cylinder.stop();
 /*
-        MotorPWM air1 = new MotorPWM(
+        EnMotorPWM air1 = new EnMotorPWM(
             channels.get("AIR1"),
             channels.get("AIR1speed")
         );
-        MotorPWM air2 = new MotorPWM(
+        EnMotorPWM air2 = new EnMotorPWM(
             devices.get("dev1").channel(1),
             devices.get("dev2").channel(1)
         );
-        MotorPWM air3 = new MotorPWM(
+        EnMotorPWM air3 = new EnMotorPWM(
             devices.get("dev1").channel(1),
             devices.get("dev2").channel(1)
         );
@@ -228,4 +229,9 @@ public class FactoryCore {
 
         System.out.println(transformed);
     }
+
+    public static void main11(String[] args) {
+        new Body().main();
+    }
+
 }

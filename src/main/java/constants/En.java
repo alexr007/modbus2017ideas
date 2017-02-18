@@ -3,7 +3,7 @@ package constants;
 /**
  * Created by alexr on 17.02.2017.
  *
- * Entities: (Sensor, Motor, Transporter )
+ * Entities: (EnSensor, EnMotor, Transporter )
  */
 public class En {
     public static final String T1 = "T1";

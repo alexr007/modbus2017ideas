@@ -12,6 +12,6 @@ public enum WADdeviceType {
     DI,
     // Digital In 14
     DI14,
-    // Digital Out Relay 8
+    // Digital Out EnRelay 8
     DOS,
 }

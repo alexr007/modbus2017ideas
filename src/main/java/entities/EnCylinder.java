@@ -11,11 +11,11 @@ package entities;
  * один - на открытие
  *
  */
-public class Cylinder extends AbstractEntity {
-    private final Valve valveToOpen;
-    private final Valve valveToClose;
+public class EnCylinder extends AbstractEntity {
+    private final EnValve valveToOpen;
+    private final EnValve valveToClose;
 
-    public Cylinder(Valve valveToOpen, Valve valveToClose) {
+    public EnCylinder(EnValve valveToOpen, EnValve valveToClose) {
         this.valveToOpen = valveToOpen;
         this.valveToClose = valveToClose;
     }

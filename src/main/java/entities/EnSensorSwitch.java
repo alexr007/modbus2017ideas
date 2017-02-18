@@ -1,19 +1,21 @@
 package entities;
 
-import common.hw.ISensorAnalog;
+import common.hw.ISensorDigital;
 import common.hw.modbus.response.InvalidModBusResponse;
-import common.hw.modbus.response.Values;
 import common.hw.modbus.wad.ModBusInvalidFunction;
 import common.hw.modbus.wad.WAD_Channel;
 import jssc.SerialPortException;
 
 /**
  * Created by alexr on 17.02.2017.
+ *
+ * Концевик
+ *
  */
-public class Sensor  extends AbstractEntity implements ISensorAnalog {
+public class EnSensorSwitch extends AbstractEntity implements ISensorDigital{
     private final WAD_Channel channel;
 
-    public Sensor(WAD_Channel channel) {
+    public EnSensorSwitch(WAD_Channel channel) {
         this.channel = channel;
     }
 
@@ -23,7 +25,12 @@ public class Sensor  extends AbstractEntity implements ISensorAnalog {
     }
 
     @Override
-    public Values get() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction {
-        return channel.get();
+    public boolean opened() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction {
+        return channel.get().get() == 0;
+    }
+
+    @Override
+    public boolean closed() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction {
+        return channel.get().get() == 1;
     }
 }
