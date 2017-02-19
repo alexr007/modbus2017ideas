@@ -1,4 +1,4 @@
-package _learn.composition;
+package tests.composition;
 
 /**
  * Created by alexr on 21.01.2017.

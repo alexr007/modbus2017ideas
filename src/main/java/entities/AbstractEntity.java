@@ -9,6 +9,8 @@ import jssc.SerialPortException;
  * Created by alexr on 17.02.2017.
  */
 public class AbstractEntity {
+/*
+
     public boolean fail() throws InvalidEntityFunction, InvalidModBusResponse, ModBusInvalidFunction, SerialPortException {
         throw new InvalidEntityFunction();
     };
@@ -39,4 +41,5 @@ public class AbstractEntity {
     public void stop() throws Exception {
         throw new InvalidEntityFunction();
     };
+*/
 }

@@ -1,4 +1,4 @@
-package _learn.mt;
+package tests.threads1;
 
 /**
  * Created by alexr on 22.01.2017.

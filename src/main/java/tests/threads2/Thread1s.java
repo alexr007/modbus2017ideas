@@ -1,4 +1,4 @@
-package _learn.th;
+package tests.threads2;
 
 import static java.lang.Thread.sleep;
 

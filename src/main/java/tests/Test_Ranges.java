@@ -1,3 +1,5 @@
+package tests;
+
 import common.sw.ranges.RandomFromRange;
 import common.sw.ranges.RangeValues;
 import common.sw.validator.ValidValues;
@@ -6,7 +8,7 @@ import common.sw.filters.ValueItem;
 
 import java.util.*;
 
-public class TestIdeas_OLD {
+public class Test_Ranges {
 
     public void test1()
     {

@@ -25,11 +25,6 @@ public class EnValve extends AbstractEntity implements ISwitch {
         this.channel = channel;
     }
 
-    @Override
-    public Values get() throws InvalidEntityFunction, InvalidModBusResponse, SerialPortException, ModBusInvalidFunction {
-        throw new InvalidEntityFunction();
-    }
-
     public void on() throws Exception {
         channel.on();
     }

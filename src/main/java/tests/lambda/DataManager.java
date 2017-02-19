@@ -1,4 +1,4 @@
-package _learn.learn;
+package tests.lambda;
 
 public class DataManager {
 
