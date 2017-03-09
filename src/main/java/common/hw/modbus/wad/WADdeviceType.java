@@ -8,6 +8,8 @@ public enum WADdeviceType {
     AIK,
     // Analog Out 4
     AO,
+    // Analog Out 4
+    AO6,
     // Digital In 8
     DI,
     // Digital In 14
