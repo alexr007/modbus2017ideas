@@ -119,9 +119,12 @@ public interface Values {
 
         @Override
         public String toString() {
+            return "Multiple: NEED to fix for 1.7";
+/*
             return "Multiple:" + new IterableToString<Integer>(
                 Arrays.stream(values).boxed().toArray(Integer[]::new)
             ).toString();
+*/
         }
     }
 
