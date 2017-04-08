@@ -83,7 +83,9 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+<!--
         <finalName>fcore</finalName>
+-->
         <plugins>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
