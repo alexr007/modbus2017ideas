@@ -4,10 +4,7 @@ import com.jcabi.manifests.Manifests;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.facets.fallback.FbChain;
-import org.takes.facets.fallback.FbStatus;
-import org.takes.facets.fallback.RqFallback;
-import org.takes.facets.fallback.TkFallback;
+import org.takes.facets.fallback.*;
 import org.takes.misc.Opt;
 import org.takes.rs.RsText;
 import org.takes.rs.RsVelocity;
@@ -59,7 +56,12 @@ final class TkAppFallback extends TkWrap {
                                         HttpURLConnection.HTTP_BAD_REQUEST
                                 )
                         ),
-                        req -> new Opt.Single<>(TkAppFallback.fatal(req))
+                    new Fallback() {
+                        @Override
+                        public Opt<Response> route(RqFallback req) throws IOException {
+                            return new Opt.Single<>(TkAppFallback.fatal(req));
+                        }
+                    }
                 )
         );
     }
