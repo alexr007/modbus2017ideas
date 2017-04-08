@@ -36,6 +36,7 @@ import java.util.function.Predicate;
 import java.lang.Iterable;
 
 public class RosterTest {
+/*
 
     interface CheckPerson {
         boolean test(Person p);
@@ -278,4 +279,5 @@ public class RosterTest {
                 .map(p -> p.getEmailAddress())
                 .forEach(email -> System.out.println(email));
     }
+*/
 }
