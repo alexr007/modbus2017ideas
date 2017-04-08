@@ -1,1 +1,1 @@
-java -cp ./target/fcore.jar;./target/deps/* FactoryCore --port=8080
+java -cp ./target/ideas-0.1.jar;./target/deps/* FactoryCore %1

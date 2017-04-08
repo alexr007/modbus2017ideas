@@ -15,7 +15,7 @@ public class ModBus {
         this.comPort = comPort;
     }
 
-    public void close() throws SerialPortException {
+    private void close() throws SerialPortException {
         this.comPort.close();
     }
 
@@ -38,6 +38,6 @@ public class ModBus {
     }
 
     public void finish() throws SerialPortException {
-        comPort.close();
+       this.close();
     }
 }
