@@ -14,6 +14,7 @@ public class Test_Thread_DOS implements Runnable{
     private final CountDownLatch cdl;
     private Object monitor = new Object();
     private final int latency = 500;
+    private final int count = 36000;
 
     public Test_Thread_DOS(ModBusAbstractDevice device, CountDownLatch cdl) {
         this.device = device;
@@ -25,11 +26,13 @@ public class Test_Thread_DOS implements Runnable{
         synchronized (monitor) {
             try {
                 device.channel(0).off();
-                for (int i = 1; i <= 8; i++) {
-                    device.channel(i).on();
+                for (int i = 1; i <= count; i++) {
+                    final int chan = i % 8 +1;
+                    device.channel(chan).on();
                     monitor.wait(latency);
-                    device.channel(i).off();
+                    device.channel(chan).off();
                     monitor.wait(latency);
+                    System.out.println(chan);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
