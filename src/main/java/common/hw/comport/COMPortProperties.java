@@ -12,17 +12,19 @@ public class COMPortProperties {
     private final int stopBits;
 
     public COMPortProperties() {
-        this.baudRate = SerialPort.BAUDRATE_57600;
-        this.dataBits = SerialPort.DATABITS_8;
-        this.parity = SerialPort.PARITY_NONE;
-        this.stopBits = SerialPort.STOPBITS_1;
+        this(SerialPort.BAUDRATE_57600,
+            SerialPort.DATABITS_8,
+            SerialPort.PARITY_NONE,
+            SerialPort.STOPBITS_1
+        );
     }
 
     public COMPortProperties(int baudRate) {
-        this.baudRate = baudRate;
-        this.dataBits = SerialPort.DATABITS_8;
-        this.parity = SerialPort.PARITY_NONE;
-        this.stopBits = SerialPort.STOPBITS_1;
+        this(baudRate,
+            SerialPort.DATABITS_8,
+            SerialPort.PARITY_NONE,
+            SerialPort.STOPBITS_1
+            );
     }
 
     public COMPortProperties(int baudRate, int dataBits, int parity, int stopBits) {
