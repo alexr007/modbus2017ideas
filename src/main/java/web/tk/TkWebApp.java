@@ -38,9 +38,18 @@ public final class TkWebApp extends TkWrap {
             new Take() {
                 @Override
                 public Response act(Request req) throws IOException {
-                    return new RsText(
+                    return
+                        new TkMeasured(new TkConfigIndex()).act(req);
+
+
+
+/*
+                    new RsText(
                         new RqHref.Base(req).href()
-                    );
+                    )
+*/
+
+
                 }
             }
         );
