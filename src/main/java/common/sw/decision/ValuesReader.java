@@ -21,7 +21,7 @@ public class ValuesReader implements Iterable {
         return source.iterator();
     }
 
-    HashMap<CharSequence, Values> get() {
+    public HashMap<CharSequence, Values> get() {
         HashMap<CharSequence, Values> values = new HashMap<>();
         for (CharSequence name : source) {
             values.put(name, reader.get(name));

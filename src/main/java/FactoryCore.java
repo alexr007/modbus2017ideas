@@ -1,12 +1,4 @@
-import app.FindComPorts;
-import app.AppDefaultMessage;
-import common.hw.modbus.response.Values;
-import common.sw.decision.*;
-import tests.some.Test_DOS_Timing;
-import tests.string.StringFormat1;
-
-import java.util.Arrays;
-import java.util.HashMap;
+import common.sw.decision.test.DecisionTest;
 
 public class FactoryCore {
     public static void main(String[] args) throws Exception {

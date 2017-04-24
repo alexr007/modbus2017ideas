@@ -1,4 +1,6 @@
-package common.sw.decision;
+package common.sw.decision.test;
+
+import common.sw.decision.Strings;
 
 /**
  * Created by alexr on 24.04.2017.

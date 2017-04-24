@@ -1,6 +1,10 @@
-package common.sw.decision;
+package common.sw.decision.test;
 
 import common.hw.modbus.response.Values;
+import common.sw.decision.FakeReader;
+import common.sw.decision.ValuesMap;
+import common.sw.decision.ValuesReader;
+
 import java.util.Arrays;
 import java.util.HashMap;
 

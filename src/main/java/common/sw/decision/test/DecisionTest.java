@@ -1,6 +1,8 @@
-package common.sw.decision;
+package common.sw.decision.test;
 
 import common.hw.modbus.response.Values;
+import common.sw.decision.Decision;
+import common.sw.decision.ValuesMap;
 
 import java.util.Arrays;
 import java.util.HashMap;

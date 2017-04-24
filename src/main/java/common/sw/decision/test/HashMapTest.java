@@ -1,4 +1,4 @@
-package common.sw.decision;
+package common.sw.decision.test;
 
 import java.util.HashMap;
 
