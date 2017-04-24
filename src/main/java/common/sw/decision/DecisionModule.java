@@ -1,4 +1,4 @@
-package common.sw.threads;
+package common.sw.decision;
 
 import common.hw.modbus.ModBus;
 import common.sw.ModBusDevices;

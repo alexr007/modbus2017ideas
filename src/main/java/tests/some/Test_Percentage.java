@@ -1,4 +1,4 @@
-package tests;
+package tests.some;
 
 import common.hw.modbus.response.Values;
 import common.sw.ranges.Percentage;

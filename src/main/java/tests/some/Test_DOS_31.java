@@ -1,4 +1,4 @@
-package tests;
+package tests.some;
 
 import common.hw.comport.COMPort;
 import common.hw.comport.COMPortProperties;
@@ -6,8 +6,7 @@ import common.hw.modbus.ModBus;
 import common.hw.modbus.wad.ModBusInvalidFunction;
 import common.hw.modbus.wad.WAD_DOS_BUS;
 import jssc.SerialPortException;
-import org.takes.http.*;
-import java.util.Arrays;
+
 import java.util.concurrent.CountDownLatch;
 
 /**

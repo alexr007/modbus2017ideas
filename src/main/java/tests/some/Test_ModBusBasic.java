@@ -1,4 +1,4 @@
-package tests;
+package tests.some;
 
 import common.debug.PH;
 import common.hw.comport.COMPort;

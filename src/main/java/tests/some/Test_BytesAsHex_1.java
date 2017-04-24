@@ -1,4 +1,4 @@
-package tests;
+package tests.some;
 
 import common.BytesAsHex;
 

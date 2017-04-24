@@ -1,4 +1,4 @@
-package tests;
+package tests.some;
 
 import org.takes.http.Exit;
 import org.takes.http.FtCli;

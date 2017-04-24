@@ -38,7 +38,12 @@ public class ModBusDevices {
         // эта хрень не работает
         // TODO: переписать equals & hashcode
         if (devices.containsValue(device)) {
-            throw new Exception("Duplicate ModBus Device:"+type.toString()+" id:"+new IntAsHex(modbusId).toString());
+            throw new Exception(
+                String.format("Duplicate ModBus Device:%s id:%s",
+                    type.toString(),
+                    new IntAsHex(modbusId).toString()
+                )
+            );
         }
         devices.put(deviceName, device);
     }

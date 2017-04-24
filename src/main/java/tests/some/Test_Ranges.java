@@ -1,4 +1,4 @@
-package tests;
+package tests.some;
 
 import common.sw.ranges.RandomFromRange;
 import common.sw.ranges.RangeValues;
