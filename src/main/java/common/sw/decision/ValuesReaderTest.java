@@ -22,16 +22,11 @@ public class ValuesReaderTest {
         );
         // список всех ключей
         System.out.println(valuesMap.keySet());
-
+        // проход по списку
         for (HashMap.Entry <CharSequence, Values> e: valuesMap.entrySet()) {
             System.out.println(
                 String.format("Key:%s, Value:%s",e.getKey(),e.getValue())
             );
         }
-
-
-
-
-
     }
 }
