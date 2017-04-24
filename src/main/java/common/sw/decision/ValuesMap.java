@@ -11,6 +11,10 @@ import java.util.Set;
 public class ValuesMap {
     private final HashMap<CharSequence, Values> source;
 
+    public ValuesMap() {
+        this(new HashMap<>());
+    }
+
     public ValuesMap(HashMap<CharSequence, Values> source) {
         this.source = source;
     }
@@ -20,6 +24,13 @@ public class ValuesMap {
             throw new Exception(String.format("Requested entry:%s not exist in HashMap.",k));
         }
         return source.get(k);
+    }
+
+    public Values put(CharSequence k, Values v) throws Exception {
+        if (source.containsKey(k)) {
+            throw new Exception(String.format("Entry:%s already exist in HashMap.",k));
+        }
+        return source.put(k, v);
     }
 
     public Iterable<Map.Entry<CharSequence, Values>> entrySet() {

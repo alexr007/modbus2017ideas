@@ -1,12 +1,18 @@
 import app.FindComPorts;
 import app.AppDefaultMessage;
-import common.sw.decision.ValuesReaderTest;
+import common.hw.modbus.response.Values;
+import common.sw.decision.*;
 import tests.some.Test_DOS_Timing;
 import tests.string.StringFormat1;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 public class FactoryCore {
     public static void main(String[] args) throws Exception {
-        new ValuesReaderTest().test1();
+        new DecisionTest().test();
+        //new HashMapTest().test();
+        //new ValuesReaderTest().test1();
         //new StringFormat1().print();
 
 /*
