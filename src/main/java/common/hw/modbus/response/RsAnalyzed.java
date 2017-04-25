@@ -32,7 +32,7 @@ public class RsAnalyzed {
                             ret = parsed.data();
         }
         else
-            throw new InvalidModBusResponse();
+            throw new InvalidModBusResponse("Invalid ModBus Response");
 
         return ret;
     }

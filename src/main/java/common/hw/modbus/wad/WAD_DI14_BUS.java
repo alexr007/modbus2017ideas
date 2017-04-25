@@ -6,7 +6,6 @@ import common.hw.modbus.device.PortType;
 import common.hw.modbus.device.SignalType;
 import common.hw.modbus.ModBus;
 import common.hw.modbus.response.InvalidModBusResponse;
-import common.hw.modbus.response.InvalidModBusResponseCRC;
 import jssc.SerialPortException;
 
 /**

@@ -29,7 +29,7 @@ public class RsParsed {
         this.length=response.length;
     }
 
-    public boolean valid() throws InvalidModBusResponseCRC, InvalidModBusResponseLength {
+    public boolean valid() throws InvalidModBusResponse {
         if (!crcChecked) {
             crcValid =new MbCRC(response).valid();
             crcChecked =true;
@@ -39,33 +39,32 @@ public class RsParsed {
             lengthChecked =true;
         }
         if (crcValid&&lengthValid) return true;
-        else if (!crcValid) throw new InvalidModBusResponseCRC();
-        else throw new InvalidModBusResponseLength();
+        else if (!crcValid) throw new InvalidModBusResponse("Invalid ModBus Response CRC");
+        else throw new InvalidModBusResponse("Invalid ModBus Response Length");
     }
 
-    public int device() throws InvalidModBusResponseCRC, InvalidModBusResponseLength {
+    public int device() throws InvalidModBusResponse {
         if (valid()) {
             return response[byteID];
         }
         else return 0;
     }
 
-    public int command() throws InvalidModBusResponseCRC, InvalidModBusResponseLength {
+    public int command() throws InvalidModBusResponse {
         if (valid()) {
             return response[byteCMD];
         }
         else return 0;
     }
 
-    public int length() throws InvalidModBusResponseCRC, InvalidModBusResponseLength {
+    public int length() throws InvalidModBusResponse {
         if (valid()) {
             return response[byteLEN];
         }
         else return 0;
     }
 
-//    public byte[] data() throws InvalidModBusResponseCRC, InvalidModBusResponseLength {
-    public int[] data() throws InvalidModBusResponseCRC, InvalidModBusResponseLength {
+    public int[] data() throws InvalidModBusResponse {
         if (valid()) {
             int[] result = new int[length()];
             for (int i = byteDATA; i < byteDATA+length(); i++) {
