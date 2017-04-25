@@ -12,14 +12,10 @@ public class PortValueTest {
         //new PortValue.A();
         //new PortValue.D();
 
-        AValue aValue = new AValue(1000);
-        DIValue diValue = new DIValue(DIType.CLOSED);
-        DOValue doValue = new DOValue(DOType.ON);
-
         ArrayList<AbtractValue> l = new ArrayList<>();
-        l.add(aValue);
-        l.add(diValue);
-        l.add(doValue);
+        l.add(new AValue(1000));
+        l.add(new DIValue(DIType.CLOSED));
+        l.add(new DOValue(DOType.ON));
 
         for (AbtractValue a : l) {
             switch (a.type()) {
