@@ -1,9 +1,11 @@
 import common.sw.decision.test.DecisionTest;
+import common.sw.persistence.test.PortValueTest;
 import tests.some.Test_DOS_Timing;
 
 public class FactoryCore {
     public static void main(String[] args) throws Exception {
-        new DecisionTest().test();
+        new PortValueTest().test();
+        //new DecisionTest().test();
         //new Test_DOS_Timing().run(args[0]);
         //new HashMapTest().test();
         //new ValuesReaderTest().test1();

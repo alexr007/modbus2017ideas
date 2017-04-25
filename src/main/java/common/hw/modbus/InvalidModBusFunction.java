@@ -5,6 +5,6 @@ package common.hw.modbus;
  */
 public class InvalidModBusFunction extends Exception{
     public InvalidModBusFunction() {
-        super("Invalid ModBus Function (not supported)");
+        super("Invalid ModBus Function (not supported by channel)");
     }
 }

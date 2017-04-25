@@ -1,6 +1,5 @@
 package common.sw.decision;
 
-import common.hw.modbus.ModBus;
 import common.sw.ModBusDevices;
 
 import static java.lang.Thread.sleep;
@@ -9,12 +8,12 @@ import static java.lang.Thread.sleep;
  * Created by alexr on 10.02.2017.
  */
 abstract public class DecisionModule implements Runnable{
-    private final int freqency;
-    private final ModBusDevices modBusDevices;
+    private final int cycleMs;
+    protected final ModBusDevices modBusDevices;
     private boolean finished = false;
 
-    public DecisionModule(int freqency, ModBusDevices modBusDevices) {
-        this.freqency = freqency;
+    public DecisionModule(int CycleMs, ModBusDevices modBusDevices) {
+        this.cycleMs = CycleMs;
         this.modBusDevices = modBusDevices;
     }
 
@@ -27,11 +26,15 @@ abstract public class DecisionModule implements Runnable{
     @Override
     public void run() {
         while (!finished) {
+            long timeBegin = System.currentTimeMillis();
             task();
-            try {
-                sleep(freqency);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            long timeDelta = System.currentTimeMillis() - timeBegin;
+            if (cycleMs>timeDelta) {
+                try {
+                    sleep(cycleMs-timeDelta);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
