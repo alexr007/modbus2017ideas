@@ -1,8 +1,8 @@
 package entities;
 
 import common.hw.ISensorDigital;
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.response.InvalidModBusResponse;
-import common.hw.modbus.wad.ModBusInvalidFunction;
 import common.hw.modbus.wad.WAD_Channel;
 import jssc.SerialPortException;
 
@@ -20,17 +20,17 @@ public class EnSensorSwitch extends AbstractEntity implements ISensorDigital{
     }
 
     @Override
-    public boolean fail() throws InvalidModBusResponse, ModBusInvalidFunction, SerialPortException {
+    public boolean fail() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         return channel.fail().get() == 1;
     }
 
     @Override
-    public boolean opened() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction {
+    public boolean opened() throws InvalidModBusResponse, SerialPortException {
         return channel.get().get() == 0;
     }
 
     @Override
-    public boolean closed() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction {
+    public boolean closed() throws InvalidModBusResponse, SerialPortException {
         return channel.get().get() == 1;
     }
 }

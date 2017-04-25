@@ -28,8 +28,10 @@ public abstract class ModBusAbstractDevice {
     @Override
     public String toString() {
         return
-            this.getClass().toString()
-            +" id:"+new IntAsHex(deviceId).toString();
+            String.format("%s id: %s",
+                this.getClass().toString(),
+                new IntAsHex(deviceId).toString()
+            );
     }
 
 }

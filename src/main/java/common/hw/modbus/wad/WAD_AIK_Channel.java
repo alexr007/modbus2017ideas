@@ -1,6 +1,7 @@
 package common.hw.modbus.wad;
 
 import common.IntToArray;
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.response.*;
 import jssc.SerialPortException;
 
@@ -69,7 +70,7 @@ final public class WAD_AIK_Channel implements WAD_Channel {
      * 1 - ЕСТЬ связь с контроллером порта
      * 0 - НЕТ связи с контроллером порта (порт сгорел)
      */
-    public Values fail() throws ModBusInvalidFunction, InvalidModBusResponse, SerialPortException {
+    public Values fail() throws InvalidModBusResponse, SerialPortException {
         if (channel==0) {
             return
                 new Values.Multiple(new IntToArray((~getFailAll())&0b1111,4).get());
@@ -87,32 +88,32 @@ final public class WAD_AIK_Channel implements WAD_Channel {
     }
 
     @Override
-    public boolean opened() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public boolean opened() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public boolean closed() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public boolean closed() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public void on() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public void on() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public void off() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public void off() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public void set(int val) throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public void set(int val) throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public void set(int[] val) throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public void set(int[] val) throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 }

@@ -1,11 +1,7 @@
 package entities;
 
 import common.hw.IPWM;
-import common.hw.modbus.response.InvalidModBusResponse;
-import common.hw.modbus.response.Values;
-import common.hw.modbus.wad.ModBusInvalidFunction;
 import common.hw.modbus.wad.WAD_Channel;
-import jssc.SerialPortException;
 
 /**
  * Created by alexr on 17.02.2017.

@@ -1,9 +1,7 @@
 package tests.some;
 
 import common.hw.modbus.InvalidModBusFunction;
-import common.hw.modbus.response.InvalidModBusResponse;
 import common.hw.modbus.wad.ModBusAbstractDevice;
-import common.hw.modbus.wad.ModBusInvalidFunction;
 import jssc.SerialPortException;
 
 import java.util.concurrent.CountDownLatch;
@@ -40,7 +38,7 @@ public class Test_Thread_DOS implements Runnable{
                 e.printStackTrace();
             } catch (SerialPortException e) {
                 e.printStackTrace();
-            } catch (ModBusInvalidFunction e) {
+            } catch (InvalidModBusFunction e) {
                 e.printStackTrace();
             }
             cdl.countDown();

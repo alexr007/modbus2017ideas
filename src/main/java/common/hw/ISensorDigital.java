@@ -1,7 +1,7 @@
 package common.hw;
 
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.response.InvalidModBusResponse;
-import common.hw.modbus.wad.ModBusInvalidFunction;
 import jssc.SerialPortException;
 
 /**
@@ -10,9 +10,9 @@ import jssc.SerialPortException;
  */
 public interface ISensorDigital {
     // cable fail
-    boolean fail() throws InvalidModBusResponse, ModBusInvalidFunction, SerialPortException;
+    boolean fail() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
     // normal state
-    boolean opened() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction;
+    boolean opened() throws InvalidModBusResponse, SerialPortException;
     // shorted state
-    boolean closed() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction;
+    boolean closed() throws InvalidModBusResponse, SerialPortException;
 }

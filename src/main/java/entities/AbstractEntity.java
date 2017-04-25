@@ -1,10 +1,5 @@
 package entities;
 
-import common.hw.modbus.response.InvalidModBusResponse;
-import common.hw.modbus.response.Values;
-import common.hw.modbus.wad.ModBusInvalidFunction;
-import jssc.SerialPortException;
-
 /**
  * Created by alexr on 17.02.2017.
  */

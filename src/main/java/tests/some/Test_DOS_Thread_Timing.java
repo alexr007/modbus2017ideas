@@ -3,7 +3,6 @@ package tests.some;
 import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.response.InvalidModBusResponse;
 import common.hw.modbus.wad.ModBusAbstractDevice;
-import common.hw.modbus.wad.ModBusInvalidFunction;
 import jssc.SerialPortException;
 
 import java.util.concurrent.CountDownLatch;
@@ -32,10 +31,10 @@ public class Test_DOS_Thread_Timing implements Runnable {
                 }
             } catch (SerialPortException e) {
                 e.printStackTrace();
-            } catch (InvalidModBusResponse invalidModBusResponse) {
-                invalidModBusResponse.printStackTrace();
-            } catch (InvalidModBusFunction invalidModBusFunction) {
-                invalidModBusFunction.printStackTrace();
+            } catch (InvalidModBusResponse e) {
+                e.printStackTrace();
+            } catch (InvalidModBusFunction e) {
+                e.printStackTrace();
             }
             cdl.countDown();
             System.out.println(t);

@@ -1,5 +1,6 @@
 package common.hw.modbus.wad;
 
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.command.MbData;
 import common.hw.modbus.command.MbMerged;
 import common.hw.modbus.response.*;
@@ -57,32 +58,32 @@ final public class WAD_AO6_Channel implements WAD_Channel {
     }
 
     @Override
-    public Values fail() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public Values fail() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public boolean opened() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public boolean opened() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public boolean closed() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public boolean closed() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public void on() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public void on() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public void off() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public void off() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public void set(int val) throws ModBusInvalidFunction, SerialPortException {
+    public void set(int val) throws SerialPortException {
         assert (channel>0);
         device.run(
             device.builder.cmdWriteRegister(0x2010+channel-1,
@@ -92,7 +93,7 @@ final public class WAD_AO6_Channel implements WAD_Channel {
     }
 
     @Override
-    public void set(int[] val) throws ModBusInvalidFunction, SerialPortException {
+    public void set(int[] val) throws SerialPortException {
         assert (channel==0)&&(val.length==device.properties.channels());
         device.run(
             device.builder.cmdWriteRegister(0x2010+channel-1,0x0006,

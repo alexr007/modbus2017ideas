@@ -2,6 +2,7 @@ package common.hw.modbus.wad;
 
 import common.ArrayToInt;
 import common.IntToArray;
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.command.MbData;
 import common.hw.modbus.response.*;
 import jssc.SerialPortException;
@@ -57,8 +58,8 @@ final public class WAD_DOS_Channel implements WAD_Channel {
     }
 
     @Override
-    public Values fail() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public Values fail() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override

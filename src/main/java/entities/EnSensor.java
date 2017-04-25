@@ -1,9 +1,9 @@
 package entities;
 
 import common.hw.ISensorAnalog;
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.response.InvalidModBusResponse;
 import common.hw.modbus.response.Values;
-import common.hw.modbus.wad.ModBusInvalidFunction;
 import common.hw.modbus.wad.WAD_Channel;
 import jssc.SerialPortException;
 
@@ -18,11 +18,11 @@ public class EnSensor extends AbstractEntity implements ISensorAnalog {
     }
 
     @Override
-    public boolean fail() throws InvalidModBusResponse, ModBusInvalidFunction, SerialPortException {
+    public boolean fail() throws InvalidModBusFunction, SerialPortException, InvalidModBusResponse {
         return channel.fail().get() == 1;
     }
     @Override
-    public Values get() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction {
+    public Values get() throws InvalidModBusResponse, SerialPortException {
         return channel.get();
     }
 }

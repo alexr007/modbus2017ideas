@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class ModBusChannels {
     private final ModBusDevices devices;
-    private HashMap<String, WAD_Channel> channels = new HashMap<>();
+    private final HashMap<String, WAD_Channel> channels = new HashMap<>();
 
     public ModBusChannels(ModBusDevices devices) {
         this.devices = devices;
@@ -17,14 +17,14 @@ public class ModBusChannels {
 
     public void add(String channelName, String deviceName, int channel) throws Exception {
         if (channels.containsKey(channelName)) {
-            throw new Exception("Duplicate Channel Name:"+channelName);
+            throw new Exception(String.format("Duplicate Channel Name:%s",channelName));
         }
         channels.put(channelName, devices.get(deviceName).channel(channel));
     }
 
     public WAD_Channel get(String channelName) throws Exception {
         if (!channels.containsKey(channelName)) {
-            throw new Exception("Channel Name NotFound:"+channelName);
+            throw new Exception(String.format("Channel Name NotFound:%s",channelName));
         }
         return channels.get(channelName);
     }

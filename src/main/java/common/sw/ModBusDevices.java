@@ -19,7 +19,7 @@ public class ModBusDevices {
 
     public void add(String deviceName, WADdeviceType type, int modbusId) throws Exception {
         if (devices.containsKey(deviceName)) {
-            throw new Exception("Duplicate Module Name:"+deviceName);
+            throw new Exception(String.format("Duplicate Module Name:%s",deviceName));
         }
         ModBusAbstractDevice device = null;
         switch (type) {
@@ -50,7 +50,7 @@ public class ModBusDevices {
 
     public ModBusAbstractDevice get(String deviceName) throws Exception {
         if (!devices.containsKey(deviceName)) {
-            throw new Exception("Module Name NotFound:"+deviceName);
+            throw new Exception(String.format("Module Name NotFound:%s",deviceName));
         }
         return devices.get(deviceName);
     }

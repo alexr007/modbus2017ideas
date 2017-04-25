@@ -1,5 +1,6 @@
 package common.hw.modbus.wad;
 
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.response.InvalidModBusResponse;
 import common.hw.modbus.response.Values;
 import jssc.SerialPortException;
@@ -11,17 +12,17 @@ public interface WAD_Channel {
     // AI, DI, DO, DOS
     // Values.Single
     // Values.Multiple
-    Values get() throws SerialPortException, InvalidModBusResponse, ModBusInvalidFunction;
+    Values get() throws SerialPortException, InvalidModBusResponse;
     // DI, AI
-    Values fail() throws ModBusInvalidFunction, InvalidModBusResponse, SerialPortException;
+    Values fail() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
     // DI, DOS
     // TODO doubtful if channel==0
-    boolean opened() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction;
-    boolean closed() throws InvalidModBusResponse, SerialPortException, ModBusInvalidFunction;
+    boolean opened() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
+    boolean closed() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
     // DOS
-    void on() throws SerialPortException, ModBusInvalidFunction;
-    void off() throws SerialPortException, ModBusInvalidFunction;
+    void on() throws SerialPortException, InvalidModBusFunction;
+    void off() throws SerialPortException, InvalidModBusFunction;
     // AO, DOS
-    void set(int val) throws SerialPortException, ModBusInvalidFunction;
-    void set(int[] val) throws SerialPortException, ModBusInvalidFunction;
+    void set(int val) throws SerialPortException, InvalidModBusFunction;
+    void set(int[] val) throws SerialPortException, InvalidModBusFunction;
 }

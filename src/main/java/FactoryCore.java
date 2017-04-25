@@ -1,8 +1,10 @@
 import common.sw.decision.test.DecisionTest;
+import tests.some.Test_DOS_Timing;
 
 public class FactoryCore {
     public static void main(String[] args) throws Exception {
         new DecisionTest().test();
+        //new Test_DOS_Timing().run(args[0]);
         //new HashMapTest().test();
         //new ValuesReaderTest().test1();
         //new StringFormat1().print();

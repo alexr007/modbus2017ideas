@@ -1,6 +1,7 @@
 package common.hw.modbus.wad;
 
 import common.IntToArray;
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.response.*;
 import jssc.SerialPortException;
 
@@ -18,7 +19,7 @@ final public class WAD_DI_Channel implements WAD_Channel {
     }
 
     @Override
-    public Values get() throws SerialPortException, InvalidModBusResponse, ModBusInvalidFunction {
+    public Values get() throws InvalidModBusResponse, SerialPortException {
         if (channel==0) {
             return getMultiple();
         } else
@@ -55,7 +56,7 @@ final public class WAD_DI_Channel implements WAD_Channel {
      * 0 - все ОК
      *
      */
-    public Values fail() throws ModBusInvalidFunction, InvalidModBusResponse, SerialPortException {
+    public Values fail() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
         if (channel==0) {
             return failMultiple();
         } else
@@ -85,7 +86,7 @@ final public class WAD_DI_Channel implements WAD_Channel {
     }
 
     @Override
-    public boolean opened() throws ModBusInvalidFunction, InvalidModBusResponse, SerialPortException {
+    public boolean opened() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
         if (channel==0) {
             return (getMultiple().get()&0b11111111)==0x0;
         } else
@@ -93,7 +94,7 @@ final public class WAD_DI_Channel implements WAD_Channel {
     }
 
     @Override
-    public boolean closed() throws ModBusInvalidFunction, InvalidModBusResponse, SerialPortException {
+    public boolean closed() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
         if (channel==0) {
             return (getMultiple().get()&0b11111111)==0b11111111;
         } else
@@ -101,22 +102,22 @@ final public class WAD_DI_Channel implements WAD_Channel {
     }
 
     @Override
-    public void on() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public void on() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public void off() throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public void off() throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public void set(int val) throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public void set(int val) throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 
     @Override
-    public void set(int[] val) throws ModBusInvalidFunction {
-        throw new ModBusInvalidFunction();
+    public void set(int[] val) throws InvalidModBusFunction {
+        throw new InvalidModBusFunction();
     }
 }
