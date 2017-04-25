@@ -1,16 +1,19 @@
-package common.sw.persistence;
+package common.sw.persistence.lifeless_ideas;
+
+import common.sw.persistence.TypeChan;
+import common.sw.persistence.TypeDI;
 
 /**
  * Created by alexr on 25.04.2017.
  */
 public class DIValue extends AbtractValue {
-    private final DIType value;
+    private final TypeDI value;
 
-    public DIValue(DIType value) {
+    public DIValue(TypeDI value) {
         this.value = value;
     }
 
-    public DIType get() {
+    public TypeDI get() {
         return this.value;
     }
 
@@ -20,7 +23,7 @@ public class DIValue extends AbtractValue {
     }
 
     @Override
-    public VT type() {
-        return VT.DI;
+    public TypeChan type() {
+        return TypeChan.DI;
     }
 }

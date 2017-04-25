@@ -1,4 +1,6 @@
-package common.sw.persistence;
+package common.sw.persistence.lifeless_ideas;
+
+import common.sw.persistence.TypeChan;
 
 /**
  * Created by alexr on 25.04.2017.
@@ -23,7 +25,7 @@ public class AValue extends AbtractValue {
     }
 
     @Override
-    public VT type() {
-        return VT.A;
+    public TypeChan type() {
+        return TypeChan.A;
     }
 }

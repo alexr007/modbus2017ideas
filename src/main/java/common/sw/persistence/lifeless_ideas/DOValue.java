@@ -1,16 +1,19 @@
-package common.sw.persistence;
+package common.sw.persistence.lifeless_ideas;
+
+import common.sw.persistence.TypeChan;
+import common.sw.persistence.TypeDO;
 
 /**
  * Created by alexr on 25.04.2017.
  */
 public class DOValue extends AbtractValue {
-    private final DOType value;
+    private final TypeDO value;
 
-    public DOValue(DOType value) {
+    public DOValue(TypeDO value) {
         this.value = value;
     }
 
-    public DOType get() {
+    public TypeDO get() {
         return this.value;
     }
 
@@ -20,7 +23,7 @@ public class DOValue extends AbtractValue {
     }
 
     @Override
-    public VT type() {
-        return VT.DO;
+    public TypeChan type() {
+        return TypeChan.DO;
     }
 }

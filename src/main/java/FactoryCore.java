@@ -1,10 +1,8 @@
-import common.sw.decision.test.DecisionTest;
-import common.sw.persistence.test.PortValueTest;
-import tests.some.Test_DOS_Timing;
+import common.sw.persistence.test.ChanValueTest;
 
 public class FactoryCore {
     public static void main(String[] args) throws Exception {
-        new PortValueTest().test();
+        new ChanValueTest().test2();
         //new DecisionTest().test();
         //new Test_DOS_Timing().run(args[0]);
         //new HashMapTest().test();
