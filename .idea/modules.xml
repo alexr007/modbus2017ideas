@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BIOsmarTex.iml" filepath="$PROJECT_DIR$/BIOsmarTex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BIOscada.iml" filepath="$PROJECT_DIR$/BIOscada.iml" />
     </modules>
   </component>
 </project>

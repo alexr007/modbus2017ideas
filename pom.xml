@@ -127,7 +127,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>FactoryCore</mainClass>
+                            <mainClass>ScadaCore</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

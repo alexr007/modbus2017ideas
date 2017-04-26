@@ -1,6 +1,6 @@
 import common.sw.layers.test.ModBusDevicesTest;
 
-public class FactoryCore {
+public class ScadaCore {
     public static void main(String[] args) throws Exception {
         new ModBusDevicesTest().test();
         //new ChanValueTest().test2();

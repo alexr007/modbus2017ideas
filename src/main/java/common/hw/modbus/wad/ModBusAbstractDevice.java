@@ -28,7 +28,7 @@ public abstract class ModBusAbstractDevice {
     @Override
     public String toString() {
         return
-            String.format("%s id: %s",
+            String.format("%-13s id: %s",
                 this.getClass().getSimpleName(),
                 new IntAsHex(deviceId).toString()
             );

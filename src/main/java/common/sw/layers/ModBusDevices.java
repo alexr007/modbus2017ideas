@@ -65,7 +65,7 @@ public class ModBusDevices {
         StringBuilder sb = new StringBuilder();
         sb.append("devices list:\n");
         for (HashMap.Entry<String, ModBusAbstractDevice> item : devices.entrySet() ) {
-            sb.append("name:"+item.getKey()+", dev:"+item.getValue().toString()+"\n");
+            sb.append(String.format("name: %s, dev: %s\n",item.getKey(),item.getValue().toString()));
         }
         return sb.toString();
     }
