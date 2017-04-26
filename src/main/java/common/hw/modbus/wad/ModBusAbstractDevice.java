@@ -1,6 +1,6 @@
 package common.hw.modbus.wad;
 
-import common.IntAsHex;
+import common.sw.common.IntAsHex;
 import common.hw.modbus.*;
 import common.hw.modbus.device.DeviceProperties;
 import common.hw.modbus.response.InvalidModBusResponse;

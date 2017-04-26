@@ -1,6 +1,6 @@
 package common.sw.decision;
 
-import common.sw.ModBusDevices;
+import common.sw.layers.ModBusDevices;
 
 import static java.lang.Thread.sleep;
 

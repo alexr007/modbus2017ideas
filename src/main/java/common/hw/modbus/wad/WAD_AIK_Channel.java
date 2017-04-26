@@ -1,6 +1,6 @@
 package common.hw.modbus.wad;
 
-import common.IntToArray;
+import common.sw.common.IntToArray;
 import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.response.*;
 import jssc.SerialPortException;
@@ -85,35 +85,5 @@ final public class WAD_AIK_Channel implements WAD_Channel {
             new RqInfo(device.deviceId,RsParsed.cmdRead,2)
         );
         return analyzed.get(1);
-    }
-
-    @Override
-    public boolean opened() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public boolean closed() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public void on() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public void off() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public void set(int val) throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public void set(int[] val) throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
     }
 }

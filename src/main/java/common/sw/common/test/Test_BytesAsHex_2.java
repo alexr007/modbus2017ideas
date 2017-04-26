@@ -1,6 +1,6 @@
-package tests.some;
+package common.sw.common.test;
 
-import common.BytesAsHex;
+import common.sw.common.BytesAsHex;
 import common.hw.modbus.command.MbData;
 import common.sw.primitives.Word;
 

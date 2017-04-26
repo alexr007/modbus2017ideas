@@ -1,4 +1,4 @@
-package tests.threads1;
+package tests.threads_classic;
 
 /**
  * Created by alexr on 22.01.2017.

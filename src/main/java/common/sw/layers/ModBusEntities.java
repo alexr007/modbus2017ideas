@@ -1,4 +1,4 @@
-package common.sw;
+package common.sw.layers;
 
 import entities.AbstractEntity;
 

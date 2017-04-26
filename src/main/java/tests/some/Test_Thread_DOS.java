@@ -36,9 +36,9 @@ public class Test_Thread_DOS implements Runnable{
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            } catch (SerialPortException e) {
-                e.printStackTrace();
             } catch (InvalidModBusFunction e) {
+                e.printStackTrace();
+            } catch (SerialPortException e) {
                 e.printStackTrace();
             }
             cdl.countDown();

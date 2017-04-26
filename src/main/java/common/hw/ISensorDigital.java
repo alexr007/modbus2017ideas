@@ -12,7 +12,7 @@ public interface ISensorDigital {
     // cable fail
     boolean fail() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
     // normal state
-    boolean opened() throws InvalidModBusResponse, SerialPortException;
+    boolean opened() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
     // shorted state
-    boolean closed() throws InvalidModBusResponse, SerialPortException;
+    boolean closed() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
 }

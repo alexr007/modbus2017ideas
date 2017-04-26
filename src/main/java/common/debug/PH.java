@@ -1,6 +1,6 @@
 package common.debug;
 
-import common.BytesAsHex;
+import common.sw.common.BytesAsHex;
 import common.sw.primitives.Bytes;
 import common.hw.modbus.MbRequest;
 import common.hw.modbus.MbResponse;

@@ -1,4 +1,4 @@
-package tests.some;
+package common.sw.layers.test;
 
 import common.debug.PH;
 import common.hw.comport.COMPort;

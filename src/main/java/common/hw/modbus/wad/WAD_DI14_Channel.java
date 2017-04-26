@@ -1,6 +1,6 @@
 package common.hw.modbus.wad;
 
-import common.IntToArray;
+import common.sw.common.IntToArray;
 import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.response.*;
 import jssc.SerialPortException;
@@ -99,25 +99,5 @@ final public class WAD_DI14_Channel implements WAD_Channel {
             return (getMultiple().get()&0b0111111111111111)==0b0111111111111111;
         } else
             return getSingle().get()==1;
-    }
-
-    @Override
-    public void on() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public void off() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public void set(int val) throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public void set(int[] val) throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
     }
 }

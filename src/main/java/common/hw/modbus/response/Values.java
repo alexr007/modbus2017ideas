@@ -1,7 +1,7 @@
 package common.hw.modbus.response;
 
-import common.IntToArray;
-import common.IterableToString;
+import common.sw.common.IntToArray;
+import common.sw.common.IterableToString;
 import java.util.Arrays;
 
 /**

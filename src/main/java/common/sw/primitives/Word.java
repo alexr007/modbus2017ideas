@@ -1,6 +1,6 @@
 package common.sw.primitives;
 
-import common.WordAsHex;
+import common.sw.common.WordAsHex;
 import common.hw.modbus.command.MbMerged;
 import common.hw.modbus.command.MbWrap;
 

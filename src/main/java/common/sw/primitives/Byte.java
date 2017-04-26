@@ -1,6 +1,6 @@
 package common.sw.primitives;
 
-import common.IntAsHex;
+import common.sw.common.IntAsHex;
 import common.hw.modbus.command.MbWrap;
 
 public class Byte {

@@ -1,6 +1,6 @@
-package tests.some;
+package common.sw.common.test;
 
-import common.BytesAsHex;
+import common.sw.common.BytesAsHex;
 
 /**
  * Created by alexr on 19.02.2017.

@@ -1,6 +1,6 @@
 package common.hw.modbus;
 
-import common.BytesAsHex;
+import common.sw.common.BytesAsHex;
 
 /**
  * Created by alexr on 20.01.2017.

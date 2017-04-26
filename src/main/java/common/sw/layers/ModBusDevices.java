@@ -1,6 +1,6 @@
-package common.sw;
+package common.sw.layers;
 
-import common.IntAsHex;
+import common.sw.common.IntAsHex;
 import common.hw.modbus.ModBus;
 import common.hw.modbus.wad.*;
 import jssc.SerialPortException;

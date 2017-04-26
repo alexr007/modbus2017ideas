@@ -58,31 +58,6 @@ final public class WAD_AO6_Channel implements WAD_Channel {
     }
 
     @Override
-    public Values fail() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public boolean opened() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public boolean closed() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public void on() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
-    public void off() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
-    }
-
-    @Override
     public void set(int val) throws SerialPortException {
         assert (channel>0);
         device.run(

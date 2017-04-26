@@ -1,7 +1,7 @@
 package common.hw.modbus.wad;
 
-import common.ArrayToInt;
-import common.IntToArray;
+import common.sw.common.ArrayToInt;
+import common.sw.common.IntToArray;
 import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.command.MbData;
 import common.hw.modbus.response.*;

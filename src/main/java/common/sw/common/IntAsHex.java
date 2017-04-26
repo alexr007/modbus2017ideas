@@ -1,4 +1,4 @@
-package common;
+package common.sw.common;
 
 /**
  * Created by alexr on 15.01.2017.

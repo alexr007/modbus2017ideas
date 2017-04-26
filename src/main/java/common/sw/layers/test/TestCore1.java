@@ -1,12 +1,12 @@
-package tests.some;
+package common.sw.layers.test;
 
 import common.hw.comport.COMPort;
 import common.hw.comport.COMPortProperties;
 import common.hw.modbus.ModBus;
 import common.hw.modbus.wad.WADdeviceType;
-import common.sw.ModBusChannels;
-import common.sw.ModBusDevices;
-import common.sw.ModBusEntities;
+import common.sw.layers.ModBusChannels;
+import common.sw.layers.ModBusDevices;
+import common.sw.layers.ModBusEntities;
 import constants.Ch;
 import constants.Dv;
 import constants.En;

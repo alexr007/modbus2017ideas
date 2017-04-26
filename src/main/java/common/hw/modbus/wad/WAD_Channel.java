@@ -12,17 +12,33 @@ public interface WAD_Channel {
     // AI, DI, DO, DOS
     // Values.Single
     // Values.Multiple
-    Values get() throws SerialPortException, InvalidModBusResponse;
+    default Values get() throws InvalidModBusFunction, SerialPortException, InvalidModBusResponse {
+        throw new InvalidModBusFunction();
+    }
     // DI, AI
-    Values fail() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
+    default Values fail() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
+        throw new InvalidModBusFunction();
+    }
     // DI, DOS
     // TODO doubtful if channel==0
-    boolean opened() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
-    boolean closed() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
+    default boolean opened() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
+        throw new InvalidModBusFunction();
+    }
+    default boolean closed() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
+        throw new InvalidModBusFunction();
+    }
     // DOS
-    void on() throws SerialPortException, InvalidModBusFunction;
-    void off() throws SerialPortException, InvalidModBusFunction;
+    default void on() throws InvalidModBusFunction, SerialPortException {
+        throw new InvalidModBusFunction();
+    }
+    default void off() throws InvalidModBusFunction, SerialPortException {
+        throw new InvalidModBusFunction();
+    }
     // AO, DOS
-    void set(int val) throws SerialPortException, InvalidModBusFunction;
-    void set(int[] val) throws SerialPortException, InvalidModBusFunction;
+    default void set(int val) throws InvalidModBusFunction, SerialPortException {
+        throw new InvalidModBusFunction();
+    }
+    default void set(int[] val) throws InvalidModBusFunction, SerialPortException {
+        throw new InvalidModBusFunction();
+    }
 }

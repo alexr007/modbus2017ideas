@@ -22,7 +22,7 @@ public class EnSensor extends AbstractEntity implements ISensorAnalog {
         return channel.fail().get() == 1;
     }
     @Override
-    public Values get() throws InvalidModBusResponse, SerialPortException {
+    public Values get() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         return channel.get();
     }
 }

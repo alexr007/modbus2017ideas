@@ -14,6 +14,7 @@ package common.sw.persistence;
 public interface ChanValue {
 
     TypeChan type();
+
 /*
     default int getA() throws Exception {
         throw new Exception("unsupported operation");
@@ -26,8 +27,8 @@ public interface ChanValue {
     default TypeDO getDO() throws Exception {
         throw new Exception("unsupported operation");
     }
-
 */
+
     class A implements ChanValue {
         private final int value;
 
