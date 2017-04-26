@@ -14,12 +14,52 @@ import constants.Id;
 import entities.EnCylinder;
 import entities.EnValve;
 import jssc.SerialPort;
+import jssc.SerialPortException;
+import org.javatuples.Triplet;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
- * Created by alexr on 19.02.2017.
+ * Created by alexr on 26.04.2017.
  */
-public class TestCore1 {
-    public void run(String[] args) throws Exception {
+public class ModBusDevicesTest {
+    public void test() throws Exception {
+
+        ModBusDevices devices = new ModBusDevices(
+            new ModBus(
+                new COMPort(
+                    Dv.COM25,
+                    new COMPortProperties(SerialPort.BAUDRATE_57600)
+                )
+            ),
+            new ArrayList<Triplet<String, WADdeviceType, Integer>>() {{
+                add(new Triplet<>("DEV1", WADdeviceType.AIK, Id.x11));
+                add(new Triplet<>("DEV2", WADdeviceType.AO6, Id.x12));
+                add(new Triplet<>("DEV3", WADdeviceType.DI, Id.x13));
+                add(new Triplet<>("DEV4", WADdeviceType.DI14, Id.x14));
+                add(new Triplet<>("DEV5", WADdeviceType.DOS, Id.x15));
+            }}
+        );
+        System.out.println(
+            devices.toString()
+        );
+        devices.finish();
+    }
+
+    public void test2() throws Exception {
+        ModBusDevices devices = new ModBusDevices(
+            new ModBus(
+                new COMPort(
+                    Dv.COM25,
+                    new COMPortProperties(SerialPort.BAUDRATE_57600)
+                )
+            ),
+            new File("devices.xml")
+        );
+    }
+
+    public void test_old_ugly_configuration() throws Exception {
         // BUS initialization
         ModBusDevices devices = new ModBusDevices(
             new ModBus(

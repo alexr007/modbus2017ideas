@@ -13,7 +13,7 @@ import jssc.SerialPortException;
 /**
  * Created by alexr on 19.02.2017.
  */
-public class Test_ModBusBasic {
+public class ModBusBasicTest {
     public static void main(String[] args) throws SerialPortException, InvalidModBusFunction, InvalidModBusResponse {
         ModBus modBus = new ModBus(
             new COMPort(

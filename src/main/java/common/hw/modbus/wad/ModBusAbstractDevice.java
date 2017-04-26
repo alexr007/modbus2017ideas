@@ -29,9 +29,29 @@ public abstract class ModBusAbstractDevice {
     public String toString() {
         return
             String.format("%s id: %s",
-                this.getClass().toString(),
+                this.getClass().getSimpleName(),
                 new IntAsHex(deviceId).toString()
             );
+    }
+
+    public static ModBusAbstractDevice build(ModBus modBus, WADdeviceType type, int modbusId) {
+        ModBusAbstractDevice device = null;
+        switch (type) {
+            case AIK: device = new WAD_AIK_BUS(modBus, modbusId);
+                break;
+            case AO: device = new WAD_AO_BUS(modBus, modbusId);
+                break;
+            case AO6: device = new WAD_AO6_BUS(modBus, modbusId);
+                break;
+            case DI: device = new WAD_DI_BUS(modBus, modbusId);
+                break;
+            case DI14: device = new WAD_DI14_BUS(modBus, modbusId);
+                break;
+            case DOS: device = new WAD_DOS_BUS(modBus, modbusId);
+                break;
+            default: break;
+        }
+        return device;
     }
 
 }

@@ -1,8 +1,9 @@
-import common.sw.persistence.test.ChanValueTest;
+import common.sw.layers.test.ModBusDevicesTest;
 
 public class FactoryCore {
     public static void main(String[] args) throws Exception {
-        new ChanValueTest().test2();
+        new ModBusDevicesTest().test();
+        //new ChanValueTest().test2();
         //new DecisionTest().test();
         //new Test_DOS_Timing().run(args[0]);
         //new HashMapTest().test();

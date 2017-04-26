@@ -4,6 +4,10 @@ import common.sw.common.IntAsHex;
 import common.hw.modbus.ModBus;
 import common.hw.modbus.wad.*;
 import jssc.SerialPortException;
+import org.javatuples.Triplet;
+
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -13,28 +17,25 @@ public class ModBusDevices {
     private final ModBus modBus;
     private HashMap<String, ModBusAbstractDevice> devices = new HashMap<>();
 
-    public ModBusDevices(ModBus modBus) {
+    public ModBusDevices(ModBus modBus) throws Exception {
+        this(modBus, new ArrayList<>());
+    }
+
+    public ModBusDevices(ModBus modBus, File source) throws Exception {
         this.modBus = modBus;
+        this.devices = new DevicesFromFile(modBus, source).hashMap();
+    }
+
+    public ModBusDevices(ModBus modBus, ArrayList<Triplet<String, WADdeviceType, Integer>> devices) throws Exception {
+        this.modBus = modBus;
+        this.devices = new DevicesFromList(modBus, devices).hashMap();
     }
 
     public void add(String deviceName, WADdeviceType type, int modbusId) throws Exception {
         if (devices.containsKey(deviceName)) {
             throw new Exception(String.format("Duplicate Module Name:%s",deviceName));
         }
-        ModBusAbstractDevice device = null;
-        switch (type) {
-            case AIK: device = new WAD_AIK_BUS(modBus, modbusId);
-                break;
-            case AO: device = new WAD_AO_BUS(modBus, modbusId);
-                break;
-            case DI: device = new WAD_DI_BUS(modBus, modbusId);
-                break;
-            case DI14: device = new WAD_DI14_BUS(modBus, modbusId);
-                break;
-            case DOS: device = new WAD_DOS_BUS(modBus, modbusId);
-                break;
-            default: break;
-        }
+        ModBusAbstractDevice device = ModBusAbstractDevice.build(modBus, type, modbusId);
         // эта хрень не работает
         // TODO: переписать equals & hashcode
         if (devices.containsValue(device)) {
@@ -57,5 +58,15 @@ public class ModBusDevices {
 
     public void finish() throws SerialPortException {
         modBus.finish();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("devices list:\n");
+        for (HashMap.Entry<String, ModBusAbstractDevice> item : devices.entrySet() ) {
+            sb.append("name:"+item.getKey()+", dev:"+item.getValue().toString()+"\n");
+        }
+        return sb.toString();
     }
 }
