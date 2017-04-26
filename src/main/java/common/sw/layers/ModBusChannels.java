@@ -1,6 +1,7 @@
 package common.sw.layers;
 
 import common.hw.modbus.wad.WAD_Channel;
+import jssc.SerialPortException;
 
 import java.util.HashMap;
 
@@ -27,5 +28,9 @@ public class ModBusChannels {
             throw new Exception(String.format("Channel Name NotFound:%s",channelName));
         }
         return channels.get(channelName);
+    }
+
+    public void finish() throws SerialPortException {
+        devices.finish();
     }
 }

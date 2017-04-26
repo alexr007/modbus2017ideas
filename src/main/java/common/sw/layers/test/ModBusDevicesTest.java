@@ -26,6 +26,32 @@ import java.util.ArrayList;
 public class ModBusDevicesTest {
     public void test() throws Exception {
 
+        ModBusChannels channels = new ModBusChannels(
+            new ModBusDevices(
+                new ModBus(
+                    new COMPort(
+                        Dv.COM25,
+                        new COMPortProperties(SerialPort.BAUDRATE_57600)
+                    )
+                ),
+                new ArrayList<Triplet<String, WADdeviceType, Integer>>() {{
+                    add(new Triplet<>("DEV1", WADdeviceType.AIK, Id.x11));
+                    add(new Triplet<>("DEV2", WADdeviceType.AO6, Id.x12));
+                    add(new Triplet<>("DEV3", WADdeviceType.DI, Id.x13));
+                    add(new Triplet<>("DEV4", WADdeviceType.DI14, Id.x14));
+                    add(new Triplet<>("DEV5", WADdeviceType.DOS, Id.x15));
+                }}
+            )
+        );
+
+        System.out.println(
+            channels.toString()
+        );
+        channels.finish();
+    }
+
+    public void test1() throws Exception {
+
         ModBusDevices devices = new ModBusDevices(
             new ModBus(
                 new COMPort(
