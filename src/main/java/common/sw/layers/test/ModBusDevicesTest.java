@@ -3,8 +3,7 @@ package common.sw.layers.test;
 import common.hw.comport.COMPort;
 import common.hw.comport.COMPortProperties;
 import common.hw.modbus.ModBus;
-import common.hw.modbus.wad.WAD_AIK_BUS;
-import common.hw.modbus.wad.WADdeviceType;
+import common.hw.modbus.wad.WadDevType;
 import common.sw.layers.ModBusChannels;
 import common.sw.layers.ModBusDevices;
 import common.sw.layers.ModBusEntities;
@@ -15,7 +14,6 @@ import constants.Id;
 import entities.EnCylinder;
 import entities.EnValve;
 import jssc.SerialPort;
-import jssc.SerialPortException;
 import org.javatuples.Triplet;
 
 import java.io.File;
@@ -35,12 +33,12 @@ public class ModBusDevicesTest {
                     new COMPortProperties(SerialPort.BAUDRATE_57600)
                 )
             ),
-            new ArrayList<Triplet<String, WADdeviceType, Integer>>() {{
-                add(new Triplet<>("DEV1", WADdeviceType.AIK, Id.x11));
-                add(new Triplet<>("DEV2", WADdeviceType.AO6, Id.x12));
-                add(new Triplet<>("DEV3", WADdeviceType.DI, Id.x13));
-                add(new Triplet<>("DEV4", WADdeviceType.DI14, Id.x14));
-                add(new Triplet<>("DEV5", WADdeviceType.DOS, Id.x15));
+            new ArrayList<Triplet<String, WadDevType, Integer>>() {{
+                add(new Triplet<>("DEV1", WadDevType.AIK, Id.x11));
+                add(new Triplet<>("DEV2", WadDevType.AO6, Id.x12));
+                add(new Triplet<>("DEV3", WadDevType.DI, Id.x13));
+                add(new Triplet<>("DEV4", WadDevType.DI14, Id.x14));
+                add(new Triplet<>("DEV5", WadDevType.DOS, Id.x15));
             }}
         );
         System.out.println(
@@ -74,19 +72,19 @@ public class ModBusDevicesTest {
                     new COMPortProperties(SerialPort.BAUDRATE_57600)
                 )));
         // DEVICES initialization
-        devices.add(Dv.DOS1, WADdeviceType.DOS, Id.x11 );
-        devices.add(Dv.DOS2, WADdeviceType.DOS, Id.x12 );
-        devices.add(Dv.DOS3, WADdeviceType.DOS, Id.x13 );
-        devices.add(Dv.DOS4, WADdeviceType.DOS, Id.x14 );
-        devices.add(Dv.DOS5, WADdeviceType.DOS, Id.x15 );
-        devices.add(Dv.DI1, WADdeviceType.DI14, Id.x21 );
-        devices.add(Dv.DI2, WADdeviceType.DI14, Id.x22 );
-        devices.add(Dv.DI3, WADdeviceType.DI14, Id.x23 );
-        devices.add(Dv.DI4, WADdeviceType.DI14, Id.x24 );
-        devices.add(Dv.AIK1, WADdeviceType.AIK, Id.x31 );
-        devices.add(Dv.AIK2, WADdeviceType.AIK, Id.x32 );
-        devices.add(Dv.AO1, WADdeviceType.AO, Id.x41 );
-        devices.add(Dv.AO2, WADdeviceType.AO, Id.x42 );
+        devices.add(Dv.DOS1, WadDevType.DOS, Id.x11 );
+        devices.add(Dv.DOS2, WadDevType.DOS, Id.x12 );
+        devices.add(Dv.DOS3, WadDevType.DOS, Id.x13 );
+        devices.add(Dv.DOS4, WadDevType.DOS, Id.x14 );
+        devices.add(Dv.DOS5, WadDevType.DOS, Id.x15 );
+        devices.add(Dv.DI1, WadDevType.DI14, Id.x21 );
+        devices.add(Dv.DI2, WadDevType.DI14, Id.x22 );
+        devices.add(Dv.DI3, WadDevType.DI14, Id.x23 );
+        devices.add(Dv.DI4, WadDevType.DI14, Id.x24 );
+        devices.add(Dv.AIK1, WadDevType.AIK, Id.x31 );
+        devices.add(Dv.AIK2, WadDevType.AIK, Id.x32 );
+        devices.add(Dv.AO1, WadDevType.AO, Id.x41 );
+        devices.add(Dv.AO2, WadDevType.AO, Id.x42 );
         ModBusChannels channels = new ModBusChannels(devices);
         // CHANNELS initialization
         channels.add(En.T1, Dv.DOS1, Ch.n1);

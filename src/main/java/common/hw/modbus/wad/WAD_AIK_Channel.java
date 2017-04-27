@@ -1,7 +1,6 @@
 package common.hw.modbus.wad;
 
 import common.sw.common.IntToArray;
-import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.response.*;
 import jssc.SerialPortException;
 
@@ -88,8 +87,8 @@ final public class WAD_AIK_Channel implements WAD_Channel {
     }
 
     @Override
-    public WADdeviceType type() {
-        return WADdeviceType.AIK;
+    public WadDevType type() {
+        return WadDevType.AIK;
     }
 
 }

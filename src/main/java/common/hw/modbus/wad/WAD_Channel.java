@@ -41,5 +41,5 @@ public interface WAD_Channel {
     default void set(int[] val) throws InvalidModBusFunction, SerialPortException {
         throw new InvalidModBusFunction();
     }
-    WADdeviceType type();
+    WadDevType type();
 }

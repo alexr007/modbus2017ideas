@@ -32,8 +32,9 @@ public class DeviceProperties {
     @Override
     public String toString() {
         return
-            "SignalType:"+this.signalType+" "+
-            "PortType:"+this.portType+" "+
-            "Channels:"+this.channels;
+            String.format("SignalType:%-7s, PortType:%-6s, Channels:%s",
+                this.signalType,
+                this.portType,
+                this.channels);
     }
 }

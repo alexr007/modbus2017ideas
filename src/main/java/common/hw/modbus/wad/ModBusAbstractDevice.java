@@ -34,7 +34,7 @@ public abstract class ModBusAbstractDevice {
             );
     }
 
-    public static ModBusAbstractDevice build(ModBus modBus, WADdeviceType type, int modbusId) {
+    public static ModBusAbstractDevice build(ModBus modBus, WadDevType type, int modbusId) {
         ModBusAbstractDevice device = null;
         switch (type) {
             case AIK: device = new WAD_AIK_BUS(modBus, modbusId);

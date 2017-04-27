@@ -149,8 +149,8 @@ final public class WAD_DOS_Channel implements WAD_Channel {
     }
 
     @Override
-    public WADdeviceType type() {
-        return WADdeviceType.DOS;
+    public WadDevType type() {
+        return WadDevType.DOS;
     }
 
     private void setAll(int[] val) throws SerialPortException {

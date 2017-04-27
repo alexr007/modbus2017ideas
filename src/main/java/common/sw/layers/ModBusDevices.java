@@ -26,12 +26,12 @@ public class ModBusDevices {
         this.devices = new DevicesFromFile(modBus, source).hashMap();
     }
 
-    public ModBusDevices(ModBus modBus, ArrayList<Triplet<String, WADdeviceType, Integer>> devices) throws Exception {
+    public ModBusDevices(ModBus modBus, ArrayList<Triplet<String, WadDevType, Integer>> devices) throws Exception {
         this.modBus = modBus;
         this.devices = new DevicesFromList(modBus, devices).hashMap();
     }
 
-    public void add(String deviceName, WADdeviceType type, int modbusId) throws Exception {
+    public void add(String deviceName, WadDevType type, int modbusId) throws Exception {
         if (devices.containsKey(deviceName)) {
             throw new Exception(String.format("Duplicate Module Name:%s",deviceName));
         }
@@ -65,9 +65,12 @@ public class ModBusDevices {
         StringBuilder sb = new StringBuilder();
         sb.append("devices list:\n");
         for (HashMap.Entry<CharSequence, ModBusAbstractDevice> item : devices.entrySet() ) {
-            sb.append(String.format("name: %s, dev: %s\n",
+            sb.append(String.format("name: %s, dev: %s, properties:%s\n",
                 item.getKey(),
-                item.getValue().toString()));
+                item.getValue().toString(),
+                item.getValue().properties.toString()
+                )
+            );
         }
         return sb.toString();
     }

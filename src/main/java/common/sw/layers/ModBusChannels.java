@@ -1,7 +1,6 @@
 package common.sw.layers;
 
 import common.hw.modbus.wad.WAD_Channel;
-import common.hw.modbus.wad.WADdeviceType;
 import jssc.SerialPortException;
 import org.javatuples.Triplet;
 

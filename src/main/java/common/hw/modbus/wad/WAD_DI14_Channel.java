@@ -102,7 +102,7 @@ final public class WAD_DI14_Channel implements WAD_Channel {
     }
 
     @Override
-    public WADdeviceType type() {
-        return WADdeviceType.DI14;
+    public WadDevType type() {
+        return WadDevType.DI14;
     }
 }

@@ -3,7 +3,7 @@ package common.hw.modbus.wad;
 /**
  * Created by alexr on 10.02.2017.
  */
-public enum WADdeviceType {
+public enum WadDevType {
     // Analog In 4
     AIK,
     // Analog Out 4

@@ -1,6 +1,5 @@
 package common.hw.modbus.wad;
 
-import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.command.MbData;
 import common.hw.modbus.command.MbMerged;
 import common.hw.modbus.response.*;
@@ -81,7 +80,7 @@ final public class WAD_AO_Channel implements WAD_Channel {
     }
 
     @Override
-    public WADdeviceType type() {
-        return WADdeviceType.AO;
+    public WadDevType type() {
+        return WadDevType.AO;
     }
 }

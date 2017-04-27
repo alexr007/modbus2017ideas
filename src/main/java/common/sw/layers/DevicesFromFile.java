@@ -2,8 +2,6 @@ package common.sw.layers;
 
 import common.hw.modbus.ModBus;
 import common.hw.modbus.wad.ModBusAbstractDevice;
-import common.hw.modbus.wad.WADdeviceType;
-import org.javatuples.Triplet;
 
 import java.io.File;
 import java.util.HashMap;
@@ -24,7 +22,7 @@ public class DevicesFromFile {
         HashMap<CharSequence, ModBusAbstractDevice> map = new HashMap<>();
         if (true) throw new Exception("not implemented");
 /*
-        for (Triplet<String, WADdeviceType, Integer> item : devicesList) {
+        for (Triplet<String, WadDevType, Integer> item : devicesList) {
             map.put(
                 item.getValue0(),
                 ModBusAbstractDevice.build(modBus, item.getValue1(), item.getValue2())
