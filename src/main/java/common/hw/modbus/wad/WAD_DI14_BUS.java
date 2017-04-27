@@ -1,12 +1,21 @@
 package common.hw.modbus.wad;
 
+import com.google.common.base.Joiner;
 import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.device.DeviceProperties;
 import common.hw.modbus.device.PortType;
 import common.hw.modbus.device.SignalType;
 import common.hw.modbus.ModBus;
 import common.hw.modbus.response.InvalidModBusResponse;
+import common.hw.modbus.response.Values;
+import common.sw.common.BytesAsHex;
+import common.sw.common.IntAsHex;
+import common.sw.persistence.TypeDI;
 import jssc.SerialPortException;
+import org.xembly.Directives;
+import org.xembly.ImpossibleModificationException;
+
+import java.util.HashMap;
 
 /**
  * Created by alexr on 06.02.2017.
@@ -33,5 +42,15 @@ final public class WAD_DI14_BUS extends ModBusAbstractDevice implements WAD_func
     @Override
     public int temperature() throws SerialPortException, InvalidModBusResponse, InvalidModBusFunction {
         throw new InvalidModBusFunction();
+    }
+
+    @Override
+    public String summaryDetails() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return new WAD_DI_Summary(this).txt();
+    }
+
+    @Override
+    public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return new WAD_DI_Summary(this).xml();
     }
 }

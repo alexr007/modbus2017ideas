@@ -1,10 +1,14 @@
 package common.hw.modbus.wad;
 
+import com.google.common.base.Joiner;
 import common.sw.common.IntAsHex;
 import common.hw.modbus.*;
 import common.hw.modbus.device.DeviceProperties;
 import common.hw.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
+import org.xembly.Directives;
+import org.xembly.ImpossibleModificationException;
+import org.xembly.Xembler;
 
 public abstract class ModBusAbstractDevice {
     private final ModBus modbus;
@@ -32,6 +36,41 @@ public abstract class ModBusAbstractDevice {
                 this.getClass().getSimpleName(),
                 new IntAsHex(deviceId).toString()
             );
+    }
+
+    public String summaryDetails() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return "";
+    }
+
+    public String summary() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return Joiner.on("\n").join(
+            "Summary:",
+            String.format("ModBus id: %s", new IntAsHex(this.deviceId)),
+            String.format("Device name: %s", this.getClass().getSimpleName()),
+            String.format("Device type: %s", this.properties.portType()),
+            String.format("Channels count: %s", this.properties.channels()),
+            String.format("Channels type: %s", this.properties.signalType()),
+            summaryDetails()
+        );
+    }
+
+    public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return new Directives();
+    }
+
+    public Directives xml() throws ImpossibleModificationException, InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return new Directives()
+            .add("summary")
+            .add("modbusid").set(new IntAsHex(this.deviceId).toString()).up()
+            .add("dname").set(this.getClass().getSimpleName()).up()
+            .add("dtype").set(this.properties.portType()).up()
+            .add("ccount").set(this.properties.channels()).up()
+            .add("ctype").set(this.properties.signalType()).up()
+            .add("data")
+            .append(summaryDetailsXml())
+            .add("channels")
+            .append(new WAD_DI_Summary(this).xml())
+            .up();
     }
 
     public static ModBusAbstractDevice build(ModBus modBus, WadDevType type, int modbusId) {

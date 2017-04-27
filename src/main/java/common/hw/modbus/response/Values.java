@@ -120,8 +120,8 @@ public interface Values {
         @Override
         public String toString() {
             return
-                String.format("Multiple:",
-                    new IterableToString<Integer>(
+                String.format("Multiple:%s",
+                    new IterableToString<>(
                         Arrays.stream(values).boxed().toArray(Integer[]::new)
                     ).toString()
                 );

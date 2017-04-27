@@ -1,6 +1,8 @@
 package common.hw.modbus.response;
 
 import common.hw.modbus.MbResponse;
+import common.sw.common.BytesAsHex;
+import common.sw.common.IntAsHex;
 
 /**
  * Created by alexr on 22.01.2017.

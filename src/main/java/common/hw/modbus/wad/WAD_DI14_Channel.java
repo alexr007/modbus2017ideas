@@ -38,6 +38,12 @@ final public class WAD_DI14_Channel implements WAD_Channel {
             );
     }
 
+    /*
+    * returns:
+    * 1 - channel is SHORT
+    * 0 - channel is OPEN
+    * 2 - channel is FAIL
+    */
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {
         return
             new Values.Single(

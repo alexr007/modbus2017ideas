@@ -1,5 +1,6 @@
 package common.hw.modbus.wad;
 
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.device.DeviceProperties;
 import common.hw.modbus.device.PortType;
 import common.hw.modbus.device.SignalType;
@@ -9,6 +10,7 @@ import common.hw.modbus.response.RsAnalyzed;
 import common.hw.modbus.response.RsParsed;
 import jssc.SerialPortException;
 import common.hw.modbus.ModBus;
+import org.xembly.Directives;
 
 /**
  * Created by alexr on 22.01.2017.
@@ -39,5 +41,15 @@ final public class WAD_DI_BUS extends ModBusAbstractDevice implements WAD_func_c
                 run(builder.cmdReadRegister(0x200C)),
                 new RqInfo(deviceId, RsParsed.cmdRead,2)
             ).get(1);
+    }
+
+    @Override
+    public String summaryDetails() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return new WAD_DI_Summary(this).txt();
+    }
+
+    @Override
+    public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return new WAD_DI_Summary(this).xml();
     }
 }

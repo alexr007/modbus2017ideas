@@ -6,6 +6,7 @@ package constants;
  * ModBus Device Names
  */
 public class Dv {
+    public static final String COM24 = "COM24";
     public static final String COM25 = "COM25";
 
     // WAD-DOS-BUS (8 channel per device)

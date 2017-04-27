@@ -41,15 +41,18 @@ public class ModBusChannelsTest {
                 // just channels definition
                 add(new Triplet<>("CH1","DEV1", Ch.n1));
                 add(new Triplet<>("CH2","DEV1", Ch.n2));
-                add(new Triplet<>("CH3","DEV1", Ch.n2));
-                add(new Triplet<>("CH4","DEV1", Ch.n2));
-                add(new Triplet<>("CH5","DEV1", Ch.n2));
-                add(new Triplet<>("CH6","DEV1", Ch.n2));
-                add(new Triplet<>("CH7","DEV1", Ch.n2));
+                add(new Triplet<>("CH3","DEV1", Ch.n3));
+                add(new Triplet<>("CH4","DEV1", Ch.n4));
+                add(new Triplet<>("CH5","DEV1", Ch.n5));
+                add(new Triplet<>("CH6","DEV1", Ch.n6));
+                add(new Triplet<>("CH7","DEV1", Ch.n7));
             }}
-
         );
-        channels.add("CH8", "DEV1", Ch.n2);
+
+        channels.get("CH1").get();
+        channels.get("CH2").on();
+        channels.get("CH3").off();
+
         System.out.println(
             channels.toString()
         );

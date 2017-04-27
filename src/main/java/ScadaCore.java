@@ -1,9 +1,16 @@
+import app.FindComPorts;
+import common.Timed;
+import common.sw.layers.test.BIOcoreTest;
 import common.sw.layers.test.ModBusChannelsTest;
 import common.sw.layers.test.ModBusDevicesTest;
 
 public class ScadaCore {
     public static void main(String[] args) throws Exception {
-        new ModBusDevicesTest().test();
+        Timed t = new Timed();
+        new BIOcoreTest().test();
+        t.print();
+        //new FindComPorts().run();
+        //new ModBusDevicesTest().test();
         //new ModBusChannelsTest().test();
         //new ChanValueTest().test2();
         //new DecisionTest().test();
