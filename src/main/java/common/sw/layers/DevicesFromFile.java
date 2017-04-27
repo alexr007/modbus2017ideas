@@ -20,8 +20,8 @@ public class DevicesFromFile {
         this.origin = origin;
     }
 
-    public HashMap<String, ModBusAbstractDevice> hashMap() throws Exception {
-        HashMap<String, ModBusAbstractDevice> map = new HashMap<>();
+    public HashMap<CharSequence, ModBusAbstractDevice> hashMap() throws Exception {
+        HashMap<CharSequence, ModBusAbstractDevice> map = new HashMap<>();
         if (true) throw new Exception("not implemented");
 /*
         for (Triplet<String, WADdeviceType, Integer> item : devicesList) {

@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class ModBusDevices {
     private final ModBus modBus;
-    private HashMap<String, ModBusAbstractDevice> devices = new HashMap<>();
+    private HashMap<CharSequence, ModBusAbstractDevice> devices = new HashMap<>();
 
     public ModBusDevices(ModBus modBus) throws Exception {
         this(modBus, new ArrayList<>());
@@ -49,7 +49,7 @@ public class ModBusDevices {
         devices.put(deviceName, device);
     }
 
-    public ModBusAbstractDevice get(String deviceName) throws Exception {
+    public ModBusAbstractDevice get(CharSequence deviceName) throws Exception {
         if (!devices.containsKey(deviceName)) {
             throw new Exception(String.format("Module Name NotFound:%s",deviceName));
         }
@@ -64,8 +64,10 @@ public class ModBusDevices {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("devices list:\n");
-        for (HashMap.Entry<String, ModBusAbstractDevice> item : devices.entrySet() ) {
-            sb.append(String.format("name: %s, dev: %s\n",item.getKey(),item.getValue().toString()));
+        for (HashMap.Entry<CharSequence, ModBusAbstractDevice> item : devices.entrySet() ) {
+            sb.append(String.format("name: %s, dev: %s\n",
+                item.getKey(),
+                item.getValue().toString()));
         }
         return sb.toString();
     }

@@ -86,4 +86,10 @@ final public class WAD_AIK_Channel implements WAD_Channel {
         );
         return analyzed.get(1);
     }
+
+    @Override
+    public WADdeviceType type() {
+        return WADdeviceType.AIK;
+    }
+
 }

@@ -1,8 +1,9 @@
+import common.sw.layers.test.ModBusChannelsTest;
 import common.sw.layers.test.ModBusDevicesTest;
 
 public class ScadaCore {
     public static void main(String[] args) throws Exception {
-        new ModBusDevicesTest().test();
+        new ModBusChannelsTest().test();
         //new ChanValueTest().test2();
         //new DecisionTest().test();
         //new Test_DOS_Timing().run(args[0]);

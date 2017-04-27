@@ -12,14 +12,24 @@ import java.util.HashMap;
  */
 public class DecisionTest {
     public void test() {
-        HashMap<CharSequence, Values> src = new HashMap<>();
-        src.put("S1",new Values.Single(11));
-        src.put("S2",new Values.Single(21));
-        src.put("S3",new Values.Single(21));
-        ValuesMap output = new Decision(
+        Decision decision = new Decision(
+            // source list (for information only)
             Arrays.asList("S1", "S2", "S3"),
+            // destination list (for information only)
             Arrays.asList("P1", "P2", "P3", "P4")
-        ).make(new ValuesMap(src));
+        );
+
+
+        ValuesMap output = decision.make(
+            new ValuesMap(
+                new HashMap<CharSequence, Values>(){{
+                    put("S1",new Values.Single(11));
+                    put("S2",new Values.Single(21));
+                    put("S3",new Values.Single(21));
+                }}
+            )
+        );
+
         System.out.println(
             String.format("output is: %s", output.entrySet())
         );

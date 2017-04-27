@@ -19,8 +19,8 @@ public class DevicesFromList {
         this.devicesList = list;
     }
 
-    public HashMap<String, ModBusAbstractDevice> hashMap() {
-        HashMap<String, ModBusAbstractDevice> map = new HashMap<>();
+    public HashMap<CharSequence, ModBusAbstractDevice> hashMap() {
+        HashMap<CharSequence, ModBusAbstractDevice> map = new HashMap<>();
         for (Triplet<String, WADdeviceType, Integer> item : devicesList) {
             map.put(
                 item.getValue0(),

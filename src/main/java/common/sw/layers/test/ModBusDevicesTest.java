@@ -3,6 +3,7 @@ package common.sw.layers.test;
 import common.hw.comport.COMPort;
 import common.hw.comport.COMPortProperties;
 import common.hw.modbus.ModBus;
+import common.hw.modbus.wad.WAD_AIK_BUS;
 import common.hw.modbus.wad.WADdeviceType;
 import common.sw.layers.ModBusChannels;
 import common.sw.layers.ModBusDevices;
@@ -24,33 +25,8 @@ import java.util.ArrayList;
  * Created by alexr on 26.04.2017.
  */
 public class ModBusDevicesTest {
+
     public void test() throws Exception {
-
-        ModBusChannels channels = new ModBusChannels(
-            new ModBusDevices(
-                new ModBus(
-                    new COMPort(
-                        Dv.COM25,
-                        new COMPortProperties(SerialPort.BAUDRATE_57600)
-                    )
-                ),
-                new ArrayList<Triplet<String, WADdeviceType, Integer>>() {{
-                    add(new Triplet<>("DEV1", WADdeviceType.AIK, Id.x11));
-                    add(new Triplet<>("DEV2", WADdeviceType.AO6, Id.x12));
-                    add(new Triplet<>("DEV3", WADdeviceType.DI, Id.x13));
-                    add(new Triplet<>("DEV4", WADdeviceType.DI14, Id.x14));
-                    add(new Triplet<>("DEV5", WADdeviceType.DOS, Id.x15));
-                }}
-            )
-        );
-
-        System.out.println(
-            channels.toString()
-        );
-        channels.finish();
-    }
-
-    public void test1() throws Exception {
 
         ModBusDevices devices = new ModBusDevices(
             new ModBus(
@@ -70,6 +46,10 @@ public class ModBusDevicesTest {
         System.out.println(
             devices.toString()
         );
+/*
+        WAD_AIK_BUS aik1 = (WAD_AIK_BUS) devices.get("DEV1");
+        aik1.channel(1).
+*/
         devices.finish();
     }
 

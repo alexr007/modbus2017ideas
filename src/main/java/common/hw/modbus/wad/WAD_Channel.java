@@ -34,11 +34,12 @@ public interface WAD_Channel {
     default void off() throws InvalidModBusFunction, SerialPortException {
         throw new InvalidModBusFunction();
     }
-    // AO, DOS
+    // AO, AO6, DOS
     default void set(int val) throws InvalidModBusFunction, SerialPortException {
         throw new InvalidModBusFunction();
     }
     default void set(int[] val) throws InvalidModBusFunction, SerialPortException {
         throw new InvalidModBusFunction();
     }
+    WADdeviceType type();
 }

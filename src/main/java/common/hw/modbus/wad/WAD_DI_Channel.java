@@ -100,4 +100,9 @@ final public class WAD_DI_Channel implements WAD_Channel {
         } else
             return getSingle().get()==1;
     }
+
+    @Override
+    public WADdeviceType type() {
+        return WADdeviceType.DI;
+    }
 }

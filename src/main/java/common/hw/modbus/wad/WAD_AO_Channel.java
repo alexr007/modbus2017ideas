@@ -79,4 +79,9 @@ final public class WAD_AO_Channel implements WAD_Channel {
             )
         );
     }
+
+    @Override
+    public WADdeviceType type() {
+        return WADdeviceType.AO;
+    }
 }
