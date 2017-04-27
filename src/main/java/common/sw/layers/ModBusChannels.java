@@ -40,12 +40,12 @@ public class ModBusChannels {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Channels:\n");
-        for (HashMap.Entry<CharSequence, WAD_Channel> item : channels.entrySet()) {
+        channels.forEach((k, v)->
             sb.append(String.format("CHAN: name:%s, type:%s, chan details:%s\n",
-                item.getKey(),
-                item.getValue().type(),
-                item.getValue().getClass().getSimpleName()));
-        }
+                k,
+                v.type(),
+                v.getClass().getSimpleName()))
+        );
         sb.append("---\n");
         return sb.toString();
     }

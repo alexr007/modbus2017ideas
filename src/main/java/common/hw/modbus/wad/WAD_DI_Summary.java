@@ -5,10 +5,10 @@ import common.hw.modbus.response.InvalidModBusResponse;
 import common.hw.modbus.response.Values;
 import common.sw.persistence.TypeDI;
 import jssc.SerialPortException;
-import org.xembly.Directive;
 import org.xembly.Directives;
 
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 /**
  * Created by alexr on 27.04.2017.
@@ -35,20 +35,20 @@ public class WAD_DI_Summary {
 
     public Directives xmlDir() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         Directives dirs = new Directives();
-        for (HashMap.Entry<Integer, TypeDI> item : map().entrySet()) {
+        map().forEach((k, v) ->
             dirs.add("channel")
-                .add("id").set(item.getKey()).up()
-                .add("value").set(item.getValue().toString()).up()
-                .up();
-        }
+                .add("id").set(k).up()
+                .add("value").set(v.toString()).up()
+                .up()
+        );
         return dirs;
     }
 
     public String txt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         StringBuilder sb = new StringBuilder("details:\n");
-        for (HashMap.Entry<Integer, TypeDI> item : map().entrySet()) {
-            sb.append(String.format("Channel %2d: %s\n",item.getKey(),item.getValue().toString()));
-        }
+        map().forEach((k, v) ->
+            sb.append(String.format("Channel %2d: %s\n", k, v.toString()))
+        );
         return sb.toString();
     }
 

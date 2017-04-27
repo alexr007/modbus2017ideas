@@ -64,14 +64,12 @@ public class ModBusDevices {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("devices list:\n");
-        for (HashMap.Entry<CharSequence, ModBusAbstractDevice> item : devices.entrySet() ) {
+        devices.forEach((k, v)->
             sb.append(String.format("name: %s, dev: %s, properties:%s\n",
-                item.getKey(),
-                item.getValue().toString(),
-                item.getValue().properties.toString()
-                )
-            );
-        }
+                k,
+                v.toString(),
+                v.properties.toString()
+            )));
         return sb.toString();
     }
 }

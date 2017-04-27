@@ -32,7 +32,5 @@ public class ValuesReaderTest {
                 String.format("Key:%s, Value:%s",e.getKey(),e.getValue())
             );
         }
-
-
     }
 }
