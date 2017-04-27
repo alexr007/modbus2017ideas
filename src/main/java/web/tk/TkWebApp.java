@@ -140,7 +140,7 @@ public final class TkWebApp extends TkWrap {
                 "/images/[a-z]+\\.svg",
                 new TkWithType(
                     TkApp.refresh("./src/main/resources"),
-                    "image/svg+xml"
+                    "image/svg+xmlDir"
                 )
             ),
             new FkRegex(

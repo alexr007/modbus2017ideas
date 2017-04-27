@@ -10,7 +10,7 @@ import org.xembly.Xembler;
 public class BIOcoreTest {
     public void test() throws Exception {
         BIOcore core = new BIOcore(Dv.COM24);
-//        core.devices().get("DEV1").xml();
+//        core.devices().get("DEV1").xmlDir();
 
         System.out.println(
             new Xembler(

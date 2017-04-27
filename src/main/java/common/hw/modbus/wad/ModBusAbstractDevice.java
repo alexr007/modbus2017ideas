@@ -8,7 +8,6 @@ import common.hw.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
 import org.xembly.Directives;
 import org.xembly.ImpossibleModificationException;
-import org.xembly.Xembler;
 
 public abstract class ModBusAbstractDevice {
     private final ModBus modbus;
@@ -69,7 +68,7 @@ public abstract class ModBusAbstractDevice {
             .add("data")
             .append(summaryDetailsXml())
             .add("channels")
-            .append(new WAD_DI_Summary(this).xml())
+            .append(new WAD_DI_Summary(this).xmlDir())
             .up();
     }
 

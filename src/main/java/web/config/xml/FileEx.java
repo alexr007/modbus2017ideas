@@ -15,7 +15,7 @@ public class FileEx {
         File file1 = new File("dummy2.xml");
         FileUtils.writeStringToFile(file1, "test2");
 
-        final File file = new File(Files.createTempDir(), "dummy.xml");
+        final File file = new File(Files.createTempDir(), "dummy.xmlDir");
         FileUtils.writeStringToFile(file, "__ideas/test");
 */
     }

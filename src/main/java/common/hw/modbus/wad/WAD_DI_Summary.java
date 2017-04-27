@@ -33,7 +33,7 @@ public class WAD_DI_Summary {
         return map;
     }
 
-    public Directives xml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    public Directives xmlDir() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         Directives dirs = new Directives();
         for (HashMap.Entry<Integer, TypeDI> item : map().entrySet()) {
             dirs.add("channel")

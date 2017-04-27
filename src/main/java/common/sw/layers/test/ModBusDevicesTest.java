@@ -59,7 +59,7 @@ public class ModBusDevicesTest {
                     new COMPortProperties(SerialPort.BAUDRATE_57600)
                 )
             ),
-            new File("devices.xml")
+            new File("devices.xmlDir")
         );
     }
 
