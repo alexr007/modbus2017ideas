@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<summary>
-    <modbusid>0x11</modbusid>
-    <dname>WAD_DI14_BUS</dname>
-    <dtype>Input</dtype>
-    <ccount>15</ccount>
-    <ctype>Digital</ctype>
-    <data>
+<data>
+    <summary>
+        <modbusid>0x11</modbusid>
+        <dname>WAD_DI14_BUS</dname>
+        <dtype>Input</dtype>
+        <ccount>15</ccount>
+        <ctype>Digital</ctype>
+    </summary>
+    <channels>
         <channel>
             <id>1</id>
             <value>CLOSED</value>
@@ -66,67 +68,5 @@
             <id>15</id>
             <value>FAIL</value>
         </channel>
-        <channels>
-            <channel>
-                <id>1</id>
-                <value>CLOSED</value>
-            </channel>
-            <channel>
-                <id>2</id>
-                <value>CLOSED</value>
-            </channel>
-            <channel>
-                <id>3</id>
-                <value>FAIL</value>
-            </channel>
-            <channel>
-                <id>4</id>
-                <value>FAIL</value>
-            </channel>
-            <channel>
-                <id>5</id>
-                <value>OPENED</value>
-            </channel>
-            <channel>
-                <id>6</id>
-                <value>OPENED</value>
-            </channel>
-            <channel>
-                <id>7</id>
-                <value>FAIL</value>
-            </channel>
-            <channel>
-                <id>8</id>
-                <value>FAIL</value>
-            </channel>
-            <channel>
-                <id>9</id>
-                <value>FAIL</value>
-            </channel>
-            <channel>
-                <id>10</id>
-                <value>FAIL</value>
-            </channel>
-            <channel>
-                <id>11</id>
-                <value>FAIL</value>
-            </channel>
-            <channel>
-                <id>12</id>
-                <value>FAIL</value>
-            </channel>
-            <channel>
-                <id>13</id>
-                <value>FAIL</value>
-            </channel>
-            <channel>
-                <id>14</id>
-                <value>FAIL</value>
-            </channel>
-            <channel>
-                <id>15</id>
-                <value>FAIL</value>
-            </channel>
-        </channels>
-    </data>
-</summary>
+    </channels>
+</data>

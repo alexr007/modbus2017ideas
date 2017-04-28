@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data>
+    <summary>
+        <modbusid>0x21</modbusid>
+        <dname>WAD_AIK_BUS</dname>
+        <dtype>Input</dtype>
+        <ccount>4</ccount>
+        <ctype>Analog</ctype>
+    </summary>
+    <channels>
+        <channel>
+            <id>1</id>
+            <value>0</value>
+        </channel>
+        <channel>
+            <id>2</id>
+            <value>120</value>
+        </channel>
+        <channel>
+            <id>3</id>
+            <value>48710</value>
+        </channel>
+        <channel>
+            <id>4</id>
+            <value>56722</value>
+        </channel>
+    </channels>
+</data>

@@ -44,12 +44,12 @@ final public class WAD_DI_BUS extends ModBusAbstractDevice implements WAD_func_c
     }
 
     @Override
-    public String summaryDetails() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return new WAD_DI_Summary(this).txt();
+    public String summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return new WadSummaryDI(this).txt();
     }
 
     @Override
     public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return new WAD_DI_Summary(this).xmlDir();
+        return new WadSummaryDI(this).xmlDir();
     }
 }

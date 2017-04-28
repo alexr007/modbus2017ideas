@@ -1,5 +1,7 @@
 package common.hw.modbus.wad;
 
+import common.sw.common.BytesAsHex;
+import common.sw.common.IntAsHex;
 import common.sw.common.IntToArray;
 import common.hw.modbus.response.*;
 import jssc.SerialPortException;
@@ -36,15 +38,13 @@ final public class WAD_AIK_Channel implements WAD_Channel {
             device.run(device.builder.cmdReadRegister(0x100B, 0x0004)),
             new RqInfo(device.deviceId, RsParsed.cmdRead, 8)
         ).get();
-        return
-            new Values.Multiple(
-                new int[] {
-                    (data[0]<<8)+data[1],
-                    (data[2]<<8)+data[3],
-                    (data[4]<<8)+data[5],
-                    (data[6]<<8)+data[7]
-                }
-            );
+        return new Values.Multiple(
+            new int[]{
+                (data[0] & 0xFF) << 8 | data[1] & 0xFF,
+                (data[2] & 0xFF) << 8 | data[3] & 0xFF,
+                (data[4] & 0xFF) << 8 | data[5] & 0xFF,
+                (data[6] & 0xFF) << 8 | data[7] & 0xFF
+            });
     }
 
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {
@@ -54,7 +54,7 @@ final public class WAD_AIK_Channel implements WAD_Channel {
         ).get();
         return
             new Values.Single(
-                (data[0]<<8)+data[1]
+                (data[0] & 0xFF) << 8 | data[1] & 0xFF
             );
     }
 

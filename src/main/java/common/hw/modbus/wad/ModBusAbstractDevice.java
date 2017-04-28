@@ -37,10 +37,6 @@ public abstract class ModBusAbstractDevice {
             );
     }
 
-    public String summaryDetails() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return "";
-    }
-
     public String summary() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         return Joiner.on("\n").join(
             "Summary:",
@@ -49,8 +45,12 @@ public abstract class ModBusAbstractDevice {
             String.format("Device type: %s", this.properties.portType()),
             String.format("Channels count: %s", this.properties.channels()),
             String.format("Channels type: %s", this.properties.signalType()),
-            summaryDetails()
+            summaryDetailsTxt()
         );
+    }
+
+    public String summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return "";
     }
 
     public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
@@ -59,17 +59,16 @@ public abstract class ModBusAbstractDevice {
 
     public Directives xml() throws ImpossibleModificationException, InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         return new Directives()
+            .add("data")
             .add("summary")
             .add("modbusid").set(new IntAsHex(this.deviceId).toString()).up()
             .add("dname").set(this.getClass().getSimpleName()).up()
             .add("dtype").set(this.properties.portType()).up()
             .add("ccount").set(this.properties.channels()).up()
             .add("ctype").set(this.properties.signalType()).up()
-            .add("data")
-            .append(summaryDetailsXml())
+            .up()
             .add("channels")
-            .append(new WAD_DI_Summary(this).xmlDir())
-            .up();
+            .append(summaryDetailsXml());
     }
 
     public static ModBusAbstractDevice build(ModBus modBus, WadDevType type, int modbusId) {

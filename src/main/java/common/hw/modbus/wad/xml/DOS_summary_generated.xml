@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data>
+    <summary>
+        <modbusid>0x31</modbusid>
+        <dname>WAD_DOS_BUS</dname>
+        <dtype>Output</dtype>
+        <ccount>8</ccount>
+        <ctype>Relay</ctype>
+    </summary>
+    <channels>
+        <channel>
+            <id>1</id>
+            <value>OFF</value>
+        </channel>
+        <channel>
+            <id>2</id>
+            <value>OFF</value>
+        </channel>
+        <channel>
+            <id>3</id>
+            <value>OFF</value>
+        </channel>
+        <channel>
+            <id>4</id>
+            <value>OFF</value>
+        </channel>
+        <channel>
+            <id>5</id>
+            <value>OFF</value>
+        </channel>
+        <channel>
+            <id>6</id>
+            <value>ON</value>
+        </channel>
+        <channel>
+            <id>7</id>
+            <value>OFF</value>
+        </channel>
+        <channel>
+            <id>8</id>
+            <value>OFF</value>
+        </channel>
+    </channels>
+</data>

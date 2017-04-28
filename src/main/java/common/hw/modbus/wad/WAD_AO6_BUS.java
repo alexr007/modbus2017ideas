@@ -1,5 +1,6 @@
 package common.hw.modbus.wad;
 
+import common.hw.modbus.InvalidModBusFunction;
 import common.hw.modbus.ModBus;
 import common.hw.modbus.device.DeviceProperties;
 import common.hw.modbus.device.PortType;
@@ -9,6 +10,7 @@ import common.hw.modbus.response.RqInfo;
 import common.hw.modbus.response.RsAnalyzed;
 import common.hw.modbus.response.RsParsed;
 import jssc.SerialPortException;
+import org.xembly.Directives;
 
 /**
  * Created by alexr on 22.01.2017.
@@ -31,5 +33,15 @@ final public class WAD_AO6_BUS extends ModBusAbstractDevice implements WAD_func_
     @Override
     public WAD_Channel channel(int chan) {
         return new WAD_AO6_Channel(chan, this);
+    }
+
+    @Override
+    public String summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return new WadSummaryAO(this).txt();
+    }
+
+    @Override
+    public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+        return new WadSummaryAO(this).xmlDir();
     }
 }

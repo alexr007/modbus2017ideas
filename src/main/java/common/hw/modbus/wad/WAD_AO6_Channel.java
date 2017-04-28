@@ -35,12 +35,12 @@ final public class WAD_AO6_Channel implements WAD_Channel {
         return
             new Values.Multiple(
                 new int[] {
-                    (data[0]<<8)+data[1],
-                    (data[2]<<8)+data[3],
-                    (data[4]<<8)+data[5],
-                    (data[6]<<8)+data[7],
-                    (data[8]<<8)+data[9],
-                    (data[10]<<8)+data[11]
+                    (data[0] & 0xFF) << 8 | data[1] & 0xFF,
+                    (data[2] & 0xFF) << 8 | data[3] & 0xFF,
+                    (data[4] & 0xFF) << 8 | data[5] & 0xFF,
+                    (data[6] & 0xFF) << 8 | data[7] & 0xFF,
+                    (data[8] & 0xFF) << 8 | data[9] & 0xFF,
+                    (data[10] & 0xFF) << 8 | data[11] & 0xFF,
                 }
             );
     }
@@ -52,7 +52,7 @@ final public class WAD_AO6_Channel implements WAD_Channel {
         ).get();
         return
             new Values.Single(
-                (data[0]<<8)+data[1]
+                (data[0] & 0xFF) << 8 | data[1] & 0xFF
             );
     }
 
