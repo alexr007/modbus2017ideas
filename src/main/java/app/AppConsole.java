@@ -32,7 +32,7 @@ public class AppConsole implements Runnable{
                     e.printStackTrace();
                 }
             });
-        finish();
+        //finish();
 /*
         try {
             ArrayList<ModBusAbstractDevice> list = new ArrayList<ModBusAbstractDevice>(){{

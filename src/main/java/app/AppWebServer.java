@@ -1,6 +1,10 @@
 package app;
 
+import app.web.TkApp;
 import common.sw.layers.BIOcore;
+import org.takes.http.Exit;
+import org.takes.http.FtCli;
+import java.io.IOException;
 
 /**
  * Created by alexr on 01.05.2017.
@@ -14,9 +18,11 @@ public class AppWebServer implements Runnable {
 
     @Override
     public void run() {
-/*
-        System.out.println("T2:WebServer Thread Started.");
-        System.out.println("T2:WebServer Thread Finished.");
-*/
+        String commandLine = "--port=8080";
+        try {
+            new FtCli(new TkApp(core), commandLine).start(Exit.NEVER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

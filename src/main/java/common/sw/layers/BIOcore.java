@@ -62,12 +62,20 @@ public class BIOcore {
         );
     }
 
-    public ModBusAbstractDevice dev(CharSequence name) throws Exception {
-        return devices.get(name);
+    public ModBusAbstractDevice dev(CharSequence name) {
+        try {
+            return devices.get(name);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(String.format("Module Name NotFound:%s",name));
+        }
     }
 
     public WAD_Channel chan(CharSequence name) throws Exception {
-        return channels.get(name);
+        try {
+            return channels.get(name);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(String.format("Channel Name NotFound:%s",name));
+        }
     }
 
     public Set<CharSequence> devList() {
