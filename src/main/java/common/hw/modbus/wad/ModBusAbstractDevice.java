@@ -10,6 +10,7 @@ import org.xembly.Directives;
 import org.xembly.ImpossibleModificationException;
 
 public abstract class ModBusAbstractDevice {
+    private final String ERROR_MESSAGE_MODBUS = "Something ModBus error occurred";
     private final ModBus modbus;
     protected final int deviceId;
     protected final ModBusRequestBuilder builder;
@@ -38,23 +39,23 @@ public abstract class ModBusAbstractDevice {
     }
 
     public String summary() {
-        String ERROR_MESSAGE = "Something ModBus error occurred";
         String ret;
-        try {
-            ret = Joiner.on("\n").join(
-                "Summary:",
-                String.format("ModBus id: %s", new IntAsHex(this.deviceId)),
-                String.format("Device name: %s", this.getClass().getSimpleName()),
-                String.format("Device type: %s", this.properties.portType()),
-                String.format("Channels count: %s", this.properties.channels()),
-                String.format("Channels type: %s", this.properties.signalType()),
-                summaryDetailsTxt()
+        String s = Joiner.on("\n").join(
+            "Summary:",
+            String.format("ModBus id: %s", new IntAsHex(this.deviceId)),
+            String.format("Device name: %s", this.getClass().getSimpleName()),
+            String.format("Device type: %s", this.properties.portType()),
+            String.format("Channels count: %s", this.properties.channels()),
+            String.format("Channels type: %s", this.properties.signalType())
             );
+
+        try {
+            ret = summaryDetailsTxt();
         } catch (Exception e) {
-            ret = ERROR_MESSAGE;
+            ret = ERROR_MESSAGE_MODBUS+"\n";
             //e.printStackTrace();
         }
-        return ret;
+        return Joiner.on("\n").join(s, ret);
     }
 
     public String summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
@@ -65,8 +66,9 @@ public abstract class ModBusAbstractDevice {
         return new Directives();
     }
 
-    public Directives xml() throws ImpossibleModificationException, InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return new Directives()
+    public Directives xml() {
+        // основное
+        Directives dirs = new Directives()
             .add("data")
             .add("summary")
             .add("modbusid").set(new IntAsHex(this.deviceId).toString()).up()
@@ -74,9 +76,17 @@ public abstract class ModBusAbstractDevice {
             .add("dtype").set(this.properties.portType()).up()
             .add("ccount").set(this.properties.channels()).up()
             .add("ctype").set(this.properties.signalType()).up()
-            .up()
-            .add("channels")
-            .append(summaryDetailsXml());
+            .up();
+        // детали
+        Directives details;
+        try {
+            details = new Directives().add("channels").append(summaryDetailsXml());
+        } catch (Exception e) {
+            details = new Directives().add("error").set(ERROR_MESSAGE_MODBUS).up()
+            .add("message").set(e.getMessage()).up();
+            //e.printStackTrace();
+        }
+        return dirs.append(details);
     }
 
     public static ModBusAbstractDevice build(ModBus modBus, WadDevType type, int modbusId) {

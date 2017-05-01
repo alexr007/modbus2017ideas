@@ -18,21 +18,22 @@ public class BIOcoreTest {
         BIOcore core = new BIOcore(Dv.COM26);
 
         ArrayList<ModBusAbstractDevice> list = new ArrayList<ModBusAbstractDevice>(){{
-            add(core.dev("DEV11"));
+            //add(core.dev("DEV11"));
             add(core.dev("DEV21"));
-            add(core.dev("DEV31"));
-            add(core.dev("DEV41"));
+            //add(core.dev("DEV31"));
+            //add(core.dev("DEV41"));
         }};
-
 /*
-        System.out.println(
-            new Xembler(
-                dev.xml()
-            ).xml()
+        list.forEach(item ->
+            System.out.println(item.xml())
         );
 */
         list.forEach(item ->
-                System.out.println(item.summary())
+                System.out.println(
+                    new Xembler(
+                    item.xml()
+                    ).xmlQuietly()
+                )
         );
 
 /*
