@@ -37,16 +37,24 @@ public abstract class ModBusAbstractDevice {
             );
     }
 
-    public String summary() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return Joiner.on("\n").join(
-            "Summary:",
-            String.format("ModBus id: %s", new IntAsHex(this.deviceId)),
-            String.format("Device name: %s", this.getClass().getSimpleName()),
-            String.format("Device type: %s", this.properties.portType()),
-            String.format("Channels count: %s", this.properties.channels()),
-            String.format("Channels type: %s", this.properties.signalType()),
-            summaryDetailsTxt()
-        );
+    public String summary() {
+        String ERROR_MESSAGE = "Something ModBus error occurred";
+        String ret;
+        try {
+            ret = Joiner.on("\n").join(
+                "Summary:",
+                String.format("ModBus id: %s", new IntAsHex(this.deviceId)),
+                String.format("Device name: %s", this.getClass().getSimpleName()),
+                String.format("Device type: %s", this.properties.portType()),
+                String.format("Channels count: %s", this.properties.channels()),
+                String.format("Channels type: %s", this.properties.signalType()),
+                summaryDetailsTxt()
+            );
+        } catch (Exception e) {
+            ret = ERROR_MESSAGE;
+            //e.printStackTrace();
+        }
+        return ret;
     }
 
     public String summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {

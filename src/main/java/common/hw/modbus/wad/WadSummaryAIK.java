@@ -17,13 +17,12 @@ final public class WadSummaryAIK  extends WadSummaryBase {
     }
 
     @Override
-    protected HashMap<Integer, String> map () throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    protected HashMap<Integer, Object> map () throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         Values ch_values = device.channel(0).get();
-        HashMap<Integer, String> map = new HashMap<>();
-        for (int key=1; key<=ch_values.count(); key++) {
-            int val = ch_values.get(key);
-            map.put(key, Integer.toString(val));
-        }
-        return map;
+        return new HashMap<Integer, Object>() {{
+            for (int key=1; key<=ch_values.count(); key++) {
+                put(key, new ValuePresentedAIK(ch_values.get(key)));
+            }
+        }};
     }
 }

@@ -3,9 +3,10 @@ package common.sw.layers;
 import common.hw.comport.COMPort;
 import common.hw.comport.COMPortProperties;
 import common.hw.modbus.ModBus;
+import common.hw.modbus.wad.ModBusAbstractDevice;
+import common.hw.modbus.wad.WAD_Channel;
 import common.hw.modbus.wad.WadDevType;
 import constants.Ch;
-import constants.Dv;
 import constants.Id;
 import jssc.SerialPort;
 import jssc.SerialPortException;
@@ -57,12 +58,12 @@ public class BIOcore {
         );
     }
 
-    public ModBusDevices devices() {
-        return devices;
+    public ModBusAbstractDevice dev(CharSequence name) throws Exception {
+        return devices.get(name);
     }
 
-    public ModBusChannels channels() {
-        return channels;
+    public WAD_Channel chan(CharSequence name) throws Exception {
+        return channels.get(name);
     }
 
     public ModBus modBus() {

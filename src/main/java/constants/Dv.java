@@ -8,6 +8,7 @@ package constants;
 public class Dv {
     public static final String COM24 = "COM24";
     public static final String COM25 = "COM25";
+    public static final String COM26 = "COM26";
 
     // WAD-DOS-BUS (8 channel per device)
     public static final String DOS1 = "DOS1";
