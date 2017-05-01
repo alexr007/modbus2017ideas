@@ -1,5 +1,6 @@
 package app;
 
+import common.hw.comport.COMPortList;
 import common.sw.layers.BIOcore;
 import jssc.SerialPortException;
 
@@ -23,6 +24,7 @@ public class AppConsole implements Runnable{
 
     @Override
     public void run() {
+        System.out.println(new COMPortList());
             core.devList().forEach(item -> {
                 try {
                     System.out.println(core.dev(item).summary());

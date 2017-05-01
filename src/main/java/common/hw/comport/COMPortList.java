@@ -13,6 +13,7 @@ import java.util.Collection;
 public class COMPortList {
     private final String PREFIX = ":[";
     private final String POSTFIX = "]";
+    private final String DELIM = ", ";
     private boolean ready = false;
     private final Collection<CharSequence> list = new ArrayList<>();
 
@@ -29,8 +30,7 @@ public class COMPortList {
     }
 
     public String toString() {
-        return Joiner.on(", ").join(
-            count(),PREFIX,get(),POSTFIX);
+        return Joiner.on("").join(count(),PREFIX,Joiner.on(DELIM).join(get()),POSTFIX);
     }
 
     private void doRead() {
