@@ -13,6 +13,7 @@ import jssc.SerialPortException;
 import org.javatuples.Triplet;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by alexr on 27.04.2017.
@@ -54,6 +55,9 @@ public class BIOcore {
                 add(new Triplet<>("CH6","DEV11", Ch.n6));
                 add(new Triplet<>("CH7","DEV11", Ch.n7));
                 add(new Triplet<>("CH8","DEV11", Ch.n8));
+
+                add(new Triplet<>("CH211","DEV21", Ch.n1));
+                add(new Triplet<>("CH212","DEV21", Ch.n2));
             }}
         );
     }
@@ -64,6 +68,10 @@ public class BIOcore {
 
     public WAD_Channel chan(CharSequence name) throws Exception {
         return channels.get(name);
+    }
+
+    public Set<CharSequence> devList() {
+        return devices.list();
     }
 
     public ModBus modBus() {

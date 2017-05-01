@@ -1,17 +1,22 @@
 package common.hw.comport;
 
+import com.google.common.base.Joiner;
 import jssc.SerialPortList;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Created by alexr on 02.12.2016.
  */
 public class COMPortList {
+    private final String PREFIX = ":[";
+    private final String POSTFIX = "]";
+    private boolean ready = false;
+    private final Collection<CharSequence> list = new ArrayList<>();
 
-    private SerialPortList portList = new SerialPortList();;
-    private boolean readed = false;
-    private String[] list = null;
-
-    public String[] values()
+    public Collection<CharSequence> get()
     {
         doRead();
         return list;
@@ -20,31 +25,18 @@ public class COMPortList {
     public int count()
     {
         doRead();
-        return list.length;
+        return list.size();
     }
 
     public String toString() {
-        doRead();
-        String prefix = "";
-        StringBuilder sb = new StringBuilder();
-        sb.append(count());
-        sb.append(":[");
-
-        for (String s : values()) {
-            sb.append(prefix);
-            prefix = ", ";
-            sb.append(s);
-        }
-
-        sb.append("]");
-        return sb.toString();
-
+        return Joiner.on(", ").join(
+            count(),PREFIX,get(),POSTFIX);
     }
 
-    private void doRead()
-    {
-        if (!readed) {
-            list = portList.getPortNames();
+    private void doRead() {
+        if (!ready) {
+            list.addAll(Arrays.asList(SerialPortList.getPortNames()));
+            ready = true;
         }
     }
 

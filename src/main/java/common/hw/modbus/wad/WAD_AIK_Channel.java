@@ -90,5 +90,4 @@ final public class WAD_AIK_Channel implements WAD_Channel {
     public WadDevType type() {
         return WadDevType.AIK;
     }
-
 }

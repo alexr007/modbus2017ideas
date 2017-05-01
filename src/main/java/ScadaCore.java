@@ -1,33 +1,40 @@
+import app.AppConsole;
+import app.AppDecision;
+import app.AppWebServer;
 import app.FindComPorts;
 import common.Timed;
+import common.sw.layers.BIOcore;
 import common.sw.layers.test.BIOcoreTest;
 import common.sw.layers.test.ModBusChannelsTest;
 import common.sw.layers.test.ModBusDevicesTest;
+import constants.Dv;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class ScadaCore {
     public static void main(String[] args) throws Exception {
-        Timed t = new Timed();
-        new BIOcoreTest().test();
-        t.print();
-        //new FindComPorts().run();
-        //new ModBusDevicesTest().test();
-        //new ModBusChannelsTest().test();
-        //new ChanValueTest().test2();
-        //new DecisionTest().test();
-        //new Test_DOS_Timing().run(args[0]);
-        //new HashMapTest().test();
-        //new ValuesReaderTest().test1();
-        //new StringFormat1().print();
+        BIOcore core = new BIOcore(Dv.COM26);
 
-/*
-        if (args.length < 1 ) {
-            System.out.println(new AppDefaultMessage().toString());
-            new FindComPorts().run();
-        } else {
-            new Test_DOS_Timing().run(args[0]);
-            //new Test_DOS_31().run(args[0]);
-           // new Test_WebServer().main(args);
-        }
-*/
+        new ArrayList<Runnable>() {{
+            add(new AppConsole(core));
+            add(new AppDecision(core));
+            add(new AppWebServer(core));
+            ArrayList<Thread> th = new ArrayList<Thread>();
+            forEach(r -> th.add(new Thread(r)));
+            th.forEach(t -> t.start());
+            System.out.println("All threads started");
+            th.forEach(t -> {
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            System.out.println("All threads finished");
+        }};
+
     }
 }

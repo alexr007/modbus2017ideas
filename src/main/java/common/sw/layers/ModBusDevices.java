@@ -9,6 +9,7 @@ import org.javatuples.Triplet;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Created by alexr on 10.02.2017.
@@ -37,7 +38,7 @@ public class ModBusDevices {
         }
         ModBusAbstractDevice device = ModBusAbstractDevice.build(modBus, type, modbusId);
         // эта хрень не работает
-        // TODO: переписать equals & hashcode
+        // TODO: переписать equals & hashCode что бы избежать ошибок при конфигурировании
         if (devices.containsValue(device)) {
             throw new Exception(
                 String.format("Duplicate ModBus Device:%s id:%s",
@@ -71,5 +72,9 @@ public class ModBusDevices {
                 v.properties.toString()
             )));
         return sb.toString();
+    }
+
+    public Set<CharSequence> list() {
+        return devices.keySet();
     }
 }

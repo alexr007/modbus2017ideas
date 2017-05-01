@@ -53,7 +53,7 @@ public abstract class ModBusAbstractDevice {
             ret = summaryDetailsTxt();
         } catch (Exception e) {
             ret = ERROR_MESSAGE_MODBUS+"\n";
-            //e.printStackTrace();
+            e.printStackTrace();
         }
         return Joiner.on("\n").join(s, ret);
     }
@@ -89,8 +89,8 @@ public abstract class ModBusAbstractDevice {
         return dirs.append(details);
     }
 
-    public static ModBusAbstractDevice build(ModBus modBus, WadDevType type, int modbusId) {
-        ModBusAbstractDevice device = null;
+    public static ModBusAbstractDevice build(ModBus modBus, WadDevType type, int modbusId) throws Exception {
+        ModBusAbstractDevice device;
         switch (type) {
             case AIK: device = new WAD_AIK_BUS(modBus, modbusId);
                 break;
@@ -104,9 +104,8 @@ public abstract class ModBusAbstractDevice {
                 break;
             case DOS: device = new WAD_DOS_BUS(modBus, modbusId);
                 break;
-            default: break;
+            default: throw new Exception(String.format("Unknown ModBus Type: %s", type));
         }
         return device;
     }
-
 }
