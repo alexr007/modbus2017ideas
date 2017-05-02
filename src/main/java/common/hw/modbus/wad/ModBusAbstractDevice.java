@@ -7,7 +7,6 @@ import common.hw.modbus.device.DeviceProperties;
 import common.hw.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
 import org.xembly.Directives;
-import org.xembly.ImpossibleModificationException;
 
 public abstract class ModBusAbstractDevice {
     private final String ERROR_MESSAGE_MODBUS = "Something ModBus error occurred";
@@ -15,11 +14,17 @@ public abstract class ModBusAbstractDevice {
     protected final int deviceId;
     protected final ModBusRequestBuilder builder;
     public DeviceProperties properties;
+    private final WadDevType devType;
 
-    public ModBusAbstractDevice(ModBus modbus, int deviceId) {
+    public ModBusAbstractDevice(ModBus modbus, int deviceId, WadDevType devType) {
         this.modbus = modbus;
         this.deviceId = deviceId;
         this.builder = new ModBusRequestBuilder(deviceId);
+        this.devType = devType;
+    }
+
+    public WadDevType type() {
+        return devType;
     }
 
     public abstract WAD_Channel channel(int chan);
@@ -92,17 +97,17 @@ public abstract class ModBusAbstractDevice {
     public static ModBusAbstractDevice build(ModBus modBus, WadDevType type, int modbusId) throws Exception {
         ModBusAbstractDevice device;
         switch (type) {
-            case AIK: device = new WAD_AIK_BUS(modBus, modbusId);
+            case AIK: device = new WAD_AIK_BUS(modBus, modbusId, type);
                 break;
-            case AO: device = new WAD_AO_BUS(modBus, modbusId);
+            case AO: device = new WAD_AO_BUS(modBus, modbusId, type);
                 break;
-            case AO6: device = new WAD_AO6_BUS(modBus, modbusId);
+            case AO6: device = new WAD_AO6_BUS(modBus, modbusId, type);
                 break;
-            case DI: device = new WAD_DI_BUS(modBus, modbusId);
+            case DI: device = new WAD_DI_BUS(modBus, modbusId, type);
                 break;
-            case DI14: device = new WAD_DI14_BUS(modBus, modbusId);
+            case DI14: device = new WAD_DI14_BUS(modBus, modbusId, type);
                 break;
-            case DOS: device = new WAD_DOS_BUS(modBus, modbusId);
+            case DOS: device = new WAD_DOS_BUS(modBus, modbusId, type);
                 break;
             default: throw new Exception(String.format("Unknown ModBus Type: %s", type));
         }

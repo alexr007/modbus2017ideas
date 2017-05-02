@@ -4,6 +4,7 @@ import common.hw.comport.COMPort;
 import common.hw.comport.COMPortProperties;
 import common.hw.modbus.ModBus;
 import common.hw.modbus.wad.WAD_DOS_BUS;
+import common.hw.modbus.wad.WadDevType;
 import jssc.SerialPortException;
 
 import java.util.concurrent.CountDownLatch;
@@ -23,7 +24,7 @@ public class Test_DOS_31 {
         long delta;
         long millis = System.currentTimeMillis();
 
-        WAD_DOS_BUS dos = new WAD_DOS_BUS(modBus, 0x31);
+        WAD_DOS_BUS dos = new WAD_DOS_BUS(modBus, 0x31, WadDevType.DOS);
         CountDownLatch cdl = new CountDownLatch(1);
         new Thread(new Test_Thread_DOS(dos, cdl)).start();
         cdl.await();

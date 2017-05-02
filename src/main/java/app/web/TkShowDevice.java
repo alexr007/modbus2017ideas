@@ -1,19 +1,14 @@
 package app.web;
 
+import app.web.test.ParsedDeviceDataTest;
 import com.google.common.base.Joiner;
 import common.sw.layers.BIOcore;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.facets.fork.TkRegex;
-import org.takes.misc.Href;
-import org.takes.rq.RqHref;
 import org.takes.rs.RsText;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by alexr on 01.05.2017.
@@ -27,9 +22,23 @@ public class TkShowDevice implements Take {
 
     @Override
     public Response act(Request request) throws IOException {
-        Href href = new RqHref.Base(request).href();
-        String[] split = href.toString().split("/");
-        String s = split[split.length - 1];
-        return new RsText(core.dev(s).summary());
+        ParsedDeviceDataTest test = new ParsedDeviceDataTest(request);
+        String s = "";
+        String req = "";
+        try {
+            test.testDeviceWrite(core);
+            s = test.testDeviceRead(core);
+            req = test.testReadQuery();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new RsText(
+            Joiner.on("\n").join(
+                req,
+                s
+            )
+        );
     }
 }

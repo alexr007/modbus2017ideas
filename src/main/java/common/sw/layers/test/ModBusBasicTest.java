@@ -8,6 +8,7 @@ import common.hw.modbus.ModBus;
 import common.hw.modbus.response.InvalidModBusResponse;
 import common.hw.modbus.wad.WAD_AO_BUS;
 import common.hw.modbus.wad.WAD_DOS_BUS;
+import common.hw.modbus.wad.WadDevType;
 import jssc.SerialPortException;
 
 /**
@@ -26,8 +27,8 @@ public class ModBusBasicTest {
         long delta;
         long millis = System.currentTimeMillis();
 
-        WAD_DOS_BUS dos = new WAD_DOS_BUS(modBus, 0x11);
-        WAD_AO_BUS ao = new WAD_AO_BUS(modBus, 0x21);
+        WAD_DOS_BUS dos = new WAD_DOS_BUS(modBus, 0x11, WadDevType.DOS);
+        WAD_AO_BUS ao = new WAD_AO_BUS(modBus, 0x21, WadDevType.AO);
 
         new PH("WAD-DOS-BUS temperature",dos.temperature());
         dos.channel(1).off();

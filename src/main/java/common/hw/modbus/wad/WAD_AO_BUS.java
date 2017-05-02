@@ -13,8 +13,8 @@ import org.xembly.Directives;
  * Created by alexr on 22.01.2017.
  */
 final public class WAD_AO_BUS extends ModBusAbstractDevice implements WAD_func_channel, WAD_func_temperature {
-    public WAD_AO_BUS(ModBus modbus, int deviceId) {
-        super(modbus, deviceId);
+    public WAD_AO_BUS(ModBus modbus, int deviceId, WadDevType type) {
+        super(modbus, deviceId, type);
         properties = new DeviceProperties(SignalType.Analog, PortType.Output, 4);
     }
 

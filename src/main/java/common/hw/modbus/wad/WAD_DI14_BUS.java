@@ -21,8 +21,8 @@ final public class WAD_DI14_BUS extends ModBusAbstractDevice implements WAD_func
      * protected final int deviceId;
      *
      */
-    public WAD_DI14_BUS(ModBus modbus, int deviceId) {
-        super(modbus, deviceId);
+    public WAD_DI14_BUS(ModBus modbus, int deviceId, WadDevType type) {
+        super(modbus, deviceId, type);
         properties = new DeviceProperties(SignalType.Digital, PortType.Input, 15);
     }
 

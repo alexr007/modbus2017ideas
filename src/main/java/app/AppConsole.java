@@ -3,6 +3,12 @@ package app;
 import common.hw.comport.COMPortList;
 import common.sw.layers.BIOcore;
 import jssc.SerialPortException;
+import org.takes.misc.Href;
+import org.takes.rq.RqFake;
+import org.takes.rq.RqHref;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Created by alexr on 01.05.2017.
@@ -24,14 +30,35 @@ public class AppConsole implements Runnable{
 
     @Override
     public void run() {
+/*
+        RqFake fake = new RqFake(
+            Arrays.asList(
+                "GET /hello?a=3&b=7&c&d=9%28x%29&ff",
+                "Host: a.example.com",
+                "Content-type: text/xml"
+            ),
+            ""
+        );
+        try {
+            String d = new RqHref.Base(fake).href().param("d").iterator().next();
+            String c = new RqHref.Base(fake).href().param("c").iterator().next();
+            String e = new RqHref.Base(fake).href().param("ff").iterator().next();
+            System.out.println(c);
+            System.out.println(d);
+            System.out.println(e);
+            //d.forEach(i-> System.out.println(i));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+*/
+
+/*
         System.out.println(new COMPortList());
             core.devList().forEach(item -> {
-                try {
                     System.out.println(core.dev(item).summary());
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            });
+            );
+*/
         //finish();
 /*
         try {
