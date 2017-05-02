@@ -30,7 +30,8 @@ public class ParsedDeviceDataTest {
                 parsed.path(),
                 parsed.device(),
                 parsed.channel(),
-                new ValueDOS(parsed.value()).val());
+                parsed.value()
+            );
     }
 
     public String testDeviceRead(final BIOcore core) throws IOException {
@@ -40,7 +41,7 @@ public class ParsedDeviceDataTest {
     public void testDeviceWrite(final BIOcore core) throws IOException, InvalidModBusFunction, SerialPortException {
         if (parsed.hasEnoughParams()){
             ModBusAbstractDevice dev = core.dev(parsed.device());
-            dev.channel(parsed.channel())
+            dev.channel(Integer.valueOf(parsed.channel()))
                 .set( new ValueValidated(dev.type()).value(parsed.value()) );
         }
     }

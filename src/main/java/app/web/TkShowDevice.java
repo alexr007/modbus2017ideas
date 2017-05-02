@@ -23,21 +23,20 @@ public class TkShowDevice implements Take {
     @Override
     public Response act(Request request) throws IOException {
         ParsedDeviceDataTest test = new ParsedDeviceDataTest(request);
-        String s = "";
-        String req = "";
+        String devSummary = "";
+        String query = "";
         try {
             test.testDeviceWrite(core);
-            s = test.testDeviceRead(core);
-            req = test.testReadQuery();
-
+            devSummary = test.testDeviceRead(core);
+            query = test.testReadQuery();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return new RsText(
             Joiner.on("\n").join(
-                req,
-                s
+                devSummary,
+                query
             )
         );
     }

@@ -24,7 +24,12 @@ public class ParsedDeviceData {
 
     // request w/o params: http://127.0.0.1:8080//config/show/DEV31
     public String noparam() throws IOException {
-        return String.format("%s%s", home(), path());
+        String home = home();
+        String path = path();
+        if (home.endsWith("/")&&path.startsWith("/")) {
+            home = home.substring(0, home.length() - 1);
+        }
+        return String.format("%s%s", home, path);
     }
 
     // request home: http://127.0.0.1:8080/
@@ -43,29 +48,26 @@ public class ParsedDeviceData {
         return splitted[splitted.length - 1];
     }
 
+    // param
+    public String param(CharSequence name) throws IOException {
+        return
+            hrefSmart.single(name,"DEF");
+    }
+
+    // has Enough Params to Write to Device
     public boolean hasEnoughParams() throws IOException {
         return
             (!param("c").equals("DEF"))&&
             (!param("v").equals("DEF"));
     }
 
-    // param
-    public String param(CharSequence name) throws IOException {
-        return
-            //href().param(name).iterator().next();
-            hrefSmart.single(name,"DEF");
-    }
-
     // channel c=8
-    public int channel() throws IOException {
-        return Integer.valueOf(
-            param("c")
-        );
+    public String channel() throws IOException {
+        return param("c");
     }
 
     // value v=on
     public String value() throws IOException {
-        return
-            param("v");
+        return param("v");
     }
 }
