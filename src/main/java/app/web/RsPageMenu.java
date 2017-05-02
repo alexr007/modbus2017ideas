@@ -15,16 +15,15 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * Created by alexr on 01.05.2017.
+ * Created by alexr on 02.05.2017.
  */
-public final class RsPage extends RsWrap {
-
-    public RsPage(final String xsl, final Request req, final XeSource... src) throws IOException {
+public class RsPageMenu extends RsWrap {
+    public RsPageMenu(final String xsl, final Request req, final XeSource... src) throws IOException {
         this(xsl, req, Arrays.asList(src));
     }
 
-    public RsPage(final String xsl, final Request req,  final Iterable<XeSource> src) throws IOException {
-        super(RsPage.make(xsl, req, src));
+    public RsPageMenu(final String xsl, final Request req,  final Iterable<XeSource> src) throws IOException {
+        super(RsPageMenu.make(xsl, req, src));
     }
 
     private static Response make(final String xsl, final Request req, final Iterable<XeSource> src) throws IOException {
@@ -36,7 +35,7 @@ public final class RsPage extends RsWrap {
                 new XeChain(src),
                 new XeLinkHome(req),
                 new XeLinkSelf(req),
-                new XeLink("config", (new RqHref.Smart(new RqHref.Base(req))).home()+"config", "text/xml"),
+                new XeLink("show", (new RqHref.Smart(new RqHref.Base(req))).home()+"config/show", "text/xml"),
                 new XeMillis(true),
                 new XeDate(),
                 new XeSla(),

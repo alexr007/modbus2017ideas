@@ -20,27 +20,26 @@ import java.util.ArrayList;
  * Created by alexr on 01.05.2017.
  */
 final class TkIndex implements Take {
+    private final BIOcore core;
 
-    /**
-     * Base.
-     */
-    private final transient BIOcore core;
-
-    /**
-     * Ctor.
-     * @param bse Base
-     */
     TkIndex(final BIOcore core) {
         this.core = core;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
+/*
         new FileOutputStream(new File("ABCD")) {{
            write(32);
            close();
         }};
 
+*/
+        return new RsPage(
+            "/xsl/index.xsl",
+            req);
+
+/*
         return new RsPage(
             "/xsl/index.xsl",
             req,
@@ -57,6 +56,7 @@ final class TkIndex implements Take {
                 )
             )
         );
+*/
     }
 
     /**

@@ -54,7 +54,7 @@ public class TkApp extends TkWrap {
                                         ),
                                         // CSS
                                         new FkRegex(
-                                            "/css/[a-z\\-]+\\.css",
+                                            "/css/[a-z\\-\\.]+\\.css",
                                             new TkWithType(
                                                 new TkFiles("."), // в конструкторе папка где скать файлы
                                                 "text/css"
