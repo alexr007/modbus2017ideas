@@ -1,12 +1,15 @@
 package app.web;
 
 import common.sw.layers.BIOcore;
+import org.javatuples.Triplet;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.facets.fork.TkRegex;
-import org.takes.rs.RsText;
-
+import org.takes.rs.xe.XeAppend;
+import org.takes.rs.xe.XeDirectives;
+import org.takes.rs.xe.XeSource;
+import org.takes.rs.xe.XeTransform;
+import org.xembly.Directives;
 import java.io.IOException;
 
 /**
@@ -21,6 +24,27 @@ public class TkShowDeviceList implements Take {
 
     @Override
     public Response act(Request request) throws IOException {
-        return new RsText(core.devList().toString());
+        return new RsPageList(
+            "/xsl/list.xsl",
+            request,
+            new XeAppend(
+                "devices",
+                new XeTransform<>(
+                    core.devListTriplet(),
+                    TkShowDeviceList::source
+                )
+            )
+        );
+    }
+
+    private static XeSource source(final Triplet triplet) throws IOException {
+        return new XeDirectives(
+            new Directives()
+                .add("device")
+                .add("name").set(triplet.getValue0()).up()
+                .add("type").set(triplet.getValue1()).up()
+                .add("id").set(triplet.getValue2()).up()
+                .up()
+        );
     }
 }

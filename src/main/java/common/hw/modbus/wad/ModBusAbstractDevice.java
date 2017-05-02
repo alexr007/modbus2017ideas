@@ -27,6 +27,10 @@ public abstract class ModBusAbstractDevice {
         return devType;
     }
 
+    public int id() {
+        return deviceId;
+    }
+
     public abstract WAD_Channel channel(int chan);
     public abstract int temperature() throws SerialPortException, InvalidModBusResponse, InvalidModBusFunction;
 

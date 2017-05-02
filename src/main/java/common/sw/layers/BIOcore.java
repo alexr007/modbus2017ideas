@@ -82,6 +82,10 @@ public class BIOcore {
         return devices.list();
     }
 
+    public ArrayList<Triplet> devListTriplet() {
+        return devices.triplet();
+    }
+
     public ModBus modBus() {
         return modBus;
     }

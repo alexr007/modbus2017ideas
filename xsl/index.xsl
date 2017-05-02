@@ -9,13 +9,12 @@
             <xsl:text>BIO scada</xsl:text>
         </title>
     </xsl:template>
-    <xsl:variable name="max" select="25"/>
     <xsl:template match="page" mode="body">
         <p>
             <xsl:text>BIOsmarTEX Plant Controller</xsl:text>
         </p>
         <a href="{links/link[@rel='config']/@href}">
-        config
+            config
         </a>
     </xsl:template>
 </xsl:stylesheet>

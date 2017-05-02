@@ -77,4 +77,12 @@ public class ModBusDevices {
     public Set<CharSequence> list() {
         return devices.keySet();
     }
+
+    public ArrayList<Triplet> triplet() {
+        ArrayList<Triplet> list = new ArrayList<>();
+        devices.forEach((key, dev) -> {
+            list.add(new Triplet<CharSequence, WadDevType, CharSequence>(key, dev.type(), new IntAsHex(dev.id()).toString()));
+        });
+        return list;
+    }
 }

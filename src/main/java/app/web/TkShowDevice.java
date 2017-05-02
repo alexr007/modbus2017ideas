@@ -34,10 +34,9 @@ public class TkShowDevice implements Take {
         }
 
         return new RsText(
-            Joiner.on("\n").join(
-                devSummary,
-                query
-            )
+            //Joiner.on("\n").join(
+                devSummary
+                //,query)
         );
     }
 }
