@@ -1,4 +1,4 @@
-package tests.some;
+package app;
 
 import common.hw.comport.COMPort;
 import common.hw.comport.COMPortProperties;
@@ -13,8 +13,14 @@ import jssc.SerialPortException;
 /**
  * Created by alexr on 11.04.2017.
  */
-public class Test_DOS_Timing {
-    public void run(String portName) throws SerialPortException, InterruptedException {
+public class AppConsoleSpeedTest {
+    private final String portName;
+
+    public AppConsoleSpeedTest(String portName) {
+        this.portName = portName;
+    }
+
+    public void run() throws SerialPortException, InterruptedException {
         ModBus modBus = new ModBus(
             new COMPort(
                 portName,
