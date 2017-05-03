@@ -35,4 +35,6 @@ public class ScadaCore {
             }};
         }
     }
+    // todo timeout wile send packed to module;
+
 }

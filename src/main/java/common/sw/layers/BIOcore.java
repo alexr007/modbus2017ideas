@@ -37,15 +37,15 @@ public class BIOcore {
             new ArrayList<Triplet<String, WadDevType, Integer>>() {{
                 // just device definition
                 add(new Triplet<>("AIK21", WadDevType.AIK, Id.x21));
-                add(new Triplet<>("AIK22", WadDevType.AIK, Id.x22));
+                //add(new Triplet<>("AIK22", WadDevType.AIK, Id.x22));
                 add(new Triplet<>("DI11", WadDevType.DI14, Id.x11));
                 add(new Triplet<>("DI12", WadDevType.DI14, Id.x12));
                 add(new Triplet<>("DI13", WadDevType.DI14, Id.x13));
                 add(new Triplet<>("DI14", WadDevType.DI14, Id.x14));
                 add(new Triplet<>("DOS31", WadDevType.DOS, Id.x31));
                 add(new Triplet<>("DOS32", WadDevType.DOS, Id.x32));
-                add(new Triplet<>("DOS33", WadDevType.DOS, Id.x33));
-                add(new Triplet<>("DOS34", WadDevType.DOS, Id.x34));
+                //add(new Triplet<>("DOS33", WadDevType.DOS, Id.x33));
+                //add(new Triplet<>("DOS34", WadDevType.DOS, Id.x34));
                 add(new Triplet<>("DOS35", WadDevType.DOS, Id.x35));
                 add(new Triplet<>("AO41", WadDevType.AO6, Id.x41));
                 add(new Triplet<>("AO42", WadDevType.AO6, Id.x42));
@@ -55,18 +55,7 @@ public class BIOcore {
             this.devices,
             new ArrayList<Triplet<CharSequence, CharSequence, Integer>>() {{
                 // just channels definition
-                add(new Triplet<>("CH0","DEV11", Ch.n0));
-                add(new Triplet<>("CH1","DEV11", Ch.n1));
-                add(new Triplet<>("CH2","DEV11", Ch.n2));
-                add(new Triplet<>("CH3","DEV11", Ch.n3));
-                add(new Triplet<>("CH4","DEV11", Ch.n4));
-                add(new Triplet<>("CH5","DEV11", Ch.n5));
-                add(new Triplet<>("CH6","DEV11", Ch.n6));
-                add(new Triplet<>("CH7","DEV11", Ch.n7));
-                add(new Triplet<>("CH8","DEV11", Ch.n8));
-
-                add(new Triplet<>("CH211","DEV21", Ch.n1));
-                add(new Triplet<>("CH212","DEV21", Ch.n2));
+//                add(new Triplet<>("CH0","DEV11", Ch.n0));
             }}
         );
     }
