@@ -26,7 +26,7 @@ public class ScadaCore {
             new ArrayList<Runnable>() {{
                 add(new AppConsole(core));
                 //add(new AppDecision(core));
-                //add(new AppWebServer(core));
+                add(new AppWebServer(core));
                 ArrayList<Thread> th = new ArrayList<Thread>();
                 forEach(r -> th.add(new Thread(r)));
                 th.forEach(t -> t.start());

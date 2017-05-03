@@ -36,10 +36,19 @@ public class BIOcore {
             this.modBus,
             new ArrayList<Triplet<String, WadDevType, Integer>>() {{
                 // just device definition
-                add(new Triplet<>("DEV11", WadDevType.DI14, Id.x11));
-                add(new Triplet<>("DEV21", WadDevType.AIK, Id.x21));
-                add(new Triplet<>("DEV31", WadDevType.DOS, Id.x31));
-                add(new Triplet<>("DEV41", WadDevType.AO6, Id.x41));
+                add(new Triplet<>("AIK21", WadDevType.AIK, Id.x21));
+                add(new Triplet<>("AIK22", WadDevType.AIK, Id.x22));
+                add(new Triplet<>("DI11", WadDevType.DI14, Id.x11));
+                add(new Triplet<>("DI12", WadDevType.DI14, Id.x12));
+                add(new Triplet<>("DI13", WadDevType.DI14, Id.x13));
+                add(new Triplet<>("DI14", WadDevType.DI14, Id.x14));
+                add(new Triplet<>("DOS31", WadDevType.DOS, Id.x31));
+                add(new Triplet<>("DOS32", WadDevType.DOS, Id.x32));
+                add(new Triplet<>("DOS33", WadDevType.DOS, Id.x33));
+                add(new Triplet<>("DOS34", WadDevType.DOS, Id.x34));
+                add(new Triplet<>("DOS35", WadDevType.DOS, Id.x35));
+                add(new Triplet<>("AO41", WadDevType.AO6, Id.x41));
+                add(new Triplet<>("AO42", WadDevType.AO6, Id.x42));
             }}
         );
         this.channels = new ModBusChannels(
