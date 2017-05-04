@@ -11,8 +11,11 @@ import org.junit.Test;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
+import org.takes.rq.RqFake;
+import org.takes.rs.RsPrint;
 import org.takes.rs.RsText;
 import org.takes.rs.xe.*;
+import org.takes.tk.TkRedirect;
 import org.takes.tk.TkWrap;
 import org.xembly.Directives;
 import org.xembly.Xembler;
@@ -32,14 +35,27 @@ public class TkShowDevice implements Take {
 
     @Override
     public Response act(Request request) throws IOException {
-        return new RsPageDevice(
+        ParsedDeviceData parsed = new ParsedDeviceData(request);
+
+        if (parsed.hasEnoughParams()) {
+            // do some write
+
+            // redirect
+            return
+                new RsPrint(
+                    new TkRedirect(parsed.noparam()).act(new RqFake())
+                );
+        }
+        else {
+            return new RsPageDevice(
                 "/xsl/device.xsl",
                 request,
                 new XeDirectives(
-                        core.dev(
-                                new ParsedDeviceData(request).device()
-                        ).xml()
+                    core.dev(
+                        parsed.device()
+                    ).xml()
                 )
-        );
+            );
+        }
     }
 }

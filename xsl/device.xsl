@@ -6,9 +6,11 @@
     <xsl:include href="/xsl/layout.xsl"/>
     <xsl:template match="page" mode="head">
         <!-- WILL REFRESH ONLY INPUT PORTS -->
+<!--
         <xsl:if test="data/summary/dtype[.='Input']">
             <meta http-equiv="refresh" content="2"/>
         </xsl:if>
+-->
         <title>
             <xsl:text>BIO scada</xsl:text>
         </title>
