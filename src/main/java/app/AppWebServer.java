@@ -1,6 +1,6 @@
 package app;
 
-import app.web.TkApp;
+import app.web.tk.TkApp;
 import common.sw.layers.BIOcore;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;

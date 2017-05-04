@@ -1,7 +1,6 @@
-package app.web;
+package app.web.tk;
 
 import common.sw.layers.BIOcore;
-import org.takes.facets.flash.TkFlash;
 import org.takes.facets.fork.*;
 import org.takes.tk.*;
 

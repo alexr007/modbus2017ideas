@@ -1,4 +1,4 @@
-package app.web;
+package app.web.rs;
 
 import org.takes.Request;
 import org.takes.Response;

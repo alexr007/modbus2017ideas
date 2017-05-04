@@ -1,20 +1,16 @@
-package app.web;
+package app.web.tk;
 
+import app.web.rs.RsPage;
 import common.sw.layers.BIOcore;
 import org.javatuples.Triplet;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeSource;
-import org.takes.rs.xe.XeTransform;
 import org.xembly.Directives;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by alexr on 01.05.2017.

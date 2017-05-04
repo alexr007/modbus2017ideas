@@ -1,5 +1,6 @@
-package app.web;
+package app.web.tk;
 
+import app.web.rs.RsPageMenu;
 import common.sw.layers.BIOcore;
 import org.takes.Request;
 import org.takes.Response;

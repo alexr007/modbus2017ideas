@@ -1,6 +1,5 @@
-package app.web;
+package app.web.tk;
 
-import com.jcabi.manifests.Manifests;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.takes.Response;
 import org.takes.Take;

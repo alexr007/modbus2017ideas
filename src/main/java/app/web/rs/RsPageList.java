@@ -1,11 +1,10 @@
-package app.web;
+package app.web.rs;
 
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.facets.flash.XeFlash;
 import org.takes.facets.fork.FkTypes;
 import org.takes.facets.fork.RsFork;
-import org.takes.rq.RqHref;
 import org.takes.rs.RsPrettyXml;
 import org.takes.rs.RsWithType;
 import org.takes.rs.RsWrap;
