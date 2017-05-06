@@ -32,6 +32,19 @@ public class ParsedDeviceData {
         return String.format("%s%s", home, path);
     }
 
+    // request w/o params and w/o trail slash
+    public String noparamnoslash() throws IOException {
+        String noparam = noparam();
+        String noparamClean;
+
+        if (noparam.endsWith("/")) {
+            noparamClean = noparam.substring(0, noparam.length() - 1);
+        } else {
+            noparamClean = noparam;
+        }
+        return noparamClean;
+    }
+
     // request home: http://127.0.0.1:8080/
     public String home() throws IOException {
         return hrefSmart.home().toString();
