@@ -27,13 +27,15 @@ final public class WAD_DI14_Channel implements WAD_Channel {
     }
 
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
+        int[] data = new RsAnalyzed(
+                device.run(device.builder.cmdReadRegister(0x1FFE)),
+                new RqInfo(device.deviceId, RsParsed.cmdRead, 2)
+        ).get();
         return
             new Values.Multiple(
                 new IntToArray(
-                    new RsAnalyzed(
-                        device.run(device.builder.cmdReadRegister(0x1FFE)),
-                        new RqInfo(device.deviceId, RsParsed.cmdRead, 2)
-                    ).get(1),15
+                    (data[0] & 0xFF) << 8 | data[1] & 0xFF,
+                    15
                 )
             );
     }
@@ -84,11 +86,19 @@ final public class WAD_DI14_Channel implements WAD_Channel {
     }
 
     private int failAll() throws SerialPortException, InvalidModBusResponse {
+        int[] data = new RsAnalyzed(
+            device.run(device.builder.cmdReadRegister(0x1FFF)),
+            new RqInfo(device.deviceId, RsParsed.cmdRead, 2)
+        ).get();
+        return
+            (data[0] & 0xFF) << 8 | data[1] & 0xFF;
+/*
         return
             new RsAnalyzed(
                 device.run(device.builder.cmdReadRegister(0x1FFF)),
                 new RqInfo(device.deviceId, RsParsed.cmdRead, 2)
             ).get(1);
+*/
     }
 
     @Override
