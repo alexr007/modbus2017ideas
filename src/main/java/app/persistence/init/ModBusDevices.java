@@ -1,4 +1,4 @@
-package app.persistence;
+package app.persistence.init;
 
 import jbase.hex.IntAsHex;
 import jbus.modbus.ModBus;

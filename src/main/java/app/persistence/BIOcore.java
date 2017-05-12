@@ -1,5 +1,9 @@
 package app.persistence;
 
+import app.persistence.init.ModBusChannels;
+import app.persistence.init.ModBusDevices;
+import constants.Ch;
+import constants.Dv;
 import jbus.comport.COMPort;
 import jbus.comport.COMPortProperties;
 import jbus.modbus.ModBus;
@@ -10,7 +14,6 @@ import constants.Id;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import org.javatuples.Triplet;
-
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -34,33 +37,27 @@ public class BIOcore {
         this.devices = new ModBusDevices(
             this.modBus,
             new ArrayList<Triplet<String, WadDevType, Integer>>() {{
-                // just device definition
-/*
-                add(new Triplet<>("AIK21", WadDevType.AIK, Id.x21));
-                add(new Triplet<>("AIK22", WadDevType.AIK, Id.x22));
-                add(new Triplet<>("DI11", WadDevType.DI14, Id.x11));
-                add(new Triplet<>("DI12", WadDevType.DI14, Id.x12));
-*/
-                add(new Triplet<>("DI13", WadDevType.DI14, Id.x13));
-                add(new Triplet<>("DI14", WadDevType.DI14, Id.x14));
-/*
-                add(new Triplet<>("DOS31", WadDevType.DOS, Id.x31));
-                add(new Triplet<>("DOS32", WadDevType.DOS, Id.x32));
-                add(new Triplet<>("DOS33", WadDevType.DOS, Id.x33));
-*/
-                add(new Triplet<>("DOS34", WadDevType.DOS, Id.x34));
-                add(new Triplet<>("DOS35", WadDevType.DOS, Id.x35));
-/*
-                add(new Triplet<>("AO41", WadDevType.AO6, Id.x41));
-                add(new Triplet<>("AO42", WadDevType.AO6, Id.x42));
-*/
+                add(new Triplet<>(Dv.AIK1, WadDevType.AIK, Id.x21));
+                add(new Triplet<>(Dv.AIK1, WadDevType.AIK, Id.x22));
+                add(new Triplet<>(Dv.DI1, WadDevType.DI14, Id.x11));
+                add(new Triplet<>(Dv.DI2, WadDevType.DI14, Id.x12));
+                add(new Triplet<>(Dv.DI3, WadDevType.DI14, Id.x13));
+                add(new Triplet<>(Dv.DI4, WadDevType.DI14, Id.x14));
+                add(new Triplet<>(Dv.DOS1, WadDevType.DOS, Id.x31));
+                add(new Triplet<>(Dv.DOS2, WadDevType.DOS, Id.x32));
+                add(new Triplet<>(Dv.DOS3, WadDevType.DOS, Id.x33));
+                add(new Triplet<>(Dv.DOS4, WadDevType.DOS, Id.x34));
+                add(new Triplet<>(Dv.DOS5, WadDevType.DOS, Id.x35));
+                add(new Triplet<>(Dv.AO1, WadDevType.AO6, Id.x41));
+                add(new Triplet<>(Dv.AO2, WadDevType.AO6, Id.x42));
             }}
         );
         this.channels = new ModBusChannels(
             this.devices,
             new ArrayList<Triplet<CharSequence, CharSequence, Integer>>() {{
-                // just channels definition
-//                add(new Triplet<>("CH0","DEV11", Ch.n0));
+                add(new Triplet<>("CH1",Dv.DOS1, Ch.n1));
+                add(new Triplet<>("CH2",Dv.DOS1, Ch.n2));
+                add(new Triplet<>("CH3",Dv.DOS1, Ch.n3));
             }}
         );
     }

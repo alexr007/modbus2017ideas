@@ -1,5 +1,6 @@
-package app.persistence;
+package app.persistence.init;
 
+import app.persistence.init.ModBusDevices;
 import jwad.channels.WAD_Channel;
 import org.javatuples.Triplet;
 
@@ -12,11 +13,15 @@ import java.util.HashMap;
 public class ChannelsFromList {
     private final ModBusDevices devices;
     private final ArrayList<Triplet<CharSequence, CharSequence, Integer>> channelsList;
-    // idea based on custom Triplet type - currently lifeless
-    // T = Triplet<CharSequence, CharSequence, Integer>
-    //private final ArrayList<T> channelsList;
-//    public ChannelsFromList(ModBusDevices devices, ArrayList<T> channels) {
 
+    /**
+     *
+     * @param devices
+     * @param channels - ArrayList<Triplet>
+     *                 1st: CharSequence - Channel name;
+     *                 2nd: CharSequence - Device name (Channel owner)
+     *                 3rd: Integer      - Channel Id
+     */
     public ChannelsFromList(ModBusDevices devices, ArrayList<Triplet<CharSequence, CharSequence, Integer>> channels) {
         this.devices = devices;
         this.channelsList = channels;

@@ -1,6 +1,6 @@
 package app.decision;
 
-import app.persistence.ModBusDevices;
+import app.persistence.init.ModBusDevices;
 
 import static java.lang.Thread.sleep;
 

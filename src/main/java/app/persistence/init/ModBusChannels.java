@@ -1,4 +1,4 @@
-package app.persistence;
+package app.persistence.init;
 
 import jwad.channels.WAD_Channel;
 import jssc.SerialPortException;

@@ -1,5 +1,6 @@
 package app.persistence;
 
+import app.persistence.init.ModBusChannels;
 import entities.AbstractEntity;
 
 import java.util.HashMap;
@@ -17,14 +18,14 @@ public class ModBusEntities {
 
     public void add(String entityName, AbstractEntity entity) throws Exception {
         if (entities.containsKey(entityName)) {
-            throw new Exception("Duplicate Entity Name:"+entityName);
+            throw new Exception(String.format("Duplicate Entity Name:%s",entityName));
         }
         entities.put(entityName, entity);
     }
 
     public AbstractEntity get(String entityName) throws Exception {
         if (!entities.containsKey(entityName)) {
-            throw new Exception("Entity Name NotFound:"+entityName);
+            throw new Exception(String.format("Entity Name NotFound:%s",entityName));
         }
         return entities.get(entityName);
     }

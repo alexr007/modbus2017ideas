@@ -6,7 +6,8 @@ import java.util.ArrayList;
 public class ScadaCore {
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
-            new FindComPorts().run();
+            //new FindComPorts().run();
+            new MainTest().test();
         } else
         if ((args.length == 2)&&(args[1].equals("test"))) {
             new AppConsoleSpeedTest(args[0]).run();
@@ -20,7 +21,9 @@ public class ScadaCore {
                 //add(new AppDecision(core));
                 add(new AppWebServer(core));
 
+                // массив Thread
                 ArrayList<Thread> th = new ArrayList<Thread>();
+                // добавляем все Runnable -> Thread
                 forEach(r -> th.add(new Thread(r)));
                 th.forEach(t -> t.start());
                 System.out.println("All threads started");
@@ -35,6 +38,5 @@ public class ScadaCore {
             }};
         }
     }
-    // todo timeout wile send packed to module;
-
+    // todo timeout while send packed to module;
 }

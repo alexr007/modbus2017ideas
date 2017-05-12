@@ -1,35 +1,35 @@
-package app.persistence;
+package app.persistence.init;
 
 import jbus.modbus.ModBus;
 import jwad.modules.WadAbstractDevice;
-import jwad.WadDevType;
-import org.javatuples.Triplet;
-import java.util.ArrayList;
+
+import java.io.File;
 import java.util.HashMap;
 
 /**
  * Created by alexr on 26.04.2017.
  */
-public class DevicesFromList {
+public class DevicesFromFile {
     private final ModBus modBus;
-    private final ArrayList<Triplet<String, WadDevType, Integer>> devicesList;
+    private final File origin;
 
-    public DevicesFromList(ModBus modBus, ArrayList<Triplet<String, WadDevType, Integer>> list) {
+    public DevicesFromFile(ModBus modBus, File origin) {
         this.modBus = modBus;
-        this.devicesList = list;
+        this.origin = origin;
     }
 
     public HashMap<CharSequence, WadAbstractDevice> hashMap() throws Exception {
         HashMap<CharSequence, WadAbstractDevice> map = new HashMap<>();
+        if (true) throw new Exception("not implemented");
+/*
         for (Triplet<String, WadDevType, Integer> item : devicesList) {
-            if (map.containsKey(item.getValue0())) {
-                throw new Exception(String.format("Duplicate Device name: %s", item.getValue0()));
-            }
             map.put(
                 item.getValue0(),
                 WadAbstractDevice.build(modBus, item.getValue1(), item.getValue2())
             );
         }
+*/
         return map;
     }
+
 }
