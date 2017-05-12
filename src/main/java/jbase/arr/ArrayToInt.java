@@ -3,11 +3,11 @@ package jbase.arr;
 /**
  * Created by alexr on 22.01.2017.
  *
- * convert array of values 0-aa
+ * convert array of values 0-1
  * to integer value, where values placed on bits of integer
- * {0,aa} -> aa
- * {aa,0} -> 2
- * {aa,0,0,aa} -> 9
+ * {0,1} -> 1
+ * {1,0} -> 2
+ * {1,0,0,1} -> 9
  * maximum array length is 16
  *
  */

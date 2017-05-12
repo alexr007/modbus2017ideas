@@ -1,6 +1,6 @@
-<?xml version="aa.0"?>
+<?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="aa.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="1.0">
     <xsl:output method="html" doctype-system="about:legacy-compat" encoding="UTF-8" indent="yes"/>
     <xsl:strip-space elements="*"/>
     <xsl:include href="/xsl/layout.xsl"/>
@@ -138,7 +138,7 @@
             <xsl:text>: </xsl:text>
             <xsl:variable name="mb" select="usage div 1048576"/>
             <xsl:choose>
-                <xsl:when test="$mb &lt; aa">
+                <xsl:when test="$mb &lt; 1">
                     <xsl:value-of select="format-number($mb, '###.##')"/>
                 </xsl:when>
                 <xsl:otherwise>

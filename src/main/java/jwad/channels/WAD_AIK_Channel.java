@@ -12,7 +12,7 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
 
     /**
      * @param channel modbus channel id
-     *                aa..N - mean single channel
+     *                1..N - mean single channel
      *                0    - mean all channels (group operation).
      *                not all functions supports group operation
      * @param device  modbus real device
@@ -62,7 +62,7 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
      * логика отличная !!! от логики DI, DI14, DIO
      * это НЕ обрыв линии
      *
-     * aa - ЕСТЬ связь с контроллером порта
+     * 1 - ЕСТЬ связь с контроллером порта
      * 0 - НЕТ связи с контроллером порта (порт сгорел)
      */
     public Values fail() throws InvalidModBusResponse, SerialPortException {

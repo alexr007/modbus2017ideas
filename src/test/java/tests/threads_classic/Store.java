@@ -8,7 +8,7 @@ public class Store {
     private int count = 0;
 
     public synchronized void get() {
-        while (count <aa) {
+        while (count <1) {
             try {
                 wait();
             }
@@ -16,7 +16,7 @@ public class Store {
             }
         }
         count--;
-        System.out.println("Покупатель купил aa товар");
+        System.out.println("Покупатель купил 1 товар");
         System.out.println("Товаров на складе: " + count);
         notify();
     }
@@ -30,7 +30,7 @@ public class Store {
             }
         }
         count++;
-        System.out.println("Производитель добавил aa товар");
+        System.out.println("Производитель добавил 1 товар");
         System.out.println("Товаров на складе: " + count);
         notify();
     }

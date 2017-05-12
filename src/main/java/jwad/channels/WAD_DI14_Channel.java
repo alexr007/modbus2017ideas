@@ -12,7 +12,7 @@ import jwad.modules.WadAbstractDevice;
 final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Channel {
     /**
      * @param channel modbus channel id
-     *                aa..N - mean single channel
+     *                1..N - mean single channel
      *                0    - mean all channels (group operation).
      *                not all functions supports group operation
      * @param device  modbus real device
@@ -45,7 +45,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
 
     /*
     * returns:
-    * aa - channel is SHORT
+    * 1 - channel is SHORT
     * 0 - channel is OPEN
     * 2 - channel is FAIL
     */
@@ -63,7 +63,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
     /*
      * 1FFF
      * Состояние «Обрыв лини» по всем каналам
-     * aa - обрыв
+     * 1 - обрыв
      * 0 - все ОК
      *
      */
@@ -100,7 +100,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
             new RsAnalyzed(
                 device.run(device.builder().cmdReadRegister(0x1FFF)),
                 new RqInfo(device.deviceId, RsParsed.cmdRead, 2)
-            ).get(aa);
+            ).get(1);
 */
     }
 

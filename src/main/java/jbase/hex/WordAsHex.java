@@ -6,7 +6,7 @@ package jbase.hex;
  * print word
  * in HEX View
  *
- * aa -> 0x0001
+ * 1 -> 0x0001
  * 255 -> 0x00FF
  * 65535 --> 0xFFFF
  *

@@ -13,7 +13,7 @@ import jwad.modules.WadAbstractDevice;
 final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Channel {
     /**
      * @param channel modbus channel id
-     *                aa..N - mean single channel
+     *                1..N - mean single channel
      *                0    - mean all channels (group operation).
      *                not all functions supports group operation
      * @param device  modbus real device

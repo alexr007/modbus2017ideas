@@ -40,7 +40,7 @@ public class COMPort {
     }
 
     /*
-     * Ctor with Default Properties 57600,8,N,aa
+     * Ctor with Default Properties 57600,8,N,1
      *
      */
     public COMPort(String portName) throws SerialPortException {

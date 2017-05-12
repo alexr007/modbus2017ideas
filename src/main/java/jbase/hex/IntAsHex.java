@@ -6,7 +6,7 @@ package jbase.hex;
  * print integer
  * in HEX View
  *
- * aa -> 0x01
+ * 1 -> 0x01
  * 255 -> 0xFF
  *
  * if origin > 255 - only lower byte is used

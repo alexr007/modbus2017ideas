@@ -16,7 +16,7 @@ public class WadAbstractChannel {
 
     /**
      * @param channel modbus channel id
-     * aa..N - mean single channel
+     * 1..N - mean single channel
      * 0    - mean all channels (group operation).
      *        not all functions supports group operation
      * @param device modbus real device

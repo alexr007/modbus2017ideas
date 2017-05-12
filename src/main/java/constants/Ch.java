@@ -3,7 +3,7 @@ package constants;
 /**
  * Created by alexr on 17.02.2017.
  *
- * Channels on Device (aa-15)
+ * Channels on Device (1-15)
  */
 public class Ch {
     public static final int n0 = 0; // mean all channels

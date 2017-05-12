@@ -1,4 +1,4 @@
-<?xml version="aa.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <data>
     <summary>
         <modbusid>0x11</modbusid>
@@ -9,7 +9,7 @@
     </summary>
     <channels>
         <channel>
-            <id>aa</id>
+            <id>1</id>
             <value>CLOSED</value>
         </channel>
         <channel>

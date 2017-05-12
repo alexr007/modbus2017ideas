@@ -81,7 +81,7 @@ public class AppConsole implements Runnable{
         //new StringFormat1().print();
 
 /*
-        if (args.length < aa ) {
+        if (args.length < 1 ) {
             System.out.println(new AppDefaultMessage().toString());
             new FindComPorts().run();
         } else {

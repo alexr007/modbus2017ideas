@@ -46,7 +46,7 @@ public class ModBusDevicesTest {
         );
 /*
         WAD_AIK_BUS aik1 = (WAD_AIK_BUS) devices.get("DEV1");
-        aik1.channel(aa).
+        aik1.channel(1).
 */
         devices.finish();
     }
@@ -123,12 +123,12 @@ public class ModBusDevicesTest {
             channels.get("AIR1speed")
         );
         EnMotorPWM air2 = new EnMotorPWM(
-            devices.get("dev1").channel(aa),
-            devices.get("dev2").channel(aa)
+            devices.get("dev1").channel(1),
+            devices.get("dev2").channel(1)
         );
         EnMotorPWM air3 = new EnMotorPWM(
-            devices.get("dev1").channel(aa),
-            devices.get("dev2").channel(aa)
+            devices.get("dev1").channel(1),
+            devices.get("dev2").channel(1)
         );
         air1.off();
         air2.off();
