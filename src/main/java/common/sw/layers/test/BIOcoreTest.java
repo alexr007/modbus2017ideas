@@ -1,13 +1,8 @@
 package common.sw.layers.test;
 
-import common.hw.modbus.InvalidModBusFunction;
-import common.hw.modbus.response.InvalidModBusResponse;
-import common.hw.modbus.wad.ModBusAbstractDevice;
-import common.hw.modbus.wad.WAD_Channel;
+import jwad.ModBusAbstractDevice;
 import common.sw.layers.BIOcore;
 import constants.Dv;
-import jssc.SerialPortException;
-import org.xembly.Xembler;
 
 import java.util.ArrayList;
 

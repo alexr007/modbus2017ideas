@@ -1,7 +1,7 @@
 package entities;
 
 import common.hw.IPWM;
-import common.hw.modbus.wad.WAD_Channel;
+import jwad.channels.WAD_Channel;
 
 /**
  * Created by alexr on 17.02.2017.

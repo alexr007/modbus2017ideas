@@ -1,6 +1,6 @@
 package common.sw.layers;
 
-import common.hw.modbus.wad.WAD_Channel;
+import jwad.channels.WAD_Channel;
 import org.javatuples.Triplet;
 
 import java.util.ArrayList;

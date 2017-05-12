@@ -1,10 +1,9 @@
 package app.web.test;
 
 import app.web.ParsedDeviceData;
-import app.web.ValueDOS;
 import app.web.ValueValidated;
-import common.hw.modbus.InvalidModBusFunction;
-import common.hw.modbus.wad.ModBusAbstractDevice;
+import jbus.modbus.InvalidModBusFunction;
+import jwad.ModBusAbstractDevice;
 import common.sw.layers.BIOcore;
 import jssc.SerialPortException;
 import org.takes.Request;

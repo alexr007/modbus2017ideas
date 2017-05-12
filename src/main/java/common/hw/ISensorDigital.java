@@ -1,7 +1,7 @@
 package common.hw;
 
-import common.hw.modbus.InvalidModBusFunction;
-import common.hw.modbus.response.InvalidModBusResponse;
+import jbus.modbus.InvalidModBusFunction;
+import jbus.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
 
 /**

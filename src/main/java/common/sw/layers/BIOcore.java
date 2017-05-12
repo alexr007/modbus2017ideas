@@ -1,12 +1,11 @@
 package common.sw.layers;
 
-import common.hw.comport.COMPort;
-import common.hw.comport.COMPortProperties;
-import common.hw.modbus.ModBus;
-import common.hw.modbus.wad.ModBusAbstractDevice;
-import common.hw.modbus.wad.WAD_Channel;
-import common.hw.modbus.wad.WadDevType;
-import constants.Ch;
+import jbus.comport.COMPort;
+import jbus.comport.COMPortProperties;
+import jbus.modbus.ModBus;
+import jwad.ModBusAbstractDevice;
+import jwad.channels.WAD_Channel;
+import jwad.WadDevType;
 import constants.Id;
 import jssc.SerialPort;
 import jssc.SerialPortException;

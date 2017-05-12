@@ -1,9 +1,9 @@
 package common.sw.layers.test;
 
-import common.hw.comport.COMPort;
-import common.hw.comport.COMPortProperties;
-import common.hw.modbus.ModBus;
-import common.hw.modbus.wad.WadDevType;
+import jbus.comport.COMPort;
+import jbus.comport.COMPortProperties;
+import jbus.modbus.ModBus;
+import jwad.WadDevType;
 import common.sw.layers.ModBusChannels;
 import common.sw.layers.ModBusDevices;
 import common.sw.layers.ModBusEntities;

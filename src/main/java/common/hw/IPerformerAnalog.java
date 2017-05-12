@@ -1,6 +1,6 @@
 package common.hw;
 
-import common.hw.modbus.response.Values;
+import jbus.modbus.response.Values;
 
 /**
  * Created by alexr on 07.02.2017.

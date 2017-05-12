@@ -1,6 +1,6 @@
 package common.sw.ranges.test;
 
-import common.hw.modbus.response.Values;
+import jbus.modbus.response.Values;
 import common.sw.ranges.Percentage;
 import common.sw.ranges.RangeValues;
 

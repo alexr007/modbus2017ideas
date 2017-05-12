@@ -1,6 +1,6 @@
 package app;
 
-import common.hw.comport.COMPortList;
+import jbus.comport.COMPortList;
 /**
  * Created by alexr on 08.04.2017.
  */

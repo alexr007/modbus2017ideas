@@ -1,8 +1,8 @@
 package common.sw.primitives;
 
 import common.sw.common.WordAsHex;
-import common.hw.modbus.command.MbMerged;
-import common.hw.modbus.command.MbWrap;
+import jbus.modbus.command.MbMerged;
+import jbus.modbus.command.MbWrap;
 
 public class Word {
 

@@ -1,8 +1,8 @@
 package common.sw.layers;
 
-import common.hw.modbus.ModBus;
-import common.hw.modbus.wad.ModBusAbstractDevice;
-import common.hw.modbus.wad.WadDevType;
+import jbus.modbus.ModBus;
+import jwad.ModBusAbstractDevice;
+import jwad.WadDevType;
 import org.javatuples.Triplet;
 import java.util.ArrayList;
 import java.util.HashMap;

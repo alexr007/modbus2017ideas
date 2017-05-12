@@ -1,6 +1,6 @@
 package app.web;
 
-import common.hw.modbus.wad.WadDevType;
+import jwad.WadDevType;
 
 /**
  * Created by alexr on 02.05.2017.

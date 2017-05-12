@@ -1,7 +1,7 @@
 package common.sw.primitives;
 
 import common.sw.common.IntAsHex;
-import common.hw.modbus.command.MbWrap;
+import jbus.modbus.command.MbWrap;
 
 public class Byte {
 

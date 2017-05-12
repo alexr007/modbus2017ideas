@@ -1,7 +1,7 @@
 package common.sw.common.test;
 
 import common.sw.common.BytesAsHex;
-import common.hw.modbus.command.MbData;
+import jbus.modbus.command.MbData;
 import common.sw.primitives.Word;
 
 /**

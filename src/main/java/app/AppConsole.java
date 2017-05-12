@@ -1,14 +1,7 @@
 package app;
 
-import common.hw.comport.COMPortList;
 import common.sw.layers.BIOcore;
 import jssc.SerialPortException;
-import org.takes.misc.Href;
-import org.takes.rq.RqFake;
-import org.takes.rq.RqHref;
-
-import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Created by alexr on 01.05.2017.

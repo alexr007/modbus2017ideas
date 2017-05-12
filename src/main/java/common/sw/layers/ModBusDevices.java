@@ -1,8 +1,9 @@
 package common.sw.layers;
 
 import common.sw.common.IntAsHex;
-import common.hw.modbus.ModBus;
-import common.hw.modbus.wad.*;
+import jbus.modbus.ModBus;
+import jwad.ModBusAbstractDevice;
+import jwad.WadDevType;
 import jssc.SerialPortException;
 import org.javatuples.Triplet;
 

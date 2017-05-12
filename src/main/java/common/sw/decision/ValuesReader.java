@@ -1,6 +1,6 @@
 package common.sw.decision;
 
-import common.hw.modbus.response.Values;
+import jbus.modbus.response.Values;
 import java.util.HashMap;
 import java.util.Iterator;
 

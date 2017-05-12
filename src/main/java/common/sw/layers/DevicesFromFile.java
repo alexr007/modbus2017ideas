@@ -1,7 +1,7 @@
 package common.sw.layers;
 
-import common.hw.modbus.ModBus;
-import common.hw.modbus.wad.ModBusAbstractDevice;
+import jbus.modbus.ModBus;
+import jwad.ModBusAbstractDevice;
 
 import java.io.File;
 import java.util.HashMap;

@@ -1,9 +1,9 @@
 package entities;
 
 import common.hw.ISensorDigital;
-import common.hw.modbus.InvalidModBusFunction;
-import common.hw.modbus.response.InvalidModBusResponse;
-import common.hw.modbus.wad.WAD_Channel;
+import jbus.modbus.InvalidModBusFunction;
+import jbus.modbus.response.InvalidModBusResponse;
+import jwad.channels.WAD_Channel;
 import jssc.SerialPortException;
 
 /**
