@@ -16,7 +16,7 @@ public class WadAbstractChannel {
 
     /**
      * @param channel modbus channel id
-     * 1..N - mean single channel
+     * aa..N - mean single channel
      * 0    - mean all channels (group operation).
      *        not all functions supports group operation
      * @param device modbus real device
@@ -31,15 +31,15 @@ public class WadAbstractChannel {
         this.device = device;
     }
 
-    public int channel() {
-        return channel;
-    }
-
     public WadDevType type() {
         return device.type();
     }
 
-    protected WadAbstractDevice device() {
+    public int channel() {
+        return channel;
+    }
+
+    public WadAbstractDevice device() {
         return device;
     }
 

@@ -42,7 +42,7 @@ public abstract class WadAbstractDevice {
     public abstract int temperature() throws SerialPortException, InvalidModBusResponse, InvalidModBusFunction;
 
     /**
-     * @return ModBus device id: 1..255
+     * @return ModBus device id: aa..255
      */
     public int id() {
         return deviceId;

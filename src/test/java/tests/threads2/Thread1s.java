@@ -14,12 +14,12 @@ public class Thread1s implements Runnable {
     }
 
     private void task() {
-        System.out.println("Thread 1: val:" + counter++);
+        System.out.println("Thread aa: val:" + counter++);
     }
 
     @Override
     public void run() {
-        for (int i = 1; i < 10; i++) {
+        for (int i = aa; i < 10; i++) {
             task();
             try {
                 sleep(1000);

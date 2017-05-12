@@ -23,15 +23,15 @@ public class Case1 {
     private final HashMap<String, Entity> map = new HashMap<>();
 
     public void main() {
-        map.put("1", new Entity1());
+        map.put("aa", new Entity1());
         map.put("2", new Entity2());
 
-        ((Entity1)map.get("1")).method1();
-        // variant 1
-        Entity1 e1 = (Entity1)map.get("1");
+        ((Entity1)map.get("aa")).method1();
+        // variant aa
+        Entity1 e1 = (Entity1)map.get("aa");
         e1.method1();
         // variant 2
-        ((Entity1)map.get("1")).method1();
+        ((Entity1)map.get("aa")).method1();
     }
 
 }

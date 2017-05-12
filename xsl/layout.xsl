@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
+<?xml version="aa.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="aa.0">
     <xsl:template match="/page">
         <html lang="en">
             <head>
                 <meta charset="UTF-8"/>
-                <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/>
+                <meta name="viewport" content="width=device-width,minimum-scale=aa,initial-scale=aa"/>
                 <link rel="shortcut icon" href="/images/logo.png"/>
                 <link rel="stylesheet" href="/css/tacit.min.css"/>
                 <link rel="stylesheet" href="/css/main.css"/>

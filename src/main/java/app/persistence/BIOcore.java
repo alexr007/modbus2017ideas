@@ -38,7 +38,7 @@ public class BIOcore {
             this.modBus,
             new ArrayList<Triplet<String, WadDevType, Integer>>() {{
                 add(new Triplet<>(Dv.AIK1, WadDevType.AIK, Id.x21));
-                add(new Triplet<>(Dv.AIK1, WadDevType.AIK, Id.x22));
+                add(new Triplet<>(Dv.AIK2, WadDevType.AIK, Id.x22));
                 add(new Triplet<>(Dv.DI1, WadDevType.DI14, Id.x11));
                 add(new Triplet<>(Dv.DI2, WadDevType.DI14, Id.x12));
                 add(new Triplet<>(Dv.DI3, WadDevType.DI14, Id.x13));
@@ -55,9 +55,17 @@ public class BIOcore {
         this.channels = new ModBusChannels(
             this.devices,
             new ArrayList<Triplet<CharSequence, CharSequence, Integer>>() {{
-                add(new Triplet<>("CH1",Dv.DOS1, Ch.n1));
-                add(new Triplet<>("CH2",Dv.DOS1, Ch.n2));
-                add(new Triplet<>("CH3",Dv.DOS1, Ch.n3));
+                add(new Triplet<>("CH11",Dv.DOS1, Ch.n1));
+                add(new Triplet<>("CH12",Dv.DOS1, Ch.n2));
+                add(new Triplet<>("CH13",Dv.DOS1, Ch.n3));
+
+                add(new Triplet<>("CH21",Dv.DI1, Ch.n4));
+                add(new Triplet<>("CH22",Dv.DI1, Ch.n5));
+                add(new Triplet<>("CH23",Dv.DI1, Ch.n6));
+
+                add(new Triplet<>("CH31",Dv.AO2, Ch.n1));
+                add(new Triplet<>("CH32",Dv.AO2, Ch.n2));
+                add(new Triplet<>("CH33",Dv.AO2, Ch.n3));
             }}
         );
     }
@@ -84,6 +92,10 @@ public class BIOcore {
 
     public ArrayList<Triplet> devListTriplet() {
         return devices.triplet();
+    }
+
+    public ArrayList<Triplet> chanListTriplet() {
+        return channels.triplet();
     }
 
     public ModBus modBus() {

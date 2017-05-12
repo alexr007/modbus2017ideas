@@ -12,7 +12,7 @@ import jwad.modules.WadAbstractDevice;
 final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Channel {
     /**
      * @param channel modbus channel id
-     *                1..N - mean single channel
+     *                aa..N - mean single channel
      *                0    - mean all channels (group operation).
      *                not all functions supports group operation
      * @param device  modbus real device
@@ -55,7 +55,7 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
     /*
      * 200E
      * Состояние «Обрыв лини» по всем каналам
-     * 1 - обрыв
+     * aa - обрыв
      * 0 - все ОК
      *
      */

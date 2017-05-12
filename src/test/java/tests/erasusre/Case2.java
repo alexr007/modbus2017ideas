@@ -40,15 +40,15 @@ public class Case2 {
 
     public void main() {
         map.put("0", new E());
-        map.put("1", new E1());
+        map.put("aa", new E1());
         map.put("2", new E2());
 
         map.get("0").method0();
-        // variant 1
-        E1 e1 = (E1)map.get("1");
+        // variant aa
+        E1 e1 = (E1)map.get("aa");
         e1.method1();
         // variant 2
-        ((E1)map.get("1")).method1();
+        ((E1)map.get("aa")).method1();
 
 
         ((E2)map.get("2")).method2();

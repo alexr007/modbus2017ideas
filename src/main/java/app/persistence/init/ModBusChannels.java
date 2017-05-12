@@ -1,5 +1,8 @@
 package app.persistence.init;
 
+import jbase.hex.IntAsHex;
+import jbus.modbus.InvalidModBusFunction;
+import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
 import jssc.SerialPortException;
 import org.javatuples.Triplet;
@@ -52,5 +55,35 @@ public class ModBusChannels {
 
     public void finish() throws SerialPortException {
         devices.finish();
+    }
+
+    /**
+     * channels<key,chan>
+     *     key - channel name during initialization
+     *     chan - channel
+     *     chan.device() - device
+     *     chan.device().name() - device name (WAD_AIK_BUS, WAD_AO_BUS, WAD_DOS_BUS)
+     *     chan.device().type() - device type (AIK, AO, DOS)
+     *     chan.device().id() - device modbus id
+     *     chan.device().properties() - device properties
+     *     chan.device().properties().portType()
+     *     chan.device().properties().signalType()
+     *     chan.device().properties().chanCount()
+     *
+     */
+    public ArrayList<Triplet> triplet() {
+        ArrayList<Triplet> list = new ArrayList<>();
+        channels.forEach((key, chan) -> {
+            try {
+                list.add(new Triplet<CharSequence, CharSequence, Integer>(
+                    //key, chan.device().name(), chan.channel()
+                    key, chan.device().name(), chan.device().id()
+                    )
+                );
+            } catch (InvalidModBusFunction invalidModBusFunction) {
+                invalidModBusFunction.printStackTrace();
+            }
+        });
+        return list;
     }
 }
