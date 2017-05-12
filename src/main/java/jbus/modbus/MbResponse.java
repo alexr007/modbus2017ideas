@@ -1,6 +1,6 @@
 package jbus.modbus;
 
-import common.sw.common.BytesAsHex;
+import jbase.hex.BytesAsHex;
 
 /**
  * Created by alexr on 20.01.2017.

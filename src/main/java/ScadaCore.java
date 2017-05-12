@@ -1,5 +1,5 @@
 import app.*;
-import common.sw.layers.BIOcore;
+import app.persistence.BIOcore;
 
 import java.util.ArrayList;
 

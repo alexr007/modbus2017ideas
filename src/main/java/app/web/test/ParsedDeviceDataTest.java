@@ -4,7 +4,7 @@ import app.web.ParsedDeviceData;
 import app.web.ValueValidated;
 import jbus.modbus.InvalidModBusFunction;
 import jwad.modules.WadAbstractDevice;
-import common.sw.layers.BIOcore;
+import app.persistence.BIOcore;
 import jssc.SerialPortException;
 import org.takes.Request;
 

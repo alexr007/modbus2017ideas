@@ -1,6 +1,6 @@
 package app;
 
-import common.sw.layers.BIOcore;
+import app.persistence.BIOcore;
 
 /**
  * Created by alexr on 01.05.2017.

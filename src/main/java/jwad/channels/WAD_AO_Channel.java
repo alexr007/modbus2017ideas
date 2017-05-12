@@ -1,7 +1,7 @@
 package jwad.channels;
 
 import jssc.SerialPortException;
-import common.sw.primitives.Word;
+import jbase.primitives.Word;
 import jbus.modbus.command.MbData;
 import jbus.modbus.command.MbMerged;
 import jbus.modbus.response.*;

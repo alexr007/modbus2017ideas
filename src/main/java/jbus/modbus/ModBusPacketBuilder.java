@@ -1,8 +1,8 @@
 package jbus.modbus;
 
 import jbus.modbus.command.*;
-import common.sw.primitives.Bytes;
-import common.sw.primitives.Word;
+import jbase.primitives.Bytes;
+import jbase.primitives.Word;
 
 /**
  * Created by alexr on 22.01.2017.

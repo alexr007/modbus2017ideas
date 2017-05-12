@@ -4,7 +4,7 @@ import app.web.ParsedDeviceData;
 import app.web.ValueValidated;
 import app.web.rs.RsPageDevice;
 import jwad.modules.WadAbstractDevice;
-import common.sw.layers.BIOcore;
+import app.persistence.BIOcore;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;

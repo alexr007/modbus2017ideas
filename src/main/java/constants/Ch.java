@@ -6,7 +6,7 @@ package constants;
  * Channels on Device (1-15)
  */
 public class Ch {
-    public static final int n0 = 0; // man all channels
+    public static final int n0 = 0; // mean all channels
     public static final int n1 = 1;
     public static final int n2 = 2;
     public static final int n3 = 3;

@@ -1,7 +1,7 @@
 package jbus.modbus.command;
 
-import common.sw.common.BytesAsHex;
-import common.sw.primitives.Bytes;
+import jbase.hex.BytesAsHex;
+import jbase.primitives.Bytes;
 
 /**
  * Created by alexr on 20.01.2017.

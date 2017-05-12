@@ -1,6 +1,6 @@
 package app;
 
-import common.sw.layers.BIOcore;
+import app.persistence.BIOcore;
 import jssc.SerialPortException;
 
 /**

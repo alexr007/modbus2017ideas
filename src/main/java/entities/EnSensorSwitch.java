@@ -1,6 +1,5 @@
 package entities;
 
-import common.hw.ISensorDigital;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.InvalidModBusResponse;
 import jwad.channels.WAD_Channel;

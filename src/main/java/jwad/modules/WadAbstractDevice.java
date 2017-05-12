@@ -1,7 +1,7 @@
 package jwad.modules;
 
 import com.google.common.base.Joiner;
-import common.sw.common.IntAsHex;
+import jbase.hex.IntAsHex;
 import jbus.modbus.*;
 import jbus.modbus.device.DeviceProperties;
 import jbus.modbus.response.InvalidModBusResponse;

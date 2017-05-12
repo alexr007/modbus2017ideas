@@ -1,6 +1,5 @@
 package entities;
 
-import common.hw.ISensorAnalog;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.InvalidModBusResponse;
 import jbus.modbus.response.Values;

@@ -1,6 +1,5 @@
 package entities;
 
-import common.hw.IPWM;
 import jwad.channels.WAD_Channel;
 
 /**

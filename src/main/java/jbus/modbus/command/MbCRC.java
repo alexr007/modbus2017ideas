@@ -1,7 +1,7 @@
 package jbus.modbus.command;
 
-import common.sw.primitives.Bytes;
-import common.sw.primitives.Word;
+import jbase.primitives.Bytes;
+import jbase.primitives.Word;
 
 public class MbCRC implements Bytes {
 

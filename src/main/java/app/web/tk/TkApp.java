@@ -1,6 +1,6 @@
 package app.web.tk;
 
-import common.sw.layers.BIOcore;
+import app.persistence.BIOcore;
 import org.takes.facets.fork.*;
 import org.takes.tk.*;
 

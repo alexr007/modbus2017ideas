@@ -1,15 +1,12 @@
 package app.web.tk;
 
 import app.web.rs.RsPageMenu;
-import common.sw.layers.BIOcore;
+import app.persistence.BIOcore;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.rs.RsText;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by alexr on 01.05.2017.

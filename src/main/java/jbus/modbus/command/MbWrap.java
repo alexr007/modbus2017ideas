@@ -1,7 +1,7 @@
 package jbus.modbus.command;
 
-import common.sw.primitives.Byte;
-import common.sw.primitives.Bytes;
+import jbase.primitives.Byte;
+import jbase.primitives.Bytes;
 
 /**
  * Created by alexr on 21.01.2017.

@@ -3,10 +3,9 @@ package jwad.channels;
 import jbus.modbus.command.MbData;
 import jbus.modbus.command.MbMerged;
 import jbus.modbus.response.*;
-import common.sw.primitives.Word;
+import jbase.primitives.Word;
 import jssc.SerialPortException;
 import jwad.modules.WadAbstractDevice;
-import jwad.WadDevType;
 
 /**
  * Created by alexr on 22.01.2017.

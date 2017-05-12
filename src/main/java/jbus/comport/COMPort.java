@@ -1,6 +1,6 @@
 package jbus.comport;
 
-import common.sw.primitives.Bytes;
+import jbase.primitives.Bytes;
 import jssc.*;
 
 /**

@@ -1,11 +1,10 @@
 package jwad.channels;
 
-import common.sw.common.IntToArray;
+import jbase.arr.IntToArray;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
 import jwad.modules.WadAbstractDevice;
-import jwad.WadDevType;
 
 /**
  * Created by alexr on 22.01.2017.
