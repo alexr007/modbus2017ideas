@@ -4,7 +4,7 @@ import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.InvalidModBusResponse;
 import jbus.modbus.response.Values;
 import jssc.SerialPortException;
-import jwad.ModBusAbstractDevice;
+import jwad.modules.WadAbstractDevice;
 
 import java.util.HashMap;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Created by alexr on 28.04.2017.
  */
 final public class WadSummaryAO extends WadSummaryBase {
-    public WadSummaryAO(ModBusAbstractDevice device) {
+    public WadSummaryAO(WadAbstractDevice device) {
         super(device);
     }
 

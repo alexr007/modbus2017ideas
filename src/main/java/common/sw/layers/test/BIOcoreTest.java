@@ -1,6 +1,6 @@
 package common.sw.layers.test;
 
-import jwad.ModBusAbstractDevice;
+import jwad.modules.WadAbstractDevice;
 import common.sw.layers.BIOcore;
 import constants.Dv;
 
@@ -13,7 +13,7 @@ public class BIOcoreTest {
     public void test() throws Exception {
         BIOcore core = new BIOcore(Dv.COM26);
 
-        ArrayList<ModBusAbstractDevice> list = new ArrayList<ModBusAbstractDevice>(){{
+        ArrayList<WadAbstractDevice> list = new ArrayList<WadAbstractDevice>(){{
             add(core.dev("DEV11"));
             add(core.dev("DEV21"));
             add(core.dev("DEV31"));
@@ -22,7 +22,7 @@ public class BIOcoreTest {
 
 /*
         list.forEach(item ->
-            System.out.println(item.xml())
+            System.out.println(item.summaryXml())
         );
 */
 
@@ -30,14 +30,13 @@ public class BIOcoreTest {
         list.forEach(item ->
                 System.out.println(
                     new Xembler(
-                    item.xml()
+                    item.summaryXml()
                     ).xmlQuietly()
                 )
         );
-*/
         System.out.println(core.chan("CH211").device().toString());
         System.out.println(core.chan("CH212").device().toString());
-/*
+
         core.chan("CH1").get();
         core.chan("CH1").set(0);
         core.chan("CH1").on();

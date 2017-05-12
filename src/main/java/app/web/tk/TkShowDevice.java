@@ -3,7 +3,7 @@ package app.web.tk;
 import app.web.ParsedDeviceData;
 import app.web.ValueValidated;
 import app.web.rs.RsPageDevice;
-import jwad.ModBusAbstractDevice;
+import jwad.modules.WadAbstractDevice;
 import common.sw.layers.BIOcore;
 import org.takes.Request;
 import org.takes.Response;
@@ -32,7 +32,7 @@ public class TkShowDevice implements Take {
         RsWrap res;
         if (parsed.hasEnoughParams()) {
             // has enough parameters to write data to channel
-            ModBusAbstractDevice dev = core.dev(parsed.device());
+            WadAbstractDevice dev = core.dev(parsed.device());
             try {
                 dev.channel(Integer.valueOf(parsed.channel()))
                     .set( new ValueValidated(dev.type()).value(parsed.value()) );
@@ -48,7 +48,7 @@ public class TkShowDevice implements Take {
             res = new RsPageDevice(
                 "/xsl/device.xsl",
                 request,
-                new XeDirectives( core.dev( parsed.device() ).xml() )
+                new XeDirectives( core.dev( parsed.device() ).summaryXml() )
             );
         }
         return res;

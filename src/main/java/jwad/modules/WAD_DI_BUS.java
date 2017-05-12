@@ -10,9 +10,6 @@ import jbus.modbus.response.RsAnalyzed;
 import jbus.modbus.response.RsParsed;
 import jssc.SerialPortException;
 import jbus.modbus.ModBus;
-import jwad.ModBusAbstractDevice;
-import jwad.WAD_func_channel;
-import jwad.WAD_func_temperature;
 import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
 import jwad.channels.WAD_DI_Channel;
@@ -22,18 +19,10 @@ import org.xembly.Directives;
 /**
  * Created by alexr on 22.01.2017.
  */
-final public class WAD_DI_BUS extends ModBusAbstractDevice implements WAD_func_channel, WAD_func_temperature {
-    /*
-     * inherited:
-     *
-     * private final ModBus modbus;
-     * protected final ModBusRequestBuilder builder;
-     * protected final int deviceId;
-     *
-     */
+final public class WAD_DI_BUS extends WadAbstractDevice {
     public WAD_DI_BUS(ModBus modbus, int deviceId) {
-        super(modbus, deviceId);
-        properties = new DeviceProperties(SignalType.Digital, PortType.Input, 8);
+        super(modbus, deviceId,
+            new DeviceProperties(SignalType.Digital, PortType.Input, 8));
     }
 
     @Override
@@ -50,13 +39,13 @@ final public class WAD_DI_BUS extends ModBusAbstractDevice implements WAD_func_c
     public int temperature() throws SerialPortException, InvalidModBusResponse {
         return
             new RsAnalyzed(
-                run(builder.cmdReadRegister(0x200C)),
+                run(builder().cmdReadRegister(0x200C)),
                 new RqInfo(id(), RsParsed.cmdRead,2)
             ).get(1);
     }
 
     @Override
-    public String summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    public CharSequence summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         return new WadSummaryDI(this).txt();
     }
 

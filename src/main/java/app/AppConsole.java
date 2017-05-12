@@ -48,14 +48,14 @@ public class AppConsole implements Runnable{
 /*
         System.out.println(new COMPortList());
             core.devList().forEach(item -> {
-                    System.out.println(core.dev(item).summary());
+                    System.out.println(core.dev(item).summaryTxt());
                 }
             );
 */
         //finish();
 /*
         try {
-            ArrayList<ModBusAbstractDevice> list = new ArrayList<ModBusAbstractDevice>(){{
+            ArrayList<WadAbstractDevice> list = new ArrayList<WadAbstractDevice>(){{
                 add(core.dev("DEV11"));
                 add(core.dev("DEV21"));
                 add(core.dev("DEV31"));
@@ -63,7 +63,7 @@ public class AppConsole implements Runnable{
             }};
 
             list.forEach(item ->
-                System.out.println(item.summary())
+                System.out.println(item.summaryTxt())
             );
 
         } catch (Exception e) {

@@ -4,7 +4,7 @@ import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.InvalidModBusResponse;
 import jbus.modbus.response.Values;
 import jssc.SerialPortException;
-import jwad.ModBusAbstractDevice;
+import jwad.modules.WadAbstractDevice;
 import jwad.WadDevType;
 
 /**
@@ -44,8 +44,10 @@ public interface WAD_Channel {
         throw new InvalidModBusFunction();
     }
     WadDevType type();
-    default ModBusAbstractDevice device() throws InvalidModBusFunction {
+/*
+    default WadAbstractDevice device() throws InvalidModBusFunction {
         // TODO need to implement for use magic when grouping ModBus Requests
         throw new InvalidModBusFunction();
     }
+*/
 }

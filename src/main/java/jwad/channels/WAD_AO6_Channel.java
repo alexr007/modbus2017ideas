@@ -5,25 +5,27 @@ import jbus.modbus.command.MbMerged;
 import jbus.modbus.response.*;
 import common.sw.primitives.Word;
 import jssc.SerialPortException;
-import jwad.ModBusAbstractDevice;
+import jwad.modules.WadAbstractDevice;
 import jwad.WadDevType;
 
 /**
  * Created by alexr on 22.01.2017.
  */
-final public class WAD_AO6_Channel implements WAD_Channel {
-    private final int channel;
-    private final ModBusAbstractDevice device;
-
-    public WAD_AO6_Channel(int channel, ModBusAbstractDevice device) {
-        assert (channel>=0)&&(channel<=device.properties.channels());
-        this.channel = channel;
-        this.device = device;
+final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Channel {
+    /**
+     * @param channel modbus channel id
+     *                1..N - mean single channel
+     *                0    - mean all channels (group operation).
+     *                not all functions supports group operation
+     * @param device  modbus real device
+     */
+    public WAD_AO6_Channel(int channel, WadAbstractDevice device) {
+        super(channel, device);
     }
 
     @Override
     public Values get() throws SerialPortException, InvalidModBusResponse {
-        if (channel==0) {
+        if (channel()==0) {
             return getMultiple();
         } else
             return getSingle();
@@ -31,8 +33,8 @@ final public class WAD_AO6_Channel implements WAD_Channel {
 
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
         int[] data = new RsAnalyzed(
-            device.run(device.builder.cmdReadRegister(0x2010,0x0006)),
-            new RqInfo(device.id(), RsParsed.cmdRead, 12)
+            run(builder().cmdReadRegister(0x2010,0x0006)),
+            new RqInfo(device().id(), RsParsed.cmdRead, 12)
         ).get();
         return
             new Values.Multiple(
@@ -49,8 +51,8 @@ final public class WAD_AO6_Channel implements WAD_Channel {
 
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {
         int[] data = new RsAnalyzed(
-            device.run(device.builder.cmdReadRegister(0x2010+channel-1)),
-            new RqInfo(device.id(), RsParsed.cmdRead, 2)
+            run(builder().cmdReadRegister(0x2010+channel()-1)),
+            new RqInfo(device().id(), RsParsed.cmdRead, 2)
         ).get();
         return
             new Values.Single(
@@ -60,9 +62,9 @@ final public class WAD_AO6_Channel implements WAD_Channel {
 
     @Override
     public void set(int val) throws SerialPortException {
-        assert (channel>0);
-        device.run(
-            device.builder.cmdWriteRegister(0x2010+channel-1,
+        assert (channel()>0);
+        run(
+            builder().cmdWriteRegister(0x2010+channel()-1,
                 new MbData(new Word(val))
             )
         );
@@ -70,9 +72,9 @@ final public class WAD_AO6_Channel implements WAD_Channel {
 
     @Override
     public void set(int[] val) throws SerialPortException {
-        assert (channel==0)&&(val.length==device.properties.channels());
-        device.run(
-            device.builder.cmdWriteRegister(0x2010+channel-1,0x0006,
+        assert (channel()==0)&&(val.length==device().properties().chanCount());
+        run(
+            builder().cmdWriteRegister(0x2010+channel()-1,0x0006,
                 new MbMerged(
                     new Word(val[0]).toBytes(),
                     new Word(val[1]).toBytes(),
@@ -83,10 +85,5 @@ final public class WAD_AO6_Channel implements WAD_Channel {
                 )
             )
         );
-    }
-
-    @Override
-    public WadDevType type() {
-        return WadDevType.AO6;
     }
 }

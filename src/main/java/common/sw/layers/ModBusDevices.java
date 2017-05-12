@@ -2,7 +2,7 @@ package common.sw.layers;
 
 import common.sw.common.IntAsHex;
 import jbus.modbus.ModBus;
-import jwad.ModBusAbstractDevice;
+import jwad.modules.WadAbstractDevice;
 import jwad.WadDevType;
 import jssc.SerialPortException;
 import org.javatuples.Triplet;
@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class ModBusDevices {
     private final ModBus modBus;
-    private HashMap<CharSequence, ModBusAbstractDevice> devices = new HashMap<>();
+    private HashMap<CharSequence, WadAbstractDevice> devices = new HashMap<>();
 
     public ModBusDevices(ModBus modBus) throws Exception {
         this(modBus, new ArrayList<>());
@@ -37,7 +37,7 @@ public class ModBusDevices {
         if (devices.containsKey(deviceName)) {
             throw new Exception(String.format("Duplicate Module Name:%s",deviceName));
         }
-        ModBusAbstractDevice device = ModBusAbstractDevice.build(modBus, type, modbusId);
+        WadAbstractDevice device = WadAbstractDevice.build(modBus, type, modbusId);
         // эта хрень не работает
         // TODO: переписать equals & hashCode что бы избежать ошибок при конфигурировании
         if (devices.containsValue(device)) {
@@ -51,7 +51,7 @@ public class ModBusDevices {
         devices.put(deviceName, device);
     }
 
-    public ModBusAbstractDevice get(CharSequence deviceName) throws Exception {
+    public WadAbstractDevice get(CharSequence deviceName) throws Exception {
         if (!devices.containsKey(deviceName)) {
             throw new Exception(String.format("Module Name NotFound:%s",deviceName));
         }
@@ -70,7 +70,7 @@ public class ModBusDevices {
             sb.append(String.format("name: %s, dev: %s, properties:%s\n",
                 k,
                 v.toString(),
-                v.properties.toString()
+                v.properties().toString()
             )));
         return sb.toString();
     }

@@ -3,7 +3,7 @@ package jwad.summary;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
-import jwad.ModBusAbstractDevice;
+import jwad.modules.WadAbstractDevice;
 import org.xembly.Directives;
 
 import java.util.HashMap;
@@ -12,9 +12,9 @@ import java.util.HashMap;
  * Created by alexr on 28.04.2017.
  */
 abstract public class WadSummaryBase implements WadSummary {
-    protected final ModBusAbstractDevice device;
+    protected final WadAbstractDevice device;
 
-    public WadSummaryBase(ModBusAbstractDevice device) {
+    public WadSummaryBase(WadAbstractDevice device) {
         this.device = device;
     }
 

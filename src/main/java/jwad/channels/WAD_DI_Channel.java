@@ -4,25 +4,27 @@ import common.sw.common.IntToArray;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
-import jwad.ModBusAbstractDevice;
+import jwad.modules.WadAbstractDevice;
 import jwad.WadDevType;
 
 /**
  * Created by alexr on 22.01.2017.
  */
-final public class WAD_DI_Channel implements WAD_Channel {
-    private final int channel;
-    private final ModBusAbstractDevice device;
-
-    public WAD_DI_Channel(int channel, ModBusAbstractDevice device) {
-        assert (channel>=0)&&(channel<=device.properties.channels());
-        this.channel = channel;
-        this.device = device;
+final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Channel {
+    /**
+     * @param channel modbus channel id
+     *                1..N - mean single channel
+     *                0    - mean all channels (group operation).
+     *                not all functions supports group operation
+     * @param device  modbus real device
+     */
+    public WAD_DI_Channel(int channel, WadAbstractDevice device) {
+        super(channel, device);
     }
 
     @Override
     public Values get() throws InvalidModBusResponse, SerialPortException {
-        if (channel==0) {
+        if (channel()==0) {
             return getMultiple();
         } else
             return getSingle();
@@ -33,8 +35,8 @@ final public class WAD_DI_Channel implements WAD_Channel {
             new Values.Multiple(
                 new IntToArray(
                     new RsAnalyzed(
-                        device.run(device.builder.cmdReadRegister(0x200D)),
-                        new RqInfo(device.id(), RsParsed.cmdRead, 2)
+                        run(builder().cmdReadRegister(0x200D)),
+                        new RqInfo(device().id(), RsParsed.cmdRead, 2)
                     ).get(1),8
                 )
             );
@@ -44,8 +46,8 @@ final public class WAD_DI_Channel implements WAD_Channel {
         return
             new Values.Single(
                 new RsAnalyzed(
-                    device.run(device.builder.cmdReadRegister(0x2004+channel-1)),
-                    new RqInfo(device.id(), RsParsed.cmdRead, 2)
+                    run(builder().cmdReadRegister(0x2004+channel()-1)),
+                    new RqInfo(device().id(), RsParsed.cmdRead, 2)
                 ).get(1)
             );
     }
@@ -59,7 +61,7 @@ final public class WAD_DI_Channel implements WAD_Channel {
      *
      */
     public Values fail() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        if (channel==0) {
+        if (channel()==0) {
             return failMultiple();
         } else
             return failSingle();
@@ -75,21 +77,21 @@ final public class WAD_DI_Channel implements WAD_Channel {
     private Values failSingle() throws InvalidModBusResponse, SerialPortException {
         return
             new Values.Single(
-                (failAll()>>(channel-1))&0b1
+                (failAll()>>(channel()-1))&0b1
             );
     }
 
     private int failAll() throws SerialPortException, InvalidModBusResponse {
         return
             new RsAnalyzed(
-                device.run(device.builder.cmdReadRegister(0x200E)),
-                new RqInfo(device.id(), RsParsed.cmdRead, 2)
+                run(builder().cmdReadRegister(0x200E)),
+                new RqInfo(device().id(), RsParsed.cmdRead, 2)
             ).get(1);
     }
 
     @Override
     public boolean opened() throws InvalidModBusResponse, SerialPortException {
-        if (channel==0) {
+        if (channel()==0) {
             return (getMultiple().get()&0b11111111)==0x0;
         } else
             return getSingle().get()==0;
@@ -97,14 +99,9 @@ final public class WAD_DI_Channel implements WAD_Channel {
 
     @Override
     public boolean closed() throws InvalidModBusResponse, SerialPortException {
-        if (channel==0) {
+        if (channel()==0) {
             return (getMultiple().get()&0b11111111)==0b11111111;
         } else
             return getSingle().get()==1;
-    }
-
-    @Override
-    public WadDevType type() {
-        return WadDevType.DI;
     }
 }

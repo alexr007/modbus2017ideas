@@ -3,31 +3,27 @@ package jwad.channels;
 import common.sw.common.IntToArray;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
-import jwad.ModBusAbstractDevice;
-import jwad.WadDevType;
+import jwad.modules.WadAbstractDevice;
 
 /**
  * Created by alexr on 22.01.2017.
  */
-final public class WAD_AIK_Channel implements WAD_Channel {
-    private final int channel;
-    private final ModBusAbstractDevice device;
+final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Channel {
 
-    /*
-     * channel selection
-     * @channel: 1-4 - mean single channel
-     *           0   - mean all channels;
-     *
+    /**
+     * @param channel modbus channel id
+     *                1..N - mean single channel
+     *                0    - mean all channels (group operation).
+     *                not all functions supports group operation
+     * @param device  modbus real device
      */
-    public WAD_AIK_Channel(int channel, ModBusAbstractDevice device) {
-        assert (channel>=0)&&(channel<=device.properties.channels());
-        this.channel = channel;
-        this.device = device;
+    public WAD_AIK_Channel(int channel, WadAbstractDevice device) {
+        super(channel, device);
     }
 
     @Override
     public Values get() throws SerialPortException, InvalidModBusResponse {
-        if (channel==0) {
+        if (channel()==0) {
             return getMultiple();
         } else
             return getSingle();
@@ -35,8 +31,8 @@ final public class WAD_AIK_Channel implements WAD_Channel {
 
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
         int[] data = new RsAnalyzed(
-            device.run(device.builder.cmdReadRegister(0x100B, 0x0004)),
-            new RqInfo(device.id(), RsParsed.cmdRead, 8)
+            run(builder().cmdReadRegister(0x100B, 0x0004)),
+            new RqInfo(device().id(), RsParsed.cmdRead, 8)
         ).get();
         return new Values.Multiple(
             new int[]{
@@ -49,8 +45,8 @@ final public class WAD_AIK_Channel implements WAD_Channel {
 
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {
         int[] data = new RsAnalyzed(
-            device.run(device.builder.cmdReadRegister(0x100B+channel-1)),
-            new RqInfo(device.id(), RsParsed.cmdRead, 2)
+            run(builder().cmdReadRegister(0x100B+channel()-1)),
+            new RqInfo(device().id(), RsParsed.cmdRead, 2)
         ).get();
         return
             new Values.Single(
@@ -59,7 +55,7 @@ final public class WAD_AIK_Channel implements WAD_Channel {
     }
 
     @Override
-    /*
+    /**
      * Младшие четыре бита регистра статуса указывают
      * на наличие связи с соответствующим каналом
      *
@@ -70,24 +66,19 @@ final public class WAD_AIK_Channel implements WAD_Channel {
      * 0 - НЕТ связи с контроллером порта (порт сгорел)
      */
     public Values fail() throws InvalidModBusResponse, SerialPortException {
-        if (channel==0) {
+        if (channel()==0) {
             return
-                new Values.Multiple(new IntToArray((~getFailAll())&0b1111,4).get());
+                new Values.Multiple(new IntToArray((~getFailAll())&0b1111,4));
         } else
             return
-                new Values.Single((~getFailAll()) >> (channel-1) & 0b1);
+                new Values.Single((~getFailAll()) >> (channel()-1) & 0b1);
     }
 
     private int getFailAll() throws SerialPortException, InvalidModBusResponse {
         RsAnalyzed analyzed = new RsAnalyzed(
-            device.run(device.builder.cmdReadRegister(0x100A)),
-            new RqInfo(device.id(),RsParsed.cmdRead,2)
+            run(builder().cmdReadRegister(0x100A)),
+            new RqInfo(device().id(),RsParsed.cmdRead,2)
         );
         return analyzed.get(1);
-    }
-
-    @Override
-    public WadDevType type() {
-        return WadDevType.AIK;
     }
 }

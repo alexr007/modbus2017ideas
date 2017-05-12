@@ -11,10 +11,10 @@ public class DeviceProperties {
     // Channels count
     private final int channels;
 
-    public DeviceProperties(SignalType signalType, PortType portType, int channels) {
+    public DeviceProperties(SignalType signalType, PortType portType, int count) {
         this.signalType = signalType;
         this.portType = portType;
-        this.channels = channels;
+        this.channels = count;
     }
 
     public SignalType signalType() {
@@ -25,7 +25,7 @@ public class DeviceProperties {
         return this.portType;
     }
 
-    public int channels() {
+    public int chanCount() {
         return this.channels;
     }
 

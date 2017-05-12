@@ -7,8 +7,6 @@ import jbus.modbus.device.SignalType;
 import jbus.modbus.ModBus;
 import jbus.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
-import jwad.ModBusAbstractDevice;
-import jwad.WAD_func_channel;
 import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
 import jwad.channels.WAD_DI14_Channel;
@@ -18,18 +16,10 @@ import org.xembly.Directives;
 /**
  * Created by alexr on 06.02.2017.
  */
-final public class WAD_DI14_BUS extends ModBusAbstractDevice implements WAD_func_channel {
-    /*
-     * inherited:
-     *
-     * private final ModBus modbus;
-     * protected final ModBusRequestBuilder builder;
-     * protected final int deviceId;
-     *
-     */
+final public class WAD_DI14_BUS extends WadAbstractDevice {
     public WAD_DI14_BUS(ModBus modbus, int deviceId) {
-        super(modbus, deviceId);
-        properties = new DeviceProperties(SignalType.Digital, PortType.Input, 15);
+        super(modbus, deviceId,
+            new DeviceProperties(SignalType.Digital, PortType.Input, 15));
     }
 
     @Override
@@ -48,7 +38,7 @@ final public class WAD_DI14_BUS extends ModBusAbstractDevice implements WAD_func
     }
 
     @Override
-    public String summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    public CharSequence summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         return new WadSummaryDI(this).txt();
     }
 

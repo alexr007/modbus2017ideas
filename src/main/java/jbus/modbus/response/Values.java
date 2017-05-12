@@ -84,12 +84,12 @@ public interface Values {
     class Multiple implements Values {
         private final int[] values;
 
-        public Multiple(int[] values) {
-            this.values = values;
-        }
-
         public Multiple(IntToArray values) {
             this(values.get());
+        }
+
+        public Multiple(int[] values) {
+            this.values = values;
         }
 
         @Override

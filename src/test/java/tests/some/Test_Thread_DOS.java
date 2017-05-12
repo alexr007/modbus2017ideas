@@ -1,7 +1,7 @@
 package tests.some;
 
 import jbus.modbus.InvalidModBusFunction;
-import jwad.ModBusAbstractDevice;
+import jwad.modules.WadAbstractDevice;
 import jssc.SerialPortException;
 
 import java.util.concurrent.CountDownLatch;
@@ -10,13 +10,13 @@ import java.util.concurrent.CountDownLatch;
  * Created by alexr on 08.04.2017.
  */
 public class Test_Thread_DOS implements Runnable{
-    private final ModBusAbstractDevice device;
+    private final WadAbstractDevice device;
     private final CountDownLatch cdl;
     private Object monitor = new Object();
     private final int latency = 500;
     private final int count = 36000;
 
-    public Test_Thread_DOS(ModBusAbstractDevice device, CountDownLatch cdl) {
+    public Test_Thread_DOS(WadAbstractDevice device, CountDownLatch cdl) {
         this.device = device;
         this.cdl = cdl;
     }

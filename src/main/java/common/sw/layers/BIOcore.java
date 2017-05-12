@@ -3,7 +3,7 @@ package common.sw.layers;
 import jbus.comport.COMPort;
 import jbus.comport.COMPortProperties;
 import jbus.modbus.ModBus;
-import jwad.ModBusAbstractDevice;
+import jwad.modules.WadAbstractDevice;
 import jwad.channels.WAD_Channel;
 import jwad.WadDevType;
 import constants.Id;
@@ -65,7 +65,7 @@ public class BIOcore {
         );
     }
 
-    public ModBusAbstractDevice dev(CharSequence name) {
+    public WadAbstractDevice dev(CharSequence name) {
         try {
             return devices.get(name);
         } catch (Exception e) {
