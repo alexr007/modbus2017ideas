@@ -5,10 +5,6 @@
     <xsl:strip-space elements="*"/>
     <xsl:include href="/xsl/layout.xsl"/>
     <xsl:template match="page" mode="head">
-        <!-- WILL REFRESH ONLY INPUT PORTS -->
-        <xsl:if test="data/summary/dtype[.='Input']">
-            <meta http-equiv="refresh" content="2"/>
-        </xsl:if>
         <title>
             <xsl:text>BIO scada</xsl:text>
         </title>
@@ -51,12 +47,35 @@
                 <xsl:text>There are no channels on device.</xsl:text>
             </p>
         </xsl:if>
+        <!-- WILL REFRESH ONLY INPUT PORTS -->
+        <xsl:if test="data/summary/dtype[.='Input']">
+            <input type="button" value="update" onClick="js:refresh()" tabindex="1"/>
+            <script type="text/javascript">
+                function refresh() {
+                var xml = new XMLHttpRequest();
+                xml.open('GET', "refresh", false);
+                xml.send();
+                var styles = new XMLHttpRequest();
+                styles.open("GET", "http://127.0.0.1:8080/xsl/details.xsl", false);
+                styles.send();
+                var proc = new XSLTProcessor();
+                proc.importStylesheet(styles.responseXML);
+                document.getElementById('details').innerHTML = "";
+                document.getElementById('details').appendChild(
+                proc.transformToFragment(xml.responseXML, document)
+                );
+                }
+                setInterval(refresh, 1500);
+            </script>
+        </xsl:if>
         <xsl:if test="data/channels/channel">
-            <table>
-            <xsl:for-each select="data/channels/channel">
-                <xsl:apply-templates select="."/>
-            </xsl:for-each>
-            </table>
+            <span id="details">
+                <table>
+                    <xsl:for-each select="data/channels/channel">
+                        <xsl:apply-templates select="."/>
+                    </xsl:for-each>
+                </table>
+            </span>
         </xsl:if>
     </xsl:template>
     <xsl:template match="channel">

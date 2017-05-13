@@ -62,6 +62,7 @@ public class TkApp extends TkWrap {
                                         new FkRegex("/", new TkIndex(core)),
                                         new FkRegex("/config", new TkShowBasicMenu(core)),
                                         new FkRegex("/config/show", new TkShowDeviceList(core)),
+                                        new FkRegex("/config/show/refresh", new TkShowDeviceDetailsOnly(core)),
                                         new FkRegex("/config/show/[A-Za-z0-9\\_\\-]+", new TkShowDevice(core))
                                         //new FkRegex("/shutdown", new TkShutdown())
                                     )

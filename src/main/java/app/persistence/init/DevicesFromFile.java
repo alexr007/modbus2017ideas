@@ -25,7 +25,7 @@ public class DevicesFromFile {
         for (Triplet<String, WadDevType, Integer> item : devicesList) {
             map.put(
                 item.getValue0(),
-                WadAbstractDevice.build(modBus, item.getValue1(), item.getValue2())
+                WadAbstractDevice.buildEcoAlliance(modBus, item.getValue1(), item.getValue2())
             );
         }
 */
