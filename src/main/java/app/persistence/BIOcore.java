@@ -33,7 +33,7 @@ public class BIOcore {
         this.devices = new ModBusDevices(
             modBus,
             //DeviceBuilded.buildEcoAlliance()
-            DeviceBuilded.buildTestEvironment()
+            DeviceBuilded.buildTestEnvironment()
         );
         this.channels = new ModBusChannels(
             this.devices,

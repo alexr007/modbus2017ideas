@@ -49,21 +49,19 @@
         </xsl:if>
         <!-- WILL REFRESH ONLY INPUT PORTS -->
         <xsl:if test="data/summary/dtype[.='Input']">
-            <input type="button" value="update" onClick="js:refresh()" tabindex="1"/>
+            <input type="button" value="manual update" onClick="js:refresh()" tabindex="1"/>
             <script type="text/javascript">
                 function refresh() {
-                var xml = new XMLHttpRequest();
-                xml.open('GET', "refresh", false);
-                xml.send();
-                var styles = new XMLHttpRequest();
-                styles.open("GET", "http://127.0.0.1:8080/xsl/details.xsl", false);
-                styles.send();
-                var proc = new XSLTProcessor();
-                proc.importStylesheet(styles.responseXML);
-                document.getElementById('details').innerHTML = "";
-                document.getElementById('details').appendChild(
-                proc.transformToFragment(xml.responseXML, document)
-                );
+                    var xml = new XMLHttpRequest();
+                    xml.open('GET', "refresh", false);
+                    xml.send();
+                    var styles = new XMLHttpRequest();
+                    styles.open("GET", "http://192.168.5.101:8080/xsl/details.xsl", false);
+                    styles.send();
+                    var proc = new XSLTProcessor();
+                    proc.importStylesheet(styles.responseXML);
+                    document.getElementById('details').innerHTML = "";
+                    document.getElementById('details').appendChild( proc.transformToFragment(xml.responseXML, document) );
                 }
                 setInterval(refresh, 1500);
             </script>
