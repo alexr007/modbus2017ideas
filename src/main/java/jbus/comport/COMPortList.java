@@ -6,6 +6,7 @@ import jssc.SerialPortList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 /**
  * Created by alexr on 02.12.2016.
@@ -35,7 +36,11 @@ public class COMPortList {
 
     private void doRead() {
         if (!ready) {
-            list.addAll(Arrays.asList(SerialPortList.getPortNames()));
+            list.addAll(Arrays.asList(SerialPortList.getPortNames(
+                    "/dev/",
+                    //"tty.(serial|usbserial|usbmodem).*"
+                    Pattern.compile("(tty.*UART*|tty.*serial*)")
+            )));
             ready = true;
         }
     }
