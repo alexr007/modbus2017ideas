@@ -1,5 +1,7 @@
 import app.persistence.BIOcore;
-import jbase.hex.IntAsHex;
+import jbase.hex.ByteAsHex;
+import jbase.hex.WordsAsHex;
+import jbus.modbus.response.WordsFromBytes;
 import org.javatuples.Triplet;
 
 import java.util.ArrayList;
@@ -9,7 +11,17 @@ import java.util.ArrayList;
  * Created by alexr on 12.05.2017.
  */
 public class MainTest {
-    public void test() throws Exception {
+    public void test() {
+        System.out.println(
+            new WordsAsHex(
+                new WordsFromBytes(
+                    new int[] {1,1}
+                ).get()
+            )
+        );
+    }
+
+    public void test1() throws Exception {
         BIOcore core = new BIOcore(constants.Dv.COM26);
         ArrayList<Triplet> l = core.chanListTriplet();
         l.forEach(item -> {
@@ -19,7 +31,7 @@ public class MainTest {
                 item.getValue0(),
                 item.getValue1(),
 //                item.getValue2()
-                new IntAsHex((Integer) item.getValue2()).toString()
+                new ByteAsHex((Integer) item.getValue2()).toString()
             ));
         });
 

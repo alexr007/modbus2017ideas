@@ -1,8 +1,6 @@
 package app.persistence.init;
 
-import jbase.hex.IntAsHex;
 import jbus.modbus.InvalidModBusFunction;
-import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
 import jssc.SerialPortException;
 import org.javatuples.Triplet;

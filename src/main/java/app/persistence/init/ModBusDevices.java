@@ -1,6 +1,6 @@
 package app.persistence.init;
 
-import jbase.hex.IntAsHex;
+import jbase.hex.ByteAsHex;
 import jbus.modbus.ModBus;
 import jwad.modules.WadAbstractDevice;
 import jwad.WadDevType;
@@ -44,7 +44,7 @@ public class ModBusDevices {
             throw new Exception(
                 String.format("Duplicate ModBus Device:%s id:%s",
                     type.toString(),
-                    new IntAsHex(modbusId).toString()
+                    new ByteAsHex(modbusId).toString()
                 )
             );
         }
@@ -82,7 +82,7 @@ public class ModBusDevices {
     public ArrayList<Triplet> triplet() {
         ArrayList<Triplet> list = new ArrayList<>();
         devices.forEach((key, dev) -> {
-            list.add(new Triplet<CharSequence, WadDevType, CharSequence>(key, dev.type(), new IntAsHex(dev.id()).toString()));
+            list.add(new Triplet<CharSequence, WadDevType, CharSequence>(key, dev.type(), new ByteAsHex(dev.id()).toString()));
         });
         return list;
     }

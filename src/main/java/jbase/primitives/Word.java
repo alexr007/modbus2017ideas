@@ -20,6 +20,10 @@ public class Word {
         return new Byte(0x00FF & (origin >> 8));
     }
 
+    public int get() {
+        return origin;
+    }
+
     @Override
     public String toString() {
         return new WordAsHex(origin).toString();

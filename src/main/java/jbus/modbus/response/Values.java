@@ -84,6 +84,10 @@ public interface Values {
     class Multiple implements Values {
         private final int[] values;
 
+        public Multiple(WordsFromBytes origin) {
+            this(origin.get());
+        }
+
         public Multiple(IntToArray values) {
             this(values.get());
         }

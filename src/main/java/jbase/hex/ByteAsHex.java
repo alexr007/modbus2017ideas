@@ -11,10 +11,10 @@ package jbase.hex;
  *
  * if origin > 255 - only lower byte is used
  */
-public class IntAsHex {
+public class ByteAsHex {
     private final int origin;
 
-    public IntAsHex(int origin) {
+    public ByteAsHex(int origin) {
         this.origin = 0xFF & origin;
     }
 

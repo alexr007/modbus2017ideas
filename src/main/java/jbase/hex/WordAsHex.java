@@ -1,5 +1,7 @@
 package jbase.hex;
 
+import jbase.primitives.Word;
+
 /**
  * Created by alexr on 18.01.2017.
  *
@@ -14,6 +16,10 @@ package jbase.hex;
  */
 public class WordAsHex {
     private final int origin;
+
+    public WordAsHex(Word origin) {
+        this(origin.get());
+    }
 
     public WordAsHex(int origin) {
         this.origin = 0xFFFF & origin;
