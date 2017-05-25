@@ -1,6 +1,6 @@
 package jwad.channels;
 
-import jbase.arr.IntToArray;
+import jbase.arr.ArrayFromInt;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
@@ -36,7 +36,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
         ).get();
         return
             new Values.Multiple(
-                new IntToArray(
+                new ArrayFromInt(
                     (data[0] & 0xFF) << 8 | data[1] & 0xFF,
                     15
                 )
@@ -77,7 +77,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
     private Values failMultiple() throws InvalidModBusResponse, SerialPortException {
         return
             new Values.Multiple(
-                new IntToArray(failAll(),15)
+                new ArrayFromInt(failAll(),15)
             );
     }
 

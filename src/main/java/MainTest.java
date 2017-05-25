@@ -1,4 +1,7 @@
 import app.persistence.BIOcore;
+import jbase.Branch;
+import jbase.Decision;
+import jbase.Solution;
 import jbase.hex.ByteAsHex;
 import jbase.hex.WordsAsHex;
 import jbus.modbus.response.WordsFromBytes;
@@ -9,9 +12,31 @@ import java.util.ArrayList;
 
 /**
  * Created by alexr on 12.05.2017.
+ *
+ * /dev/tty.SLAB_USBtoUART
  */
 public class MainTest {
     public void test() {
+        int i=1;
+        new Decision(
+            new Branch(i < 0, () -> System.out.println("<0")),
+            new Branch(i == 0, () -> System.out.println("=0")),
+            new Branch(i > 0, () -> System.out.println(">0"))
+        ).make();
+    }
+
+    public void test3() {
+        int i=10;
+        System.out.println(
+            new Solution<>(i > 1,
+                "gt 1\n",
+                "lt 1\n"
+            ).make()
+        );
+    }
+
+
+    public void test2() {
         System.out.println(
             new WordsAsHex(
                 new WordsFromBytes(

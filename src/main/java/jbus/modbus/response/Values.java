@@ -1,6 +1,6 @@
 package jbus.modbus.response;
 
-import jbase.arr.IntToArray;
+import jbase.arr.ArrayFromInt;
 import jbase.IterableToString;
 import java.util.Arrays;
 
@@ -46,6 +46,10 @@ public interface Values {
     class Single implements  Values {
         private final int value;
 
+        public Single(WordsFromBytes origin) {
+            this(origin.get0());
+        }
+
         public Single(int value) {
             this.value = value;
         }
@@ -88,7 +92,7 @@ public interface Values {
             this(origin.get());
         }
 
-        public Multiple(IntToArray values) {
+        public Multiple(ArrayFromInt values) {
             this(values.get());
         }
 

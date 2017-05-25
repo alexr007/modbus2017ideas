@@ -11,15 +11,15 @@ package jbase.arr;
  * maximum array length is 16
  *
  */
-public class IntToArray {
+public class ArrayFromInt {
     private final int values;
     private final int count;
 
-    public IntToArray(int values) {
+    public ArrayFromInt(int values) {
         this(values, 8);
     }
 
-    public IntToArray(int values, int count) {
+    public ArrayFromInt(int values, int count) {
         this.values = values;
         this.count = count;
     }

@@ -20,7 +20,7 @@ public class ScadaCore {
                 // создаем массив Runnable
                 add(new AppConsole(core));
                 //add(new AppDecision(core));
-                //add(new AppWebServer(core));
+                add(new AppWebServer(core));
 
                 // массив Thread
                 ArrayList<Thread> th = new ArrayList<Thread>();

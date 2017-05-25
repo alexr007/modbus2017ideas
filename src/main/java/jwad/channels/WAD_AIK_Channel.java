@@ -1,6 +1,7 @@
 package jwad.channels;
 
-import jbase.arr.IntToArray;
+import jbase.Solution;
+import jbase.arr.ArrayFromInt;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
 import jwad.modules.WadAbstractDevice;
@@ -23,13 +24,16 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
 
     @Override
     public Values get() throws SerialPortException, InvalidModBusResponse {
-        if (channel()==0) {
-            return getMultiple();
-        } else
-            return getSingle();
+        return
+            new Solution<>(
+                channel()==0,
+                getMultiple(),
+                getSingle()
+            ).make();
     }
 
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
+/*
         int[] data = new RsAnalyzed(
             run(builder().cmdReadRegister(0x100B, 0x0004)),
             new RqInfo(device().id(), RsParsed.cmdRead, 8)
@@ -41,9 +45,21 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
                 (data[4] & 0xFF) << 8 | data[5] & 0xFF,
                 (data[6] & 0xFF) << 8 | data[7] & 0xFF
             });
+
+*/
+        return
+            new Values.Multiple(
+                new WordsFromBytes(
+                    new RsAnalyzed(
+                        run(builder().cmdReadRegister(0x100B, 0x0004)),
+                        new RqInfo(device().id(), RsParsed.cmdRead, 8)
+                    )
+                )
+            );
     }
 
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {
+/*
         int[] data = new RsAnalyzed(
             run(builder().cmdReadRegister(0x100B+channel()-1)),
             new RqInfo(device().id(), RsParsed.cmdRead, 2)
@@ -51,6 +67,14 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
         return
             new Values.Single(
                 (data[0] & 0xFF) << 8 | data[1] & 0xFF
+            );
+*/
+        return
+            new Values.Single(
+                new WordsFromBytes(new RsAnalyzed(
+                    run(builder().cmdReadRegister(0x100B+channel()-1)),
+                    new RqInfo(device().id(), RsParsed.cmdRead, 2)
+                ))
             );
     }
 
@@ -66,19 +90,19 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
      * 0 - НЕТ связи с контроллером порта (порт сгорел)
      */
     public Values fail() throws InvalidModBusResponse, SerialPortException {
-        if (channel()==0) {
-            return
-                new Values.Multiple(new IntToArray((~getFailAll())&0b1111,4));
-        } else
-            return
-                new Values.Single((~getFailAll()) >> (channel()-1) & 0b1);
+        return
+            new Solution<>(
+                channel()==0,
+                new Values.Multiple(new ArrayFromInt((~getFailAll())&0b1111,4)),
+                new Values.Single((~getFailAll()) >> (channel()-1) & 0b1)
+            ).make();
     }
 
     private int getFailAll() throws SerialPortException, InvalidModBusResponse {
-        RsAnalyzed analyzed = new RsAnalyzed(
-            run(builder().cmdReadRegister(0x100A)),
-            new RqInfo(device().id(),RsParsed.cmdRead,2)
-        );
-        return analyzed.get(1);
+        return
+            new RsAnalyzed(
+                run(builder().cmdReadRegister(0x100A)),
+                new RqInfo(device().id(),RsParsed.cmdRead,2)
+            ).get(1);
     }
 }
