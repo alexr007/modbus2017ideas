@@ -24,12 +24,9 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
 
     @Override
     public Values get() throws SerialPortException, InvalidModBusResponse {
-        return
-            new Solution<>(
-                channel()==0,
-                getMultiple(),
-                getSingle()
-            ).make();
+        return channel()==0
+            ? getMultiple()
+            : getSingle();
     }
 
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
@@ -45,7 +42,6 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
                 (data[4] & 0xFF) << 8 | data[5] & 0xFF,
                 (data[6] & 0xFF) << 8 | data[7] & 0xFF
             });
-
 */
         return
             new Values.Multiple(
@@ -90,12 +86,9 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
      * 0 - НЕТ связи с контроллером порта (порт сгорел)
      */
     public Values fail() throws InvalidModBusResponse, SerialPortException {
-        return
-            new Solution<>(
-                channel()==0,
-                new Values.Multiple(new ArrayFromInt((~getFailAll())&0b1111,4)),
-                new Values.Single((~getFailAll()) >> (channel()-1) & 0b1)
-            ).make();
+        return channel()==0
+            ? new Values.Multiple(new ArrayFromInt((~getFailAll())&0b1111,4))
+            : new Values.Single((~getFailAll()) >> (channel()-1) & 0b1);
     }
 
     private int getFailAll() throws SerialPortException, InvalidModBusResponse {
