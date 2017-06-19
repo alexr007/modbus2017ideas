@@ -6,9 +6,7 @@ import jbase.hex.ByteAsHex;
 import jbase.hex.WordsAsHex;
 import jbus.modbus.response.WordsFromBytes;
 import org.javatuples.Triplet;
-
 import java.util.ArrayList;
-
 
 /**
  * Created by alexr on 12.05.2017.
@@ -17,6 +15,13 @@ import java.util.ArrayList;
  */
 public class MainTest {
     public void test() {
+        int i = 0b1111111111111111111111111111111;
+        int j = 0;
+        int k = i+j;
+        System.out.println(k);
+    }
+
+    public void test4() {
         int i=1;
         new Decision(
             new Branch(i < 0, () -> System.out.println("<0")),

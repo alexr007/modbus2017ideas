@@ -3,10 +3,12 @@ package jbus.comport;
 import jbase.primitives.Bytes;
 import jssc.*;
 
+import java.io.IOException;
+
 /**
  * Created by alexr on 02.12.2016.
  */
-public class COMPort {
+public class COMPort implements  SimpleSerialInterface{
     // SerialPort instance, that wrapped
     private final SerialPort port;
     // listener for comport read
@@ -53,10 +55,12 @@ public class COMPort {
      * You need the close port after use it
      *
      */
+    @Override
     public void close() throws SerialPortException {
         port.closePort();
     }
 
+    @Override
     public void write(Bytes buffer) throws SerialPortException {
         port.writeBytes(buffer.get());
     }
@@ -64,6 +68,7 @@ public class COMPort {
     /*
      * just write byte[] to buffer
      */
+    @Override
     public void write(byte[] buffer) throws SerialPortException {
         port.writeBytes(buffer);
     }
@@ -73,12 +78,25 @@ public class COMPort {
      * and wait byte[] from buffer
      *
      */
+    @Override
     public byte[] writeRead(byte[] buffer) throws SerialPortException, InterruptedException {
         synchronized (locker) {
             received = false;
             port.writeBytes(buffer);
-            while (!received) locker.wait();
+            while (!received) {
+                locker.wait();
+            }
             return readed;
+        }
+    }
+
+    @Override
+    public void cancelWrite() throws IOException {
+        try {
+            port.purgePort(SerialPort.PURGE_TXABORT);
+            port.purgePort(SerialPort.PURGE_TXCLEAR);
+        } catch (SerialPortException e) {
+            throw new IOException(e);
         }
     }
 
