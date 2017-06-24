@@ -45,7 +45,7 @@ final public class WAD_AO_Channel extends WadAbstractChannel implements WAD_Chan
                 (data[6] & 0xFF) << 8 | data[7] & 0xFF,
             }
         );
-        //System.out.println(new ByteAsHex(v.get()).toString());
+        //System.out.println(new HexFromByte(v.get()).toString());
         return v;
     }
 

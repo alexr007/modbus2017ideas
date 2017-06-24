@@ -14,14 +14,14 @@ import jbase.primitives.Word;
  *
  * if origin > 65535 - only 2 lower bytes is used
  */
-public class WordAsHex {
+public class HexFromWord {
     private final int origin;
 
-    public WordAsHex(Word origin) {
+    public HexFromWord(Word origin) {
         this(origin.get());
     }
 
-    public WordAsHex(int origin) {
+    public HexFromWord(int origin) {
         this.origin = 0xFFFF & origin;
     }
 

@@ -1,7 +1,7 @@
 package jwad.modules;
 
 import com.google.common.base.Joiner;
-import jbase.hex.ByteAsHex;
+import jbase.hex.HexFromByte;
 import jbus.modbus.*;
 import jbus.modbus.device.DeviceProperties;
 import jbus.modbus.response.InvalidModBusResponse;
@@ -72,7 +72,7 @@ public abstract class WadAbstractDevice {
         return
             String.format("%-13s id: %s",
                 name(),
-                new ByteAsHex(deviceId).toString()
+                new HexFromByte(deviceId).toString()
             );
     }
 
@@ -80,7 +80,7 @@ public abstract class WadAbstractDevice {
         CharSequence details;
         CharSequence base = Joiner.on("\n").join(
             "Summary:",
-            String.format("ModBus id: %s", new ByteAsHex(deviceId)),
+            String.format("ModBus id: %s", new HexFromByte(deviceId)),
             String.format("Device name: %s", name()),
             String.format("Device type: %s", properties.portType()),
             String.format("Channels count: %s", properties.chanCount()),
@@ -99,7 +99,7 @@ public abstract class WadAbstractDevice {
         Directives base = new Directives()
             .add("data")
             .add("summary")
-            .add("modbusid").set(new ByteAsHex(deviceId).toString()).up()
+            .add("modbusid").set(new HexFromByte(deviceId).toString()).up()
             .add("dname").set(name()).up()
             .add("dtype").set(properties.portType()).up()
             .add("ccount").set(properties.chanCount()).up()

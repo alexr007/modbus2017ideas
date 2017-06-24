@@ -1,6 +1,6 @@
 package jtools;
 
-import jbase.hex.BytesAsHex;
+import jbase.hex.HexFromBytes;
 import jbase.primitives.Bytes;
 import jbus.modbus.MbRequest;
 import jbus.modbus.MbResponse;
@@ -10,28 +10,28 @@ import jbus.modbus.MbResponse;
  */
 public class PH {
     public PH(String text, byte[] origin) {
-        System.out.println(text+":"+new BytesAsHex(origin));
+        System.out.println(text+":"+new HexFromBytes(origin));
     }
     public PH(byte[] origin) {
-        System.out.println(new BytesAsHex(origin));
+        System.out.println(new HexFromBytes(origin));
     }
     public PH(String text, MbResponse origin) {
-        System.out.println(text+":"+new BytesAsHex(origin.get()));
+        System.out.println(text+":"+new HexFromBytes(origin.get()));
     }
     public PH(MbResponse origin) {
-        System.out.println(new BytesAsHex(origin.get()));
+        System.out.println(new HexFromBytes(origin.get()));
     }
     public PH(String text, MbRequest origin) {
-        System.out.println(text+":"+new BytesAsHex(origin.get()));
+        System.out.println(text+":"+new HexFromBytes(origin.get()));
     }
     public PH(MbRequest origin) {
-        System.out.println(new BytesAsHex(origin.get()));
+        System.out.println(new HexFromBytes(origin.get()));
     }
     public PH(String text, Bytes origin) {
-        System.out.println(text+":"+new BytesAsHex(origin.get()));
+        System.out.println(text+":"+new HexFromBytes(origin.get()));
     }
     public PH(Bytes origin) {
-        System.out.println(new BytesAsHex(origin.get()));
+        System.out.println(new HexFromBytes(origin.get()));
     }
     public PH(String text, int origin) {
         System.out.println(text+":"+origin);

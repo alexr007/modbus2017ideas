@@ -1,6 +1,6 @@
 package jbase.primitives;
 
-import jbase.hex.ByteAsHex;
+import jbase.hex.HexFromByte;
 import jbus.modbus.command.MbWrap;
 
 public class Byte {
@@ -17,7 +17,7 @@ public class Byte {
 
     @Override
     public String toString() {
-        return new ByteAsHex(origin).toString();
+        return new HexFromByte(origin).toString();
     }
 
     public Bytes toBytes() {

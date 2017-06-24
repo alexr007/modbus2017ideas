@@ -1,6 +1,6 @@
 package jbase.hex.test;
 
-import jbase.hex.BytesAsHex;
+import jbase.hex.HexFromBytes;
 import jbus.modbus.command.MbData;
 import jbase.primitives.Word;
 
@@ -11,7 +11,7 @@ public class Test_BytesAsHex_2 {
     public static void main(String[] args) {
         MbData mbData = new MbData(new Word(65535));
         System.out.println(
-            new BytesAsHex(mbData)
+            new HexFromBytes(mbData)
         );
     }
 }

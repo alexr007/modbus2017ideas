@@ -1,6 +1,6 @@
 package jbus.modbus.command;
 
-import jbase.hex.BytesAsHex;
+import jbase.hex.HexFromBytes;
 import jbase.primitives.Bytes;
 
 /**
@@ -43,7 +43,7 @@ public class MbMerged implements Bytes {
 
     @Override
     public String toString() {
-        return new BytesAsHex(
+        return new HexFromBytes(
             get()
         ).toString();
     }

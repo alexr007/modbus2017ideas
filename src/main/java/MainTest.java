@@ -2,8 +2,8 @@ import app.persistence.BIOcore;
 import jbase.Branch;
 import jbase.Decision;
 import jbase.Solution;
-import jbase.hex.ByteAsHex;
-import jbase.hex.WordsAsHex;
+import jbase.hex.HexFromByte;
+import jbase.hex.HexFromWords;
 import jbus.modbus.response.WordsFromBytes;
 import org.javatuples.Triplet;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class MainTest {
 
     public void test2() {
         System.out.println(
-            new WordsAsHex(
+            new HexFromWords(
                 new WordsFromBytes(
                     new int[] {1,1}
                 ).get()
@@ -60,7 +60,7 @@ public class MainTest {
                 item.getValue0(),
                 item.getValue1(),
 //                item.getValue2()
-                new ByteAsHex((Integer) item.getValue2()).toString()
+                new HexFromByte((Integer) item.getValue2()).toString()
             ));
         });
 

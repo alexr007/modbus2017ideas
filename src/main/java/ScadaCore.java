@@ -1,6 +1,7 @@
 import app.*;
 import app.persistence.BIOcore;
 import constants.Dv;
+import t.t1;
 
 import java.util.ArrayList;
 
@@ -8,7 +9,8 @@ public class ScadaCore {
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
             //new FindComPorts().run();
-            new MainTest().test();
+            //new MainTest().test();
+            new t1().run();
         } else
         if ((args.length == 2)&&(args[1].equals("test"))) {
             new AppConsoleSpeedTest(args[0]).run();

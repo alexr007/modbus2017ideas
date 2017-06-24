@@ -1,6 +1,6 @@
 package jbase.primitives;
 
-import jbase.hex.WordAsHex;
+import jbase.hex.HexFromWord;
 import jbus.modbus.command.MbMerged;
 import jbus.modbus.command.MbWrap;
 
@@ -26,7 +26,7 @@ public class Word {
 
     @Override
     public String toString() {
-        return new WordAsHex(origin).toString();
+        return new HexFromWord(origin).toString();
     }
 
     public Bytes toBytes() {

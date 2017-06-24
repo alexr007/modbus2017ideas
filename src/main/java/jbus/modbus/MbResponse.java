@@ -1,6 +1,6 @@
 package jbus.modbus;
 
-import jbase.hex.BytesAsHex;
+import jbase.hex.HexFromBytes;
 
 /**
  * Created by alexr on 20.01.2017.
@@ -29,7 +29,7 @@ public interface MbResponse {
 
         @Override
         public String toString() {
-            return new BytesAsHex(data).toString();
+            return new HexFromBytes(data).toString();
         }
     }
 
