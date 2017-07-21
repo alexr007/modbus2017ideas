@@ -35,43 +35,5 @@ public class HexFromBytes {
         }
         sb.append("]");
         return sb.toString();
-
-/*
-        Arrays.stream(origin)
-            .mapToObj(value -> new HexFromByte(value).toString())
-            .collect(Collectors.joining(", "));
-*/
-
-
-
-/*
-        IntStream range = IntStream.range(0, origin.length);
-        return range.map(i -> origin[i])
-        .collect(Collectors.joining(", "))
-            .toString();
-*/
-/*
-
-        intStream.forEach(value -> System.out.println(new HexFromByte(value).toString()));
-        return intStream.toString();
-*/
-/*
-        System.out.println(intStream);
-*/
-/*
-        intStream.collect(Collectors.joining(", "));
-
-
-        return String.format("%s%s%s%s",
-            origin.length,
-            ":[",
-                IntStream.range(0, origin.length).map(i -> origin[i]);
-                    .map(i -> new HexFromByte(i).toString())
-                .collect(Collectors.joining(", "))
-
-            )
-            ;
-*/
-
     }
 }

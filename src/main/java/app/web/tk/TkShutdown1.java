@@ -15,5 +15,10 @@ public class TkShutdown1 extends TkWrap {
         Process exec = runtime.exec("shutdown -s -t 0");
         System.exit(0);
 
+/*
+        Runtime
+            .getRuntime()
+            .exec("shutdown -s -t 0");
+*/
     }
 }

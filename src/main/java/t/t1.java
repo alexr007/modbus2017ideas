@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.util.Arrays;
+import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -32,7 +33,15 @@ public class t1 {
         byte[] bytess = {1, 2, 3, 4, 5};
 
 
-        int[] ints = ByteBuffer.wrap(bytess).asIntBuffer().array();
+        ByteBuffer wrapped = ByteBuffer.wrap(bytess);
+
+
+        IntBuffer intBuffer = wrapped.asIntBuffer();
+        int[] ints = intBuffer.array();
+
+        Arrays.stream(ints).forEach(value -> System.out.println(
+            new HexFromByte(value).toString()
+        ));
 
 
 
