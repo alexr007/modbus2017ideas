@@ -1,8 +1,11 @@
 package app.persistence.init;
 
+import app.persistence.ChannelList;
 import jbus.modbus.InvalidModBusFunction;
 import jwad.channels.WAD_Channel;
 import jssc.SerialPortException;
+import jwad.modules.WadAbstractDevice;
+import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
 import java.util.ArrayList;
@@ -13,13 +16,20 @@ import java.util.HashMap;
  */
 public class ModBusChannels {
     private final ModBusDevices devices;
-    private HashMap<CharSequence, WAD_Channel> channels = new HashMap<>();
+    private HashMap<CharSequence, WAD_Channel> channels;
 
     public ModBusChannels(ModBusDevices devices) throws Exception {
         this(devices, new ArrayList<>());
     }
 
+    // add channels by CHANNEL_NAME, DEVICE_NAME, CHANNEL_ID
     public ModBusChannels(ModBusDevices devices, ArrayList<Triplet<CharSequence, CharSequence, Integer>> channels) throws Exception {
+        this.devices = devices;
+        this.channels = new ChannelsFromList(devices, channels).hashMap();
+    }
+
+    // add channels by list of Pair<DEVICE, Pair<CHANNEL_NAME, CHANNEL_ID>>
+    public ModBusChannels (ModBusDevices devices, Pair<WadAbstractDevice, ChannelList>... channels) throws Exception {
         this.devices = devices;
         this.channels = new ChannelsFromList(devices, channels).hashMap();
     }

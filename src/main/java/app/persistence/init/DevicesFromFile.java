@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * Created by alexr on 26.04.2017.
  */
-public class DevicesFromFile {
+public class DevicesFromFile implements DevicesFrom {
     private final ModBus modBus;
     private final File origin;
 
@@ -18,6 +18,7 @@ public class DevicesFromFile {
         this.origin = origin;
     }
 
+    @Override
     public HashMap<CharSequence, WadAbstractDevice> hashMap() throws Exception {
         HashMap<CharSequence, WadAbstractDevice> map = new HashMap<>();
         if (true) throw new Exception("not implemented");
@@ -31,5 +32,4 @@ public class DevicesFromFile {
 */
         return map;
     }
-
 }

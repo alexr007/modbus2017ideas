@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * Created by alexr on 26.04.2017.
  */
-public class DevicesFromList {
+public class DevicesFromList implements DevicesFrom {
     private final ModBus modBus;
     private final ArrayList<Triplet<String, WadDevType, Integer>> devicesList;
 
@@ -19,6 +19,7 @@ public class DevicesFromList {
         this.devicesList = list;
     }
 
+    @Override
     public HashMap<CharSequence, WadAbstractDevice> hashMap() throws Exception {
         HashMap<CharSequence, WadAbstractDevice> map = new HashMap<>();
         for (Triplet<String, WadDevType, Integer> item : devicesList) {
