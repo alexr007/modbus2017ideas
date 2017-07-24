@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class ModBusDevicesTest {
 
     public void test() throws Exception {
+/*
 
         ModBusDevices devices = new ModBusDevices(
             new ModBus(
@@ -44,14 +45,18 @@ public class ModBusDevicesTest {
         System.out.println(
             devices.toString()
         );
+*/
 /*
         WAD_AIK_BUS aik1 = (WAD_AIK_BUS) devices.get("DEV1");
         aik1.channel(1).
-*/
+*//*
+
         devices.finish();
+*/
     }
 
     public void test2() throws Exception {
+/*
         ModBusDevices devices = new ModBusDevices(
             new ModBus(
                 new COMPort(
@@ -61,9 +66,11 @@ public class ModBusDevicesTest {
             ),
             new File("devices.xmlDir")
         );
+*/
     }
 
     public void test_old_ugly_configuration() throws Exception {
+/*
         // BUS initialization
         ModBusDevices devices = new ModBusDevices(
             new ModBus(
@@ -93,12 +100,14 @@ public class ModBusDevicesTest {
         channels.add(En.Transporter2, Dv.DOS1, Ch.n5);
         channels.add(En.Transporter2speed, Dv.DOS1, Ch.n6);
         // work begins here !
+*/
 /*
         Values t1 = channels.get(En.T1).get();
         Values t2 = channels.get(En.T2).get();
         channels.get(En.Transporter1).off();
         channels.get(En.Transporter2).on();
-*/
+*//*
+
         ModBusEntities entities = new ModBusEntities(channels);
         entities.add(En.Cylinder1,
             new EnCylinder(
@@ -117,6 +126,7 @@ public class ModBusDevicesTest {
         //entities.getCylinder(En.Cylinder1).open();
         //cylinder.close();
         //cylinder.stop();
+*/
 /*
         EnMotorPWM air1 = new EnMotorPWM(
             channels.get("AIR1"),
@@ -139,11 +149,13 @@ public class ModBusDevicesTest {
         air1.run(1000);
         air2.run(2000);
         air3.run(3000);
-*/
+*//*
+
 
 
 
 
         devices.finish();
+*/
     }
 }

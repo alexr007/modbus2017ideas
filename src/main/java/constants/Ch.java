@@ -23,6 +23,7 @@ public class Ch {
     public static final int n14 = 14;
     public static final int n15 = 15;
 
+/*
     // AI ports 0x21
     public static final String S_A_CRUSH = "S_A_CRUSH";
     public static final String S_А_GRAN = "S_А_GRAN";
@@ -153,4 +154,5 @@ public class Ch {
     public static final String x35p6 = "not used 3";
     public static final String x35p7 = "not used 4";
     public static final String x35p8 = "not used 5";
+*/
 }

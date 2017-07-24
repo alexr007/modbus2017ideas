@@ -14,7 +14,7 @@ import java.io.IOException;
  * Created by alexr on 02.05.2017.
  */
 public class ParsedDeviceDataTest {
-    private final ParsedDeviceData parsed;
+ /*   private final ParsedDeviceData parsed;
 
     public ParsedDeviceDataTest(final Request rq) {
         this.parsed = new ParsedDeviceData(rq);
@@ -43,5 +43,5 @@ public class ParsedDeviceDataTest {
             dev.channel(Integer.valueOf(parsed.channel()))
                 .set( new ValueValidated(dev.type()).value(parsed.value()) );
         }
-    }
+    }*/
 }

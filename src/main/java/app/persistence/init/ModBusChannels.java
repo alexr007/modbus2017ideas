@@ -1,6 +1,7 @@
 package app.persistence.init;
 
 import app.persistence.ChannelList;
+import constants.DevName;
 import jbus.modbus.InvalidModBusFunction;
 import jwad.channels.WAD_Channel;
 import jssc.SerialPortException;
@@ -34,7 +35,7 @@ public class ModBusChannels {
         this.channels = new ChannelsFromList(devices, channels).hashMap();
     }
 
-    public void add(CharSequence channelName, CharSequence deviceName, int channel) throws Exception {
+    public void add(CharSequence channelName, DevName deviceName, int channel) throws Exception {
         if (channels.containsKey(channelName)) {
             throw new Exception(String.format("Duplicate Channel Name:%s",channelName));
         }

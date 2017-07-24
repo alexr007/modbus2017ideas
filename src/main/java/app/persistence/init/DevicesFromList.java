@@ -1,5 +1,6 @@
 package app.persistence.init;
 
+import constants.DevName;
 import jbus.modbus.ModBus;
 import jwad.modules.WadAbstractDevice;
 import jwad.WadDevType;
@@ -12,17 +13,17 @@ import java.util.HashMap;
  */
 public class DevicesFromList implements DevicesFrom {
     private final ModBus modBus;
-    private final ArrayList<Triplet<String, WadDevType, Integer>> devicesList;
+    private final ArrayList<Triplet<DevName, WadDevType, Integer>> devicesList;
 
-    public DevicesFromList(ModBus modBus, ArrayList<Triplet<String, WadDevType, Integer>> list) {
+    public DevicesFromList(ModBus modBus, ArrayList<Triplet<DevName, WadDevType, Integer>> list) {
         this.modBus = modBus;
         this.devicesList = list;
     }
 
     @Override
-    public HashMap<CharSequence, WadAbstractDevice> hashMap() throws Exception {
-        HashMap<CharSequence, WadAbstractDevice> map = new HashMap<>();
-        for (Triplet<String, WadDevType, Integer> item : devicesList) {
+    public HashMap<DevName, WadAbstractDevice> hashMap() throws Exception {
+        HashMap<DevName, WadAbstractDevice> map = new HashMap<>();
+        for (Triplet<DevName, WadDevType, Integer> item : devicesList) {
             if (map.containsKey(item.getValue0())) {
                 throw new Exception(String.format("Duplicate Device name: %s", item.getValue0()));
             }

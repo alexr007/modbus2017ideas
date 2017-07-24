@@ -1,5 +1,6 @@
 package app.persistence.init;
 
+import constants.DevName;
 import jbase.hex.HexFromByte;
 import jbus.modbus.ModBus;
 import jwad.modules.WadAbstractDevice;
@@ -17,23 +18,18 @@ import java.util.Set;
  */
 public class ModBusDevices {
     private final ModBus modBus;
-    private HashMap<CharSequence, WadAbstractDevice> devices = new HashMap<>();
+    private HashMap<DevName, WadAbstractDevice> devices = new HashMap<>();
 
     public ModBusDevices(ModBus modBus) throws Exception {
         this(modBus, new ArrayList<>());
     }
 
-    public ModBusDevices(ModBus modBus, File source) throws Exception {
-        this.modBus = modBus;
-        this.devices = new DevicesFromFile(modBus, source).hashMap();
-    }
-
-    public ModBusDevices(ModBus modBus, ArrayList<Triplet<String, WadDevType, Integer>> devices) throws Exception {
+    public ModBusDevices(ModBus modBus, ArrayList<Triplet<DevName, WadDevType, Integer>> devices) throws Exception {
         this.modBus = modBus;
         this.devices = new DevicesFromList(modBus, devices).hashMap();
     }
 
-    public void add(String deviceName, WadDevType type, int modbusId) throws Exception {
+    public void add(DevName deviceName, WadDevType type, int modbusId) throws Exception {
         if (devices.containsKey(deviceName)) {
             throw new Exception(String.format("Duplicate Module Name:%s",deviceName));
         }
@@ -51,7 +47,7 @@ public class ModBusDevices {
         devices.put(deviceName, device);
     }
 
-    public WadAbstractDevice get(CharSequence deviceName) throws Exception {
+    public WadAbstractDevice get(DevName deviceName) throws Exception {
         if (!devices.containsKey(deviceName)) {
             throw new Exception(String.format("Module Name NotFound:%s",deviceName));
         }
@@ -75,14 +71,14 @@ public class ModBusDevices {
         return sb.toString();
     }
 
-    public Set<CharSequence> list() {
+    public Set<DevName> list() {
         return devices.keySet();
     }
 
     public ArrayList<Triplet> triplet() {
         ArrayList<Triplet> list = new ArrayList<>();
         devices.forEach((key, dev) -> {
-            list.add(new Triplet<CharSequence, WadDevType, CharSequence>(key, dev.type(), new HexFromByte(dev.id()).toString()));
+            list.add(new Triplet<DevName, WadDevType, CharSequence>(key, dev.type(), new HexFromByte(dev.id()).toString()));
         });
         return list;
     }

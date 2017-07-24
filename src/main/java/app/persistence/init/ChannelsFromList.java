@@ -2,6 +2,8 @@ package app.persistence.init;
 
 import app.persistence.ChannelList;
 import app.persistence.init.ModBusDevices;
+import constants.ChanName;
+import constants.DevName;
 import jwad.channels.WAD_Channel;
 import jwad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
@@ -17,8 +19,11 @@ import java.util.HashMap;
  */
 public class ChannelsFromList {
     private final ModBusDevices devices;
+/*
     private final ArrayList<Triplet<CharSequence, CharSequence, Integer>> channelsList = new ArrayList<>();
     private final ArrayList<Triplet<CharSequence, WadAbstractDevice, Integer>> channelsList2 = new ArrayList<>();
+*/
+    private final ArrayList<Triplet<DevName, WadAbstractDevice, Integer>> channelsList2 = new ArrayList<>();
 
     /**
      *
@@ -28,15 +33,17 @@ public class ChannelsFromList {
      *                 2nd: CharSequence - Device name (Channel owner)
      *                 3rd: Integer      - Channel Id
      */
+/*
     public ChannelsFromList(ModBusDevices devices, ArrayList<Triplet<CharSequence, CharSequence, Integer>> channels) {
         this.devices = devices;
         this.channelsList.addAll(channels);
     }
+*/
 
     public ChannelsFromList(ModBusDevices devices, Pair<WadAbstractDevice, ChannelList>... channels) {
         this.devices = devices;
         for (Pair<WadAbstractDevice, ChannelList> channel : channels) {
-            for (Pair<CharSequence, Integer> item : channel.getValue1().list()) {
+            for (Pair<ChanName, Integer> item : channel.getValue1().list()) {
                 this.channelsList2.add(new Triplet<>(
                     item.getValue0(), // channel name
                     channel.getValue0(), // device name

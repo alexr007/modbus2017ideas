@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 public class BIOcoreTest {
     public void test() throws Exception {
+/*
         BIOcore core = new BIOcore(Dv.COM26);
 
         ArrayList<WadAbstractDevice> list = new ArrayList<WadAbstractDevice>(){{
@@ -20,7 +21,6 @@ public class BIOcoreTest {
             add(core.dev("DEV41"));
         }};
 
-/*
         list.forEach(item ->
             System.out.println(item.summaryXml())
         );
@@ -41,8 +41,8 @@ public class BIOcoreTest {
         core.chan("CH1").set(0);
         core.chan("CH1").on();
         core.chan("CH1").off();
-*/
 
         core.finish();
+*/
     }
 }

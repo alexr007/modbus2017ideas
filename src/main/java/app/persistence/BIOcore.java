@@ -3,6 +3,7 @@ package app.persistence;
 import app.persistence.init.ModBusChannels;
 import app.persistence.init.ModBusDevices;
 import constants.Ch;
+import constants.DevName;
 import constants.Dv;
 import jbus.comport.COMPort;
 import jbus.comport.COMPortProperties;
@@ -15,6 +16,10 @@ import org.javatuples.Pair;
 import org.javatuples.Triplet;
 import java.util.ArrayList;
 import java.util.Set;
+
+import static constants.Ch.*;
+import static constants.ChanName.*;
+import static constants.DevName.*;
 
 /**
  * Created by alexr on 27.04.2017.
@@ -43,149 +48,149 @@ public class BIOcore {
         this.channels = new ModBusChannels(
             this.devices,
             // AIK1
-            new Pair<>(this.devices.get(Dv.AIK1),
+            new Pair<>(this.devices.get(AIK1),
                 new ChannelList(
-                    new Pair<>(Ch.S_A_CRUSH,  Ch.n1),
-                    new Pair<>(Ch.S_А_GRAN,   Ch.n2),
-                    new Pair<>(Ch.S_VOLT_IN,  Ch.n3)
+                    new Pair<>(S_A_CRUSH,  n1),
+                    new Pair<>(S_А_GRAN,   n2),
+                    new Pair<>(S_VOLT_IN,  n3)
                 )),
             // AIK2
-            new Pair<>(this.devices.get(Dv.AIK2),
+            new Pair<>(this.devices.get(AIK2),
                 new ChannelList(
-                    new Pair<>(Ch.S_TG_TEMP,  Ch.n1),
-                    new Pair<>(Ch.S_RAW_T_IN, Ch.n2),
-                    new Pair<>(Ch.S_RAW_T_OUT,Ch.n3),
-                    new Pair<>(Ch.S_TG_PRESS, Ch.n4)
+                    new Pair<>(S_TG_TEMP,  n1),
+                    new Pair<>(S_RAW_T_IN, n2),
+                    new Pair<>(S_RAW_T_OUT, n3),
+                    new Pair<>(S_TG_PRESS, n4)
                 )),
             // AO1
-            new Pair<>(this.devices.get(Dv.AO1),
+            new Pair<>(this.devices.get(AO1),
                 new ChannelList(
-                    new Pair<>(Ch.M_FU,  Ch.n1),
-                    new Pair<>(Ch.M_AIR1, Ch.n2),
-                    new Pair<>(Ch.M_AIR2,Ch.n3)
+                    new Pair<>(M_FU,  n1),
+                    new Pair<>(M_AIR1, n2),
+                    new Pair<>(M_AIR2, n3)
                 )),
             // AO2
-            new Pair<>(this.devices.get(Dv.AO2),
+            new Pair<>(this.devices.get(AO2),
                 new ChannelList(
-                    new Pair<>(Ch.M_AIR3,  Ch.n1),
-                    new Pair<>(Ch.M_DRDR, Ch.n2),
-                    new Pair<>(Ch.M_CYCL,Ch.n3),
-                    new Pair<>(Ch.M_DISPEN, Ch.n4)
+                    new Pair<>(M_AIR3,  n1),
+                    new Pair<>(M_DRDR, n2),
+                    new Pair<>(M_CYCL, n3),
+                    new Pair<>(M_DISPEN, n4)
                 )),
-            new Pair<>(this.devices.get(Dv.DI1),
+            new Pair<>(this.devices.get(DI1),
                 new ChannelList(
-                    new Pair<>(Ch.S_CYL1_MIN, Ch.n1),
-                    new Pair<>(Ch.S_CYL1_MAX, Ch.n2),
-                    new Pair<>(Ch.S_CYL2_MIN, Ch.n3),
-                    new Pair<>(Ch.S_CYL2_MAX, Ch.n4),
-                    new Pair<>(Ch.SM_HYDRO, Ch.n5),
-                    new Pair<>(Ch.SM_RAW, Ch.n6),
-                    new Pair<>(Ch.SM_TRANS_1, Ch.n7),
-                    new Pair<>(Ch.SM_SEP, Ch.n8),
-                    new Pair<>(Ch.SM_TRANS_2, Ch.n9),
-                    new Pair<>(Ch.SM_GATE_1, Ch.n10),
-                    new Pair<>(Ch.STOP_1, Ch.n11),
-                    new Pair<>(Ch.AUTO_MAN_1, Ch.n12),
-                    new Pair<>(Ch.SM_FU_TR, Ch.n13),
-                    new Pair<>(Ch.S_FU_BK_MIN, Ch.n14),
-                    new Pair<>(Ch.S_FU_BK_MAX, Ch.n15)
+                    new Pair<>(S_CYL1_MIN, n1),
+                    new Pair<>(S_CYL1_MAX, n2),
+                    new Pair<>(S_CYL2_MIN, n3),
+                    new Pair<>(S_CYL2_MAX, n4),
+                    new Pair<>(SM_HYDRO, n5),
+                    new Pair<>(SM_RAW, n6),
+                    new Pair<>(SM_TRANS_1, n7),
+                    new Pair<>(SM_SEP, n8),
+                    new Pair<>(SM_TRANS_2, n9),
+                    new Pair<>(SM_GATE_1, n10),
+                    new Pair<>(STOP_1, n11),
+                    new Pair<>(AUTO_MAN_1, n12),
+                    new Pair<>(SM_FU_TR, n13),
+                    new Pair<>(S_FU_BK_MIN, n14),
+                    new Pair<>(S_FU_BK_MAX, n15)
                 )),
-            new Pair<>(this.devices.get(Dv.DI2),
+            new Pair<>(this.devices.get(DI2),
                 new ChannelList(
-                    new Pair<>(Ch.S_CRUSH_SEC, Ch.n1),
-                    new Pair<>(Ch.SМ_FU_HAYM, Ch.n2),
-                    new Pair<>(Ch.SM_FU, Ch.n3),
-                    new Pair<>(Ch.SM_AIR1, Ch.n4),
-                    new Pair<>(Ch.SM_AIR2, Ch.n5),
-                    new Pair<>(Ch.SM_AIR3, Ch.n6),
-                    new Pair<>(Ch.SM_DRDR, Ch.n7),
-                    new Pair<>(Ch.SM_CYCL, Ch.n8),
-                    new Pair<>(Ch.SM_GATE_2, Ch.n9),
-                    new Pair<>(Ch.SM_CRUSH, Ch.n10),
-                    new Pair<>(Ch.SM_FAN, Ch.n11),
-                    new Pair<>(Ch.SM_GATE_3, Ch.n12),
-                    new Pair<>(Ch.STOP_2, Ch.n13),
-                    new Pair<>(Ch.AUTO_MAN_2, Ch.n14)
+                    new Pair<>(S_CRUSH_SEC, n1),
+                    new Pair<>(SМ_FU_HAYM, n2),
+                    new Pair<>(SM_FU, n3),
+                    new Pair<>(SM_AIR1, n4),
+                    new Pair<>(SM_AIR2, n5),
+                    new Pair<>(SM_AIR3, n6),
+                    new Pair<>(SM_DRDR, n7),
+                    new Pair<>(SM_CYCL, n8),
+                    new Pair<>(SM_GATE_2, n9),
+                    new Pair<>(SM_CRUSH, n10),
+                    new Pair<>(SM_FAN, n11),
+                    new Pair<>(SM_GATE_3, n12),
+                    new Pair<>(STOP_2, n13),
+                    new Pair<>(AUTO_MAN_2, n14)
                     // 15 free
                 )),
-            new Pair<>(this.devices.get(Dv.DI3),
+            new Pair<>(this.devices.get(DI3),
                 new ChannelList(
-                    new Pair<>(Ch.STOP_3, Ch.n1),
-                    new Pair<>(Ch.AUTO_MAN_3, Ch.n2),
-                    new Pair<>(Ch.S_BUNK_MIN, Ch.n3),
-                    new Pair<>(Ch.S_BUNK_MAX, Ch.n4),
-                    new Pair<>(Ch.S_GRAN_SEC, Ch.n5),
-                    new Pair<>(Ch.SM_HAYM, Ch.n6),
-                    new Pair<>(Ch.SM_DISPEN, Ch.n7),
-                    new Pair<>(Ch.SM_FORCE, Ch.n8),
-                    new Pair<>(Ch.SM_GRAN, Ch.n9),
-                    new Pair<>(Ch.SM_TRANS_3, Ch.n10),
-                    new Pair<>(Ch.SM_GATE_4, Ch.n11),
-                    new Pair<>(Ch.S_COOL_MIN, Ch.n12),
-                    new Pair<>(Ch.S_COOL_MAX, Ch.n13),
-                    new Pair<>(Ch.S_OUT_OP, Ch.n14),
-                    new Pair<>(Ch.S_OUT_CL, Ch.n15)
+                    new Pair<>(STOP_3, n1),
+                    new Pair<>(AUTO_MAN_3, n2),
+                    new Pair<>(S_BUNK_MIN, n3),
+                    new Pair<>(S_BUNK_MAX, n4),
+                    new Pair<>(S_GRAN_SEC, n5),
+                    new Pair<>(SM_HAYM, n6),
+                    new Pair<>(SM_DISPEN, n7),
+                    new Pair<>(SM_FORCE, n8),
+                    new Pair<>(SM_GRAN, n9),
+                    new Pair<>(SM_TRANS_3, n10),
+                    new Pair<>(SM_GATE_4, n11),
+                    new Pair<>(S_COOL_MIN, n12),
+                    new Pair<>(S_COOL_MAX, n13),
+                    new Pair<>(S_OUT_OP, n14),
+                    new Pair<>(S_OUT_CL, n15)
                 )),
-            new Pair<>(this.devices.get(Dv.DI4),
+            new Pair<>(this.devices.get(DI4),
                 new ChannelList(
-                    new Pair<>(Ch.SM_EXHAU, Ch.n1),
-                    new Pair<>(Ch.SM_OUT_OP, Ch.n2),
-                    new Pair<>(Ch.SM_OUT_CL, Ch.n3),
-                    new Pair<>(Ch.SM_SIEVE, Ch.n4),
-                    new Pair<>(Ch.SM_TRANS_4, Ch.n5),
-                    new Pair<>(Ch.SM_VIBRO_FILTR, Ch.n6)
+                    new Pair<>(SM_EXHAU, n1),
+                    new Pair<>(SM_OUT_OP, n2),
+                    new Pair<>(SM_OUT_CL, n3),
+                    new Pair<>(SM_SIEVE, n4),
+                    new Pair<>(SM_TRANS_4, n5),
+                    new Pair<>(SM_VIBRO_FILTR, n6)
                     // 7-15 free
                 )),
-            new Pair<>(this.devices.get(Dv.DOS1),
+            new Pair<>(this.devices.get(DOS1),
                 new ChannelList(
-                    new Pair<>(Ch.VALVE_1, Ch.n1),
-                    new Pair<>(Ch.VALVE_2, Ch.n2),
-                    new Pair<>(Ch.VALVE_3, Ch.n3),
-                    new Pair<>(Ch.VALVE_4, Ch.n4),
-                    new Pair<>(Ch.VALVE_START, Ch.n5),
-                    new Pair<>(Ch.M_HYDRO, Ch.n6),
-                    new Pair<>(Ch.M_RAW, Ch.n7),
-                    new Pair<>(Ch.M_TRANS_1, Ch.n8)
+                    new Pair<>(VALVE_1, n1),
+                    new Pair<>(VALVE_2, n2),
+                    new Pair<>(VALVE_3, n3),
+                    new Pair<>(VALVE_4, n4),
+                    new Pair<>(VALVE_START, n5),
+                    new Pair<>(M_HYDRO, n6),
+                    new Pair<>(M_RAW, n7),
+                    new Pair<>(M_TRANS_1, n8)
                 )),
-            new Pair<>(this.devices.get(Dv.DOS2),
+            new Pair<>(this.devices.get(DOS2),
                 new ChannelList(
-                    new Pair<>(Ch.M_SEP, Ch.n1),
-                    new Pair<>(Ch.M_TRANS_2, Ch.n2),
-                    new Pair<>(Ch.M_GATE_1, Ch.n3),
-                    new Pair<>(Ch.M_FU_TR, Ch.n4),
-                    new Pair<>(Ch.M_FU_ON, Ch.n5),
-                    new Pair<>(Ch.M_AIR1_ON, Ch.n6),
-                    new Pair<>(Ch.M_AIR2_ON, Ch.n7),
-                    new Pair<>(Ch.M_AIR3_ON, Ch.n8)
+                    new Pair<>(M_SEP, n1),
+                    new Pair<>(M_TRANS_2, n2),
+                    new Pair<>(M_GATE_1, n3),
+                    new Pair<>(M_FU_TR, n4),
+                    new Pair<>(M_FU_ON, n5),
+                    new Pair<>(M_AIR1_ON, n6),
+                    new Pair<>(M_AIR2_ON, n7),
+                    new Pair<>(M_AIR3_ON, n8)
                 )),
-            new Pair<>(this.devices.get(Dv.DOS3),
+            new Pair<>(this.devices.get(DOS3),
                 new ChannelList(
-                    new Pair<>(Ch.М_FU_HAYM, Ch.n1),
-                    new Pair<>(Ch.M_DRDR_ON, Ch.n2),
-                    new Pair<>(Ch.M_CYCL_ON, Ch.n3),
-                    new Pair<>(Ch.M_GATE_2, Ch.n4),
-                    new Pair<>(Ch.M_CRUSH, Ch.n5),
-                    new Pair<>(Ch.M_FAN, Ch.n6),
-                    new Pair<>(Ch.M_GATE_3, Ch.n7)
+                    new Pair<>(М_FU_HAYM, n1),
+                    new Pair<>(M_DRDR_ON, n2),
+                    new Pair<>(M_CYCL_ON, n3),
+                    new Pair<>(M_GATE_2, n4),
+                    new Pair<>(M_CRUSH, n5),
+                    new Pair<>(M_FAN, n6),
+                    new Pair<>(M_GATE_3, n7)
                     // 8 free
                 )),
-            new Pair<>(this.devices.get(Dv.DOS4),
+            new Pair<>(this.devices.get(DOS4),
                 new ChannelList(
-                    new Pair<>(Ch.M_HAYM, Ch.n1),
-                    new Pair<>(Ch.M_DISPEN_ON, Ch.n2),
-                    new Pair<>(Ch.M_FORCE, Ch.n3),
-                    new Pair<>(Ch.M_GRAN, Ch.n4),
-                    new Pair<>(Ch.M_TRANS_3, Ch.n5),
-                    new Pair<>(Ch.M_GATE_4, Ch.n6),
-                    new Pair<>(Ch.M_EXHAUST, Ch.n7),
-                    new Pair<>(Ch.M_OUT_OPEN, Ch.n8)
+                    new Pair<>(M_HAYM, n1),
+                    new Pair<>(M_DISPEN_ON, n2),
+                    new Pair<>(M_FORCE, n3),
+                    new Pair<>(M_GRAN, n4),
+                    new Pair<>(M_TRANS_3, n5),
+                    new Pair<>(M_GATE_4, n6),
+                    new Pair<>(M_EXHAUST, n7),
+                    new Pair<>(M_OUT_OPEN, n8)
                 )),
-            new Pair<>(this.devices.get(Dv.DOS5),
+            new Pair<>(this.devices.get(DOS5),
                 new ChannelList(
-                    new Pair<>(Ch.M_OUT_CLOSE, Ch.n1),
-                    new Pair<>(Ch.М_SIEVE, Ch.n2),
-                    new Pair<>(Ch.M_TRANS_4, Ch.n3),
-                    new Pair<>(Ch.M_VIBRO_FILTR, Ch.n4)
+                    new Pair<>(M_OUT_CLOSE, n1),
+                    new Pair<>(М_SIEVE, n2),
+                    new Pair<>(M_TRANS_4, n3),
+                    new Pair<>(M_VIBRO_FILTR, n4)
                     // 5-8 free
                 ))
             );
@@ -194,9 +199,17 @@ public class BIOcore {
         );
     }
 
-    public WadAbstractDevice dev(CharSequence name) {
+    public WadAbstractDevice dev(DevName name) {
         try {
             return devices.get(name);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(String.format("Module Name NotFound:%s",name));
+        }
+    }
+
+    public WadAbstractDevice dev(String name) {
+        try {
+            return devices.get(DevName.valueOf(name));
         } catch (Exception e) {
             throw new IllegalArgumentException(String.format("Module Name NotFound:%s",name));
         }
@@ -210,7 +223,7 @@ public class BIOcore {
         }
     }
 
-    public Set<CharSequence> devList() {
+    public Set<DevName> devList() {
         return devices.list();
     }
 
