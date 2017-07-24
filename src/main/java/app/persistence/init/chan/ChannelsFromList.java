@@ -3,7 +3,6 @@ package app.persistence.init.chan;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.javatuples.Pair;
-import app.persistence.ChannelList;
 import app.persistence.init.HashMapFrom;
 import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;

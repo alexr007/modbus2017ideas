@@ -1,19 +1,15 @@
 package app.persistence.init.chan;
 
-import app.persistence.ChannelList;
 import app.persistence.init.HashMapFrom;
 import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;
 import constants.DevName;
 import jbase.hex.HexFromByte;
-import jbus.modbus.InvalidModBusFunction;
 import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
 import jssc.SerialPortException;
-import jwad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
-import org.javatuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.Arrays;

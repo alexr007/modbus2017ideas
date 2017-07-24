@@ -1,4 +1,4 @@
-package app.persistence;
+package app.persistence.init.chan;
 
 import constants.ChanName;
 import org.javatuples.Pair;

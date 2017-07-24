@@ -129,8 +129,8 @@ public class COMPort implements  SimpleSerialInterface{
 
     @Override
     public boolean equals(Object obj) {
-        COMPort other = (COMPort) obj;
-        return this.port.equals(other.port);
+        return obj instanceof COMPort
+            && this.port.equals(COMPort.class.cast(obj).port);
     }
 
 }

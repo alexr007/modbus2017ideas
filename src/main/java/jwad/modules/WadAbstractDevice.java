@@ -142,8 +142,8 @@ public abstract class WadAbstractDevice {
 
     @Override
     public boolean equals(Object obj) {
-        WadAbstractDevice other = (WadAbstractDevice) obj;
-        return this.deviceId == other.deviceId &&
-            this.modbus.equals(other.modbus);
+        return obj instanceof WadAbstractDevice
+            && this.deviceId == WadAbstractDevice.class.cast(obj).deviceId
+            && this.modbus.equals(WadAbstractDevice.class.cast(obj).modbus);
     }
 }

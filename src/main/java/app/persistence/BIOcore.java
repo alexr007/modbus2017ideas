@@ -1,5 +1,6 @@
 package app.persistence;
 
+import app.persistence.init.chan.ChannelList;
 import app.persistence.init.chan.ModBusChannels;
 import app.persistence.init.dev.ModBusDevices;
 import constants.DevName;

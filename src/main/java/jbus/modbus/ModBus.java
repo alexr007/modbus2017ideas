@@ -2,6 +2,7 @@ package jbus.modbus;
 
 import jbus.comport.COMPort;
 import jssc.SerialPortException;
+import jwad.channels.WadAbstractChannel;
 import jwad.modules.WadAbstractDevice;
 
 /**
@@ -42,7 +43,7 @@ public class ModBus {
 
     @Override
     public boolean equals(Object obj) {
-        ModBus other = (ModBus) obj;
-        return this.comPort.equals(other.comPort);
+        return obj instanceof ModBus
+            && this.comPort.equals(ModBus.class.cast(obj).comPort);
     }
 }

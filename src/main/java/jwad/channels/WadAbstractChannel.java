@@ -53,8 +53,7 @@ public class WadAbstractChannel {
 
     @Override
     public boolean equals(Object obj) {
-        WadAbstractChannel other = (WadAbstractChannel) obj;
-        return this.channelId == other.channelId &&
-               this.device.equals(other.device);
-    }
+        return obj instanceof WadAbstractChannel
+            && this.channelId == WadAbstractChannel.class.cast(obj).channelId
+            && this.device.equals(WadAbstractChannel.class.cast(obj).device);}
 }
