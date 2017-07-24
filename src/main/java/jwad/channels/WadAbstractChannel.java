@@ -55,5 +55,6 @@ public class WadAbstractChannel {
     public boolean equals(Object obj) {
         return obj instanceof WadAbstractChannel
             && this.channelId == WadAbstractChannel.class.cast(obj).channelId
-            && this.device.equals(WadAbstractChannel.class.cast(obj).device);}
+            && this.device.equals(WadAbstractChannel.class.cast(obj).device);
+    }
 }
