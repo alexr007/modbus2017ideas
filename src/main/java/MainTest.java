@@ -5,6 +5,7 @@ import jbase.Solution;
 import jbase.hex.HexFromByte;
 import jbase.hex.HexFromWords;
 import jbus.modbus.response.WordsFromBytes;
+import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 import java.util.ArrayList;
 
@@ -52,15 +53,14 @@ public class MainTest {
 
     public void test1() throws Exception {
         BIOcore core = new BIOcore(constants.Dv.COM26);
-        ArrayList<Triplet> l = core.chanListTriplet();
-        l.forEach(item -> {
+        ArrayList<Quartet> list = core.chanListQuartet();
+        list.forEach(item -> {
             System.out.println(String.format(
-//                "Channel_name:%s, Device Type:%s, Channel ID:%s",
-                "Channel_name:%s, Device Type:%s, Device ModBus ID:%s",
-                item.getValue0(),
-                item.getValue1(),
-//                item.getValue2()
-                new HexFromByte((Integer) item.getValue2()).toString()
+                "Channel_name:%s, Device Type:%s, Channel:%s, ModBus ID:%s",
+                item.getValue0().toString(),
+                item.getValue1().toString(),
+                item.getValue2().toString(),
+                item.getValue3().toString()
             ));
         });
 

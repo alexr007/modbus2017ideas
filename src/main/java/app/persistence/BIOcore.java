@@ -11,6 +11,7 @@ import jwad.channels.WAD_Channel;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import org.javatuples.Pair;
+import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 import java.util.ArrayList;
 import java.util.Set;
@@ -46,14 +47,14 @@ public class BIOcore {
         this.channels = new ModBusChannels(
             this.devices,
             // AIK1
-            new Pair<>(this.devices.get(AIK1),
+            new Pair<>(AIK1,
                 new ChannelList(
                     new Pair<>(S_A_CRUSH,  n1),
                     new Pair<>(S_А_GRAN,   n2),
                     new Pair<>(S_VOLT_IN,  n3)
                 )),
             // AIK2
-            new Pair<>(this.devices.get(AIK2),
+            new Pair<>(AIK2,
                 new ChannelList(
                     new Pair<>(S_TG_TEMP,  n1),
                     new Pair<>(S_RAW_T_IN, n2),
@@ -61,21 +62,21 @@ public class BIOcore {
                     new Pair<>(S_TG_PRESS, n4)
                 )),
             // AO1
-            new Pair<>(this.devices.get(AO1),
+            new Pair<>(AO1,
                 new ChannelList(
                     new Pair<>(M_FU,  n1),
                     new Pair<>(M_AIR1, n2),
                     new Pair<>(M_AIR2, n3)
                 )),
             // AO2
-            new Pair<>(this.devices.get(AO2),
+            new Pair<>(AO2,
                 new ChannelList(
                     new Pair<>(M_AIR3,  n1),
                     new Pair<>(M_DRDR, n2),
                     new Pair<>(M_CYCL, n3),
                     new Pair<>(M_DISPEN, n4)
                 )),
-            new Pair<>(this.devices.get(DI1),
+            new Pair<>(DI1,
                 new ChannelList(
                     new Pair<>(S_CYL1_MIN, n1),
                     new Pair<>(S_CYL1_MAX, n2),
@@ -93,7 +94,7 @@ public class BIOcore {
                     new Pair<>(S_FU_BK_MIN, n14),
                     new Pair<>(S_FU_BK_MAX, n15)
                 )),
-            new Pair<>(this.devices.get(DI2),
+            new Pair<>(DI2,
                 new ChannelList(
                     new Pair<>(S_CRUSH_SEC, n1),
                     new Pair<>(SМ_FU_HAYM, n2),
@@ -111,7 +112,7 @@ public class BIOcore {
                     new Pair<>(AUTO_MAN_2, n14)
                     // 15 free
                 )),
-            new Pair<>(this.devices.get(DI3),
+            new Pair<>(DI3,
                 new ChannelList(
                     new Pair<>(STOP_3, n1),
                     new Pair<>(AUTO_MAN_3, n2),
@@ -129,7 +130,7 @@ public class BIOcore {
                     new Pair<>(S_OUT_OP, n14),
                     new Pair<>(S_OUT_CL, n15)
                 )),
-            new Pair<>(this.devices.get(DI4),
+            new Pair<>(DI4,
                 new ChannelList(
                     new Pair<>(SM_EXHAU, n1),
                     new Pair<>(SM_OUT_OP, n2),
@@ -139,7 +140,7 @@ public class BIOcore {
                     new Pair<>(SM_VIBRO_FILTR, n6)
                     // 7-15 free
                 )),
-            new Pair<>(this.devices.get(DOS1),
+            new Pair<>(DOS1,
                 new ChannelList(
                     new Pair<>(VALVE_1, n1),
                     new Pair<>(VALVE_2, n2),
@@ -150,7 +151,7 @@ public class BIOcore {
                     new Pair<>(M_RAW, n7),
                     new Pair<>(M_TRANS_1, n8)
                 )),
-            new Pair<>(this.devices.get(DOS2),
+            new Pair<>(DOS2,
                 new ChannelList(
                     new Pair<>(M_SEP, n1),
                     new Pair<>(M_TRANS_2, n2),
@@ -161,7 +162,7 @@ public class BIOcore {
                     new Pair<>(M_AIR2_ON, n7),
                     new Pair<>(M_AIR3_ON, n8)
                 )),
-            new Pair<>(this.devices.get(DOS3),
+            new Pair<>(DOS3,
                 new ChannelList(
                     new Pair<>(М_FU_HAYM, n1),
                     new Pair<>(M_DRDR_ON, n2),
@@ -172,7 +173,7 @@ public class BIOcore {
                     new Pair<>(M_GATE_3, n7)
                     // 8 free
                 )),
-            new Pair<>(this.devices.get(DOS4),
+            new Pair<>(DOS4,
                 new ChannelList(
                     new Pair<>(M_HAYM, n1),
                     new Pair<>(M_DISPEN_ON, n2),
@@ -183,7 +184,7 @@ public class BIOcore {
                     new Pair<>(M_EXHAUST, n7),
                     new Pair<>(M_OUT_OPEN, n8)
                 )),
-            new Pair<>(this.devices.get(DOS5),
+            new Pair<>(DOS5,
                 new ChannelList(
                     new Pair<>(M_OUT_CLOSE, n1),
                     new Pair<>(М_SIEVE, n2),
@@ -213,7 +214,7 @@ public class BIOcore {
         }
     }
 
-    public WAD_Channel chan(CharSequence name) throws Exception {
+    public WAD_Channel chan(String name) throws Exception {
         try {
             return channels.get(name);
         } catch (Exception e) {
@@ -229,8 +230,8 @@ public class BIOcore {
         return devices.triplet();
     }
 
-    public ArrayList<Triplet> chanListTriplet() {
-        return channels.triplet();
+    public ArrayList<Quartet> chanListQuartet() {
+        return channels.quartet();
     }
 
     public ModBus modBus() {

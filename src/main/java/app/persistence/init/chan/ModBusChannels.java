@@ -5,11 +5,14 @@ import app.persistence.init.HashMapFrom;
 import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;
 import constants.DevName;
+import jbase.hex.HexFromByte;
 import jbus.modbus.InvalidModBusFunction;
+import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
 import jssc.SerialPortException;
 import jwad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
+import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 
 import java.util.ArrayList;
@@ -29,12 +32,12 @@ public class ModBusChannels {
     }
 
     // ctor 2 - random quantity Pair<WadAbstractDevice, ChannelList>
-    public ModBusChannels (ModBusDevices devices, Pair<WadAbstractDevice, ChannelList>... channels) throws Exception {
+    public ModBusChannels (ModBusDevices devices, Pair<DevName, ChannelList>... channels) throws Exception {
         this(devices, new ArrayList<>(Arrays.asList(channels)));
     }
 
     // ctor 3 - ArrayList<Pair<WadAbstractDevice, ChannelList>>
-    public ModBusChannels (ModBusDevices devices, ArrayList<Pair<WadAbstractDevice, ChannelList>> channels) throws Exception {
+    public ModBusChannels (ModBusDevices devices, ArrayList<Pair<DevName, ChannelList>> channels) throws Exception {
         this(devices, new ChannelsFromList(devices, channels));
     }
 
@@ -49,31 +52,48 @@ public class ModBusChannels {
         this.channels = channels;
     }
 
-    // =================================================================================================================
-
-    public void add(CharSequence channelName, DevName deviceName, int channel) throws Exception {
+    public void add(ChanName channelName, DevName deviceName, int channel) throws Exception {
         if (channels.containsKey(channelName)) {
-            throw new Exception(String.format("Duplicate Channel Name:%s",channelName));
+            throw new Exception(String.format("Duplicate Channel Name:%s",channelName.toString()));
         }
-        channels.put(channelName, devices.get(deviceName).channel(channel));
+        WAD_Channel wadChannel = devices.get(deviceName).channel(channel);
+        if (channels.containsValue(wadChannel)) {
+            throw new Exception(
+                String.format("Duplicate Channel, name:%s, at device:%s, modbus id:%s",
+                    channelName.toString(),
+                    deviceName.toString(),
+                    new HexFromByte(channel).toString()
+                )
+            );
+        }
+        channels.put(channelName, wadChannel);
     }
 
-    public WAD_Channel get(CharSequence channelName) throws Exception {
+    public WAD_Channel get(ChanName channelName) throws Exception {
         if (!channels.containsKey(channelName)) {
             throw new Exception(String.format("Channel Name NotFound:%s",channelName));
         }
         return channels.get(channelName);
     }
 
+    public WAD_Channel get(String channelName) throws Exception {
+        ChanName cname= ChanName.valueOf(channelName);
+        if (!channels.containsKey(cname)) {
+            throw new Exception(String.format("Channel Name NotFound:%s",channelName));
+        }
+        return channels.get(cname);
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Channels:\n");
+        StringBuilder sb = new StringBuilder("Channels configured (HashMap):\n");
         channels.forEach((k, v)->
-            sb.append(String.format("CHAN: name:%s, type:%s, chan details:%s\n",
-                k,
-                v.type(),
-                v.getClass().getSimpleName()))
-        );
+            sb.append(String.format("chan.name: %s, dev.name: %s, dev.prop:%s\n",
+                k.toString(), // enum key from HashMap
+                v.device().toString(), // dev name(AIK, DOS), modbus id
+                v.device().properties().toString() // dev.prop: signalType, portType, chanCount
+                )
+            ));
         sb.append("---\n");
         return sb.toString();
     }
@@ -95,19 +115,19 @@ public class ModBusChannels {
      *     chan.device().properties().signalType()
      *     chan.device().properties().chanCount()
      *
+     *
+     * new HexFromByte(
+     *
      */
-    public ArrayList<Triplet> triplet() {
-        ArrayList<Triplet> list = new ArrayList<>();
+    public ArrayList<Quartet> quartet() {
+        ArrayList<Quartet> list = new ArrayList<>();
         channels.forEach((key, chan) -> {
-            try {
-                list.add(new Triplet<CharSequence, CharSequence, Integer>(
-                    //key, chan.device().name(), chan.channel()
-                    key, chan.device().name(), chan.device().id()
-                    )
-                );
-            } catch (InvalidModBusFunction invalidModBusFunction) {
-                invalidModBusFunction.printStackTrace();
-            }
+            list.add(new Quartet<ChanName, WadDevType, Integer, CharSequence>(
+                key,
+                chan.type(),
+                chan.channel(),
+                new HexFromByte(chan.device().id()).toString()
+            ));
         });
         return list;
     }

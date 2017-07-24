@@ -45,8 +45,11 @@ public interface WAD_Channel {
     }
     WadDevType type();
     int channel();
-    default WadAbstractDevice device() throws InvalidModBusFunction {
+    WadAbstractDevice device();
+/*
+    {
         // TODO need to implement for use magic when grouping ModBus Requests
         throw new InvalidModBusFunction();
     }
+*/
 }

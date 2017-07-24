@@ -12,6 +12,7 @@ import org.javatuples.Triplet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Created by alexr on 10.02.2017.
@@ -82,28 +83,37 @@ public class ModBusDevices {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("devices list:\n");
+        StringBuilder sb = new StringBuilder("devices list:\n");
         devices.forEach((k, v)->
-            sb.append(String.format("name: %s, dev: %s, properties:%s\n",
-                k,
-                v.toString(),
-                v.properties().toString()
+            sb.append(String.format("dev.name: %s, dev: %s, dev.prop:%s\n",
+                k.toString(), // enum key from HashMap
+                v.toString(), // modbus type AIT,DOS etc + modbusId
+                v.properties().toString() // dev.prop: signalType, portType, chanCount
             )));
         return sb.toString();
     }
 
-/*
     public Set<DevName> list() {
         return devices.keySet();
     }
 
+    /**
+     *
+     * @return
+     * ArrayList<Triplet<DevName, WadDevType, CharSequence>>
+     *    device name (DevName)
+     *    device type (WadDevType)
+     *    modbusId (String)
+     */
     public ArrayList<Triplet> triplet() {
         ArrayList<Triplet> list = new ArrayList<>();
         devices.forEach((key, dev) -> {
-            list.add(new Triplet<DevName, WadDevType, CharSequence>(key, dev.type(), new HexFromByte(dev.id()).toString()));
+            list.add(new Triplet<DevName, WadDevType, CharSequence>(
+                key, // device name (DevName)
+                dev.type(), // device type (WadDevType)
+                new HexFromByte(dev.id()).toString() // modbusId (String)
+            ));
         });
         return list;
     }
-*/
 }

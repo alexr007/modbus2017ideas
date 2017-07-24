@@ -42,8 +42,8 @@ public class TkShowDeviceList implements Take {
         return new XeDirectives(
             new Directives()
                 .add("device")
-                .add("name").set(triplet.getValue0()).up()
-                .add("type").set(triplet.getValue1()).up()
+                .add("name").set(triplet.getValue0().toString()).up()
+                .add("type").set(triplet.getValue1().toString()).up()
                 .add("id").set(triplet.getValue2()).up()
                 .up()
         );
