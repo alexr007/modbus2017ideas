@@ -1,24 +1,5 @@
 package app.persistence.test;
 
-import jbus.comport.COMPort;
-import jbus.comport.COMPortProperties;
-import jbus.modbus.ModBus;
-import jwad.WadDevType;
-import app.persistence.init.ModBusChannels;
-import app.persistence.init.ModBusDevices;
-import app.persistence.ModBusEntities;
-import constants.Ch;
-import constants.Dv;
-import constants.En;
-import constants.Id;
-import entities.EnCylinder;
-import entities.EnValve;
-import jssc.SerialPort;
-import org.javatuples.Triplet;
-
-import java.io.File;
-import java.util.ArrayList;
-
 /**
  * Created by alexr on 26.04.2017.
  */

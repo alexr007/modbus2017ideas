@@ -1,10 +1,8 @@
 package app.persistence;
 
-import app.persistence.init.ModBusChannels;
-import app.persistence.init.ModBusDevices;
-import constants.Ch;
+import app.persistence.init.chan.ModBusChannels;
+import app.persistence.init.dev.ModBusDevices;
 import constants.DevName;
-import constants.Dv;
 import jbus.comport.COMPort;
 import jbus.comport.COMPortProperties;
 import jbus.modbus.ModBus;

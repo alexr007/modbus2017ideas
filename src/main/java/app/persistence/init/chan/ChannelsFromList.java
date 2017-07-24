@@ -1,29 +1,32 @@
-package app.persistence.init;
+package app.persistence.init.chan;
 
 import app.persistence.ChannelList;
-import app.persistence.init.ModBusDevices;
+import app.persistence.init.HashMapFrom;
+import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;
 import constants.DevName;
+import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
 import jwad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Created by alexr on 27.04.2017.
  */
-public class ChannelsFromList {
+public class ChannelsFromList implements HashMapFrom<ChanName, WAD_Channel> {
     private final ModBusDevices devices;
 /*
     private final ArrayList<Triplet<CharSequence, CharSequence, Integer>> channelsList = new ArrayList<>();
     private final ArrayList<Triplet<CharSequence, WadAbstractDevice, Integer>> channelsList2 = new ArrayList<>();
 */
+    //
     private final ArrayList<Triplet<DevName, WadAbstractDevice, Integer>> channelsList2 = new ArrayList<>();
+    private final ArrayList<Triplet<DevName, WadDevType, Integer>> devicesList;
 
     /**
      *
@@ -39,6 +42,10 @@ public class ChannelsFromList {
         this.channelsList.addAll(channels);
     }
 */
+    public ChannelsFromList(ModBusDevices devices,  ArrayList<Pair<WadAbstractDevice, ChannelList>> channels) {
+
+    }
+
 
     public ChannelsFromList(ModBusDevices devices, Pair<WadAbstractDevice, ChannelList>... channels) {
         this.devices = devices;
@@ -53,7 +60,7 @@ public class ChannelsFromList {
         }
     }
 
-    public HashMap<CharSequence,WAD_Channel> hashMap() throws Exception {
+    public HashMap<ChanName, WAD_Channel> hashMap() throws Exception {
         HashMap<CharSequence, WAD_Channel> map = new HashMap<>();
         for (Triplet<CharSequence, WadAbstractDevice, Integer> item : channelsList2) {
             if (map.containsKey(item.getValue0())) {

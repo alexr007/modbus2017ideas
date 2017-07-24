@@ -1,6 +1,9 @@
-package app.persistence.init;
+package app.persistence.init.chan;
 
 import app.persistence.ChannelList;
+import app.persistence.init.HashMapFrom;
+import app.persistence.init.dev.ModBusDevices;
+import constants.ChanName;
 import constants.DevName;
 import jbus.modbus.InvalidModBusFunction;
 import jwad.channels.WAD_Channel;
@@ -10,6 +13,7 @@ import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -17,23 +21,35 @@ import java.util.HashMap;
  */
 public class ModBusChannels {
     private final ModBusDevices devices;
-    private HashMap<CharSequence, WAD_Channel> channels;
+    private final HashMap<ChanName, WAD_Channel> channels;
 
+    // ctor 1 - empty list
     public ModBusChannels(ModBusDevices devices) throws Exception {
         this(devices, new ArrayList<>());
     }
 
-    // add channels by CHANNEL_NAME, DEVICE_NAME, CHANNEL_ID
-    public ModBusChannels(ModBusDevices devices, ArrayList<Triplet<CharSequence, CharSequence, Integer>> channels) throws Exception {
-        this.devices = devices;
-        this.channels = new ChannelsFromList(devices, channels).hashMap();
+    // ctor 2 - random quantity Pair<WadAbstractDevice, ChannelList>
+    public ModBusChannels (ModBusDevices devices, Pair<WadAbstractDevice, ChannelList>... channels) throws Exception {
+        this(devices, new ArrayList<>(Arrays.asList(channels)));
     }
 
-    // add channels by list of Pair<DEVICE, Pair<CHANNEL_NAME, CHANNEL_ID>>
-    public ModBusChannels (ModBusDevices devices, Pair<WadAbstractDevice, ChannelList>... channels) throws Exception {
-        this.devices = devices;
-        this.channels = new ChannelsFromList(devices, channels).hashMap();
+    // ctor 3 - ArrayList<Pair<WadAbstractDevice, ChannelList>>
+    public ModBusChannels (ModBusDevices devices, ArrayList<Pair<WadAbstractDevice, ChannelList>> channels) throws Exception {
+        this(devices, new ChannelsFromList(devices, channels));
     }
+
+    // ctor 4 - HashMapFrom
+    public ModBusChannels(ModBusDevices devices, HashMapFrom<ChanName, WAD_Channel> channels) throws Exception {
+        this(devices, channels.hashMap());
+    }
+
+    // ctor 5 - plain assignment
+    public ModBusChannels(ModBusDevices devices, HashMap<ChanName, WAD_Channel> channels) {
+        this.devices = devices;
+        this.channels = channels;
+    }
+
+    // =================================================================================================================
 
     public void add(CharSequence channelName, DevName deviceName, int channel) throws Exception {
         if (channels.containsKey(channelName)) {

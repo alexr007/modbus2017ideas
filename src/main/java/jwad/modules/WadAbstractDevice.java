@@ -8,11 +8,12 @@ import jbus.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
 import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
+import jwad.channels.WadAbstractChannel;
 import org.xembly.Directives;
 
 public abstract class WadAbstractDevice {
     private static final String ERROR_MESSAGE_MODBUS = "Something ModBus error occurred";
-    private static final String ERROR_UNKNOWN_TYPE = "Unknown ModBus Type: %s";
+    private static final String ERROR_UNKNOWN_TYPE = "Unknown ModBus device type: %s";
 
     private final ModBus modbus;
     private final int deviceId;
@@ -134,8 +135,15 @@ public abstract class WadAbstractDevice {
                 break;
             case DOS: device = new WAD_DOS_BUS(modBus, modbusId);
                 break;
-            default: throw new Exception(String.format(ERROR_UNKNOWN_TYPE, type));
+            default: throw new Exception (String.format(ERROR_UNKNOWN_TYPE, type));
         }
         return device;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        WadAbstractDevice other = (WadAbstractDevice) obj;
+        return this.deviceId == other.deviceId &&
+            this.modbus.equals(other.modbus);
     }
 }

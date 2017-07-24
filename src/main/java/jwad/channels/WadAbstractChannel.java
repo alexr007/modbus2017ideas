@@ -11,7 +11,7 @@ import jwad.modules.WadAbstractDevice;
  * Created by alexr on 12.05.2017.
  */
 public class WadAbstractChannel {
-    private final int channel;
+    private final int channelId;
     private final WadAbstractDevice device;
 
     /**
@@ -27,7 +27,7 @@ public class WadAbstractChannel {
             throw new IllegalArgumentException(
                 String.format("channel must be 0..%s, given:%s", device.properties().chanCount(), channel));
         }
-        this.channel = channel;
+        this.channelId = channel;
         this.device = device;
     }
 
@@ -36,7 +36,7 @@ public class WadAbstractChannel {
     }
 
     public int channel() {
-        return channel;
+        return channelId;
     }
 
     public WadAbstractDevice device() {
@@ -49,5 +49,12 @@ public class WadAbstractChannel {
 
     protected MbResponse run(MbRequest request) throws SerialPortException {
         return device.run(request);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        WadAbstractChannel other = (WadAbstractChannel) obj;
+        return this.channelId == other.channelId &&
+               this.device.equals(other.device);
     }
 }

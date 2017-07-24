@@ -1,6 +1,6 @@
 package app.persistence;
 
-import app.persistence.init.ModBusChannels;
+import app.persistence.init.chan.ModBusChannels;
 import entities.AbstractEntity;
 
 import java.util.HashMap;

@@ -2,6 +2,7 @@ package jbus.modbus;
 
 import jbus.comport.COMPort;
 import jssc.SerialPortException;
+import jwad.modules.WadAbstractDevice;
 
 /**
  * Created by alexr on 15.01.2017.
@@ -37,5 +38,11 @@ public class ModBus {
 
     public void finish() throws SerialPortException {
        this.close();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        ModBus other = (ModBus) obj;
+        return this.comPort.equals(other.comPort);
     }
 }

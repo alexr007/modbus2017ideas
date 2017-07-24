@@ -1,6 +1,7 @@
 package jbus.comport;
 
 import jbase.primitives.Bytes;
+import jbus.modbus.ModBus;
 import jssc.*;
 
 import java.io.IOException;
@@ -126,5 +127,10 @@ public class COMPort implements  SimpleSerialInterface{
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        COMPort other = (COMPort) obj;
+        return this.port.equals(other.port);
+    }
 
 }

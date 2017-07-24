@@ -8,7 +8,7 @@ public class DeviceProperties {
     private final SignalType signalType;
     // DRPort type: Input / Output / EnRelay
     private final PortType portType;
-    // Channels count
+    // Channels count: 1-24
     private final int channels;
 
     public DeviceProperties(SignalType signalType, PortType portType, int count) {
