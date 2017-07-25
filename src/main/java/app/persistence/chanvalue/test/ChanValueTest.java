@@ -5,16 +5,21 @@ import app.persistence.chanvalue.TypeDI;
 import app.persistence.chanvalue.TypeDO;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by alexr on 25.04.2017.
  */
 public class ChanValueTest {
     public void test2() throws Exception {
-        ArrayList<ChanValue> l = new ArrayList<>();
-        l.add(new ChanValue.A(1000));
-        l.add(new ChanValue.DI(TypeDI.CLOSED));
-        l.add(new ChanValue.DO(TypeDO.ON));
+        ArrayList<ChanValue> l = new ArrayList<>(
+            Arrays.asList(
+                new ChanValue.A(1000),
+                new ChanValue.DI(TypeDI.CLOSED),
+                new ChanValue.DO(TypeDO.ON)
+            )
+        );
 
         for (ChanValue a : l) {
             switch (a.type()) {

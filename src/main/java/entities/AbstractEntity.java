@@ -4,6 +4,15 @@ package entities;
  * Created by alexr on 17.02.2017.
  */
 public class AbstractEntity {
+    protected final EntityType type;
+
+    public AbstractEntity(EntityType type) {
+        this.type = type;
+    }
+
+    public EntityType type() {
+        return type;
+    }
 /*
 
     public boolean fail() throws InvalidEntityFunction, InvalidModBusResponse, ModBusInvalidFunction, SerialPortException {

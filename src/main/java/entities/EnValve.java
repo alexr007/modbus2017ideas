@@ -17,6 +17,7 @@ public class EnValve extends AbstractEntity implements ISwitch {
     private final WAD_Channel channel;
 
     public EnValve(WAD_Channel channel) {
+        super(EntityType.Valve);
         this.channel = channel;
     }
 

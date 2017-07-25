@@ -9,6 +9,7 @@ public class EnMotor extends AbstractEntity implements ISwitch {
     private final WAD_Channel channel;
 
     public EnMotor(WAD_Channel channel) {
+        super(EntityType.Motor);
         this.channel = channel;
     }
 

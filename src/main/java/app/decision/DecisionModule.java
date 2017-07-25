@@ -7,7 +7,7 @@ import static java.lang.Thread.sleep;
 /**
  * Created by alexr on 10.02.2017.
  */
-abstract public class DecisionModule implements Runnable{
+abstract public class DecisionModule implements Runnable {
     private final int cycleMs;
     protected final ModBusDevices modBusDevices;
     private boolean finished = false;

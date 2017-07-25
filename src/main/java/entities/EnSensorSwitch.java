@@ -15,6 +15,7 @@ public class EnSensorSwitch extends AbstractEntity implements ISensorDigital{
     private final WAD_Channel channel;
 
     public EnSensorSwitch(WAD_Channel channel) {
+        super(EntityType.SensorSwitch);
         this.channel = channel;
     }
 

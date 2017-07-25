@@ -21,8 +21,9 @@ public class WordsFromBytes {
      * @return words FFFF, ... from sequential bytes (origin) FF,FF, ...
      */
     public int[] get() {
-        int[] res = new int[origin.length / 2];
-        for (int i = 0 ; i < origin.length / 2 ; i++) {
+        int newLength = origin.length / 2;
+        int[] res = new int[newLength];
+        for (int i = 0 ; i < newLength ; i++) {
             res[i]=(origin[i*2] & 0xFF) << 8 | origin[i*2+1] & 0xFF;
         }
         return res;

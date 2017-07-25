@@ -11,6 +11,7 @@ public class EnMotorPWM extends AbstractEntity implements ISwitch, IPWM
     private final WAD_Channel channelValue;
 
     public EnMotorPWM(WAD_Channel channel, WAD_Channel channelValue) {
+        super(EntityType.MotorPWM);
         this.channel = channel;
         this.channelValue = channelValue;
     }

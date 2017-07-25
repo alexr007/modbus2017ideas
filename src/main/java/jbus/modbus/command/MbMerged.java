@@ -9,16 +9,18 @@ import jbase.primitives.Bytes;
 public class MbMerged implements Bytes {
 
     private final Bytes[] source;
+    private final int newTotalLength;
     private boolean ready = false;
     private byte[] command;
-    private int newTotalLength = 0;
 
     public MbMerged(Bytes... sources) {
         source = new Bytes[sources.length];
+        int len=0;
         for (int i = 0; i < sources.length; i++) {
             source[i] = sources[i];
-            newTotalLength += sources[i].get().length;
+            len += sources[i].get().length;
         }
+        this.newTotalLength=len;
     }
 
     private byte[] doBuild() {

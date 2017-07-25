@@ -16,6 +16,7 @@ public class EnCylinder extends AbstractEntity {
     private final EnValve valveToClose;
 
     public EnCylinder(EnValve valveToOpen, EnValve valveToClose) {
+        super(EntityType.Cylinder);
         this.valveToOpen = valveToOpen;
         this.valveToClose = valveToClose;
     }

@@ -13,6 +13,7 @@ public class EnSensor extends AbstractEntity implements ISensorAnalog {
     private final WAD_Channel channel;
 
     public EnSensor(WAD_Channel channel) {
+        super(EntityType.Sensor);
         this.channel = channel;
     }
 

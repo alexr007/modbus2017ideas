@@ -9,6 +9,7 @@ public class EnRelay extends AbstractEntity implements ISwitch{
     private final WAD_Channel channel;
 
     public EnRelay(WAD_Channel channel) {
+        super(EntityType.Relay);
         this.channel = channel;
     }
 

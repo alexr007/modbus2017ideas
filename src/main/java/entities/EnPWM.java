@@ -9,6 +9,7 @@ public class EnPWM extends AbstractEntity implements IPWM {
     private final WAD_Channel channel;
 
     public EnPWM(WAD_Channel channel) {
+        super(EntityType.PWM);
         this.channel = channel;
     }
 
