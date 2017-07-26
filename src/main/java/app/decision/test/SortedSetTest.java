@@ -8,10 +8,12 @@ import jbase.hex.HexFromWords;
 import jbus.modbus.response.Values;
 import org.javatuples.Pair;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Created by mac on 25.07.2017.
@@ -168,10 +170,10 @@ public class SortedSetTest {
     }
 
     public static void test28() {
-            List<Person> list = new ArrayList<Person>() {{
-                add(new Person(100, "Mohan"));
-                add(new Person(200, "Sohan"));
-                add(new Person(300, "Mahesh"));
+            List<PersonTest> list = new ArrayList<PersonTest>() {{
+                add(new PersonTest(100, "Mohan"));
+                add(new PersonTest(200, "Sohan"));
+                add(new PersonTest(300, "Mahesh"));
             }};
 
             Map<Integer, String> map = list.stream()
@@ -181,7 +183,7 @@ public class SortedSetTest {
             map.forEach((x, y) -> System.out.println("Key: " + x +", value: "+ y));
     }
 
-    public static void test2() {
+    public static void test29() {
         Values.Multiple ints = new Values.Multiple(new int[]{10, 20, 30, 40, 50, 60, 70});
 /*
         List<Integer> list = new ArrayList<Integer>() {{
@@ -242,6 +244,70 @@ public class SortedSetTest {
 */
 
 
+
+    }
+
+    public static void test230() {
+        //3 apple, 2 banana, others 1
+        List<Item> items = Arrays.asList(
+            new Item("apple",      10, new BigDecimal("9.99")),
+            new Item("banana",     20, new BigDecimal("19.99")),
+            new Item("orang",      10, new BigDecimal("29.99")),
+            new Item("watermelon", 10, new BigDecimal("29.99")),
+            new Item("papaya",     20, new BigDecimal("9.99")),
+            new Item("apple",      10, new BigDecimal("9.99")),
+            new Item("banana",     10, new BigDecimal("19.99")),
+            new Item("apple",      20, new BigDecimal("9.99"))
+        );
+
+        //group by price
+        Map<BigDecimal, List<Item>> groupByPriceMap =
+            items.stream().
+                collect(Collectors.groupingBy(new Function<Item, BigDecimal>() {
+                    @Override
+                    public BigDecimal apply(Item item) {
+                        return item.price();
+                    }
+                }));
+        System.out.println(groupByPriceMap);
+
+        // group by price, uses 'mapping' to convert List<Item> to Set<String>
+        Map<BigDecimal, Set<String>> result =
+            items.stream().
+                collect(
+                    Collectors.groupingBy(Item::price,
+                        Collectors.mapping(Item::name, Collectors.toSet())
+                )
+            );
+
+        System.out.println(result);
+    }
+
+    public static void test31() {
+        //3 apple, 2 banana, others 1
+        List<String> items =
+            Arrays.asList("apple", "apple", "banana",
+                "apple", "orange", "banana", "papaya");
+
+        Map<String, Long> result =
+            items.stream().collect(
+                Collectors.groupingBy(
+                    Function.identity(), Collectors.counting()
+                )
+            );
+
+        System.out.println(result);
+
+
+    }
+
+    public static void test2() {
+        Stream.of("one", "two", "three", "four")
+                     .filter(e -> e.length() > 3)
+                     .peek(e -> System.out.println("Filtered value: " + e))
+                     .map(String::toUpperCase)
+                     .peek(e -> System.out.println("Mapped value: " + e))
+                     .collect(Collectors.toList());
 
     }
 }

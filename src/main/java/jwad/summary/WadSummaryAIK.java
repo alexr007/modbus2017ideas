@@ -5,12 +5,9 @@ import jbus.modbus.response.InvalidModBusResponse;
 import jbus.modbus.response.Values;
 import jssc.SerialPortException;
 import jwad.modules.WadAbstractDevice;
-import org.javatuples.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -22,7 +19,7 @@ final public class WadSummaryAIK  extends WadSummaryBase {
         super(device);
     }
 
-    protected Map<Integer, ValuePresented> mapOriginal() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    protected Map<Integer, ValuePresented> map_OLD() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         Values ch_values = device.channel(0).get();
         return
             new HashMap<Integer, ValuePresented>() {{

@@ -5,7 +5,6 @@ import jbus.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
 import jwad.modules.WadAbstractDevice;
 import org.xembly.Directives;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

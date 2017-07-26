@@ -39,14 +39,14 @@ public class RosterTest {
 /*
 
     interface CheckPerson {
-        boolean test(Person p);
+        boolean test(PersonTest p);
     }
 
     // Approach 1: Create Methods that Search for Persons that Match One
     // Characteristic
 
-    public static void printPersonsOlderThan(List<Person> roster, int age) {
-        for (Person p : roster) {
+    public static void printPersonsOlderThan(List<PersonTest> roster, int age) {
+        for (PersonTest p : roster) {
             if (p.getAge() >= age) {
                 p.printPerson();
             }
@@ -56,8 +56,8 @@ public class RosterTest {
     // Approach 2: Create More Generalized Search Methods
 
     public static void printPersonsWithinAgeRange(
-            List<Person> roster, int low, int high) {
-        for (Person p : roster) {
+            List<PersonTest> roster, int low, int high) {
+        for (PersonTest p : roster) {
             if (low <= p.getAge() && p.getAge() < high) {
                 p.printPerson();
             }
@@ -69,8 +69,8 @@ public class RosterTest {
     // Approach 5: Specify Search Criteria Code with a Lambda Expression
 
     public static void printPersons(
-            List<Person> roster, CheckPerson tester) {
-        for (Person p : roster) {
+            List<PersonTest> roster, CheckPerson tester) {
+        for (PersonTest p : roster) {
             if (tester.test(p)) {
                 p.printPerson();
             }
@@ -80,8 +80,8 @@ public class RosterTest {
     // Approach 6: Use Standard Functional Interfaces with Lambda Expressions
 
     public static void printPersonsWithPredicate(
-            List<Person> roster, Predicate<Person> tester) {
-        for (Person p : roster) {
+            List<PersonTest> roster, Predicate<PersonTest> tester) {
+        for (PersonTest p : roster) {
             if (tester.test(p)) {
                 p.printPerson();
             }
@@ -91,10 +91,10 @@ public class RosterTest {
     // Approach 7: Use Lambda Expressions Throughout Your Application
 
     public static void processPersons(
-            List<Person> roster,
-            Predicate<Person> tester,
-            Consumer<Person> block) {
-        for (Person p : roster) {
+            List<PersonTest> roster,
+            Predicate<PersonTest> tester,
+            Consumer<PersonTest> block) {
+        for (PersonTest p : roster) {
             if (tester.test(p)) {
                 block.accept(p);
             }
@@ -104,11 +104,11 @@ public class RosterTest {
     // Approach 7, second example
 
     public static void processPersonsWithFunction(
-            List<Person> roster,
-            Predicate<Person> tester,
-            Function<Person, String> mapper,
+            List<PersonTest> roster,
+            Predicate<PersonTest> tester,
+            Function<PersonTest, String> mapper,
             Consumer<String> block) {
-        for (Person p : roster) {
+        for (PersonTest p : roster) {
             if (tester.test(p)) {
                 String data = mapper.apply(p);
                 block.accept(data);
@@ -133,9 +133,9 @@ public class RosterTest {
 
     public static void main(String... args) {
 
-        List<Person> roster = Person.createRoster();
+        List<PersonTest> roster = PersonTest.createRoster();
 
-        for (Person p : roster) {
+        for (PersonTest p : roster) {
             p.printPerson();
         }
 
@@ -157,8 +157,8 @@ public class RosterTest {
         System.out.println("Persons who are eligible for Selective Service:");
 
         class CheckPersonEligibleForSelectiveService implements CheckPerson {
-            public boolean test(Person p) {
-                return p.getGender() == Person.Sex.MALE
+            public boolean test(PersonTest p) {
+                return p.getGender() == PersonTest.Sex.MALE
                         && p.getAge() >= 18
                         && p.getAge() <= 25;
             }
@@ -178,8 +178,8 @@ public class RosterTest {
         printPersons(
                 roster,
                 new CheckPerson() {
-                    public boolean test(Person p) {
-                        return p.getGender() == Person.Sex.MALE
+                    public boolean test(PersonTest p) {
+                        return p.getGender() == PersonTest.Sex.MALE
                                 && p.getAge() >= 18
                                 && p.getAge() <= 25;
                     }
@@ -195,7 +195,7 @@ public class RosterTest {
 
         printPersons(
                 roster,
-                (Person p) -> p.getGender() == Person.Sex.MALE
+                (PersonTest p) -> p.getGender() == PersonTest.Sex.MALE
                         && p.getAge() >= 18
                         && p.getAge() <= 25
         );
@@ -210,7 +210,7 @@ public class RosterTest {
 
         printPersonsWithPredicate(
                 roster,
-                p -> p.getGender() == Person.Sex.MALE
+                p -> p.getGender() == PersonTest.Sex.MALE
                         && p.getAge() >= 18
                         && p.getAge() <= 25
         );
@@ -224,7 +224,7 @@ public class RosterTest {
 
         processPersons(
                 roster,
-                p -> p.getGender() == Person.Sex.MALE
+                p -> p.getGender() == PersonTest.Sex.MALE
                         && p.getAge() >= 18
                         && p.getAge() <= 25,
                 p -> p.printPerson()
@@ -239,7 +239,7 @@ public class RosterTest {
 
         processPersonsWithFunction(
                 roster,
-                p -> p.getGender() == Person.Sex.MALE
+                p -> p.getGender() == PersonTest.Sex.MALE
                         && p.getAge() >= 18
                         && p.getAge() <= 25,
                 p -> p.getEmailAddress(),
@@ -255,7 +255,7 @@ public class RosterTest {
 
         processElements(
                 roster,
-                p -> p.getGender() == Person.Sex.MALE
+                p -> p.getGender() == PersonTest.Sex.MALE
                         && p.getAge() >= 18
                         && p.getAge() <= 25,
                 p -> p.getEmailAddress(),
@@ -273,7 +273,7 @@ public class RosterTest {
         roster
                 .stream()
                 .filter(
-                        p -> p.getGender() == Person.Sex.MALE
+                        p -> p.getGender() == PersonTest.Sex.MALE
                                 && p.getAge() >= 18
                                 && p.getAge() <= 25)
                 .map(p -> p.getEmailAddress())

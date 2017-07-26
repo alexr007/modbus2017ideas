@@ -1,3 +1,5 @@
+package app.decision.test;
+
 import app.persistence.BIOcore;
 import jbase.Branch;
 import jbase.Decision;
