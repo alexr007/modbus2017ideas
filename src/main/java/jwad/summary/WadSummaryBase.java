@@ -6,6 +6,7 @@ import jssc.SerialPortException;
 import jwad.modules.WadAbstractDevice;
 import org.xembly.Directives;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by alexr on 28.04.2017.
@@ -17,7 +18,7 @@ abstract public class WadSummaryBase implements WadSummary {
         this.device = device;
     }
 
-    abstract protected HashMap<Integer, ValuePresented> map() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
+    abstract protected Map<Integer, ValuePresented> map() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
 
     public Directives xmlDir() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         Directives dirs = new Directives();

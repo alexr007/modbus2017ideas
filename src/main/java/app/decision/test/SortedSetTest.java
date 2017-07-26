@@ -11,6 +11,7 @@ import org.javatuples.Pair;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created by mac on 25.07.2017.
@@ -160,10 +161,87 @@ public class SortedSetTest {
         );
     }
 
-    public static void test2() {
+    public static void test27() {
         System.out.println(
             new Values.Multiple(new int[]{9,8,7,6})
         );
     }
 
+    public static void test28() {
+            List<Person> list = new ArrayList<Person>() {{
+                add(new Person(100, "Mohan"));
+                add(new Person(200, "Sohan"));
+                add(new Person(300, "Mahesh"));
+            }};
+
+            Map<Integer, String> map = list.stream()
+                .collect(Collectors.toMap(
+                    person -> person.getId(), person -> person.getName()));
+
+            map.forEach((x, y) -> System.out.println("Key: " + x +", value: "+ y));
+    }
+
+    public static void test2() {
+        Values.Multiple ints = new Values.Multiple(new int[]{10, 20, 30, 40, 50, 60, 70});
+/*
+        List<Integer> list = new ArrayList<Integer>() {{
+            add(1);
+            add(2);
+            add(3);
+        }};
+
+        Map<Integer, Integer> collect = list.stream()
+            .collect(Collectors.toMap(
+                o -> o,
+                o -> ints.get(o)
+            ));
+        collect.forEach((k,v)-> System.out.println(
+            String.format(
+                "k:%sv:%s",k,v
+            )
+        ));
+*/
+        Map<Integer, Integer> collect = IntStream.range(1,ints.count()+1).boxed()
+            //.forEach(p-> System.out.println(p));
+        .collect(Collectors.toMap(
+            i -> i,
+            j -> ints.get(j)*2
+        ));
+        collect.forEach((k,v)-> System.out.println(
+            String.format(
+                "k:%sv:%s",k,v
+            )));
+
+
+
+
+/*
+        IntStream.range(0, ints.count())
+            .collect(Collectors.toMap(
+                new Function<Object, Object>() {
+                    @Override
+                    public Object apply(Object o) {
+                        return null;
+                    }
+                },
+                new Function<Object, Object>() {
+                    @Override
+                    public Object apply(Object o) {
+                        return null;
+                    }
+                }
+            ))
+*/
+/*
+            .forEach(
+                p-> System.out.println(
+                    String.format("K:%d,V:%d",
+                        p+1,
+                        ints.get(p+1)
+                )
+*/
+
+
+
+    }
 }

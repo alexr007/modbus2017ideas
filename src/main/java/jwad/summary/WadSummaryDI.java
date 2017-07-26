@@ -7,6 +7,7 @@ import jssc.SerialPortException;
 import jwad.modules.WadAbstractDevice;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by alexr on 27.04.2017.
@@ -17,7 +18,7 @@ final public class WadSummaryDI extends WadSummaryBase {
     }
 
     @Override
-    protected HashMap<Integer, ValuePresented> map() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    protected Map<Integer, ValuePresented> map() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         Values ch_fails = device.channel(0).fail();
         Values ch_values = device.channel(0).get();
         return new HashMap<Integer, ValuePresented>() {{

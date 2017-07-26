@@ -2,6 +2,7 @@ package jbus.modbus.response;
 
 import jbase.arr.ArrayFromInt;
 import jbase.IterableToString;
+import java.util.stream.IntStream;
 
 /**
  * Created by alexr on 22.01.2017.
@@ -14,6 +15,7 @@ public interface Values {
     int get();
     int get(int index);
     int count();
+    IntStream stream();
 
     class None implements  Values {
         @Override
@@ -39,6 +41,11 @@ public interface Values {
         @Override
         public int count() {
             return 0;
+        }
+
+        @Override
+        public IntStream stream() {
+            return IntStream.empty();
         }
     }
 
@@ -76,6 +83,11 @@ public interface Values {
         @Override
         public int count() {
             return 1;
+        }
+
+        @Override
+        public IntStream stream() {
+            return IntStream.of(value);
         }
 
         @Override
@@ -122,6 +134,11 @@ public interface Values {
         @Override
         public int count() {
             return values.length;
+        }
+
+        @Override
+        public IntStream stream() {
+            return IntStream.of(values);
         }
 
         @Override
