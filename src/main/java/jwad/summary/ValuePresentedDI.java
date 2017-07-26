@@ -5,7 +5,7 @@ import app.persistence.chanvalue.TypeDI;
 /**
  * Created by alexr on 01.05.2017.
  */
-public class ValuePresentedDI {
+public class ValuePresentedDI implements ValuePresented {
     private final int origin;
     private final int fail;
     private final int I_OPENED = 0;

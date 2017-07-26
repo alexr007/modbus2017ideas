@@ -3,7 +3,7 @@ package jwad.summary;
 /**
  * Created by alexr on 01.05.2017.
  */
-public class ValuePresentedAO {
+public class ValuePresentedAO implements ValuePresented {
     private final int origin;
     private final int I_NOT_INSTALLED = 0xFFFF;
     private final String S_NOT_INSTALLED = "NOT INSTALLED";

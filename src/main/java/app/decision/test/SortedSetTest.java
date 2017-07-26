@@ -1,20 +1,16 @@
 package app.decision.test;
 
-import app.decision.Strings;
 import constants.ChanName;
+import jbase.IterableToString;
 import jbase.hex.HexFromBytes;
 import jbase.hex.HexFromWord;
 import jbase.hex.HexFromWords;
-import jbase.primitives.Bytes;
+import jbus.modbus.response.Values;
 import org.javatuples.Pair;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Created by mac on 25.07.2017.
@@ -140,10 +136,34 @@ public class SortedSetTest {
         );
     }
 
-    public static void test2() {
+    public static void test251() {
         System.out.println(
-            new HexFromWords(new int[]{1,2,3,4,  0xFFFF})
+            new HexFromWords(new int[]{1,2,3,4, (short)0xFFFF})
+                .toString()
+        );
+        System.out.println(
+            new HexFromWords(new short[]{1,2,3,4, (short)0xFFFF})
                 .toString()
         );
     }
+
+    public static void test252() {
+        System.out.println(
+            new HexFromBytes(new byte[]{1,2,3,4, (byte)0xFF})
+                .toString()
+        );
+    }
+
+    public static void test26() {
+        System.out.println(
+            new IterableToString<Integer>(new int[]{1, 2, 3, 5}, integer -> String.format("_%s_", integer.toString()))
+        );
+    }
+
+    public static void test2() {
+        System.out.println(
+            new Values.Multiple(new int[]{9,8,7,6})
+        );
+    }
+
 }

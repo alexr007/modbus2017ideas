@@ -10,6 +10,7 @@ import jssc.SerialPortException;
 import org.javatuples.Triplet;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by alexr on 10.02.2017.
@@ -96,14 +97,14 @@ public class ModBusDevices {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("devices list:\n");
-        devices.forEach((k, v)->
-            sb.append(String.format("dev.name: %s, dev: %s, dev.prop:%s\n",
-                k.toString(), // enum key from HashMap
-                v.toString(), // modbus type AIT,DOS etc + modbusId
-                v.properties().toString() // dev.prop: signalType, portType, chanCount
-            )));
-        return sb.toString();
+        return String.format("Devices configured (HashMap):\n%s",
+            devices.keySet().stream()
+                .map(key -> String.format("dev.name: %s, dev: %s, dev.prop:%s\n",
+                    key.toString(), // enum key from HashMap
+                    devices.get(key).toString(), // modbus type AIT,DOS etc + modbusId
+                    devices.get(key).properties().toString() // dev.prop: signalType, portType, chanCount
+                ))
+                .collect(Collectors.joining()));
     }
 
     public Set<DevName> list() {

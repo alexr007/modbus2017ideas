@@ -2,7 +2,6 @@ package jbus.modbus.response;
 
 import jbase.arr.ArrayFromInt;
 import jbase.IterableToString;
-import java.util.Arrays;
 
 /**
  * Created by alexr on 22.01.2017.
@@ -129,9 +128,7 @@ public interface Values {
         public String toString() {
             return
                 String.format("Multiple:%s",
-                    new IterableToString<>(
-                        Arrays.stream(values).boxed().toArray(Integer[]::new)
-                    ).toString()
+                    new IterableToString<Integer>(values)
                 );
         }
     }

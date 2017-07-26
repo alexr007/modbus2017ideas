@@ -246,6 +246,10 @@ public class BIOcore {
         return modBus;
     }
 
+    public ModBusDevices devices() {
+        return devices;
+    }
+
     public ModBusChannels channels() {
         return channels;
     }

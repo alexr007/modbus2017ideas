@@ -17,10 +17,10 @@ final public class WadSummaryDI extends WadSummaryBase {
     }
 
     @Override
-    protected HashMap<Integer, Object> map () throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    protected HashMap<Integer, ValuePresented> map() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         Values ch_fails = device.channel(0).fail();
         Values ch_values = device.channel(0).get();
-        return new HashMap<Integer, Object>() {{
+        return new HashMap<Integer, ValuePresented>() {{
             for (int key=1; key<=ch_fails.count(); key++) {
                 put(key,new ValuePresentedDI(ch_values.get(key), ch_fails.get(key)));
             }

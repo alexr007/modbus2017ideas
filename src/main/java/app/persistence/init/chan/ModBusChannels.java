@@ -4,6 +4,7 @@ import app.persistence.init.EnumMapFrom;
 import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;
 import constants.DevName;
+import jbase.IterableToString;
 import jbase.hex.HexFromByte;
 import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
@@ -12,7 +13,9 @@ import org.javatuples.Pair;
 import org.javatuples.Quartet;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -95,19 +98,17 @@ public class ModBusChannels {
         );
     }
 
-
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Channels configured (HashMap):\n");
-        channels.forEach((k, v)->
-            sb.append(String.format("chan.name: %s, dev.name: %s, dev.prop:%s\n",
-                k.toString(), // enum key from HashMap
-                v.device().toString(), // dev name(AIK, DOS), modbus id
-                v.device().properties().toString() // dev.prop: signalType, portType, chanCount
-                )
-            ));
-        sb.append("---\n");
-        return sb.toString();
+        return String.format("Channels configured (HashMap):\n%s",
+            channels.keySet().stream()
+                .map(key -> String.format("chan.name: %s, dev.name: %s, dev.prop:%s\n",
+                    key.toString(), // enum key from HashMap
+                    channels.get(key).device().toString(), // dev name(AIK, DOS), modbus id
+                    channels.get(key).device().properties().toString() // dev.prop: signalType, portType, chanCount
+                ))
+                .collect(Collectors.joining())
+        );
     }
 
     public void finish() throws SerialPortException {

@@ -1,6 +1,6 @@
 package jbase.hex;
 
-import java.util.stream.Collectors;
+import jbase.IterableToString;
 import java.util.stream.IntStream;
 
 /**
@@ -11,17 +11,21 @@ public class HexFromWords {
     private final String DELIMITER = ", ";
     private final int[] origin;
 
+    public HexFromWords(short[] origin) {
+        this(IntStream
+            .range(0, origin.length)
+            .map(i -> origin[i])
+            .toArray());
+    }
+
     public HexFromWords(int[] origin) {
         this.origin = origin;
     }
 
     @Override
     public String toString() {
-        return String.format("%d:[%s]", origin.length,
-            IntStream
-                .range(0, origin.length)
-                .mapToObj((int val) -> new HexFromWord(origin[val]).toString())
-                .collect(Collectors.joining(DELIMITER))
-        );
+        return
+            new IterableToString<Integer>(origin, val -> new HexFromWord(val).toString())
+                .toString();
     }
 }

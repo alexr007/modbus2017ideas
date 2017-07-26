@@ -21,6 +21,10 @@ public class HexFromWord {
         this(origin.get());
     }
 
+    public HexFromWord(short origin) {
+        this(0xFFFF & origin);
+    }
+
     public HexFromWord(int origin) {
         this.origin = 0xFFFF & origin;
     }

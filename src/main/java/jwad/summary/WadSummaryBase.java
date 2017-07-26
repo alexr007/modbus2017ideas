@@ -5,7 +5,6 @@ import jbus.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
 import jwad.modules.WadAbstractDevice;
 import org.xembly.Directives;
-
 import java.util.HashMap;
 
 /**
@@ -18,7 +17,7 @@ abstract public class WadSummaryBase implements WadSummary {
         this.device = device;
     }
 
-    abstract protected HashMap<?, ?> map () throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
+    abstract protected HashMap<Integer, ValuePresented> map() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
 
     public Directives xmlDir() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         Directives dirs = new Directives();
@@ -37,5 +36,6 @@ abstract public class WadSummaryBase implements WadSummary {
             sb.append(String.format("Channel %2d: %s\n", k, v.toString()))
         );
         return sb.toString();
+
     }
 }

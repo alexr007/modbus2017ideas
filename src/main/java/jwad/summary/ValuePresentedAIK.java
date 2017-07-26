@@ -3,7 +3,7 @@ package jwad.summary;
 /**
  * Created by alexr on 01.05.2017.
  */
-public class ValuePresentedAIK {
+public class ValuePresentedAIK implements ValuePresented {
     private final int origin;
 
     public ValuePresentedAIK(int origin) {

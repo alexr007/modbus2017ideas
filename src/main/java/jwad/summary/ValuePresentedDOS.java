@@ -5,7 +5,7 @@ import app.persistence.chanvalue.TypeDO;
 /**
  * Created by alexr on 01.05.2017.
  */
-public class ValuePresentedDOS {
+public class ValuePresentedDOS implements ValuePresented {
     private final int ON = 1;
     private final String S_ON = "ON";
     private final String S_OFF = "OFF";
