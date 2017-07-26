@@ -1,6 +1,6 @@
 package app.persistence.init.chan;
 
-import app.persistence.init.HashMapFrom;
+import app.persistence.init.EnumMapFrom;
 import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;
 import constants.DevName;
@@ -11,16 +11,16 @@ import jssc.SerialPortException;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 /**
  * Created by alexr on 15.02.2017.
  */
 public class ModBusChannels {
     private final ModBusDevices devices;
-    private final HashMap<ChanName, WAD_Channel> channels;
+    private final EnumMap<ChanName, WAD_Channel> channels;
 
     // ctor 1 - empty list
     public ModBusChannels(ModBusDevices devices) throws Exception {
@@ -37,13 +37,13 @@ public class ModBusChannels {
         this(devices, new ChannelsFromList(devices, channels));
     }
 
-    // ctor 4 - HashMapFrom
-    public ModBusChannels(ModBusDevices devices, HashMapFrom<ChanName, WAD_Channel> channels) throws Exception {
-        this(devices, channels.hashMap());
+    // ctor 4 - EnumMapFrom
+    public ModBusChannels(ModBusDevices devices, EnumMapFrom<ChanName, WAD_Channel> channels) throws Exception {
+        this(devices, channels.enumMap());
     }
 
     // ctor 5 - plain assignment
-    public ModBusChannels(ModBusDevices devices, HashMap<ChanName, WAD_Channel> channels) {
+    public ModBusChannels(ModBusDevices devices, EnumMap<ChanName, WAD_Channel> channels) {
         this.devices = devices;
         this.channels = channels;
     }
@@ -79,6 +79,22 @@ public class ModBusChannels {
         }
         return channels.get(cname);
     }
+
+    /**
+     * Find all Channels on same device
+     *
+     * @param chan
+     * @return EnumSet<ChanName>
+     */
+    public EnumSet<ChanName> getAllFromSameDevice(ChanName chan) {
+        return EnumSet.copyOf(
+            channels.entrySet().stream()
+                .filter(entry -> entry.getValue().device().id() == channels.get(chan).device().id())
+                .map(entry -> entry.getKey())
+                .collect(Collectors.toSet())
+        );
+    }
+
 
     @Override
     public String toString() {

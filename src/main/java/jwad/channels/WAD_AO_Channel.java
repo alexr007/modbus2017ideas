@@ -47,6 +47,14 @@ final public class WAD_AO_Channel extends WadAbstractChannel implements WAD_Chan
         );
         //System.out.println(new HexFromByte(v.get()).toString());
         return v;
+/*
+        return
+            new Values.Multiple(
+                new WordsFromBytes(
+                    data
+                )
+            );
+*/
     }
 
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {

@@ -1,23 +1,20 @@
 package app.persistence.init.dev;
 
-import app.persistence.init.HashMapFrom;
+import app.persistence.init.EnumMapFrom;
 import constants.DevName;
 import jbus.modbus.ModBus;
 import jwad.modules.WadAbstractDevice;
 import jwad.WadDevType;
 import org.javatuples.Triplet;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Stream;
+import java.util.EnumMap;
 
 /**
  * Created by alexr on 26.04.2017.
  */
-public class DevicesFromList implements HashMapFrom<DevName, WadAbstractDevice> {
+public class DevicesFromList implements EnumMapFrom<DevName, WadAbstractDevice> {
     private final ModBus modBus;
     private final ArrayList<Triplet<DevName, WadDevType, Integer>> devicesList;
 
@@ -31,19 +28,8 @@ public class DevicesFromList implements HashMapFrom<DevName, WadAbstractDevice> 
     }
 
     @Override
-    public HashMap<DevName, WadAbstractDevice> hashMap() throws Exception {
-        final HashMap<DevName, WadAbstractDevice> map = new HashMap<>();
-/*
-    stream implementation. need explicit Exception handling
-        devicesList.forEach(item -> {
-                    if (map.containsKey(item.getValue0()))
-                        throw new Exception (String.format("Duplicate Device name: %s", item.getValue0().toString()));
-                    map.put(
-                        item.getValue0(),
-                        WadAbstractDevice.build(modBus, item.getValue1(), item.getValue2())
-                    );
-        });
-*/
+    public EnumMap<DevName, WadAbstractDevice> enumMap() throws Exception {
+        final EnumMap<DevName, WadAbstractDevice> map = new EnumMap<>(DevName.class);
         for (Triplet<DevName, WadDevType, Integer> item : devicesList) {
             if (map.containsKey(item.getValue0())) {
                 throw new Exception(String.format("Duplicate Device name: %s", item.getValue0().toString()));

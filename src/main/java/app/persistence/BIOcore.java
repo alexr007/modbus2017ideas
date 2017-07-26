@@ -3,6 +3,7 @@ package app.persistence;
 import app.persistence.init.chan.ChannelList;
 import app.persistence.init.chan.ModBusChannels;
 import app.persistence.init.dev.ModBusDevices;
+import constants.ChanName;
 import constants.DevName;
 import jbus.comport.COMPort;
 import jbus.comport.COMPortProperties;
@@ -30,10 +31,11 @@ public class BIOcore {
     private final ModBus modBus;
     private final COMPort comPort;
 
-    public BIOcore(String comName) throws Exception {
+    public BIOcore(String comName, boolean fake) throws Exception {
         this.comPort = new COMPort(
             comName,
-            new COMPortProperties(SerialPort.BAUDRATE_57600)
+            new COMPortProperties(SerialPort.BAUDRATE_57600),
+            fake
         );
         this.modBus = new ModBus(
             this.comPort
@@ -194,12 +196,17 @@ public class BIOcore {
                     // 5-8 free
                 ))
             );
-        System.out.println(
-            this.channels.toString()
-        );
     }
 
     public WadAbstractDevice dev(DevName name) {
+        try {
+            return devices.get(name);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(String.format("Module Name NotFound:%s",name.toString()));
+        }
+    }
+
+    public WadAbstractDevice dev(String name) {
         try {
             return devices.get(name);
         } catch (Exception e) {
@@ -207,11 +214,11 @@ public class BIOcore {
         }
     }
 
-    public WadAbstractDevice dev(String name) {
+    public WAD_Channel chan(ChanName name) throws Exception {
         try {
-            return devices.get(DevName.valueOf(name));
+            return channels.get(name);
         } catch (Exception e) {
-            throw new IllegalArgumentException(String.format("Module Name NotFound:%s",name));
+            throw new IllegalArgumentException(String.format("Channel Name NotFound:%s",name.toString()));
         }
     }
 
@@ -237,6 +244,10 @@ public class BIOcore {
 
     public ModBus modBus() {
         return modBus;
+    }
+
+    public ModBusChannels channels() {
+        return channels;
     }
 
     public void finish() throws SerialPortException {

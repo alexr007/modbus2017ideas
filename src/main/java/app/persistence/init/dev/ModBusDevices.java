@@ -1,6 +1,6 @@
 package app.persistence.init.dev;
 
-import app.persistence.init.HashMapFrom;
+import app.persistence.init.EnumMapFrom;
 import constants.DevName;
 import jbase.hex.HexFromByte;
 import jbus.modbus.ModBus;
@@ -9,17 +9,15 @@ import jwad.WadDevType;
 import jssc.SerialPortException;
 import org.javatuples.Triplet;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by alexr on 10.02.2017.
  */
 public class ModBusDevices {
     private final ModBus modBus;
-    private final HashMap<DevName, WadAbstractDevice> devices;
+    private final EnumMap<DevName, WadAbstractDevice> devices;
+    private final HashMap<Integer, WadAbstractDevice> devicesById;
 
     // ctor 1 - empty list
     public ModBusDevices(final ModBus modBus) throws Exception {
@@ -36,15 +34,23 @@ public class ModBusDevices {
         this(modBus, new DevicesFromList(modBus, devices));
     }
 
-    // ctor 4 - HashMapFrom
-    public ModBusDevices(final ModBus modBus, final HashMapFrom<DevName, WadAbstractDevice> devices) throws Exception {
-        this(modBus, devices.hashMap());
+    // ctor 4 - EnumMapFrom
+    public ModBusDevices(final ModBus modBus, final EnumMapFrom<DevName, WadAbstractDevice> devices) throws Exception {
+        this(modBus, devices.enumMap());
     }
 
     // ctor 5 - plain assignment
-    public ModBusDevices(final ModBus modBus, final HashMap<DevName, WadAbstractDevice> devices) throws Exception {
+    public ModBusDevices(final ModBus modBus, final EnumMap<DevName, WadAbstractDevice> devices) throws Exception {
         this.modBus = modBus;
         this.devices = devices;
+        /**
+         * one more enumMap for access to WADdevice by ModBusId
+         */
+        HashMap<Integer, WadAbstractDevice> map = new HashMap<>();
+        this.devices.forEach(
+            (k,v) -> map.put(v.id(), v)
+        );
+        this.devicesById = map;
     }
 
     public void add(DevName deviceName, WadDevType type, int modbusId) throws Exception {
@@ -75,6 +81,13 @@ public class ModBusDevices {
             throw new Exception(String.format("Module Name NotFound:%s", deviceName));
         }
         return devices.get(DevName.valueOf(deviceName));
+    }
+
+    public WadAbstractDevice get(int deviceId) throws Exception {
+        if (!devicesById.containsKey(deviceId)) {
+            throw new Exception(String.format("Module with ModBus Id:%s NotFound", deviceId));
+        }
+        return devicesById.get(deviceId);
     }
 
     public void finish() throws SerialPortException {

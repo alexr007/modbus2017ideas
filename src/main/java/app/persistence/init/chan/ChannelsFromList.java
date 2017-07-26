@@ -1,18 +1,22 @@
 package app.persistence.init.chan;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import app.persistence.init.EnumMapFrom;
+import jwad.channels.WAD_Channel;
 import org.javatuples.Pair;
-import app.persistence.init.HashMapFrom;
 import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;
 import constants.DevName;
-import jwad.channels.WAD_Channel;
 
 /**
  * Created by alexr on 27.04.2017.
  */
-public class ChannelsFromList implements HashMapFrom<ChanName, WAD_Channel> {
+public class ChannelsFromList implements EnumMapFrom<ChanName, WAD_Channel> {
     private final ModBusDevices devices;
     private final ArrayList<Pair<DevName, ChannelList>> channelsList;
 
@@ -21,8 +25,8 @@ public class ChannelsFromList implements HashMapFrom<ChanName, WAD_Channel> {
         this.channelsList = channelsList;
     }
 
-    public HashMap<ChanName, WAD_Channel> hashMap() throws Exception {
-        HashMap<ChanName, WAD_Channel> map = new HashMap<>();
+    public EnumMap<ChanName, WAD_Channel> enumMap() throws Exception {
+        EnumMap<ChanName, WAD_Channel> map = new EnumMap<>(ChanName.class);
         channelsList.forEach(
             (Pair<DevName, ChannelList> pair) -> {
                 // iteration by each pair <dev, chan_list>

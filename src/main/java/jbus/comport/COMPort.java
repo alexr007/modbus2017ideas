@@ -20,45 +20,79 @@ public class COMPort implements  SimpleSerialInterface{
     private byte[] readed;
     // locker for multithreading
     private final Object locker = new Object();
+    // fake mode informer
+    private final boolean fake;
 
-    /*
-     * Ctor with COMPortProperties
+    /**
      *
-     */
-    public COMPort(String portName, COMPortProperties properties) throws SerialPortException {
-        port = new SerialPort(portName);
-        port.openPort();
-        port.setParams(
-            properties.baudRate(),
-            properties.dataBits(),
-            properties.stopBits(),
-            properties.parity()
-        );
-        port.setFlowControlMode(
-            SerialPort.FLOWCONTROL_NONE
-            //| SerialPort.FLOWCONTROL_RTSCTS_IN
-            //| SerialPort.FLOWCONTROL_RTSCTS_OUT
-        );
-        this.port.addEventListener(listener, SerialPort.MASK_RXCHAR);
-    }
-
-    /*
-     * Ctor with Default Properties 57600,8,N,1
-     *
+     * @param portName
+     * @throws SerialPortException
      */
     public COMPort(String portName) throws SerialPortException {
-        this(
-            portName,
-            new COMPortProperties(57600)
+        this(portName,
+            new COMPortProperties(57600),
+            false
         );
     }
-    /*
-     * You need the close port after use it
+
+    /**
      *
+     * @param portName
+     * @param fake
+     * @throws SerialPortException
+     */
+    public COMPort(String portName, boolean fake) throws SerialPortException {
+        this(portName,
+            new COMPortProperties(57600),
+            fake
+        );
+    }
+
+    /**
+     *
+     * @param portName
+     * @param properties
+     * @throws SerialPortException
+     */
+    public COMPort(String portName, COMPortProperties properties) throws SerialPortException {
+        this(portName, properties, false);
+    }
+
+    /**
+     *
+     * @param portName
+     * @param properties
+     * @param fake
+     * @throws SerialPortException
+     */
+    public COMPort(String portName, COMPortProperties properties, boolean fake) throws SerialPortException {
+        this.fake = fake;
+        this.port = new SerialPort(portName);
+        if (!this.fake) {
+            port.openPort();
+            port.setParams(
+                properties.baudRate(),
+                properties.dataBits(),
+                properties.stopBits(),
+                properties.parity()
+            );
+            port.setFlowControlMode(
+                SerialPort.FLOWCONTROL_NONE
+                //| SerialPort.FLOWCONTROL_RTSCTS_IN
+                //| SerialPort.FLOWCONTROL_RTSCTS_OUT
+            );
+            this.port.addEventListener(listener, SerialPort.MASK_RXCHAR);
+        }
+    }
+
+    /**
+     * We need the close port after use it
      */
     @Override
     public void close() throws SerialPortException {
-        port.closePort();
+        if (!this.fake) {
+            port.closePort();
+        }
     }
 
     @Override
@@ -74,13 +108,15 @@ public class COMPort implements  SimpleSerialInterface{
         port.writeBytes(buffer);
     }
 
-    /*
+    /**
      * write byte[] to buffer
      * and wait byte[] from buffer
-     *
      */
     @Override
     public byte[] writeRead(byte[] buffer) throws SerialPortException, InterruptedException {
+        if (fake) {
+            throw new IllegalArgumentException("Serial port in fake mode (for testing purposes)");
+        }
         synchronized (locker) {
             received = false;
             port.writeBytes(buffer);
@@ -101,7 +137,7 @@ public class COMPort implements  SimpleSerialInterface{
         }
     }
 
-    /*
+    /**
      * Inner class to implement read from serial DRPort
      * in different thread
      *
