@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Created by mac on 19.06.2017.
  */
-public interface SimpleSerialInterface {
+public interface COMPortBaseInterface {
     void write(byte[] buffer) throws SerialPortException;
     void write(Bytes buffer) throws SerialPortException;
     byte[] writeRead(byte[] buffer) throws SerialPortException, InterruptedException;

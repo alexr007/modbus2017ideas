@@ -1,18 +1,15 @@
 package jbus.modbus;
 
-import jbus.comport.COMPort;
-import jbus.comport.SimpleSerialInterface;
+import jbus.comport.COMPortBaseInterface;
 import jssc.SerialPortException;
-import jwad.channels.WadAbstractChannel;
-import jwad.modules.WadAbstractDevice;
 
 /**
  * Created by alexr on 15.01.2017.
  */
 public class ModBus {
-    private final SimpleSerialInterface comPort;
+    private final COMPortBaseInterface comPort;
 
-    public ModBus(SimpleSerialInterface comPort) {
+    public ModBus(COMPortBaseInterface comPort) {
         this.comPort = comPort;
     }
 

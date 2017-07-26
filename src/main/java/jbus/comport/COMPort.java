@@ -1,7 +1,6 @@
 package jbus.comport;
 
 import jbase.primitives.Bytes;
-import jbus.modbus.ModBus;
 import jssc.*;
 
 import java.io.IOException;
@@ -9,7 +8,7 @@ import java.io.IOException;
 /**
  * Created by alexr on 02.12.2016.
  */
-public class COMPort implements SimpleSerialInterface{
+public class COMPort implements COMPortBaseInterface {
     // SerialPort instance, that wrapped
     private final SerialPort port;
     // listener for comport read

@@ -10,13 +10,13 @@ import java.util.concurrent.Executors;
 /**
  * Created by mac on 19.06.2017.
  */
-public class COMPortTimed implements SimpleSerialInterface {
-    private final SimpleSerialInterface origin;
+public class COMPortTimed implements COMPortBaseInterface {
+    private final COMPortBaseInterface origin;
     private final long timeout;
     ExecutorService executor = Executors.newSingleThreadExecutor();
 
 
-    public COMPortTimed(SimpleSerialInterface origin, long timeout) {
+    public COMPortTimed(COMPortBaseInterface origin, long timeout) {
         this.origin = origin;
         this.timeout = timeout;
     }

@@ -19,7 +19,8 @@ public class ScadaCore {
         if ((args.length == 2)&&(args[1].equals("test"))) {
             new AppConsoleSpeedTest(args[0]).run();
         } else {
-//            SortedSetTest.test1();
+            SortedSetTest.test2();
+/*
             BIOcore core = new BIOcore(args[0],true);
             WAD_Channel chan = core.chan(ChanName.S_A_CRUSH);
             System.out.println(
@@ -32,6 +33,7 @@ public class ScadaCore {
                 core.channels().getAllFromSameDevice(ChanName.M_AIR1)
             );
             System.out.println(core.channels().toString());
+*/
             //BIOcore core = new BIOcore(Dv.COM26);
 
 /*

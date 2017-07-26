@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Created by mac on 26.07.2017.
  */
-public class COMPortFake implements SimpleSerialInterface {
+public class COMPortFake implements COMPortBaseInterface {
 
     public COMPortFake(String portName) throws SerialPortException {
         this(portName,
