@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by alexr on 02.12.2016.
  */
-public class COMPort implements  SimpleSerialInterface{
+public class COMPort implements SimpleSerialInterface{
     // SerialPort instance, that wrapped
     private final SerialPort port;
     // listener for comport read
@@ -20,8 +20,6 @@ public class COMPort implements  SimpleSerialInterface{
     private byte[] readed;
     // locker for multithreading
     private final Object locker = new Object();
-    // fake mode informer
-    private final boolean fake;
 
     /**
      *
@@ -30,21 +28,7 @@ public class COMPort implements  SimpleSerialInterface{
      */
     public COMPort(String portName) throws SerialPortException {
         this(portName,
-            new COMPortProperties(57600),
-            false
-        );
-    }
-
-    /**
-     *
-     * @param portName
-     * @param fake
-     * @throws SerialPortException
-     */
-    public COMPort(String portName, boolean fake) throws SerialPortException {
-        this(portName,
-            new COMPortProperties(57600),
-            fake
+            new COMPortProperties(57600)
         );
     }
 
@@ -55,34 +39,20 @@ public class COMPort implements  SimpleSerialInterface{
      * @throws SerialPortException
      */
     public COMPort(String portName, COMPortProperties properties) throws SerialPortException {
-        this(portName, properties, false);
-    }
-
-    /**
-     *
-     * @param portName
-     * @param properties
-     * @param fake
-     * @throws SerialPortException
-     */
-    public COMPort(String portName, COMPortProperties properties, boolean fake) throws SerialPortException {
-        this.fake = fake;
         this.port = new SerialPort(portName);
-        if (!this.fake) {
-            port.openPort();
-            port.setParams(
-                properties.baudRate(),
-                properties.dataBits(),
-                properties.stopBits(),
-                properties.parity()
-            );
-            port.setFlowControlMode(
-                SerialPort.FLOWCONTROL_NONE
-                //| SerialPort.FLOWCONTROL_RTSCTS_IN
-                //| SerialPort.FLOWCONTROL_RTSCTS_OUT
-            );
-            this.port.addEventListener(listener, SerialPort.MASK_RXCHAR);
-        }
+        port.openPort();
+        port.setParams(
+            properties.baudRate(),
+            properties.dataBits(),
+            properties.stopBits(),
+            properties.parity()
+        );
+        port.setFlowControlMode(
+            SerialPort.FLOWCONTROL_NONE
+            //| SerialPort.FLOWCONTROL_RTSCTS_IN
+            //| SerialPort.FLOWCONTROL_RTSCTS_OUT
+        );
+        this.port.addEventListener(listener, SerialPort.MASK_RXCHAR);
     }
 
     /**
@@ -90,9 +60,7 @@ public class COMPort implements  SimpleSerialInterface{
      */
     @Override
     public void close() throws SerialPortException {
-        if (!this.fake) {
-            port.closePort();
-        }
+        port.closePort();
     }
 
     @Override
@@ -114,9 +82,6 @@ public class COMPort implements  SimpleSerialInterface{
      */
     @Override
     public byte[] writeRead(byte[] buffer) throws SerialPortException, InterruptedException {
-        if (fake) {
-            throw new IllegalArgumentException("Serial port in fake mode (for testing purposes)");
-        }
         synchronized (locker) {
             received = false;
             port.writeBytes(buffer);

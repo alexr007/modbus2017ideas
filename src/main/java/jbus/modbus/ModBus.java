@@ -1,6 +1,7 @@
 package jbus.modbus;
 
 import jbus.comport.COMPort;
+import jbus.comport.SimpleSerialInterface;
 import jssc.SerialPortException;
 import jwad.channels.WadAbstractChannel;
 import jwad.modules.WadAbstractDevice;
@@ -9,9 +10,9 @@ import jwad.modules.WadAbstractDevice;
  * Created by alexr on 15.01.2017.
  */
 public class ModBus {
-    private final COMPort comPort;
+    private final SimpleSerialInterface comPort;
 
-    public ModBus(COMPort comPort) {
+    public ModBus(SimpleSerialInterface comPort) {
         this.comPort = comPort;
     }
 

@@ -6,7 +6,9 @@ import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;
 import constants.DevName;
 import jbus.comport.COMPort;
+import jbus.comport.COMPortFake;
 import jbus.comport.COMPortProperties;
+import jbus.comport.SimpleSerialInterface;
 import jbus.modbus.ModBus;
 import jwad.modules.WadAbstractDevice;
 import jwad.channels.WAD_Channel;
@@ -29,13 +31,12 @@ public class BIOcore {
     private final ModBusDevices devices;
     private final ModBusChannels channels;
     private final ModBus modBus;
-    private final COMPort comPort;
+    private final SimpleSerialInterface comPort;
 
     public BIOcore(String comName, boolean fake) throws Exception {
-        this.comPort = new COMPort(
+        this.comPort = new COMPortFake(
             comName,
-            new COMPortProperties(SerialPort.BAUDRATE_57600),
-            fake
+            new COMPortProperties(SerialPort.BAUDRATE_57600)
         );
         this.modBus = new ModBus(
             this.comPort
