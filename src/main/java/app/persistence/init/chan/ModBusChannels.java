@@ -1,5 +1,7 @@
 package app.persistence.init.chan;
 
+import app.decision.test.Item;
+import app.persistence.DeviceUsingDetails;
 import app.persistence.init.EnumMapFrom;
 import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;
@@ -9,9 +11,12 @@ import jbase.hex.HexFromByte;
 import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
 import jssc.SerialPortException;
+import jwad.channels.WadAbstractChannel;
+import jwad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -68,7 +73,21 @@ public class ModBusChannels {
         channels.put(channelName, wadChannel);
     }
 
-    public WAD_Channel get(ChanName channelName) throws Exception {
+    public WAD_Channel get(ChanName channelName) {
+        try {
+            return get(channelName);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(String.format("Channel Name NotFound:%s",channelName),e);
+        }
+    }
+
+    /**
+     * Verbose version get(ChanName channelName)
+     * @param channelName
+     * @return
+     * @throws Exception
+     */
+    public WAD_Channel getVerbosed(ChanName channelName) throws Exception {
         if (!channels.containsKey(channelName)) {
             throw new Exception(String.format("Channel Name NotFound:%s",channelName));
         }
@@ -84,18 +103,78 @@ public class ModBusChannels {
     }
 
     /**
+     *
      * Find all Channels on same device
      *
-     * @param chan
+     * @param chan ChanName
      * @return EnumSet<ChanName>
      */
-    public EnumSet<ChanName> getAllFromSameDevice(ChanName chan) {
-        return EnumSet.copyOf(
+    public Set<ChanName> getAllChannelFromSameDevice(ChanName chan) {
+        // device Id just for more verbose code while learning streams
+        int deviceId = channels.get(chan).device().id();
+        return
+            // Really don't know about real difference between Set<ChanName> and EnumSet<ChanName>
+            // TODO: need to real benchmark later
+            EnumSet.copyOf(
             channels.entrySet().stream()
-                .filter(entry -> entry.getValue().device().id() == channels.get(chan).device().id())
+                .filter(entry -> entry.getValue().device().id() == deviceId)
                 .map(entry -> entry.getKey())
                 .collect(Collectors.toSet())
         );
+    }
+
+    /**
+     *
+     * converts: Set<ChanName> to Set<WadAbstractDevice>
+     * for future purposes
+     * @param chanSet Set<ChanName>
+     * @return Set<WadAbstractDevice>
+     */
+    public Set<WadAbstractDevice> getDeviceSet(Set<ChanName> chanSet) {
+        return chanSet.stream()
+            .map(c -> channels.get(c).device())
+            .distinct()
+            .collect(Collectors.toSet());
+    }
+
+    /**
+     * converts: Set<ChanName> to Set<DeviceId, UsedChanCount>
+     * @param chanSet Set<ChanName>
+     * @return Map<Integer, Long> means Set<DeviceId, UsedChanCount>
+     */
+    public Map<Integer, Long> getMapDeviceChanCount(Set<ChanName> chanSet) {
+        return chanSet.stream()
+            .map(key -> channels.get(key).device()) // map chanId -> device
+            .collect(
+                Collectors.groupingBy(device -> device.id(), // map device -> device id
+                    Collectors.counting() // count devices with same id
+                )
+            );
+    }
+
+    public Map<Integer, Set<Integer>> getMapDeviceChanList (Set<ChanName> chanSet) {
+        return chanSet.stream()
+            .map(key -> channels.get(key)) // map chanId -> channel
+            // now mapped to chan:
+            // chan.device().id() - modbus device id
+            // chan.channel() - channel id on device
+            .collect(
+                Collectors.groupingBy(new Function<WAD_Channel, Integer>() {
+                                          @Override
+                                          public Integer apply(WAD_Channel chan) {
+                                              return chan.device().id();
+                                          }
+                                      },
+                    Collectors.mapping(new Function<WAD_Channel, Integer>() {
+                                           @Override
+                                           public Integer apply(WAD_Channel chan) {
+                                               return chan.channel();
+                                           }
+                                       },
+                        Collectors.toSet())
+
+                )
+            );
     }
 
     @Override

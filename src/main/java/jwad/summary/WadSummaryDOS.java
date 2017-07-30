@@ -8,6 +8,7 @@ import jwad.modules.WadAbstractDevice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.IntUnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

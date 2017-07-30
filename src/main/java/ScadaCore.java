@@ -2,11 +2,7 @@ import app.*;
 import app.decision.test.SortedSetTest;
 import app.persistence.BIOcore;
 import constants.ChanName;
-import constants.Dv;
-import jwad.channels.WAD_Channel;
-import t.t1;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 
 public class ScadaCore {
@@ -19,23 +15,32 @@ public class ScadaCore {
         if ((args.length == 2)&&(args[1].equals("test"))) {
             new AppConsoleSpeedTest(args[0]).run();
         } else {
-            SortedSetTest.test2();
+            SortedSetTest.test33();
+            //new rxTest1().test0();
 
 /*
             BIOcore core = new BIOcore(args[0],true);
+            System.out.println( core.channels().getAllChannelFromSameDevice(ChanName.SM_AIR1)   );
+            System.out.println( core.channels().getDeviceSet(EnumSet.allOf(ChanName.class)) );
+            System.out.println( core.channels().getMapDeviceChanCount(EnumSet.allOf(ChanName.class)) );
+            System.out.println( core.channels().getMapDeviceChanList(EnumSet.allOf(ChanName.class)) );
+*/
+
+
+
+
+/*
             WAD_Channel chan = core.chan(ChanName.S_A_CRUSH);
             System.out.println(
-                core.channels().getAllFromSameDevice(ChanName.SM_AIR1)
+                core.channels().getAllChannelFromSameDevice(ChanName.S_A_CRUSH)
             );
             System.out.println(
-                core.channels().getAllFromSameDevice(ChanName.S_A_CRUSH)
-            );
-            System.out.println(
-                core.channels().getAllFromSameDevice(ChanName.M_AIR1)
+                core.channels().getAllChannelFromSameDevice(ChanName.M_AIR1)
             );
             System.out.println(core.devices().toString());
             System.out.println(core.channels().toString());
 */
+
 
             //BIOcore core = new BIOcore(Dv.COM26);
 

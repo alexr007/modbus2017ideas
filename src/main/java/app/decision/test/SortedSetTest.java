@@ -10,7 +10,9 @@ import org.javatuples.Pair;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -263,12 +265,8 @@ public class SortedSetTest {
         //group by price
         Map<BigDecimal, List<Item>> groupByPriceMap =
             items.stream().
-                collect(Collectors.groupingBy(new Function<Item, BigDecimal>() {
-                    @Override
-                    public BigDecimal apply(Item item) {
-                        return item.price();
-                    }
-                }));
+                collect(Collectors.groupingBy(item -> item.price()));
+
         System.out.println(groupByPriceMap);
 
         // group by price, uses 'mapping' to convert List<Item> to Set<String>
@@ -310,4 +308,44 @@ public class SortedSetTest {
                      .collect(Collectors.toList());
 
     }
+
+    public static void test331() {
+        Map<Integer, List<String>> collect = Stream.of("one", "two", "three", "four")
+            .collect(Collectors.groupingBy(s -> s.length()));
+        System.out.println(collect);
+    }
+
+    public static void test332() {
+        Map<Integer, Map<Boolean, Map<Boolean, Map<Boolean, List<String>>>>> collect = Stream.of("one", "two", "three", "four", "five", "six")
+            .collect(
+                Collectors.groupingBy(s -> s.length(),
+                    Collectors.groupingBy(s -> s.contains("o"),
+                        Collectors.groupingBy(s -> s.startsWith("t"),
+                            Collectors.groupingBy(s -> s.endsWith("e"),
+                                Collectors.toList()
+                            )))));
+        System.out.println(collect);
+    }
+
+    public static void test333() {
+        Map<Integer, List<String>> collect = Stream.of("one", "two", "three", "four", "five", "six")
+            .collect(
+                Collectors.groupingBy(s -> s.length()
+                )
+            );
+        System.out.println(collect);
+    }
+
+    public static void test33() {
+        System.out.println(
+            Stream.of("one", "two", "three", "four", "five", "six")
+                .collect(
+                    Collectors.toMap(
+                        o -> String.format("%s%s",o.substring(0,1).toUpperCase(),o.substring(1)),
+                        String::length
+                    )
+                )
+        );
+    }
+
 }

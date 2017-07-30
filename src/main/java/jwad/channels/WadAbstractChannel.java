@@ -11,7 +11,13 @@ import jwad.modules.WadAbstractDevice;
  * Created by alexr on 12.05.2017.
  */
 public class WadAbstractChannel {
+    /**
+     * channel ID on ModBus device
+     */
     private final int channelId;
+    /**
+     * parent ModBus device for current channel
+     */
     private final WadAbstractDevice device;
 
     /**
