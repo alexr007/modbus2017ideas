@@ -1,4 +1,4 @@
-package app.persistence.chanvalue;
+package jwad.chanvalue;
 
 /**
  * Created by alexr on 25.04.2017.

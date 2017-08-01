@@ -1,6 +1,6 @@
 package jwad.summary;
 
-import app.persistence.chanvalue.TypeDI;
+import jwad.chanvalue.TypeDI;
 
 /**
  * Created by alexr on 01.05.2017.

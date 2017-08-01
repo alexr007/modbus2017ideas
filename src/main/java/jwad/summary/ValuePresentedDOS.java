@@ -1,6 +1,6 @@
 package jwad.summary;
 
-import app.persistence.chanvalue.TypeDO;
+import jwad.chanvalue.TypeDO;
 
 /**
  * Created by alexr on 01.05.2017.

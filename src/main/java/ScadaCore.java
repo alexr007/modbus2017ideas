@@ -1,9 +1,5 @@
 import app.*;
-import app.decision.test.SortedSetTest;
-import app.persistence.BIOcore;
-import constants.ChanName;
-
-import java.util.EnumSet;
+import jwad.chanvalue.test.ChanValueTest;
 
 public class ScadaCore {
     public static void main(String[] args) throws Exception {
@@ -15,7 +11,8 @@ public class ScadaCore {
         if ((args.length == 2)&&(args[1].equals("test"))) {
             new AppConsoleSpeedTest(args[0]).run();
         } else {
-            SortedSetTest.test33();
+            //SortedSetTest.test33();
+            new ChanValueTest().test3();
             //new rxTest1().test0();
 
 /*

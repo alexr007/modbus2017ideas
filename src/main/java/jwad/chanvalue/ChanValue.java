@@ -1,4 +1,4 @@
-package app.persistence.chanvalue;
+package jwad.chanvalue;
 
 /**
  * Created by alexr on 25.04.2017.
@@ -8,31 +8,21 @@ package app.persistence.chanvalue;
  * ChanValue value = new ChanValue.DI(TypeDI.CLOSED);
  * ChanValue value = new ChanValue.DO(TypeDO.ON);
  *
+ * ChanValue value = chanValue.get()
+ * TypeChan type = chanValue.type()
  * see ChanValueTest for full Explanation.
  *
  */
-public interface ChanValue {
-
+public interface ChanValue<T> {
     TypeChan type();
-
-/*
-    default int getA() throws Exception {
-        throw new Exception("unsupported operation");
+    default T get() {
+        throw new IllegalStateException("unsupported operation on interface ChanValue");
     }
-
-    default TypeDI getDI() throws Exception {
-        throw new Exception("unsupported operation");
-    }
-
-    default TypeDO getDO() throws Exception {
-        throw new Exception("unsupported operation");
-    }
-*/
 
     class A implements ChanValue {
-        private final int value;
+        private final Integer value;
 
-        public A(int value) {
+        public A(Integer value) {
             this.value = value;
         }
 
@@ -41,14 +31,14 @@ public interface ChanValue {
             return TypeChan.A;
         }
 
-        //@Override
-        public int get() {
+        @Override
+        public Integer get() {
             return this.value;
         }
 
         @Override
         public String toString() {
-            return String.format("A:%d",this.value);
+            return String.format("A:%s",this.value.toString());
         }
     }
 
@@ -64,7 +54,7 @@ public interface ChanValue {
             return TypeChan.DI;
         }
 
-        //@Override
+        @Override
         public TypeDI get() {
             return this.value;
         }
@@ -87,7 +77,7 @@ public interface ChanValue {
             return TypeChan.DO;
         }
 
-        //@Override
+        @Override
         public TypeDO get() {
             return this.value;
         }
@@ -97,4 +87,5 @@ public interface ChanValue {
             return String.format("DO:%s",this.value.toString());
         }
     }
+
 }
