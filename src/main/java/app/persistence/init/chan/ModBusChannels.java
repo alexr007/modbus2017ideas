@@ -113,88 +113,11 @@ public final class ModBusChannels {
         return channelMap.get(channelName);
     }
 
-/**
- *
- * Find all Channels on same device
- *
- * @param chan ChanName
- * @return EnumSet<ChanName>
- */
-
-    public Set<ChanName> getAllChannelFromSameDevice(ChanName chan) {
-        // device Id just for more verbose code while learning streams
-        int deviceId = channelMap.get(chan).device().id();
-        return
-            // Really don'tests.t know about real difference between Set<ChanName> and EnumSet<ChanName>
-            // TODO: need to real benchmark later
-            EnumSet.copyOf(
-                channelMap.entrySet().stream()
-                    .filter(entry -> entry.getValue().device().id() == deviceId)
-                    .map(entry -> entry.getKey())
-                    .collect(Collectors.toSet())
-            );
-    }
-
-    /**
-     *
-     * converts: Set<ChanName> to Set<WadAbstractDevice>
-     * for future purposes
-     * @param chanSet Set<ChanName>
-     * @return Set<WadAbstractDevice>
-     */
-    public Set<WadAbstractDevice> getDeviceSet(Set<ChanName> chanSet) {
-        return chanSet.stream()
-            .map(c -> channelMap.get(c).device())
-            .distinct()
-            .collect(Collectors.toSet());
-    }
-
-    /**
-     * converts: Set<ChanName> to Set<DeviceId, UsedChanCount>
-     * @param chanSet Set<ChanName>
-     * @return Map<Integer, Long> means Set<DeviceId, UsedChanCount>
-     */
-    public Map<Integer, Long> getMapDeviceChanCount(Set<ChanName> chanSet) {
-        return chanSet.stream()
-            .map(key -> channelMap.get(key).device()) // map chanId -> device
-            .collect(
-                Collectors.groupingBy(device -> device.id(), // map device -> device id
-                    Collectors.counting() // count devices with same id
-                )
-            );
-    }
-
-    public Map<Integer, Set<Integer>> getMapDeviceChanList (Set<ChanName> chanSet) {
-        return chanSet.stream()
-            .map(key -> channelMap.get(key)) // map chanId -> channel
-            // now mapped to chan:
-            // chan.device().id() - modbus device id
-            // chan.channel() - channel id on device
-            .collect(
-                Collectors.groupingBy(new Function<WAD_Channel, Integer>() {
-                                          @Override
-                                          public Integer apply(WAD_Channel chan) {
-                                              return chan.device().id();
-                                          }
-                                      },
-                    Collectors.mapping(new Function<WAD_Channel, Integer>() {
-                                           @Override
-                                           public Integer apply(WAD_Channel chan) {
-                                               return chan.channel();
-                                           }
-                                       },
-                        Collectors.toSet())
-
-                )
-            );
-    }
-    /////////////////////////////////////////////////////////////
-
     @Override
     public String toString() {
         return String.format("Channels configured (HashMap):\n%s",
             channelMap.keySet().stream()
-                .map(key -> String.format("chan.name: %s, dev.name: %s, dev.prop:%s\n",
+                .map(key -> String.format("chan.name: %-14s, dev.name: %s, dev.prop:%s\n",
                     key.toString(), // enum key from HashMap
                     channelMap.get(key).device().toString(), // dev name(AIK, DOS), modbus id
                     channelMap.get(key).device().properties().toString() // dev.prop: signalType, portType, chanCount

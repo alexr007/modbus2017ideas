@@ -132,7 +132,7 @@ public final class ModBusDevices {
     public String toString() {
         return String.format("Devices configured (HashMap):\n%s",
             devices.keySet().stream()
-                .map(key -> String.format("dev.name: %s, dev: %s, dev.prop:%s\n",
+                .map(key -> String.format("dev.name: %-4s, dev: %s, dev.prop:%s\n",
                     key.toString(), // enum key from HashMap
                     devices.get(key).toString(), // modbus type AIT,DOS etc + modbusId
                     devices.get(key).properties().toString() // dev.prop: signalType, portType, chanCount

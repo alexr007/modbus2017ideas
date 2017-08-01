@@ -1,5 +1,6 @@
 import app.*;
 import app.persistence.BIOcore;
+import app.persistence.init.chan.ChanSet;
 import constants.ChanName;
 
 import java.util.EnumSet;
@@ -19,11 +20,16 @@ public class ScadaCore {
             //new rxTest1().test0();
 
             BIOcore core = new BIOcore(args[0]);
-            System.out.println( core.channels().getAllChannelFromSameDevice(ChanName.SM_AIR1)   );
-            System.out.println( core.channels().getDeviceSet(EnumSet.allOf(ChanName.class)) );
-            System.out.println( core.channels().getMapDeviceChanCount(EnumSet.allOf(ChanName.class)) );
-            System.out.println( core.channels().getMapDeviceChanList(EnumSet.allOf(ChanName.class)) );
+            ChanSet cs = new ChanSet(core.channels(), EnumSet.allOf(ChanName.class));
 
+            System.out.println( cs.getAllChannelFromSameDevice(ChanName.SM_AIR1) );
+            System.out.println( cs.getAllChannelFromSameDevice(ChanName.SM_GATE_4) );
+            System.out.println( cs.getDeviceSet() );
+            System.out.println( cs.getMapDeviceChanCount() );
+            System.out.println( cs.getMapDeviceChanList()  );
+
+            System.out.println(core.devices().toString());
+            System.out.println(core.channels().toString());
 
 
 /*
@@ -34,8 +40,6 @@ public class ScadaCore {
             System.out.println(
                 core.channelMap().getAllChannelFromSameDevice(ChanName.M_AIR1)
             );
-            System.out.println(core.devices().toString());
-            System.out.println(core.channelMap().toString());
 */
 
 

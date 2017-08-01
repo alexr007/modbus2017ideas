@@ -14,8 +14,8 @@ public interface WAD_Channel {
     // AI, DI, DO, DOS
     // Values.Single
     // Values.Multiple
-    default Values get() throws InvalidModBusFunction, SerialPortException, InvalidModBusResponse {
-        throw new InvalidModBusFunction();
+    default Values get() {
+        throw new IllegalArgumentException();
     }
     // DI, AI
     default Values fail() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {

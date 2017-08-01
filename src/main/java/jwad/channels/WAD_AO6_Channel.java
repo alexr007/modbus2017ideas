@@ -23,11 +23,16 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public Values get() throws SerialPortException, InvalidModBusResponse {
-        if (channel()==0) {
-            return getMultiple();
-        } else
-            return getSingle();
+    public Values get()  {
+        try {
+            return channel()==0
+                ? getMultiple()
+                : getSingle();
+        } catch (SerialPortException e) {
+            throw new IllegalArgumentException(e);
+        } catch (InvalidModBusResponse e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {

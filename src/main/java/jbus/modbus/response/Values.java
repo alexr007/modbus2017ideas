@@ -2,6 +2,12 @@ package jbus.modbus.response;
 
 import jbase.arr.ArrayFromInt;
 import jbase.IterableToString;
+import jwad.chanvalue.ChanValue;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -16,6 +22,7 @@ public interface Values {
     int get(int index);
     int count();
     IntStream stream();
+    List<Integer> list();
 
     class None implements  Values {
         @Override
@@ -46,6 +53,11 @@ public interface Values {
         @Override
         public IntStream stream() {
             return IntStream.empty();
+        }
+
+        @Override
+        public List<Integer> list() {
+            return Collections.emptyList();
         }
     }
 
@@ -88,6 +100,11 @@ public interface Values {
         @Override
         public IntStream stream() {
             return IntStream.of(value);
+        }
+
+        @Override
+        public List<Integer> list() {
+            return Arrays.asList(value);
         }
 
         @Override
@@ -139,6 +156,11 @@ public interface Values {
         @Override
         public IntStream stream() {
             return IntStream.of(values);
+        }
+
+        @Override
+        public List<Integer> list() {
+            return stream().boxed().collect(Collectors.toList());
         }
 
         @Override
