@@ -20,48 +20,61 @@ import java.util.stream.Collectors;
 /**
  * Created by alexr on 15.02.2017.
  */
-public class ModBusChannels {
+public final class ModBusChannels {
+    private final String ERROR_GET = "Channel Name NotFound:%s";
+    private final String ERROR_ADD_K = "Duplicate Channel Name:%s";
+    private final String ERROR_ADD_V = "Duplicate Channel, name:%s, at device:%s, modbus id:%s";
+
     private final ModBusDevices devices;
     private final EnumMap<ChanName, WAD_Channel> channelMap;
 
-    // ctor 1 - empty set
+    /** ctor 1 - empty set */
     public ModBusChannels(ModBusDevices devices) throws Exception {
         this(devices, new ArrayList<>());
     }
 
-    // ctor 2 - random quantity Pair<WadAbstractDevice, ChannelList>
+    /** ctor 2 - random quantity Pair<WadAbstractDevice, ChannelList> */
     public ModBusChannels (ModBusDevices devices, Pair<DevName, ChannelList>... channels) throws Exception {
         this(devices, new ArrayList<>(Arrays.asList(channels)));
     }
 
-    // ctor 3 - ArrayList<Pair<WadAbstractDevice, ChannelList>>
+    /** ctor 3 - ArrayList<Pair<WadAbstractDevice, ChannelList>> */
     public ModBusChannels (ModBusDevices devices, ArrayList<Pair<DevName, ChannelList>> channels) throws Exception {
         this(devices, new ChannelsFromList(devices, channels));
     }
 
-    // ctor 4 - EnumMapFrom
+    /** ctor 4 - EnumMapFrom */
     public ModBusChannels(ModBusDevices devices, EnumMapFrom<ChanName, WAD_Channel> channels) throws Exception {
         this(devices, channels.enumMap());
     }
 
-    // ctor 5 - plain assignment
+    /** ctor 5 - plain assignment */
     public ModBusChannels(ModBusDevices devices, EnumMap<ChanName, WAD_Channel> channels) {
         this.devices = devices;
         this.channelMap = channels;
     }
 
-    public EnumMap<ChanName, WAD_Channel> channels() {
+    public EnumMap<ChanName, WAD_Channel> channelMap() {
         return channelMap;
     }
 
-    public void add(ChanName channelName, DevName deviceName, int channel) throws Exception {
+    /** try to catch Exception if possible */
+    public void add(ChanName channelName, DevName deviceName, int channel) {
+        try {
+            addVerbose(channelName, deviceName, channel);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public void addVerbose(ChanName channelName, DevName deviceName, int channel) throws Exception {
         if (channelMap.containsKey(channelName)) {
-            throw new Exception(String.format("Duplicate Channel Name:%s",channelName.toString()));
+            throw new Exception(String.format(ERROR_ADD_K,channelName.toString()));
         }
         WAD_Channel wadChannel = devices.get(deviceName).channel(channel);
         if (channelMap.containsValue(wadChannel)) {
             throw new Exception(
-                String.format("Duplicate Channel, name:%s, at device:%s, modbus id:%s",
+                String.format(ERROR_ADD_V,
                     channelName.toString(),
                     deviceName.toString(),
                     new HexFromByte(channel).toString()
@@ -71,35 +84,35 @@ public class ModBusChannels {
         channelMap.put(channelName, wadChannel);
     }
 
-    public WAD_Channel get(ChanName channelName) {
+    /** try to catch Exception if possible */
+    public WAD_Channel get(String channelName) {
         try {
-            return get(channelName);
+            return getVerbose(channelName);
         } catch (Exception e) {
-            throw new IllegalArgumentException(String.format("Channel Name NotFound:%s",channelName),e);
+            throw new IllegalArgumentException(e);
         }
     }
 
-    /**
-     * Verbose version get(ChanName channelName)
-     * @param channelName
-     * @return
-     * @throws Exception
-     */
-    public WAD_Channel getVerbosed(ChanName channelName) throws Exception {
+    /** try to catch Exception if possible */
+    public WAD_Channel get(ChanName channelName) {
+        try {
+            return getVerbose(channelName);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public WAD_Channel getVerbose(String channelName) throws Exception {
+        return getVerbose(ChanName.valueOf(channelName));
+    }
+
+    public WAD_Channel getVerbose(ChanName channelName) throws Exception {
         if (!channelMap.containsKey(channelName)) {
-            throw new Exception(String.format("Channel Name NotFound:%s",channelName));
+            throw new Exception(String.format(ERROR_GET, channelName));
         }
         return channelMap.get(channelName);
     }
 
-    public WAD_Channel get(String channelName) throws Exception {
-        ChanName cname= ChanName.valueOf(channelName);
-        if (!channelMap.containsKey(cname)) {
-            throw new Exception(String.format("Channel Name NotFound:%s",channelName));
-        }
-        return channelMap.get(cname);
-    }
-    /////////////////////////////////////////////////////////////
 /**
  *
  * Find all Channels on same device
@@ -112,7 +125,7 @@ public class ModBusChannels {
         // device Id just for more verbose code while learning streams
         int deviceId = channelMap.get(chan).device().id();
         return
-            // Really don't know about real difference between Set<ChanName> and EnumSet<ChanName>
+            // Really don'tests.t know about real difference between Set<ChanName> and EnumSet<ChanName>
             // TODO: need to real benchmark later
             EnumSet.copyOf(
                 channelMap.entrySet().stream()

@@ -1,4 +1,4 @@
-package app.persistence.test;
+package tests.core_test;
 
 /**
  * Created by alexr on 27.04.2017.
@@ -6,7 +6,7 @@ package app.persistence.test;
 public class ModBusChannelsTest {
     public void test() throws Exception {
 /*
-        ModBusChannels channels = new ModBusChannels(
+        ModBusChannels channelMap = new ModBusChannels(
             new ModBusDevices(
                 new ModBus(
                     new COMPort(
@@ -24,7 +24,7 @@ public class ModBusChannelsTest {
                 }}
             ),
             new ArrayList<Triplet<CharSequence, CharSequence, Integer>>() {{
-                // just channels definition
+                // just channelMap definition
                 add(new Triplet<>("CH1","DEV1", Ch.n1));
                 add(new Triplet<>("CH2","DEV1", Ch.n2));
                 add(new Triplet<>("CH3","DEV1", Ch.n3));
@@ -35,13 +35,13 @@ public class ModBusChannelsTest {
             }}
         );
 
-        channels.get("CH1").get();
-        channels.get("CH2").on();
-        channels.get("CH3").off();
+        channelMap.get("CH1").get();
+        channelMap.get("CH2").on();
+        channelMap.get("CH3").off();
 
         System.out.println(
-            channels.toString()
+            channelMap.toString()
         );
-        channels.finish();*/
+        channelMap.finish();*/
     }
 }

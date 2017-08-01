@@ -45,7 +45,7 @@ public class AppConsoleSpeedTest {
             } catch (InvalidModBusResponse invalidModBusResponse) {
                 invalidModBusResponse.printStackTrace();
             }
-            //System.out.println(t);
+            //System.out.println(tests.t);
 
         delta = System.currentTimeMillis() - millis;
         System.out.println(

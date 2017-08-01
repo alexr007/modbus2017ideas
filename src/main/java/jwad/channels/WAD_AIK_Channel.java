@@ -14,7 +14,7 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
     /**
      * @param channel modbus channel id
      *                1..N - mean single channel
-     *                0    - mean all channels (group operation).
+     *                0    - mean all channelMap (group operation).
      *                not all functions supports group operation
      * @param device  modbus real device
      */

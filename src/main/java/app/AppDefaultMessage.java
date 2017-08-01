@@ -13,7 +13,7 @@ public class AppDefaultMessage {
             "--set to set available COM ports (default behavior)",
             "--web-port=NN to specify the web port, default 8001",
             "--term-port=NN to specify the terminal port, no default",
-            "--test to real test com port speed"
+            "--core_test to real core_test com port speed"
         );
     }
 }

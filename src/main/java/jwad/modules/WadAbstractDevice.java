@@ -109,7 +109,7 @@ public abstract class WadAbstractDevice {
         // детали
         Directives details;
         try {
-            details = new Directives().add("channels").append(summaryDetailsXml());
+            details = new Directives().add("channelMap").append(summaryDetailsXml());
         } catch (Exception e) {
             details = new Directives().add("error").set(ERROR_MESSAGE_MODBUS).up()
                 .add("message").set(e.getMessage()).up();

@@ -1,18 +1,10 @@
-package t;
+package tests.t;
 
 import jbase.hex.HexFromByte;
-import jbase.hex.HexFromBytes;
-import jbase.primitives.Bytes;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.util.Arrays;
-import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Created by mac on 23.06.2017.

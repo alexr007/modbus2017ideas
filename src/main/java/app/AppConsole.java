@@ -71,12 +71,12 @@ public class AppConsole implements Runnable{
         }
 */
         //new FindComPorts().run();
-        //new ModBusDevicesTest().test();
-        //new ModBusChannelsTest().test();
+        //new ModBusDevicesTest().core_test();
+        //new ModBusChannelsTest().core_test();
         //new ChanValueTest().test2();
-        //new DecisionTest().test();
+        //new DecisionTest().core_test();
         //new AppConsoleSpeedTest().run(args[0]);
-        //new HashMapTest().test();
+        //new HashMapTest().core_test();
         //new ValuesReaderTest().test1();
         //new StringFormat1().print();
 

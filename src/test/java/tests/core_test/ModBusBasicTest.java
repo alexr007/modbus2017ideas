@@ -1,4 +1,4 @@
-package app.persistence.test;
+package tests.core_test;
 
 import jtools.PH;
 import jbus.comport.COMPort;

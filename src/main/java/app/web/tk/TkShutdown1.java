@@ -12,13 +12,13 @@ public class TkShutdown1 extends TkWrap {
     public TkShutdown1(Take take) throws IOException {
         super(take);
         Runtime runtime = Runtime.getRuntime();
-        Process exec = runtime.exec("shutdown -s -t 0");
+        Process exec = runtime.exec("shutdown -s -tests.t 0");
         System.exit(0);
 
 /*
         Runtime
             .getRuntime()
-            .exec("shutdown -s -t 0");
+            .exec("shutdown -s -tests.t 0");
 */
     }
 }

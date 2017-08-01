@@ -20,9 +20,6 @@ import java.util.Set;
  * Created by alexr on 27.04.2017.
  */
 public class BIOcore {
-    private final String ERROR_DEV = "Module Name NotFound:%s";
-    private final String ERROR_CHAN = "Channel Name NotFound:%s";
-
     private final ModBusDevices devices;
     private final ModBusChannels channels;
     private final ModBus bus;
@@ -50,37 +47,20 @@ public class BIOcore {
         return channels;
     }
 
-
     public WadAbstractDevice dev(DevName name) {
-        try {
-            return devices.get(name);
-        } catch (Exception e) {
-            throw new IllegalArgumentException(error_dev(name.toString()), e);
-        }
+        return devices.get(name);
     }
 
     public WadAbstractDevice dev(String name) {
-        try {
-            return devices.get(name);
-        } catch (Exception e) {
-            throw new IllegalArgumentException(error_dev(name), e);
-        }
+        return devices.get(name);
     }
 
     public WAD_Channel chan(ChanName name) {
-        try {
-            return channels.get(name);
-        } catch (Exception e) {
-            throw new IllegalArgumentException(error_chan(name.toString()));
-        }
+        return channels.get(name);
     }
 
     public WAD_Channel chan(String name) {
-        try {
-            return channels.get(name);
-        } catch (Exception e) {
-            throw new IllegalArgumentException(error_chan(name));
-        }
+        return channels.get(name);
     }
 
 
@@ -100,11 +80,4 @@ public class BIOcore {
         bus().finish();
     }
 
-    private String error_dev(Object... params) {
-        return String.format(ERROR_DEV, params);
-    }
-
-    private String error_chan(Object... params) {
-        return String.format(ERROR_CHAN, params);
-    }
 }

@@ -21,7 +21,7 @@ public class ValueValidated {
                 break;
             case AO6: val = new ValueAO(value).val();
                 break;
-            default: throw new IllegalArgumentException(String.format("Can't set channel value for device type",type));
+            default: throw new IllegalArgumentException(String.format("Can'tests.t set channel value for device type",type));
         }
         return val;
     }

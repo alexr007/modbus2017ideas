@@ -39,7 +39,7 @@ public class RosterTest {
 /*
 
     interface CheckPerson {
-        boolean test(PersonTest p);
+        boolean core_test(PersonTest p);
     }
 
     // Approach 1: Create Methods that Search for Persons that Match One
@@ -71,7 +71,7 @@ public class RosterTest {
     public static void printPersons(
             List<PersonTest> roster, CheckPerson tester) {
         for (PersonTest p : roster) {
-            if (tester.test(p)) {
+            if (tester.core_test(p)) {
                 p.printPerson();
             }
         }
@@ -82,7 +82,7 @@ public class RosterTest {
     public static void printPersonsWithPredicate(
             List<PersonTest> roster, Predicate<PersonTest> tester) {
         for (PersonTest p : roster) {
-            if (tester.test(p)) {
+            if (tester.core_test(p)) {
                 p.printPerson();
             }
         }
@@ -95,7 +95,7 @@ public class RosterTest {
             Predicate<PersonTest> tester,
             Consumer<PersonTest> block) {
         for (PersonTest p : roster) {
-            if (tester.test(p)) {
+            if (tester.core_test(p)) {
                 block.accept(p);
             }
         }
@@ -109,7 +109,7 @@ public class RosterTest {
             Function<PersonTest, String> mapper,
             Consumer<String> block) {
         for (PersonTest p : roster) {
-            if (tester.test(p)) {
+            if (tester.core_test(p)) {
                 String data = mapper.apply(p);
                 block.accept(data);
             }
@@ -124,7 +124,7 @@ public class RosterTest {
             Function<X, Y> mapper,
             Consumer<Y> block) {
         for (X p : source) {
-            if (tester.test(p)) {
+            if (tester.core_test(p)) {
                 Y data = mapper.apply(p);
                 block.accept(data);
             }
@@ -157,7 +157,7 @@ public class RosterTest {
         System.out.println("Persons who are eligible for Selective Service:");
 
         class CheckPersonEligibleForSelectiveService implements CheckPerson {
-            public boolean test(PersonTest p) {
+            public boolean core_test(PersonTest p) {
                 return p.getGender() == PersonTest.Sex.MALE
                         && p.getAge() >= 18
                         && p.getAge() <= 25;
@@ -178,7 +178,7 @@ public class RosterTest {
         printPersons(
                 roster,
                 new CheckPerson() {
-                    public boolean test(PersonTest p) {
+                    public boolean core_test(PersonTest p) {
                         return p.getGender() == PersonTest.Sex.MALE
                                 && p.getAge() >= 18
                                 && p.getAge() <= 25;

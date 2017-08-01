@@ -19,7 +19,7 @@
                 <xsl:text>Content Delivery Network</xsl:text>
             </a>
             <xsl:text>) is,</xsl:text>
-            <xsl:text> but don't want to spend time and money</xsl:text>
+            <xsl:text> but don'tests.t want to spend time and money</xsl:text>
             <xsl:text> to employ a full-scale solution like </xsl:text>
             <xsl:text> Akamai or CloudFront,</xsl:text>
             <xsl:text> this system is the right choice for you.</xsl:text>

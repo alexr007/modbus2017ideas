@@ -1,4 +1,4 @@
-package app.persistence.test;
+package tests.core_test;
 
 /**
  * Created by alexr on 26.04.2017.
@@ -73,28 +73,28 @@ public class ModBusDevicesTest {
         devices.add(Dv.AIK2, WadDevType.AIK, Id.x32 );
         devices.add(Dv.AO1, WadDevType.AO, Id.x41 );
         devices.add(Dv.AO2, WadDevType.AO, Id.x42 );
-        ModBusChannels channels = new ModBusChannels(devices);
+        ModBusChannels channelMap = new ModBusChannels(devices);
         // CHANNELS initialization
-        channels.add(En.T1, Dv.DOS1, Ch.n1);
-        channels.add(En.T2, Dv.DOS1, Ch.n2);
-        channels.add(En.Transporter1, Dv.DOS1, Ch.n4);
-        channels.add(En.Transporter2, Dv.DOS1, Ch.n5);
-        channels.add(En.Transporter2speed, Dv.DOS1, Ch.n6);
+        channelMap.add(En.T1, Dv.DOS1, Ch.n1);
+        channelMap.add(En.T2, Dv.DOS1, Ch.n2);
+        channelMap.add(En.Transporter1, Dv.DOS1, Ch.n4);
+        channelMap.add(En.Transporter2, Dv.DOS1, Ch.n5);
+        channelMap.add(En.Transporter2speed, Dv.DOS1, Ch.n6);
         // work begins here !
 */
 /*
-        Values t1 = channels.get(En.T1).get();
-        Values t2 = channels.get(En.T2).get();
-        channels.get(En.Transporter1).off();
-        channels.get(En.Transporter2).on();
+        Values t1 = channelMap.get(En.T1).get();
+        Values t2 = channelMap.get(En.T2).get();
+        channelMap.get(En.Transporter1).off();
+        channelMap.get(En.Transporter2).on();
 *//*
 
-        ModBusEntities entities = new ModBusEntities(channels);
+        ModBusEntities entities = new ModBusEntities(channelMap);
         entities.add(En.Cylinder1,
             new EnCylinder(
                 new EnValve(devices.get(Dv.DOS1).channel(1)),
                 new EnValve(devices.get(Dv.DOS1).channel(2))
-                //new EnValve(channels.get("chan3"))
+                //new EnValve(channelMap.get("chan3"))
             )
         );
         // ENTITIES initialization
@@ -110,8 +110,8 @@ public class ModBusDevicesTest {
 */
 /*
         EnMotorPWM air1 = new EnMotorPWM(
-            channels.get("AIR1"),
-            channels.get("AIR1speed")
+            channelMap.get("AIR1"),
+            channelMap.get("AIR1speed")
         );
         EnMotorPWM air2 = new EnMotorPWM(
             devices.get("dev1").channel(1),

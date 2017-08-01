@@ -1,10 +1,4 @@
-package app.persistence.test;
-
-import jwad.modules.WadAbstractDevice;
-import app.persistence.BIOcore;
-import constants.Dv;
-
-import java.util.ArrayList;
+package tests.core_test;
 
 /**
  * Created by alexr on 27.04.2017.
