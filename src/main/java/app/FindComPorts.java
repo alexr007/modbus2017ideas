@@ -7,7 +7,7 @@ import jbus.comport.COMPortList;
 public class FindComPorts {
     public void run() {
         System.out.println(
-            String.format("Available COM-port list: %s",
+            String.format("Available COM-port set: %s",
                 new COMPortList().toString()
             )
         );

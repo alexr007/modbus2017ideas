@@ -10,7 +10,7 @@ public class AppDefaultMessage {
     public String toString() {
         return Joiner.on("\n").join(
             "Usage:",
-            "--list to list available COM ports (default behavior)",
+            "--set to set available COM ports (default behavior)",
             "--web-port=NN to specify the web port, default 8001",
             "--term-port=NN to specify the terminal port, no default",
             "--test to real test com port speed"

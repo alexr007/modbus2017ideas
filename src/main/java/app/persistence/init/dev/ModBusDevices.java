@@ -20,7 +20,7 @@ public class ModBusDevices {
     private final EnumMap<DevName, WadAbstractDevice> devices;
     private final HashMap<Integer, WadAbstractDevice> devicesById;
 
-    // ctor 1 - empty list
+    // ctor 1 - empty set
     public ModBusDevices(final ModBus modBus) throws Exception {
         this(modBus, new ArrayList<>());
     }
@@ -107,7 +107,7 @@ public class ModBusDevices {
                 .collect(Collectors.joining()));
     }
 
-    public Set<DevName> list() {
+    public Set<DevName> set() {
         return devices.keySet();
     }
 

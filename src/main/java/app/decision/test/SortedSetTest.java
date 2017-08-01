@@ -189,13 +189,13 @@ public class SortedSetTest {
     public static void test29() {
         Values.Multiple ints = new Values.Multiple(new int[]{10, 20, 30, 40, 50, 60, 70});
 /*
-        List<Integer> list = new ArrayList<Integer>() {{
+        List<Integer> set = new ArrayList<Integer>() {{
             add(1);
             add(2);
             add(3);
         }};
 
-        Map<Integer, Integer> collect = list.stream()
+        Map<Integer, Integer> collect = set.stream()
             .collect(Collectors.toMap(
                 o -> o,
                 o -> ints.get(o)

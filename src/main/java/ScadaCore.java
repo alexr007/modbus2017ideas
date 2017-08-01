@@ -1,5 +1,9 @@
 import app.*;
+import app.persistence.BIOcore;
+import constants.ChanName;
 import jwad.chanvalue.test.ChanValueTest;
+
+import java.util.EnumSet;
 
 public class ScadaCore {
     public static void main(String[] args) throws Exception {
@@ -15,13 +19,13 @@ public class ScadaCore {
             new ChanValueTest().test3();
             //new rxTest1().test0();
 
-/*
-            BIOcore core = new BIOcore(args[0],true);
+
+            BIOcore core = new BIOcore(args[0]);
             System.out.println( core.channels().getAllChannelFromSameDevice(ChanName.SM_AIR1)   );
             System.out.println( core.channels().getDeviceSet(EnumSet.allOf(ChanName.class)) );
             System.out.println( core.channels().getMapDeviceChanCount(EnumSet.allOf(ChanName.class)) );
             System.out.println( core.channels().getMapDeviceChanList(EnumSet.allOf(ChanName.class)) );
-*/
+
 
 
 

@@ -47,7 +47,7 @@ public class AppConsole implements Runnable{
 
 /*
         System.out.println(new COMPortList());
-            core.devList().forEach(item -> {
+            core.devSet().forEach(item -> {
                     System.out.println(core.dev(item).summaryTxt());
                 }
             );
@@ -55,14 +55,14 @@ public class AppConsole implements Runnable{
         //finish();
 /*
         try {
-            ArrayList<WadAbstractDevice> list = new ArrayList<WadAbstractDevice>(){{
+            ArrayList<WadAbstractDevice> set = new ArrayList<WadAbstractDevice>(){{
                 add(core.dev("DEV11"));
                 add(core.dev("DEV21"));
                 add(core.dev("DEV31"));
                 add(core.dev("DEV41"));
             }};
 
-            list.forEach(item ->
+            set.forEach(item ->
                 System.out.println(item.summaryTxt())
             );
 

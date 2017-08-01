@@ -26,7 +26,7 @@ public class TkShowDeviceList implements Take {
     @Override
     public Response act(Request request) throws IOException {
         return new RsPageList(
-            "/xsl/list.xsl",
+            "/xsl/set.xsl",
             request,
             new XeAppend(
                 "devices",

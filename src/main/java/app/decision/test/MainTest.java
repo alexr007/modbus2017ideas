@@ -54,7 +54,7 @@ public class MainTest {
     }
 
     public void test1() throws Exception {
-        BIOcore core = new BIOcore(constants.Dv.COM26, true);
+        BIOcore core = new BIOcore(constants.Dv.COM26);
         ArrayList<Quartet> list = core.chanListQuartet();
         list.forEach(item -> {
             System.out.println(String.format(

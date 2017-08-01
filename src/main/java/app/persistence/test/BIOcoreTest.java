@@ -14,14 +14,14 @@ public class BIOcoreTest {
 /*
         BIOcore core = new BIOcore(Dv.COM26);
 
-        ArrayList<WadAbstractDevice> list = new ArrayList<WadAbstractDevice>(){{
+        ArrayList<WadAbstractDevice> set = new ArrayList<WadAbstractDevice>(){{
             add(core.dev("DEV11"));
             add(core.dev("DEV21"));
             add(core.dev("DEV31"));
             add(core.dev("DEV41"));
         }};
 
-        list.forEach(item ->
+        set.forEach(item ->
             System.out.println(item.summaryXml())
         );
 */
