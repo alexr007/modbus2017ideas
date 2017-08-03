@@ -63,11 +63,6 @@ public class BIOcore {
         return channels.get(name);
     }
 
-
-    public Set<DevName> devSet() {
-        return devices.set();
-    }
-
     public ArrayList<Triplet> devListTriplet() {
         return devices.triplet();
     }

@@ -58,6 +58,11 @@ public class WadAbstractChannel {
     }
 
     @Override
+    public String toString() {
+        return String.format("Channel: id:%2s, Device: %s ",channel(),device());
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return obj instanceof WadAbstractChannel
             && this.channelId == WadAbstractChannel.class.cast(obj).channelId

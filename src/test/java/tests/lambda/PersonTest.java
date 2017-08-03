@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.time.chrono.IsoChronology;
 import java.time.LocalDate;
 
-public class Person {
+public class PersonTest
+{
 
     public enum Sex {
         MALE, FEMALE
@@ -16,8 +17,8 @@ public class Person {
     Sex gender;
     String emailAddress;
 
-    Person(String nameArg, LocalDate birthdayArg,
-           Sex genderArg, String emailArg) {
+    PersonTest(String nameArg, LocalDate birthdayArg,
+               Sex genderArg, String emailArg) {
         name = nameArg;
         birthday = birthdayArg;
         gender = genderArg;
@@ -50,34 +51,34 @@ public class Person {
         return birthday;
     }
 
-    public static int compareByAge(Person a, Person b) {
+    public static int compareByAge(PersonTest a, PersonTest b) {
         return a.birthday.compareTo(b.birthday);
     }
 
-    public static List<Person> createRoster() {
+    public static List<PersonTest> createRoster() {
 
-        List<Person> roster = new ArrayList<>();
+        List<PersonTest> roster = new ArrayList<>();
         roster.add(
-                new Person(
+                new PersonTest(
                         "Fred",
                         IsoChronology.INSTANCE.date(1980, 6, 20),
-                        Person.Sex.MALE,
+                        PersonTest.Sex.MALE,
                         "fred@example.com"));
         roster.add(
-                new Person(
+                new PersonTest(
                         "Jane",
                         IsoChronology.INSTANCE.date(1990, 7, 15),
-                        Person.Sex.FEMALE, "jane@example.com"));
+                        PersonTest.Sex.FEMALE, "jane@example.com"));
         roster.add(
-                new Person(
+                new PersonTest(
                         "George",
                         IsoChronology.INSTANCE.date(1991, 8, 13),
-                        Person.Sex.MALE, "george@example.com"));
+                        PersonTest.Sex.MALE, "george@example.com"));
         roster.add(
-                new Person(
+                new PersonTest(
                         "Bob",
                         IsoChronology.INSTANCE.date(2000, 9, 12),
-                        Person.Sex.MALE, "bob@example.com"));
+                        PersonTest.Sex.MALE, "bob@example.com"));
 
         return roster;
     }

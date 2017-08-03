@@ -3,6 +3,7 @@ package jwad.chanvalue.test;
 import jwad.chanvalue.ChanValue;
 import jwad.chanvalue.TypeDI;
 import jwad.chanvalue.TypeDO;
+import org.javatuples.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,7 +1,10 @@
 import app.*;
 import app.persistence.BIOcore;
 import app.persistence.init.chan.ChanSet;
+import app.persistence.init.chan.test.ModBusChannelsTest;
 import constants.ChanName;
+import jwad.chanvalue.test.ChanValueTest;
+import org.javatuples.Pair;
 
 import java.util.EnumSet;
 
@@ -16,7 +19,7 @@ public class ScadaCore {
             new AppConsoleSpeedTest(args[0]).run();
         } else {
             //SortedSetTest.test33();
-            //new ChanValueTest().test3();
+            new ChanValueTest().test3();
             //new rxTest1().test0();
 
             BIOcore core = new BIOcore(args[0]);
@@ -31,6 +34,7 @@ public class ScadaCore {
             System.out.println(core.devices().toString());
             System.out.println(core.channels().toString());
 
+            new ModBusChannelsTest().test1(core);
 
 /*
             WAD_Channel chan = core.chan(ChanName.S_A_CRUSH);

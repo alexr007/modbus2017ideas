@@ -37,7 +37,6 @@ import java.lang.Iterable;
 
 public class RosterTest {
 /*
-
     interface CheckPerson {
         boolean core_test(PersonTest p);
     }

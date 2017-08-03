@@ -4,6 +4,8 @@ package constants;
  * Created by mac on 22.07.2017.
  */
 public enum ChanName {
+    Undefined,
+
     // AI ports 0x21
     S_A_CRUSH,
     S_А_GRAN,

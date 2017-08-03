@@ -7,7 +7,10 @@ import org.javatuples.Pair;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ChanSet {
     private final ModBusChannels modBusChannels;
@@ -84,17 +87,18 @@ public class ChanSet {
             );
     }
 
+    /**
+     * converts: Set<ChanName> to Map<Integer, WadAbstractDevice>
+     * @return Map<Integer, WadAbstractDevice> mean Map<devId, WadAbstractDevice>
+     */
     public Map<Integer, WadAbstractDevice> devMap() {
         return chanSet.stream()
-            .map(chanName -> {
-                WadAbstractDevice d = modBusChannels.channelMap().get(chanName).device();
-                return new Pair<>(d.id(), d);
-            })
+            .map(chanName -> modBusChannels.channelMap().get(chanName).device())
             .distinct()
             .collect(Collectors.toMap(
-                Pair::getValue0,
-                Pair::getValue1)
-            );
+                dev -> dev.id(),
+                dev -> dev
+            ));
     }
 
     /**
@@ -109,17 +113,88 @@ public class ChanSet {
      * reads values from Device to set
      * @return
      */
-    Map<ChanName, ChanValue> values() {
+    Map<ChanName, Integer> values() {
         Map<Integer, Set<Integer>> devChan = getMapDeviceChanList();
         Map<Integer, WadAbstractDevice> devMap = devMap();
-        EnumMap<ChanName, ChanValue> result = new EnumMap<>(ChanName.class);
 
-        Map<Integer, List<Integer>> collect = devChan.keySet().stream()
-            .map(devId -> new Pair<>(devId, devMap.get(devId).channel(0).get().list())) // это мы прочитали устройство
+        // <dev, list<values>>
+        Map<Integer, List<Integer>> valuesMap = devChan.keySet().stream()
             .collect(Collectors.toMap(
-                Pair::getValue0,
-                Pair::getValue1
+                key -> key,
+                key -> devMap.get(key).channel(0).get().list())
+            );
+
+        Map<Pair<Integer, Integer>, Integer> valuesMap2 = valuesMap.entrySet()
+            .stream() // <dev, list<values>>
+            .map(new Function<Map.Entry<Integer, List<Integer>>, Map<Pair<Integer, Integer>, Integer>>() {
+                @Override
+                public Map<Pair<Integer, Integer>, Integer> apply(Map.Entry<Integer, List<Integer>> ent) {
+                    /** should map:
+                     *     Map.Entry<dev, List<values>>
+                     *     Map<Pair<dev, chan>, value>
+                     */
+                    return IntStream.range(0, ent.getValue().size())
+                        .mapToObj(new IntFunction<Map.Entry<Pair<Integer, Integer>, Integer>>() {
+                            @Override
+                            public Map.Entry<Pair<Integer, Integer>, Integer> apply(int index) {
+                                return
+                                    new AbstractMap.SimpleEntry<>(
+                                        new Pair<>(ent.getKey(), index+1),
+                                        ent.getValue().get(index)
+                                    );
+                            }
+                        })
+                        .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            Map.Entry::getValue
+                        ));
+                }
+            })
+            .flatMap(map -> map.entrySet().stream())
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue
             ));
-        return result;
+
+        Map<ChanName, Integer> collect = valuesMap2.entrySet()
+            .stream()
+            .map(entry -> new AbstractMap.SimpleEntry<>(modBusChannels.getName(entry.getKey()), entry.getValue()))
+            .collect(Collectors.toMap(
+                AbstractMap.SimpleEntry::getKey,
+                AbstractMap.SimpleEntry::getValue
+            ));
+
+        return collect;
+    }
+
+    public Map<ChanName, Integer> values1() {
+        Map<Integer, WadAbstractDevice> devMap = devMap();
+        return
+            getMapDeviceChanList().keySet().stream()
+            .collect(Collectors.toMap(
+                key -> key,
+                //key -> devMap.get(key).channel(0).get().list())
+                key -> IntStream.range(0, devMap.get(key).properties().chanCount()).boxed().collect(Collectors.toList())
+            ))
+            .entrySet()
+            .stream()
+            .map(ent -> IntStream.range(0, ent.getValue().size())
+                    .mapToObj(index -> new AbstractMap.SimpleEntry<>(
+                        // TODO тут есть лишний маппинг
+                        // прочитанные порты, которые не сконфигурированы
+                        // выдают ошибку
+                        modBusChannels.getName(new Pair<>(ent.getKey(), index + 1)),
+                        ent.getValue().get(index)
+                    ))
+                    .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue
+                    ))
+            )
+            .flatMap(map -> map.entrySet().stream())
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue
+            ));
     }
 }
