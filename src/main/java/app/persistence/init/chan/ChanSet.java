@@ -74,7 +74,7 @@ public class ChanSet {
 
     /**
      * converts: Set<ChanName> to Set<Dev, Set<Channels>>
-     * @return Map<Integer, Set<Integer>> mean Set<Dev, Set<Channels>>
+     * @return Map<Integer, Set<Integer>> mean Map<Dev, Set<Channels>>
      */
     public Map<Integer, Set<Integer>> getMapDeviceChanList () {
         return chanSet.stream()
@@ -99,6 +99,12 @@ public class ChanSet {
                 dev -> dev.id(),
                 dev -> dev
             ));
+    }
+
+    public Set<Pair<Integer, Integer>>setPairDC() {
+        return chanSet.stream()
+            .map(item -> modBusChannels.getDC(item))
+            .collect(Collectors.toSet());
     }
 
     /**
@@ -169,25 +175,31 @@ public class ChanSet {
 
     public Map<ChanName, Integer> values1() {
         Map<Integer, WadAbstractDevice> devMap = devMap();
+        Set<Pair<Integer, Integer>> setPairDC = setPairDC();
         return
-            getMapDeviceChanList().keySet().stream()
+            // Map<Dev, Set<Channels>>
+            getMapDeviceChanList().keySet().stream() // Set<Dev>
             .collect(Collectors.toMap(
                 key -> key,
+                // this is real reading
                 //key -> devMap.get(key).channel(0).get().list())
-                key -> IntStream.range(0, devMap.get(key).properties().chanCount()).boxed().collect(Collectors.toList())
+                // this is fake reader
+                key -> IntStream.rangeClosed(1, devMap.get(key).properties().chanCount()).boxed().collect(Collectors.toList())
             ))
+            // Map<Dev, List<Values>>
             .entrySet()
+            // Set<Dev>
             .stream()
             .map(ent -> IntStream.range(0, ent.getValue().size())
                     .mapToObj(index -> new AbstractMap.SimpleEntry<>(
-                        // TODO тут есть лишний маппинг
-                        // прочитанные порты, которые не сконфигурированы
-                        // выдают ошибку
-                        modBusChannels.getName(new Pair<>(ent.getKey(), index + 1)),
+                        new Pair<>(ent.getKey(), index + 1), //
                         ent.getValue().get(index)
                     ))
+                    // Map.Entry<Pair<>, Value> - this is filter to exclude non requested channels from device
+                    .filter(item -> setPairDC.contains(item.getKey()))
+                    // Map<Name, Value>
                     .collect(Collectors.toMap(
-                        Map.Entry::getKey,
+                        pair -> modBusChannels.getName(pair.getKey()),
                         Map.Entry::getValue
                     ))
             )

@@ -104,6 +104,11 @@ public final class ModBusChannels {
         channelMap.put(channelName, wadChannel);
     }
 
+    public Pair<Integer, Integer> getDC(ChanName channelName) {
+        WAD_Channel channel = get(channelName);
+        return new Pair<>(channel.device().id(),channel.channel());
+    }
+
     /** try to catch Exception if possible */
     public ChanName getName(WAD_Channel channel)  {
         try {

@@ -53,6 +53,7 @@ public class ModBusChannelsTest {
         System.out.println(
             core.channels().getName(new Pair(0x31,1))
         );
+        System.out.println("---------");
         System.out.println(
             new ChanSet(core.channels(), EnumSet.allOf(ChanName.class)).values1()
         );
