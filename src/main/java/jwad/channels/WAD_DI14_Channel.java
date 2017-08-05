@@ -4,7 +4,13 @@ import jbase.arr.ArrayFromIntBits;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
+import jwad.chanvalue.ChanValue;
 import jwad.modules.WadAbstractDevice;
+import jwad.summary.ValuePresentedDI;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created by alexr on 06.02.2017.
@@ -72,6 +78,17 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
     }
 
     @Override
+    public Values getWFailsRaw() {
+        Values ch_fails = fails();
+        Values ch_values = getRaw();
+        return new Values.Multiple(
+            IntStream.range(1, ch_fails.count() + 1).boxed()
+                .mapToInt(index -> ch_values.get(index) + 2 * ch_fails.get(index))
+                .toArray()
+        );
+    }
+
+    @Override
     /*
      * 1FFF
      * Состояние «Обрыв лини» по всем каналам
@@ -79,10 +96,16 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
      * 0 - все ОК
      *
      */
-    public Values fails() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        return channel()==0
-            ? failMultiple()
-            : failSingle();
+    public Values fails() {
+        try {
+            return channel()==0
+                ? failMultiple()
+                : failSingle();
+        } catch (InvalidModBusResponse e) {
+            throw new IllegalArgumentException("ModBusError");
+        } catch (SerialPortException e) {
+            throw new IllegalArgumentException("ModBusError");
+        }
     }
 
     private Values failMultiple() throws InvalidModBusResponse, SerialPortException {

@@ -164,7 +164,7 @@ public class ChanSet {
             .collect(Collectors.toMap(
                 key -> key,
                 // this is real reading
-                key -> devMap.get(key).channel(0).get().list()
+                key -> devMap.get(key).channel(0).getWFails().list()
                 // this is fake reader
                 //key -> IntStream.rangeClosed(1, devMap.get(key).properties().chanCount()).boxed().collect(Collectors.toList())
             ))

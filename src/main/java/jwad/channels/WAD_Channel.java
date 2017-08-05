@@ -44,9 +44,12 @@ public interface WAD_Channel {
      * need to be implement only in WAD-DI-BUS, WAD-DI14-BUS
      * where we want to hold Signal+Fail status in one Variable
      */
-    default ValuesMapped<ChanValue> getWFails() {
-        return get();
-    }
+    ValuesMapped<ChanValue> getWFails();
+    /**
+     * if you want to use getWFails
+     * you just need to override getWFailsRaw
+     */
+    Values getWFailsRaw();
     /**
      * single channel / multiple channels
      * this query make 1 query / response for DI, DI14 Channel types

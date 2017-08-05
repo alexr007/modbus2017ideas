@@ -59,10 +59,18 @@ public abstract class WadAbstractChannel {
         return device;
     }
 
-    abstract Values getRaw();
+    public abstract Values getRaw();
+
+    public Values getWFailsRaw() {
+        return getRaw();
+    };
 
     public  ValuesMapped<ChanValue> get() {
         return new ValuesMapped<ChanValue>(getRaw(), mapper);
+    }
+
+    public  ValuesMapped<ChanValue> getWFails() {
+        return new ValuesMapped<ChanValue>(getWFailsRaw(), mapper);
     }
 
     protected ModBusRequestBuilder builder() {

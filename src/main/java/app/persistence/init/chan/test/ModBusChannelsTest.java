@@ -57,7 +57,9 @@ public class ModBusChannelsTest {
 */
         System.out.println("---------");
         System.out.println(
-            new ChanSet(core.channels(), EnumSet.range(ChanName.R1,ChanName.V10_3)).values()
+//            new ChanSet(core.channels(), EnumSet.range(ChanName.R1,ChanName.R8)).values()
+//              new ChanSet(core.channels(), EnumSet.range(ChanName.V10_1,ChanName.V10_3)).values()
+            new ChanSet(core.channels(), EnumSet.range(ChanName.DC1,ChanName.DC15)).values()
         );
     }
 
