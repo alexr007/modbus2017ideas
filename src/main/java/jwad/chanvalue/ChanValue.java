@@ -8,7 +8,7 @@ package jwad.chanvalue;
  * ChanValue value = new ChanValue.DI(TypeDI.CLOSED);
  * ChanValue value = new ChanValue.DO(TypeDO.ON);
  *
- * ChanValue value = chanValue.get()
+ * ChanValue value = chanValue.bytes()
  * TypeChan type = chanValue.type()
  * see ChanValueTest for full Explanation.
  *
@@ -49,6 +49,18 @@ public interface ChanValue<T> {
             this.value = value;
         }
 
+        public DI(int value) {
+            switch (value) {
+                case 0: this.value = TypeDI.OPENED;
+                        break;
+                case 1: this.value = TypeDI.CLOSED;
+                        break;
+                case 2: this.value = TypeDI.FAIL;
+                        break;
+                default: throw new IllegalArgumentException("TypeDI parameter invalid: should be 0..2");
+            }
+        }
+
         @Override
         public TypeChan type() {
             return TypeChan.DI;
@@ -70,6 +82,16 @@ public interface ChanValue<T> {
 
         public DO(TypeDO value) {
             this.value = value;
+        }
+
+        public DO(int value) {
+            switch (value) {
+                case 0: this.value = TypeDO.OFF;
+                    break;
+                case 1: this.value = TypeDO.ON;
+                    break;
+                default: throw new IllegalArgumentException("TypeDO parameter invalid: should be 0..1");
+            }
         }
 
         @Override

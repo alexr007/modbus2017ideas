@@ -13,7 +13,7 @@ public class DataManager {
                 e.printStackTrace();
             }
 
-            // continue execution and sending get
+            // continue execution and sending bytes
             System.out.println("Sending data...");
         }
     }

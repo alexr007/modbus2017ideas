@@ -10,7 +10,7 @@ public class MbLength implements Bytes {
     private final int length;
 
     public MbLength(Bytes origin) {
-        this(origin.get());
+        this(origin.bytes());
     }
 
     public MbLength(byte[] origin) {
@@ -18,7 +18,7 @@ public class MbLength implements Bytes {
     }
 
     @Override
-    public byte[] get() {
+    public byte[] bytes() {
         return new byte[] { (byte) length };
     }
 }

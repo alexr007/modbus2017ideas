@@ -22,16 +22,16 @@ public class PH {
         System.out.println(new HexFromBytes(origin.get()));
     }
     public PH(String text, MbRequest origin) {
-        System.out.println(text+":"+new HexFromBytes(origin.get()));
+        System.out.println(text+":"+new HexFromBytes(origin.bytes()));
     }
     public PH(MbRequest origin) {
-        System.out.println(new HexFromBytes(origin.get()));
+        System.out.println(new HexFromBytes(origin.bytes()));
     }
     public PH(String text, Bytes origin) {
-        System.out.println(text+":"+new HexFromBytes(origin.get()));
+        System.out.println(text+":"+new HexFromBytes(origin.bytes()));
     }
     public PH(Bytes origin) {
-        System.out.println(new HexFromBytes(origin.get()));
+        System.out.println(new HexFromBytes(origin.bytes()));
     }
     public PH(String text, int origin) {
         System.out.println(text+":"+origin);

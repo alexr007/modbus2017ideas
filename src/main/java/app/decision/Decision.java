@@ -29,7 +29,9 @@ public class Decision {
         );
         HashMap<CharSequence, Values> output = new HashMap<>();
 
+/*
         output.put("M_1", new Values.Single(31000) );
+*/
 
         return new ValuesMap(output);
     }

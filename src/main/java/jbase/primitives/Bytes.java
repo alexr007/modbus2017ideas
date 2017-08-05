@@ -7,5 +7,5 @@ package jbase.primitives;
  *
  */
 public interface Bytes {
-    byte[] get();
+    byte[] bytes();
 }

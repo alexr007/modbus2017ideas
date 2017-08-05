@@ -18,7 +18,7 @@ public class MbMerged implements Bytes {
         int len=0;
         for (int i = 0; i < sources.length; i++) {
             source[i] = sources[i];
-            len += sources[i].get().length;
+            len += sources[i].bytes().length;
         }
         this.newTotalLength=len;
     }
@@ -27,7 +27,7 @@ public class MbMerged implements Bytes {
         int index = 0;
         byte[] cmd = new byte[newTotalLength];
         for (Bytes line : source) {
-            for (Byte b : line.get()) {
+            for (Byte b : line.bytes()) {
                 cmd[index++] = b;
             }
         }
@@ -35,7 +35,7 @@ public class MbMerged implements Bytes {
     }
 
     @Override
-    public byte[] get() {
+    public byte[] bytes() {
         if (!ready) {
             command = doBuild();
             ready = true;
@@ -46,7 +46,7 @@ public class MbMerged implements Bytes {
     @Override
     public String toString() {
         return new HexFromBytes(
-            get()
+            bytes()
         ).toString();
     }
 }

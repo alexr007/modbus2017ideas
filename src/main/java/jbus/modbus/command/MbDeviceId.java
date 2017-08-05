@@ -13,7 +13,7 @@ public class MbDeviceId implements Bytes {
     }
 
     @Override
-    public byte[] get() {
+    public byte[] bytes() {
         return new byte[] { (byte) origin};
     }
 }

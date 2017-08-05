@@ -9,7 +9,7 @@ public class MbRequest implements Bytes{
     private final byte[] data;
 
     public MbRequest(Bytes data) {
-        this(data.get());
+        this(data.bytes());
     }
 
     public MbRequest(byte[] data) {
@@ -17,7 +17,7 @@ public class MbRequest implements Bytes{
     }
 
     @Override
-    public byte[] get() {
+    public byte[] bytes() {
         return data;
     }
 }

@@ -1,9 +1,12 @@
 package jbase.arr;
 
+import java.util.stream.IntStream;
+
 /**
  * Created by alexr on 22.01.2017.
  *
- * convert array of values 0-1
+ * convert array of values
+ * array items must be only 0-1
  * to integer value, where values placed on bits of integer
  * {0,1} -> 1
  * {1,0} -> 2
@@ -11,20 +14,25 @@ package jbase.arr;
  * maximum array length is 16
  *
  */
-public class ArrayToInt {
+public class IntBitsFromArray {
     private final int[] origin;
 
-    public ArrayToInt(int[] origin) {
+    public IntBitsFromArray(int[] origin) {
         this.origin = origin;
     }
 
     public int get() {
         assert (origin.length<=16);
+/*
         int result = 0;
         for (int i = 0; i < origin.length ; i++) {
             result += (origin[i]<<i);
         }
         return result;
+*/
+        return IntStream.range(0, origin.length)
+            .map(index -> origin[index]<<index)
+            .sum();
     }
 
     public byte toByte() {

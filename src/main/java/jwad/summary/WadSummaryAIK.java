@@ -20,7 +20,7 @@ final public class WadSummaryAIK  extends WadSummaryBase {
     }
 
     protected Map<Integer, ValuePresented> map_OLD() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        Values ch_values = device.channel(0).get();
+        Values ch_values = device.channel(0).getRaw();
         return
             new HashMap<Integer, ValuePresented>() {{
                 for (int key=1; key<=ch_values.count(); key++) {
@@ -31,7 +31,7 @@ final public class WadSummaryAIK  extends WadSummaryBase {
 
     @Override
     protected Map<Integer, ValuePresented> map() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        Values ch_values = device.channel(0).get();
+        Values ch_values = device.channel(0).getRaw();
         return IntStream.range(1, ch_values.count() + 1).boxed()
             .collect(Collectors.toMap(
                 key -> key, key -> new ValuePresentedAIK(ch_values.get(key))

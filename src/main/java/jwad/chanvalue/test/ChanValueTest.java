@@ -17,7 +17,12 @@ public class ChanValueTest {
             Arrays.asList(
                 new ChanValue.A(1000),
                 new ChanValue.DI(TypeDI.CLOSED),
-                new ChanValue.DO(TypeDO.ON)
+                new ChanValue.DI(0),
+                new ChanValue.DI(1),
+                new ChanValue.DI(2),
+                new ChanValue.DO(TypeDO.ON),
+                new ChanValue.DO(0),
+                new ChanValue.DO(1)
             )
         )
            .forEach(

@@ -11,7 +11,7 @@ public class MbCRC implements Bytes {
     private boolean ready = false;
 
     public MbCRC(Bytes source) {
-        this(source.get(), source.get().length);
+        this(source.bytes(), source.bytes().length);
     }
 
     public MbCRC(byte[] source) {
@@ -25,7 +25,7 @@ public class MbCRC implements Bytes {
 
     // MbCRC тип byte[]
     @Override
-    public byte[] get() {
+    public byte[] bytes() {
         return
             new byte[] {
                 (byte) crc().hi().get(),

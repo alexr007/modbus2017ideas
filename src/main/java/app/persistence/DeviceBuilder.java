@@ -1,10 +1,8 @@
 package app.persistence;
 
 import app.persistence.init.dev.ModBusDevices;
-import constants.DevName;
 import constants.Id;
 import jbus.modbus.ModBus;
-import jwad.WadDevType;
 import org.javatuples.Triplet;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,12 +42,9 @@ public class DeviceBuilder {
         return
             new ModBusDevices(bus,
                 new ArrayList<>(Arrays.asList(
-                    new Triplet<>(DI1, DI14, Id.x11),
-                    new Triplet<>(DOS1, DOS, Id.x31),
-                    new Triplet<>(DOS2, DOS, Id.x32),
-                    new Triplet<>(DOS3, DOS, Id.x33),
-                    new Triplet<>(AO1, AO6, Id.x41),
-                    new Triplet<>(AIK2, AIK, Id.x22)
+                    new Triplet<>(DI1,  DI14, Id.x11),
+                    new Triplet<>(DOS1, DOS,  Id.x31),
+                    new Triplet<>(AO1,  AO6,  Id.x41)
                 )));
     }
 }

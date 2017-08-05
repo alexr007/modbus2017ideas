@@ -14,19 +14,19 @@ public class MbCommand implements Bytes {
     }
 
     @Override
-    public byte[] get() {
+    public byte[] bytes() {
         MbMerged cmd = new MbMerged(source);
         return
             new MbMerged(
                 cmd,
                 new MbCRC(cmd)
-            ).get();
+            ).bytes();
     }
 
     @Override
     public String toString() {
         return new HexFromBytes(
-            get()
+            bytes()
         ).toString();
     }
 }

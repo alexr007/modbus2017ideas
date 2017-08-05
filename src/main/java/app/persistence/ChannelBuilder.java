@@ -162,4 +162,46 @@ public class ChannelBuilder {
                     ))
             );
     }
+    public static ModBusChannels buildTestEnvironment(ModBusDevices devices) throws Exception {
+        return
+            new ModBusChannels(
+                devices,
+                // AO1
+                new Pair<>(AO1,
+                    new ChannelList(
+                        new Pair<>(V10_1,  n1),
+                        new Pair<>(V10_2,  n2),
+                        new Pair<>(V10_3,  n3)
+                    )),
+                new Pair<>(DI1,
+                    new ChannelList(
+                        new Pair<>(DC1, n1),
+                        new Pair<>(DC2, n2),
+                        new Pair<>(DC3, n3),
+                        new Pair<>(DC4, n4),
+                        new Pair<>(DC5, n5),
+                        new Pair<>(DC6, n6),
+                        new Pair<>(DC7, n7),
+                        new Pair<>(DC8, n8),
+                        new Pair<>(DC9, n9),
+                        new Pair<>(DC10, n10),
+                        new Pair<>(DC11, n11),
+                        new Pair<>(DC12, n12),
+                        new Pair<>(DC13, n13),
+                        new Pair<>(DC14, n14),
+                        new Pair<>(DC15, n15)
+                    )),
+                new Pair<>(DOS1,
+                    new ChannelList(
+                        new Pair<>(R1, n1),
+                        new Pair<>(R2, n2),
+                        new Pair<>(R3, n3),
+                        new Pair<>(R4, n4),
+                        new Pair<>(R5, n5),
+                        new Pair<>(R6, n6),
+                        new Pair<>(R7, n7),
+                        new Pair<>(R8, n8)
+                    ))
+            );
+    }
 }

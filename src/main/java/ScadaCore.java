@@ -25,16 +25,19 @@ public class ScadaCore {
             BIOcore core = new BIOcore(args[0]);
             ChanSet cs = new ChanSet(core.channels(), EnumSet.allOf(ChanName.class));
 
+/*
             System.out.println( cs.getAllChannelFromSameDevice(ChanName.SM_AIR1) );
             System.out.println( cs.getAllChannelFromSameDevice(ChanName.SM_GATE_4) );
             System.out.println( cs.getDeviceSet() );
             System.out.println( cs.getMapDeviceChanCount() );
             System.out.println( cs.getMapDeviceChanList()  );
+*/
 
             System.out.println(core.devices().toString());
             System.out.println(core.channels().toString());
 
             new ModBusChannelsTest().test1(core);
+            //new ChanValueTest().test3();
 
 /*
             WAD_Channel chan = core.chan(ChanName.S_A_CRUSH);

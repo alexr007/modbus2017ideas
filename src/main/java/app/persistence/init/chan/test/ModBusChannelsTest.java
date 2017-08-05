@@ -11,39 +11,40 @@ import java.util.EnumSet;
 public class ModBusChannelsTest {
     public void test1 (BIOcore core) {
         // output should be similar
+/*
         System.out.println(
-            core.channels().get(ChanName.M_VIBRO_FILTR)
+            core.channels().bytes(ChanName.M_VIBRO_FILTR)
                 .equals(
-                    core.channels().get("M_VIBRO_FILTR")
+                    core.channels().bytes("M_VIBRO_FILTR")
                 )
         );
         System.out.println(
-            core.channels().get(ChanName.M_VIBRO_FILTR)
+            core.channels().bytes(ChanName.M_VIBRO_FILTR)
                 .equals(
-                    core.channels().get(new Pair<>(0x35,4))
+                    core.channels().bytes(new Pair<>(0x35,4))
                 )
         );
         System.out.println(
-            core.channels().get(ChanName.M_VIBRO_FILTR)
+            core.channels().bytes(ChanName.M_VIBRO_FILTR)
                 .equals(
-                    core.channels().get(0x35,4)
+                    core.channels().bytes(0x35,4)
                 )
         );
         // output should be similar
         System.out.println(
-            core.channels().get(0x31,1).toString()
+            core.channels().bytes(0x31,1).toString()
         );
         System.out.println(
-            core.channels().get(new Pair(0x31,1)).toString()
+            core.channels().bytes(new Pair(0x31,1)).toString()
         );
         System.out.println(
-            core.channels().get("VALVE_1").toString()
+            core.channels().bytes("VALVE_1").toString()
         );
         System.out.println(
-            core.channels().get(ChanName.VALVE_1).toString()
+            core.channels().bytes(ChanName.VALVE_1).toString()
         );
         // output should be similar
-        WAD_Channel c = core.channels().get(0x31, 1);
+        WAD_Channel c = core.channels().bytes(0x31, 1);
         System.out.println(
             core.channels().getName(c)
         );
@@ -53,9 +54,10 @@ public class ModBusChannelsTest {
         System.out.println(
             core.channels().getName(new Pair(0x31,1))
         );
+*/
         System.out.println("---------");
         System.out.println(
-            new ChanSet(core.channels(), EnumSet.allOf(ChanName.class)).values1()
+            new ChanSet(core.channels(), EnumSet.range(ChanName.R1,ChanName.V10_3)).values()
         );
     }
 

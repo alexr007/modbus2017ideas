@@ -19,10 +19,10 @@ public class EnSensor extends AbstractEntity implements ISensorAnalog {
 
     @Override
     public boolean fail() throws InvalidModBusFunction, SerialPortException, InvalidModBusResponse {
-        return channel.fail().get() == 1;
+        return channel.fails().get() == 1;
     }
     @Override
     public Values get() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return channel.get();
+        return channel.getRaw();
     }
 }

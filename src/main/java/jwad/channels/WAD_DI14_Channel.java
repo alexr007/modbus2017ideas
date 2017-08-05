@@ -1,6 +1,6 @@
 package jwad.channels;
 
-import jbase.arr.ArrayFromInt;
+import jbase.arr.ArrayFromIntBits;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
@@ -22,7 +22,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
     }
 
     @Override
-    public Values get()  {
+    public Values getRaw()  {
         try {
             return channel()==0
                 ? getMultiple()
@@ -35,14 +35,21 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
     }
 
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
+/*
         int[] data = new RsAnalyzed(
                 run(builder().cmdReadRegister(0x1FFE)),
                 new RqInfo(device().id(), RsParsed.cmdRead, 2)
         ).get();
+//                    (data[0] & 0xFF) << 8 | data[1] & 0xFF,
+*/
         return
             new Values.Multiple(
-                new ArrayFromInt(
-                    (data[0] & 0xFF) << 8 | data[1] & 0xFF,
+                new ArrayFromIntBits(
+                    new WordsFromBytes(
+                        new RsAnalyzed(
+                            run(builder().cmdReadRegister(0x1FFE)),
+                            new RqInfo(device().id(), RsParsed.cmdRead, 2)
+                        )).get0(),
                     15
                 )
             );
@@ -72,17 +79,16 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
      * 0 - все ОК
      *
      */
-    public Values fail() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        if (channel()==0) {
-            return failMultiple();
-        } else
-            return failSingle();
+    public Values fails() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
+        return channel()==0
+            ? failMultiple()
+            : failSingle();
     }
 
     private Values failMultiple() throws InvalidModBusResponse, SerialPortException {
         return
             new Values.Multiple(
-                new ArrayFromInt(failAll(),15)
+                new ArrayFromIntBits(failAll(),15)
             );
     }
 
@@ -94,34 +100,24 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
     }
 
     private int failAll() throws SerialPortException, InvalidModBusResponse {
-        int[] data = new RsAnalyzed(
-            run(builder().cmdReadRegister(0x1FFF)),
-            new RqInfo(device().id(), RsParsed.cmdRead, 2)
-        ).get();
         return
-            (data[0] & 0xFF) << 8 | data[1] & 0xFF;
-/*
-        return
-            new RsAnalyzed(
-                device.run(device.builder().cmdReadRegister(0x1FFF)),
-                new RqInfo(device.deviceId, RsParsed.cmdRead, 2)
-            ).get(1);
-*/
+            new WordsFromBytes(new RsAnalyzed(
+                run(builder().cmdReadRegister(0x1FFF)),
+                new RqInfo(device().id(), RsParsed.cmdRead, 2)
+            )).get0();
     }
 
     @Override
     public boolean opened() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        if (channel()==0) {
-            return (getMultiple().get()&0b0111111111111111)==0x0;
-        } else
-            return getSingle().get()==0;
+        return channel()==0
+            ? (getMultiple().get()&0b0111111111111111)==0x0
+            : getSingle().get()==0;
     }
 
     @Override
     public boolean closed() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        if (channel()==0) {
-            return (getMultiple().get()&0b0111111111111111)==0b0111111111111111;
-        } else
-            return getSingle().get()==1;
+        return channel()==0
+            ? (getMultiple().get()&0b0111111111111111)==0b0111111111111111
+            : getSingle().get()==1;
     }
 }

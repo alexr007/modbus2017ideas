@@ -164,9 +164,11 @@ public class SortedSetTest {
     }
 
     public static void test27() {
+/*
         System.out.println(
             new Values.Multiple(new int[]{9,8,7,6})
         );
+*/
     }
 
     public static void test28() {
@@ -184,7 +186,9 @@ public class SortedSetTest {
     }
 
     public static void test29() {
+/*
         Values.Multiple ints = new Values.Multiple(new int[]{10, 20, 30, 40, 50, 60, 70});
+*/
 /*
         List<Integer> set = new ArrayList<Integer>() {{
             add(1);
@@ -195,7 +199,7 @@ public class SortedSetTest {
         Map<Integer, Integer> collect = set.stream()
             .collect(Collectors.toMap(
                 o -> o,
-                o -> ints.get(o)
+                o -> ints.bytes(o)
             ));
         collect.forEach((k,v)-> System.out.println(
             String.format(
@@ -203,17 +207,19 @@ public class SortedSetTest {
             )
         ));
 */
+/*
         Map<Integer, Integer> collect = IntStream.range(1,ints.count()+1).boxed()
             //.forEach(p-> System.out.println(p));
         .collect(Collectors.toMap(
             i -> i,
-            j -> ints.get(j)*2
+            j -> ints.bytes(j)*2
         ));
         collect.forEach((k,v)-> System.out.println(
             String.format(
                 "k:%sv:%s",k,v
             )));
 
+*/
 
 
 
@@ -239,7 +245,7 @@ public class SortedSetTest {
                 p-> System.out.println(
                     String.format("K:%d,V:%d",
                         p+1,
-                        ints.get(p+1)
+                        ints.bytes(p+1)
                 )
 */
 

@@ -17,7 +17,7 @@ public class MbData implements Bytes {
     }
 
     public MbData(Bytes origin) {
-        this(origin.get());
+        this(origin.bytes());
     }
 
     public MbData(byte[] origin) {
@@ -25,7 +25,7 @@ public class MbData implements Bytes {
     }
 
     @Override
-    public byte[] get() {
+    public byte[] bytes() {
         return origin;
     }
 }

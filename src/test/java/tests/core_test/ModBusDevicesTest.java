@@ -28,7 +28,7 @@ public class ModBusDevicesTest {
         );
 */
 /*
-        WAD_AIK_BUS aik1 = (WAD_AIK_BUS) devices.get("DEV1");
+        WAD_AIK_BUS aik1 = (WAD_AIK_BUS) devices.bytes("DEV1");
         aik1.channel(1).
 *//*
 
@@ -83,43 +83,43 @@ public class ModBusDevicesTest {
         // work begins here !
 */
 /*
-        Values t1 = channelMap.get(En.T1).get();
-        Values t2 = channelMap.get(En.T2).get();
-        channelMap.get(En.Transporter1).off();
-        channelMap.get(En.Transporter2).on();
+        Values t1 = channelMap.bytes(En.T1).bytes();
+        Values t2 = channelMap.bytes(En.T2).bytes();
+        channelMap.bytes(En.Transporter1).off();
+        channelMap.bytes(En.Transporter2).on();
 *//*
 
         ModBusEntities entities = new ModBusEntities(channelMap);
         entities.add(En.Cylinder1,
             new EnCylinder(
-                new EnValve(devices.get(Dv.DOS1).channel(1)),
-                new EnValve(devices.get(Dv.DOS1).channel(2))
-                //new EnValve(channelMap.get("chan3"))
+                new EnValve(devices.bytes(Dv.DOS1).channel(1)),
+                new EnValve(devices.bytes(Dv.DOS1).channel(2))
+                //new EnValve(channelMap.bytes("chan3"))
             )
         );
         // ENTITIES initialization
 
         System.out.println(
-            entities.get(En.Cylinder1)
+            entities.bytes(En.Cylinder1)
         );
 
-        ((EnCylinder)entities.get(En.Cylinder1)).open();
+        ((EnCylinder)entities.bytes(En.Cylinder1)).open();
         //entities.getCylinder(En.Cylinder1).open();
         //cylinder.close();
         //cylinder.stop();
 */
 /*
         EnMotorPWM air1 = new EnMotorPWM(
-            channelMap.get("AIR1"),
-            channelMap.get("AIR1speed")
+            channelMap.bytes("AIR1"),
+            channelMap.bytes("AIR1speed")
         );
         EnMotorPWM air2 = new EnMotorPWM(
-            devices.get("dev1").channel(1),
-            devices.get("dev2").channel(1)
+            devices.bytes("dev1").channel(1),
+            devices.bytes("dev2").channel(1)
         );
         EnMotorPWM air3 = new EnMotorPWM(
-            devices.get("dev1").channel(1),
-            devices.get("dev2").channel(1)
+            devices.bytes("dev1").channel(1),
+            devices.bytes("dev2").channel(1)
         );
         air1.off();
         air2.off();

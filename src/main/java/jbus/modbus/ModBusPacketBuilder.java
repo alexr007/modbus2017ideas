@@ -29,8 +29,8 @@ public final class ModBusPacketBuilder {
                 new MbDeviceId(this.deviceId),
                 new MbWrite(),
                 new MbRegisters(new Word(base), new Word(count)),
-                new MbLength(content.get()),
-                new MbData(content.get())
+                new MbLength(content.bytes()),
+                new MbData(content.bytes())
             );
     }
 }

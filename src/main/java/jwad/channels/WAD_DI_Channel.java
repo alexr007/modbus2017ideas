@@ -1,6 +1,6 @@
 package jwad.channels;
 
-import jbase.arr.ArrayFromInt;
+import jbase.arr.ArrayFromIntBits;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
@@ -22,7 +22,7 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
     }
 
     @Override
-    public Values get() {
+    public Values getRaw() {
         try {
             return channel()==0
                 ? getMultiple()
@@ -37,11 +37,12 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
         return
             new Values.Multiple(
-                new ArrayFromInt(
+                new ArrayFromIntBits(
                     new RsAnalyzed(
                         run(builder().cmdReadRegister(0x200D)),
                         new RqInfo(device().id(), RsParsed.cmdRead, 2)
-                    ).get(1),8
+                    ).get(1),
+                    8
                 )
             );
     }
@@ -64,17 +65,16 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
      * 0 - все ОК
      *
      */
-    public Values fail() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        if (channel()==0) {
-            return failMultiple();
-        } else
-            return failSingle();
+    public Values fails() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
+        return channel()==0
+            ? failMultiple()
+            : failSingle();
     }
 
     private Values failMultiple() throws InvalidModBusResponse, SerialPortException {
         return
             new Values.Multiple(
-                new ArrayFromInt(failAll(),8)
+                new ArrayFromIntBits(failAll(),8)
             );
     }
 
@@ -95,17 +95,15 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
 
     @Override
     public boolean opened() throws InvalidModBusResponse, SerialPortException {
-        if (channel()==0) {
-            return (getMultiple().get()&0b11111111)==0x0;
-        } else
-            return getSingle().get()==0;
+        return channel()==0
+        ? (getMultiple().get()&0b11111111)==0x0
+        : getSingle().get()==0;
     }
 
     @Override
     public boolean closed() throws InvalidModBusResponse, SerialPortException {
-        if (channel()==0) {
-            return (getMultiple().get()&0b11111111)==0b11111111;
-        } else
-            return getSingle().get()==1;
+        return channel()==0
+            ? (getMultiple().get()&0b11111111)==0b11111111
+            : getSingle().get()==1;
     }
 }

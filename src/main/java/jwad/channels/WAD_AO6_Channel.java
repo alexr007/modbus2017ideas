@@ -5,6 +5,8 @@ import jbus.modbus.command.MbMerged;
 import jbus.modbus.response.*;
 import jbase.primitives.Word;
 import jssc.SerialPortException;
+import jwad.chanvalue.ChanValue;
+import jwad.chanvalue.ChanValueFromInt;
 import jwad.modules.WadAbstractDevice;
 
 /**
@@ -23,7 +25,7 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public Values get()  {
+    public Values getRaw() {
         try {
             return channel()==0
                 ? getMultiple()
@@ -36,31 +38,26 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
-        int[] data = new RsAnalyzed(
-            run(builder().cmdReadRegister(0x2010,0x0006)),
-            new RqInfo(device().id(), RsParsed.cmdRead, 12)
-        ).get();
         return
             new Values.Multiple(
-                new int[] {
-                    (data[0] & 0xFF) << 8 | data[1] & 0xFF,
-                    (data[2] & 0xFF) << 8 | data[3] & 0xFF,
-                    (data[4] & 0xFF) << 8 | data[5] & 0xFF,
-                    (data[6] & 0xFF) << 8 | data[7] & 0xFF,
-                    (data[8] & 0xFF) << 8 | data[9] & 0xFF,
-                    (data[10] & 0xFF) << 8 | data[11] & 0xFF,
-                }
+                new WordsFromBytes(
+                    new RsAnalyzed(
+                        run(builder().cmdReadRegister(0x2010,0x0006)),
+                        new RqInfo(device().id(), RsParsed.cmdRead, 12)
+                    )
+                )
             );
     }
 
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {
-        int[] data = new RsAnalyzed(
-            run(builder().cmdReadRegister(0x2010+channel()-1)),
-            new RqInfo(device().id(), RsParsed.cmdRead, 2)
-        ).get();
         return
             new Values.Single(
-                (data[0] & 0xFF) << 8 | data[1] & 0xFF
+                new WordsFromBytes(
+                    new RsAnalyzed(
+                        run(builder().cmdReadRegister(0x2010+channel()-1)),
+                        new RqInfo(device().id(), RsParsed.cmdRead, 2)
+                    )
+                )
             );
     }
 
@@ -68,7 +65,8 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     public void set(int val) throws SerialPortException {
         assert (channel()>0);
         run(
-            builder().cmdWriteRegister(0x2010+channel()-1,
+            builder().cmdWriteRegister(
+                0x2010+channel()-1,
                 new MbData(new Word(val))
             )
         );
@@ -78,7 +76,8 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     public void set(int[] val) throws SerialPortException {
         assert (channel()==0)&&(val.length==device().properties().chanCount());
         run(
-            builder().cmdWriteRegister(0x2010+channel()-1,0x0006,
+            builder().cmdWriteRegister(
+                0x2010+channel()-1,0x0006,
                 new MbMerged(
                     new Word(val[0]).toBytes(),
                     new Word(val[1]).toBytes(),

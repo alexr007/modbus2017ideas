@@ -35,9 +35,9 @@ public class ModBusChannelsTest {
             }}
         );
 
-        channelMap.get("CH1").get();
-        channelMap.get("CH2").on();
-        channelMap.get("CH3").off();
+        channelMap.bytes("CH1").bytes();
+        channelMap.bytes("CH2").on();
+        channelMap.bytes("CH3").off();
 
         System.out.println(
             channelMap.toString()

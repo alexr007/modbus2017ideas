@@ -11,6 +11,9 @@ public class FakeReader implements PortReader {
         System.out.println(
             String.format("Reading value:%s", name)
         );
+        return null;
+/*
         return new Values.Single((int) (Math.random()*10+10));
+*/
     }
 }

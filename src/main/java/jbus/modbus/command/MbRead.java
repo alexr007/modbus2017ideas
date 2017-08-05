@@ -10,7 +10,7 @@ public class MbRead  implements Bytes {
     private final int CMD = 0x03;
 
     @Override
-    public byte[] get() {
+    public byte[] bytes() {
         return new byte[] { CMD };
     }
 }

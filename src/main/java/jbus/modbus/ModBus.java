@@ -25,7 +25,7 @@ public class ModBus {
         MbResponse response;
         try {
             response = new MbResponse.Data(
-                comPort.writeRead(req.get())
+                comPort.writeRead(req.bytes())
             );
         }
         catch (InterruptedException ex)

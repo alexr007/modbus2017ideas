@@ -3,14 +3,19 @@ package jwad.channels;
 import jbus.modbus.MbRequest;
 import jbus.modbus.MbResponse;
 import jbus.modbus.ModBusRequestBuilder;
+import jbus.modbus.response.MappedTo;
+import jbus.modbus.response.Values;
+import jbus.modbus.response.ValuesMapped;
 import jssc.SerialPortException;
 import jwad.WadDevType;
+import jwad.chanvalue.ChanValue;
+import jwad.chanvalue.ChanValueFromInt;
 import jwad.modules.WadAbstractDevice;
 
 /**
  * Created by alexr on 12.05.2017.
  */
-public class WadAbstractChannel {
+public abstract class WadAbstractChannel {
     /**
      * channel ID on ModBus device
      */
@@ -19,6 +24,10 @@ public class WadAbstractChannel {
      * parent ModBus device for current channel
      */
     private final WadAbstractDevice device;
+    /**
+     * mapper for map int to value for future human using
+     */
+    private final MappedTo mapper;
 
     /**
      * @param channel modbus channel id
@@ -35,6 +44,7 @@ public class WadAbstractChannel {
         }
         this.channelId = channel;
         this.device = device;
+        this.mapper = new ChanValueFromInt(this);
     }
 
     public WadDevType type() {
@@ -47,6 +57,12 @@ public class WadAbstractChannel {
 
     public WadAbstractDevice device() {
         return device;
+    }
+
+    abstract Values getRaw();
+
+    public  ValuesMapped<ChanValue> get() {
+        return new ValuesMapped<ChanValue>(getRaw(), mapper);
     }
 
     protected ModBusRequestBuilder builder() {

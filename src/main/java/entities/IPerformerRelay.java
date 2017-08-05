@@ -7,7 +7,7 @@ import jbus.modbus.response.Values;
  *
  */
 public interface IPerformerRelay {
-    // just get value 0-1 range
+    // just bytes value 0-1 range
     Values.Single get();
     // just set 1
     void on();

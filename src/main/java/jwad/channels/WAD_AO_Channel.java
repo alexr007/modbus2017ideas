@@ -23,7 +23,7 @@ final public class WAD_AO_Channel extends WadAbstractChannel implements WAD_Chan
     }
 
     @Override
-    public Values get() {
+    public Values getRaw() {
         try {
             return channel()==0
                 ? getMultiple()
@@ -36,40 +36,26 @@ final public class WAD_AO_Channel extends WadAbstractChannel implements WAD_Chan
     }
 
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
-        int[] data = new RsAnalyzed(
-            run(builder().cmdReadRegister(0x200C,0x0004)),
-            new RqInfo(device().id(), RsParsed.cmdRead, 8)
-        ).get();
-        //return
-
-        Values.Multiple v = new Values.Multiple(
-            new int[]{
-                (data[0] & 0xFF) << 8 | data[1] & 0xFF,
-                (data[2] & 0xFF) << 8 | data[3] & 0xFF,
-                (data[4] & 0xFF) << 8 | data[5] & 0xFF,
-                (data[6] & 0xFF) << 8 | data[7] & 0xFF,
-            }
-        );
-        //System.out.println(new HexFromByte(v.get()).toString());
-        return v;
-/*
         return
             new Values.Multiple(
                 new WordsFromBytes(
-                    data
+                    new RsAnalyzed(
+                        run(builder().cmdReadRegister(0x200C,0x0004)),
+                        new RqInfo(device().id(), RsParsed.cmdRead, 8)
+                    )
                 )
             );
-*/
     }
 
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {
-        int[] data = new RsAnalyzed(
-            run(builder().cmdReadRegister(0x200C+channel()-1)),
-            new RqInfo(device().id(), RsParsed.cmdRead, 2)
-        ).get();
         return
             new Values.Single(
-                (data[0] & 0xFF) << 8 | data[1] & 0xFF
+                new WordsFromBytes(
+                    new RsAnalyzed(
+                        run(builder().cmdReadRegister(0x200C+channel()-1)),
+                        new RqInfo(device().id(), RsParsed.cmdRead, 2)
+                    )
+                )
             );
     }
 
@@ -77,7 +63,8 @@ final public class WAD_AO_Channel extends WadAbstractChannel implements WAD_Chan
     public void set(int val) throws SerialPortException {
         assert (channel()>0);
         run(
-            builder().cmdWriteRegister(0x200C+channel()-1,
+            builder().cmdWriteRegister(
+                0x200C+channel()-1,
                 new MbData(new Word(val))
             )
         );
@@ -87,7 +74,8 @@ final public class WAD_AO_Channel extends WadAbstractChannel implements WAD_Chan
     public void set(int[] val) throws SerialPortException {
         assert (channel()==0)&&(val.length==device().properties().chanCount());
         run(
-            builder().cmdWriteRegister(0x200C+channel()-1,0x0004,
+            builder().cmdWriteRegister(
+                0x200C+channel()-1,0x0004,
                 new MbMerged(
                     new Word(val[0]).toBytes(),
                     new Word(val[1]).toBytes(),

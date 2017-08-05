@@ -9,7 +9,7 @@ public class MbWrite  implements Bytes {
     private final int CMD = 0x10;
 
     @Override
-    public byte[] get() {
+    public byte[] bytes() {
         return new byte[] { CMD };
     }
 }

@@ -4,6 +4,7 @@ import app.persistence.init.chan.ModBusChannels;
 import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;
 import constants.DevName;
+import jbus.comport.COMPort;
 import jbus.comport.COMPortFake;
 import jbus.comport.COMPortProperties;
 import jbus.modbus.ModBus;
@@ -26,13 +27,18 @@ public class BIOcore {
 
     public BIOcore(String comName) throws Exception {
         this.bus = new ModBus(
-            new COMPortFake(
+            //new COMPortFake(
+            new COMPort(
                 comName,
                 new COMPortProperties(SerialPort.BAUDRATE_57600)
             )
         );
+/*
         this.devices = DeviceBuilder.buildEcoAlliance(this.bus);
         this.channels = ChannelBuilder.buildEcoAlliance(this.devices);
+*/
+        this.devices = DeviceBuilder.buildTestEnvironment(this.bus);
+        this.channels = ChannelBuilder.buildTestEnvironment(this.devices);
     }
 
     public ModBus bus() {

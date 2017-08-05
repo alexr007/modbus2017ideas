@@ -21,16 +21,16 @@ public class EnSensorSwitch extends AbstractEntity implements ISensorDigital{
 
     @Override
     public boolean fail() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return channel.fail().get() == 1;
+        return channel.fails().get() == 1;
     }
 
     @Override
     public boolean opened() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return channel.get().get() == 0;
+        return channel.getRaw().get() == 0;
     }
 
     @Override
     public boolean closed() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return channel.get().get() == 1;
+        return channel.getRaw().get() == 1;
     }
 }

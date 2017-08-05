@@ -11,7 +11,7 @@ public class HexFromBytes {
     private final byte[] origin;
 
     public HexFromBytes(Bytes origin) {
-        this(origin.get());
+        this(origin.bytes());
     }
 
     public HexFromBytes(byte[] origin) {

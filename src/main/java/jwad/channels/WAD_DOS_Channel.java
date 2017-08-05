@@ -1,7 +1,7 @@
 package jwad.channels;
 
-import jbase.arr.ArrayToInt;
-import jbase.arr.ArrayFromInt;
+import jbase.arr.IntBitsFromArray;
+import jbase.arr.ArrayFromIntBits;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.command.MbData;
 import jbus.modbus.response.*;
@@ -25,7 +25,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public Values get() {
+    public Values getRaw() {
         try {
             return channel()==0
                 ? getMultiple()
@@ -40,7 +40,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
         return
             new Values.Multiple(
-                new ArrayFromInt(
+                new ArrayFromIntBits(
                     new RsAnalyzed(
                         device().run(device().builder().cmdReadRegister(0x200B)),
                         new RqInfo(device().id(),RsParsed.cmdRead,2)
@@ -60,7 +60,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public Values fail() throws InvalidModBusFunction {
+    public Values fails() throws InvalidModBusFunction {
         throw new InvalidModBusFunction();
     }
 
@@ -68,14 +68,14 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     public boolean opened() throws InvalidModBusResponse, SerialPortException {
         // support only SINGLE port
         assert channel()>0;
-        return (get().get()==0);
+        return (getRaw().get()==0);
     }
 
     @Override
     public boolean closed() throws InvalidModBusResponse, SerialPortException {
         // support only SINGLE port
         assert channel()>0;
-        return (get().get()==1);
+        return (getRaw().get()==1);
     }
 
     @Override
@@ -153,7 +153,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     private void setAll(int[] val) throws SerialPortException {
         device().run(
             device().builder().cmdWriteRegister(0x200B,
-                new MbData(new byte[]{0, /*(byte)*/new ArrayToInt(val).toByte() })
+                new MbData(new byte[]{0, /*(byte)*/new IntBitsFromArray(val).toByte() })
             )
         );
     }

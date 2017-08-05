@@ -20,6 +20,7 @@ public class DecisionTest {
         );
 
 
+/*
         ValuesMap output = decision.make(
             new ValuesMap(
                 new HashMap<CharSequence, Values>(){{
@@ -33,5 +34,6 @@ public class DecisionTest {
         System.out.println(
             String.format("output is: %s", output.entrySet())
         );
+*/
     }
 }

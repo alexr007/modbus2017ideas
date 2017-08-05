@@ -13,9 +13,9 @@ public class COMPort implements COMPortBaseInterface {
     private final SerialPort port;
     // listener for comport read
     private final Listener listener = new Listener();
-    // get received ready to exit from thread.
+    // bytes received ready to exit from thread.
     private boolean received;
-    // readed get
+    // readed bytes
     private byte[] readed;
     // locker for multithreading
     private final Object locker = new Object();
@@ -64,7 +64,7 @@ public class COMPort implements COMPortBaseInterface {
 
     @Override
     public void write(Bytes buffer) throws SerialPortException {
-        port.writeBytes(buffer.get());
+        port.writeBytes(buffer.bytes());
     }
 
     /*

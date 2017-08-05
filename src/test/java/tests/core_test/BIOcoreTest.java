@@ -31,7 +31,7 @@ public class BIOcoreTest {
         System.out.println(core.chan("CH211").device().toString());
         System.out.println(core.chan("CH212").device().toString());
 
-        core.chan("CH1").get();
+        core.chan("CH1").bytes();
         core.chan("CH1").set(0);
         core.chan("CH1").on();
         core.chan("CH1").off();

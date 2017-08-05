@@ -7,7 +7,7 @@ import jbus.modbus.response.Values;
  *
  */
 public interface IPerformerAnalog {
-    // just get value 0-65535 range
+    // just bytes value 0-65535 range
     Values.Single get();
     // just set value 0-65535 range
     void set(Values.Single value);

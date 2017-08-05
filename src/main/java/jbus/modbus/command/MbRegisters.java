@@ -29,11 +29,11 @@ public class MbRegisters implements Bytes {
     }
 
     @Override
-    public byte[] get() {
+    public byte[] bytes() {
         return
             new MbMerged(
                 base.toBytes(),
                 count.toBytes()
-            ).get();
+            ).bytes();
     }
 }
