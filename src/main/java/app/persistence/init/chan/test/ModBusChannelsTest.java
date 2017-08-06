@@ -16,10 +16,9 @@ import org.xembly.Directives;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
+import java.util.*;
 
+import static jwad.chanvalue.TypeChan.DO;
 import static jwad.chanvalue.TypeDO.*;
 
 public class ModBusChannelsTest {
@@ -78,11 +77,23 @@ public class ModBusChannelsTest {
         System.out.println(
             core.dev(DevName.DOS1).summaryTxt()
         );
-//        core.chan(ChanName.R1).on();
+/*
+        core.chan(ChanName.R1).on();
         System.out.println(
             core.dev(DevName.DOS1).summaryTxt()
         );
+*/
         WAD_Channel ch = core.dev(DevName.DOS1).channel(0);
+        EnumMap<ChanName, ChanValue> wr = new EnumMap<>(ChanName.class);
+        wr.put(ChanName.R1, ChanValue.DO(TypeDO.ON));
+        wr.put(ChanName.R2, ChanValue.DO(TypeDO.OFF));
+        wr.put(ChanName.R3, ChanValue.DO(TypeDO.ON));
+        wr.put(ChanName.R4, ChanValue.DO(TypeDO.OFF));
+        new ChanSet(core.channels(), EnumSet.range(ChanName.R1,ChanName.R4)).write(wr);
+/*
+        new ChanSet(core.channels(), wr).write(wr);
+        new ChanSet(core.channels(), EnumSet.range(ChanName.R1,ChanName.R1)).write(wr);
+*/
 /*
         ch.set(new int[]{1,0,1,0,1,0,1,0});
         ch.set(
@@ -110,6 +121,7 @@ public class ModBusChannelsTest {
                 }
         );
 */
+/*
         core.dev(DevName.AO1)
             .channel(0).set(new int[]{
             100,200,300,400,500,600
@@ -117,6 +129,7 @@ public class ModBusChannelsTest {
         System.out.println(
             core.dev(DevName.AO1).summaryTxt()
         );
+*/
 
 
 

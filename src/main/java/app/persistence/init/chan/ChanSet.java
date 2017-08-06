@@ -6,6 +6,7 @@ import jwad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -16,6 +17,10 @@ public class ChanSet {
     public ChanSet(ModBusChannels modBusChannels) {
         this.modBusChannels = modBusChannels;
         this.chanSet = Collections.emptySet();
+    }
+
+    public ChanSet(ModBusChannels modBusChannels, EnumMap<ChanName, ChanValue> chanSet) {
+        this(modBusChannels, new HashSet<>(chanSet.keySet()));
     }
 
     public ChanSet(ModBusChannels modBusChannels, Set<ChanName> chanSet) {
@@ -104,12 +109,39 @@ public class ChanSet {
             .collect(Collectors.toSet());
     }
 
+    private void checkIdentically(EnumMap<ChanName, ChanValue> mapToWrite) {
+        // check origin Set equals mapToWrite.set
+        Set<ChanName> toWrite = new HashSet<>(mapToWrite.keySet());
+        if (! chanSet.equals(toWrite)) {
+            throw new IllegalArgumentException(String.format(
+                "Origin set and set to write is different\nOrigin: %s\nToWrite: %s\n",
+                chanSet, toWrite));
+        }
+    }
+
     /**
      * Writes EnumMap<ChanName, ChanValue> to device
      * @param mapToWrite
      */
-    void write(EnumMap<ChanName, ChanValue> mapToWrite) {
+    public void write(EnumMap<ChanName, ChanValue> mapToWrite) {
+        checkIdentically(mapToWrite);
 
+        Map<Integer, Set<Integer>> mapDeviceChanList = getMapDeviceChanList();
+        Map<Integer, WadAbstractDevice> devMap = devMap();
+
+        mapDeviceChanList.entrySet().stream()
+            .forEach(ent -> {
+                WadAbstractDevice dev = devMap.get(ent.getKey());
+                Set<Integer> set = ent.getValue();
+                int setSize = set.size();
+                if (setSize==1) {
+                    System.out.println("writting 1 channel");
+                } else if (setSize==dev.properties().chanCount()) {
+                    System.out.println(String.format("writting ALL %s channels", dev.properties().chanCount()));
+                } else {
+                    System.out.println(String.format("writting %s of %s channels", setSize, dev.properties().chanCount()));
+                }
+            });
     }
 
     public Map<ChanName, Integer> values0_work_ok() {
