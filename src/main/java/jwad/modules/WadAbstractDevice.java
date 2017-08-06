@@ -1,14 +1,14 @@
 package jwad.modules;
 
 import com.google.common.base.Joiner;
+import jssc.SerialPortException;
 import jbase.hex.HexFromByte;
 import jbus.modbus.*;
 import jbus.modbus.device.DeviceProperties;
 import jbus.modbus.response.InvalidModBusResponse;
-import jssc.SerialPortException;
 import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
-import jwad.channels.WadAbstractChannel;
+import jwad.summary.WadSummary;
 import org.xembly.Directives;
 
 public abstract class WadAbstractDevice {
@@ -17,12 +17,15 @@ public abstract class WadAbstractDevice {
 
     private final ModBus modbus;
     private final int deviceId;
+    private final WadDevType type;
     private final DeviceProperties properties;
     private final ModBusRequestBuilder builder;
+    protected WadSummary summary;
 
-    public WadAbstractDevice(ModBus modbus, int deviceId, DeviceProperties properties) {
+    public WadAbstractDevice(ModBus modbus, int deviceId, WadDevType type, DeviceProperties properties) {
         this.modbus = modbus;
         this.deviceId = deviceId;
+        this.type = type;
         this.properties = properties;
         this.builder = new ModBusRequestBuilder(deviceId);
     }
@@ -30,7 +33,9 @@ public abstract class WadAbstractDevice {
     /**
      * @return device type AIK, DOS, AO etc
      */
-    public abstract WadDevType type();
+    public WadDevType type() {
+        return type;
+    }
 
     /**
      * @return WAD_Channel instance
@@ -88,7 +93,8 @@ public abstract class WadAbstractDevice {
             String.format("Channels type: %s", properties.signalType())
         );
         try {
-            details = summaryDetailsTxt();
+            details = summary.txt();
+//            details = summaryDetailsTxt();
         } catch (Exception e) {
             details = ERROR_MESSAGE_MODBUS+"\n";
         }
@@ -109,16 +115,25 @@ public abstract class WadAbstractDevice {
         // детали
         Directives details;
         try {
-            details = new Directives().add("channelMap").append(summaryDetailsXml());
+            details = new Directives().add("channelMap").append(summary.xmlDir());
+            //details = new Directives().add("channelMap").append(summaryDetailsXml());
         } catch (Exception e) {
             details = new Directives().add("error").set(ERROR_MESSAGE_MODBUS).up()
                 .add("message").set(e.getMessage()).up();
         }
         return base.append(details);
     }
-
+/*
     public abstract CharSequence summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
     public abstract Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
+*/
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof WadAbstractDevice
+            && this.deviceId == WadAbstractDevice.class.cast(obj).deviceId
+            && this.modbus.equals(WadAbstractDevice.class.cast(obj).modbus);
+    }
 
     public static WadAbstractDevice build(ModBus modBus, WadDevType type, int modbusId) throws Exception {
         WadAbstractDevice device;
@@ -138,12 +153,5 @@ public abstract class WadAbstractDevice {
             default: throw new Exception (String.format(ERROR_UNKNOWN_TYPE, type));
         }
         return device;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof WadAbstractDevice
-            && this.deviceId == WadAbstractDevice.class.cast(obj).deviceId
-            && this.modbus.equals(WadAbstractDevice.class.cast(obj).modbus);
     }
 }

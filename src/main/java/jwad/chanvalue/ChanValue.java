@@ -1,5 +1,7 @@
 package jwad.chanvalue;
 
+import static jwad.chanvalue.TypeDO.*;
+
 /**
  * Created by alexr on 25.04.2017.
  *
@@ -17,6 +19,18 @@ public interface ChanValue<T> {
     TypeChan type();
     default T get() {
         throw new IllegalStateException("unsupported operation on interface ChanValue");
+    }
+
+    static ChanValue.A A(int val) {
+        return new ChanValue.A(val);
+    }
+
+    static ChanValue.DI DI(TypeDI val) {
+        return new ChanValue.DI(val);
+    }
+
+    static ChanValue.DO DO(TypeDO val) {
+        return new ChanValue.DO(val);
     }
 
     class A implements ChanValue {
@@ -88,7 +102,7 @@ public interface ChanValue<T> {
             switch (value) {
                 case 0: this.value = TypeDO.OFF;
                     break;
-                case 1: this.value = TypeDO.ON;
+                case 1: this.value = ON;
                     break;
                 default: throw new IllegalArgumentException("TypeDO parameter invalid: should be 0..1");
             }

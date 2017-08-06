@@ -1,6 +1,5 @@
 package jwad.modules;
 
-import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.device.DeviceProperties;
 import jbus.modbus.device.PortType;
 import jbus.modbus.device.SignalType;
@@ -14,20 +13,15 @@ import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
 import jwad.channels.WAD_DI_Channel;
 import jwad.summary.WadSummaryDI;
-import org.xembly.Directives;
 
 /**
  * Created by alexr on 22.01.2017.
  */
 final public class WAD_DI_BUS extends WadAbstractDevice {
     public WAD_DI_BUS(ModBus modbus, int deviceId) {
-        super(modbus, deviceId,
+        super(modbus, deviceId, WadDevType.DI,
             new DeviceProperties(SignalType.Digital, PortType.Input, 8));
-    }
-
-    @Override
-    public WadDevType type() {
-        return WadDevType.DI;
+        this.summary = new WadSummaryDI(this);
     }
 
     @Override
@@ -43,6 +37,7 @@ final public class WAD_DI_BUS extends WadAbstractDevice {
                 new RqInfo(id(), RsParsed.cmdRead,2)
             ).get(1);
     }
+/*
 
     @Override
     public CharSequence summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
@@ -53,4 +48,5 @@ final public class WAD_DI_BUS extends WadAbstractDevice {
     public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         return new WadSummaryDI(this).xmlDir();
     }
+*/
 }

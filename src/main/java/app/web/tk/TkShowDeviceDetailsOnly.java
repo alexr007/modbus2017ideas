@@ -32,7 +32,7 @@ public class TkShowDeviceDetailsOnly implements Take {
             res = new RsPageDevice(
                 "/xsl/device.xsl",
                 request,
-                new XeDirectives( core.dev( "DI1" ).summaryDetailsXml() )
+                new XeDirectives( core.dev( "DI1" ).summaryXml() )
                 //new XeDirectives( core.dev( parsed.device() ).summaryDetailsXml() )
             );
         } catch (Exception e) {

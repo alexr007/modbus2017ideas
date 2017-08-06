@@ -24,49 +24,71 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
 
     @Override
     public Values getWoFailRaw() {
+        return chanNumber()==0
+            ? getMultiple()
+            : getSingle();
+    }
+
+    private Values getMultiple()  {
         try {
-            return chanNumber()==0
-                ? getMultiple()
-                : getSingle();
-        } catch (SerialPortException e) {
-            throw new IllegalArgumentException(e);
+            return
+                new Values.Multiple(
+                    new ArrayFromIntBits(
+                        new RsAnalyzed(
+                            run(builder().cmdReadRegister(0x200D)),
+                            new RqInfo(device().id(), RsParsed.cmdRead, 2)
+                        ).get(1),
+                        8
+                    )
+                );
         } catch (InvalidModBusResponse e) {
+            throw new IllegalArgumentException(e);
+        } catch (SerialPortException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
-        return
-            new Values.Multiple(
-                new ArrayFromIntBits(
+    /*
+    * returns:
+    * 1 - channel is SHORT
+    * 0 - channel is OPEN
+    * 2 - channel is FAIL
+    */
+    private Values getSingle() {
+        try {
+            return
+                new Values.Single(
                     new RsAnalyzed(
-                        run(builder().cmdReadRegister(0x200D)),
+                        run(builder().cmdReadRegister(0x2004+ chanNumber()-1)),
                         new RqInfo(device().id(), RsParsed.cmdRead, 2)
-                    ).get(1),
-                    8
-                )
-            );
+                    ).get(1)
+                );
+        } catch (InvalidModBusResponse e) {
+            throw new IllegalArgumentException(e);
+        } catch (SerialPortException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
-    private Values getSingle() throws SerialPortException, InvalidModBusResponse {
-        return
-            new Values.Single(
-                new RsAnalyzed(
-                    run(builder().cmdReadRegister(0x2004+ chanNumber()-1)),
-                    new RqInfo(device().id(), RsParsed.cmdRead, 2)
-                ).get(1)
-            );
-    }
-
+    /**
+     * this implementation mix Values + Fails
+     * @return
+     */
     @Override
     public Values getRaw() {
-        Values ch_fails = failsRaw();
-        Values ch_values = getWoFailRaw();
-        return new Values.Multiple(
-            IntStream.range(1, ch_fails.count() + 1).boxed()
-                .mapToInt(index -> ch_values.get(index) + 2 * ch_fails.get(index))
-                .toArray()
-        );
+        if (chanNumber()==0) {
+            // multiple
+            Values ch_fails = failsRaw();
+            Values ch_values = getWoFailRaw();
+            return new Values.Multiple(
+                IntStream.range(1, ch_fails.count() + 1).boxed()
+                    .mapToInt(index -> ch_values.get(index) + 2 * ch_fails.get(index))
+                    .toArray()
+            );
+        } else {
+            // single
+            return getSingle();
+        }
     }
 
     @Override

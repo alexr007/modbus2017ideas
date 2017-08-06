@@ -1,11 +1,17 @@
 package jwad.channels;
 
+import jbus.modbus.InvalidModBusFunction;
 import jssc.SerialPortException;
 import jbase.primitives.Word;
 import jbus.modbus.command.MbData;
 import jbus.modbus.command.MbMerged;
 import jbus.modbus.response.*;
+import jwad.chanvalue.ChanValue;
+import jwad.chanvalue.IntFromChanValue;
 import jwad.modules.WadAbstractDevice;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by alexr on 22.01.2017.
@@ -67,6 +73,19 @@ final public class WAD_AO_Channel extends WadAbstractChannel implements WAD_Chan
                 0x200C+ chanNumber()-1,
                 new MbData(new Word(val))
             )
+        );
+    }
+
+    @Override
+    public void set(List<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
+        set(values.stream());
+    }
+
+    @Override
+    public void set(Stream<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
+        set(values.
+            mapToInt(value -> new IntFromChanValue(value).get())
+            .toArray()
         );
     }
 

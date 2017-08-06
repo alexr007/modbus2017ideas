@@ -6,7 +6,15 @@ import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.command.MbData;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
+import jwad.chanvalue.ChanValue;
+import jwad.chanvalue.IntFromChanValue;
+import jwad.chanvalue.TypeChan;
+import jwad.chanvalue.TypeDO;
 import jwad.modules.WadAbstractDevice;
+
+import java.util.List;
+import java.util.function.ToIntFunction;
+import java.util.stream.Stream;
 
 
 /**
@@ -94,10 +102,6 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
         );
     }
 
-    private void onAll() throws SerialPortException {
-        setAll(0xFF);
-    }
-
     @Override
     public void off() throws SerialPortException {
         if (chanNumber()==0) {
@@ -111,10 +115,6 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
             device().builder().cmdWriteRegister(0x2002+ chanNumber()-1,
                 new MbData(new byte[]{0,0}))
         );
-    }
-
-    private void offAll() throws SerialPortException {
-        setAll(0x00);
     }
 
     @Override
@@ -133,11 +133,24 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
         );
     }
 
-    private void setAll(int val) throws SerialPortException {
-        device().run(
-            device().builder().cmdWriteRegister(0x200B,
-                new MbData(new byte[]{0, (byte)val})
-            )
+    private void onAll() throws SerialPortException {
+        setAll(0xFF);
+    }
+
+    private void offAll() throws SerialPortException {
+        setAll(0x00);
+    }
+
+    @Override
+    public void set(List<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
+        set(values.stream());
+    }
+
+    @Override
+    public void set(Stream<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
+        set(values.
+            mapToInt(value -> new IntFromChanValue(value).get())
+            .toArray()
         );
     }
 
@@ -151,10 +164,15 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     private void setAll(int[] val) throws SerialPortException {
+        setAll(new IntBitsFromArray(val).toByte());
+    }
+
+    private void setAll(int val) throws SerialPortException {
         device().run(
             device().builder().cmdWriteRegister(0x200B,
-                new MbData(new byte[]{0, /*(byte)*/new IntBitsFromArray(val).toByte() })
+                new MbData(new byte[]{0, (byte)val})
             )
         );
     }
+
 }

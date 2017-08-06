@@ -1,11 +1,17 @@
 package jwad.channels;
 
+import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.command.MbData;
 import jbus.modbus.command.MbMerged;
 import jbus.modbus.response.*;
 import jbase.primitives.Word;
 import jssc.SerialPortException;
+import jwad.chanvalue.ChanValue;
+import jwad.chanvalue.IntFromChanValue;
 import jwad.modules.WadAbstractDevice;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by alexr on 22.01.2017.
@@ -64,9 +70,22 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
         assert (chanNumber()>0);
         run(
             builder().cmdWriteRegister(
-                0x2010+ chanNumber()-1,
+                0x2010 + chanNumber()-1,
                 new MbData(new Word(val))
             )
+        );
+    }
+
+    @Override
+    public void set(List<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
+        set(values.stream());
+    }
+
+    @Override
+    public void set(Stream<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
+        set(values.
+                mapToInt(value -> new IntFromChanValue(value).get())
+                .toArray()
         );
     }
 
@@ -75,7 +94,7 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
         assert (chanNumber()==0)&&(val.length==device().properties().chanCount());
         run(
             builder().cmdWriteRegister(
-                0x2010+ chanNumber()-1,0x0006,
+                0x2010+ chanNumber(),0x0006,
                 new MbMerged(
                     new Word(val[0]).toBytes(),
                     new Word(val[1]).toBytes(),

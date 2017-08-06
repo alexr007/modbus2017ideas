@@ -1,6 +1,5 @@
 package jwad.modules;
 
-import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.device.DeviceProperties;
 import jbus.modbus.device.PortType;
 import jbus.modbus.device.SignalType;
@@ -11,20 +10,15 @@ import jwad.WadDevType;
 import jwad.channels.WAD_AO_Channel;
 import jwad.channels.WAD_Channel;
 import jwad.summary.WadSummaryAO;
-import org.xembly.Directives;
 
 /**
  * Created by alexr on 22.01.2017.
  */
 final public class WAD_AO_BUS extends WadAbstractDevice {
     public WAD_AO_BUS(ModBus modbus, int deviceId) {
-        super(modbus, deviceId,
+        super(modbus, deviceId, WadDevType.AO,
             new DeviceProperties(SignalType.Analog, PortType.Output, 4));
-    }
-
-    @Override
-    public WadDevType type() {
-        return WadDevType.AO;
+        this.summary = new WadSummaryAO(this);
     }
 
     @Override
@@ -41,6 +35,7 @@ final public class WAD_AO_BUS extends WadAbstractDevice {
         return new WAD_AO_Channel(chan, this);
     }
 
+/*
     @Override
     public CharSequence summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         return new WadSummaryAO(this).txt();
@@ -50,4 +45,5 @@ final public class WAD_AO_BUS extends WadAbstractDevice {
     public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         return new WadSummaryAO(this).xmlDir();
     }
+*/
 }

@@ -11,20 +11,15 @@ import jwad.WadDevType;
 import jwad.channels.WAD_Channel;
 import jwad.channels.WAD_DI14_Channel;
 import jwad.summary.WadSummaryDI;
-import org.xembly.Directives;
 
 /**
  * Created by alexr on 06.02.2017.
  */
 final public class WAD_DI14_BUS extends WadAbstractDevice {
     public WAD_DI14_BUS(ModBus modbus, int deviceId) {
-        super(modbus, deviceId,
+        super(modbus, deviceId, WadDevType.DI14,
             new DeviceProperties(SignalType.Digital, PortType.Input, 15));
-    }
-
-    @Override
-    public WadDevType type() {
-        return WadDevType.DI14;
+        this.summary = new WadSummaryDI(this);
     }
 
     @Override
@@ -36,6 +31,7 @@ final public class WAD_DI14_BUS extends WadAbstractDevice {
     public int temperature() throws SerialPortException, InvalidModBusResponse, InvalidModBusFunction {
         throw new InvalidModBusFunction();
     }
+/*
 
     @Override
     public CharSequence summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
@@ -46,4 +42,5 @@ final public class WAD_DI14_BUS extends WadAbstractDevice {
     public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
         return new WadSummaryDI(this).xmlDir();
     }
+*/
 }

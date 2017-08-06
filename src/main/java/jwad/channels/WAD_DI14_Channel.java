@@ -30,20 +30,13 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
                 ? getMultiple()
                 : getSingle();
         } catch (SerialPortException e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException("ModBusError");
         } catch (InvalidModBusResponse e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException("ModBusError");
         }
     }
 
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
-/*
-        int[] data = new RsAnalyzed(
-                run(builder().cmdReadRegister(0x1FFE)),
-                new RqInfo(device().id(), RsParsed.cmdRead, 2)
-        ).getWoFail();
-//                    (data[0] & 0xFF) << 8 | data[1] & 0xFF,
-*/
         return
             new Values.Multiple(
                 new ArrayFromIntBits(
@@ -73,6 +66,10 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
             );
     }
 
+    /**
+     * this implementation mix Values + Fails
+     * @return
+     */
     @Override
     public Values getRaw() {
         Values ch_fails = failsRaw();

@@ -19,7 +19,7 @@ public class ScadaCore {
             new AppConsoleSpeedTest(args[0]).run();
         } else {
             //SortedSetTest.test33();
-            new ChanValueTest().test3();
+            //new ChanValueTest().test3();
             //new rxTest1().test0();
 
             BIOcore core = new BIOcore(args[0]);

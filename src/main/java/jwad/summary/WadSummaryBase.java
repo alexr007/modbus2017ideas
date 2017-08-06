@@ -1,11 +1,13 @@
 package jwad.summary;
 
+import com.google.common.base.Joiner;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
 import jwad.modules.WadAbstractDevice;
 import org.xembly.Directives;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by alexr on 28.04.2017.
@@ -31,11 +33,9 @@ abstract public class WadSummaryBase implements WadSummary {
     }
 
     public String txt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        StringBuilder sb = new StringBuilder("details:\n");
-        map().forEach((k, v) ->
-            sb.append(String.format("Channel %2d: %s\n", k, v.toString()))
-        );
-        return sb.toString();
-
+        return String.format("details:\n%s",
+            map().entrySet().stream()
+                .map(ent->String.format("Channel %2d: %s\n", ent.getKey(), ent.getValue()))
+                .collect(Collectors.joining()));
     }
 }
