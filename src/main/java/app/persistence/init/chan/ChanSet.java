@@ -2,24 +2,15 @@ package app.persistence.init.chan;
 
 import constants.ChanName;
 import jbase.hex.HexFromByte;
-import jbus.modbus.InvalidModBusFunction;
-import jssc.SerialPortException;
 import jwad.WadDevType;
-import jwad.channels.WAD_Channel;
 import jwad.chanvalue.ChanValue;
-import jwad.chanvalue.IntFromChanValue;
-import jwad.chanvalue.TypeDO;
 import jwad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
 
 import java.util.*;
-import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static jwad.WadDevType.*;
 
@@ -89,17 +80,13 @@ public class ChanSet {
             );
     }
 
-    private WAD_Channel chanNameToChannel(ChanName key) {
-        return modBusChannels.channelMap().get(key);
-    }
-
     /**
      * converts: Set<ChanName> to Set<Dev, Set<Channels>>
      * @return Map<Integer, Set<Integer>> mean Map<Dev, Set<Channels>>
      */
     public Map<Integer, Set<Integer>> getMapDeviceChanList () {
         return chanSet.stream()
-            .map(this::chanNameToChannel) // map chanId -> channel
+            .map(ent->modBusChannels.channelMap().get(ent)) // map chanId -> channel
             .collect(
                 Collectors.groupingBy(chan -> chan.device().id(),
                     Collectors.mapping(chan -> chan.chanNumber(),
@@ -143,7 +130,7 @@ public class ChanSet {
     /**
      * check if selected device available to write
      */
-    private boolean checkIsDevWritable2(WadAbstractDevice dev) {
+    private boolean checkIsDevWritable(WadAbstractDevice dev) {
         if (!wadWritable.contains(dev.type())) {
             throw new IllegalArgumentException(String.format("Non writable device selected to write: %s, modbus id:%s",
                 dev.type(), new HexFromByte(dev.id())));
@@ -157,10 +144,6 @@ public class ChanSet {
         return modBusChannels.channelMap().get(chanName).device();
     }
 
-    private WadAbstractDevice mapEntryToDevId(Map.Entry<ChanName, ChanValue> ent) {
-        return modBusChannels.channelMap().get(ent.getKey()).device();
-    }
-
     /**
      * Writes EnumMap<ChanName, ChanValue> to device
      * @param mapToWrite
@@ -172,7 +155,7 @@ public class ChanSet {
             .map(this::chanNameToDevId)
             .distinct()
             // check devices able to write or throw the exception
-            .filter(this::checkIsDevWritable2)
+            .filter(this::checkIsDevWritable)
             .collect(Collectors.toMap(
                 dev -> dev.id(),
                 dev -> dev
@@ -204,16 +187,16 @@ public class ChanSet {
                     int mapSize = deviceEntry.size();
                     if (mapSize==1) {
                         // one channel write
-                        System.out.println("writting 1 channel");
+                        System.out.println("writing 1 channel");
                         Map.Entry<Integer, ChanValue> entry = deviceEntry.entrySet().stream().findFirst().get();
                         dev.channel(entry.getKey()).set(entry.getValue());
                         // one channel write - done
                     } else if (mapSize==dev.properties().chanCount()) {
                         // write all channels
-                        System.out.println(String.format("writting ALL %s channels", dev.properties().chanCount()));
+                        System.out.println(String.format("writing ALL %s channels", dev.properties().chanCount()));
                     } else {
                         // M from N channel write
-                        System.out.println(String.format("writting %s of %s channels", mapSize, dev.properties().chanCount()));
+                        System.out.println(String.format("writing %s of %s channels", mapSize, dev.properties().chanCount()));
                         // read all channels
                         // replace new channels
                         // write all channels
@@ -222,7 +205,10 @@ public class ChanSet {
             });
     }
 
-    public Map<ChanName, Integer> values_v0_work_ok() {
+    /**
+     * read version for emulate read
+     */
+    public Map<ChanName, Integer> values_v0_work_ok_with () {
         Map<Integer, WadAbstractDevice> devMap = devMap();
         Set<Pair<Integer, Integer>> setPairDC = setPairDC();
         // Map<Dev, Set<Channels>>
@@ -230,7 +216,7 @@ public class ChanSet {
             .collect(Collectors.toMap(
                 key -> key,
                 // this is real reading
-                //key -> devMap.bytes(key).channel(0).bytes().list())
+                //key -> devMap.get(key).channel(0).get().list())
                 // this is fake reader
                 key -> IntStream.rangeClosed(1, devMap.get(key).properties().chanCount()).boxed().collect(Collectors.toList())
             ))
@@ -264,15 +250,13 @@ public class ChanSet {
     public Map<ChanName, ChanValue> values() {
         Map<Integer, WadAbstractDevice> devMap = devMap();
         Set<Pair<Integer, Integer>> setPairDC = setPairDC();
-
-            // Map<Dev, Set<Channels>>
-        return
-        getMapDeviceChanList().keySet().stream() // Set<Dev>
+        return getMapDeviceChanList().keySet().stream() // Set<Dev>
             .collect(Collectors.toMap(
                 key -> key,
                 // this is real reading
                 key -> devMap.get(key).channel(0).get().list()
                 // this is fake reader
+                // TODO написать FAKE READER
                 //key -> IntStream.rangeClosed(1, devMap.getWoFail(key).properties().chanCount()).boxed().collect(Collectors.toList())
             ))
             // Map<Dev, List<Values>>
@@ -284,12 +268,10 @@ public class ChanSet {
                     new Pair<>(ent.getKey(), index + 1), //
                     ent.getValue().get(index)
                 ))
-                // Map.Entry<Pair<>, Value> - this is filter to exclude non requested channels from device
-                .filter(item -> setPairDC.contains(item.getKey()))
-                // Map<Name, Value>
+                .filter(item -> setPairDC.contains(item.getKey())) // filter to exclude non requested channels from device
                 .collect(Collectors.toMap(
-                    pair -> modBusChannels.getName(pair.getKey()),
-                    Map.Entry::getValue
+                    pair -> modBusChannels.getName(pair.getKey()), // name
+                    Map.Entry::getValue // value
                 ))
             )
             .flatMap(map -> map.entrySet().stream())
