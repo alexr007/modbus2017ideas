@@ -3,7 +3,6 @@ package jwad.channels;
 import jbase.arr.ArrayFromIntBits;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
-import jwad.chanvalue.ChanValue;
 import jwad.modules.WadAbstractDevice;
 
 /**
@@ -16,9 +15,9 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public Values getRaw() {
+    public Values getWoFailRaw() {
         try {
-            return channel()==0
+            return chanNumber()==0
                 ? getMultiple()
                 : getSingle();
         } catch (SerialPortException e) {
@@ -44,7 +43,7 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
         return
             new Values.Single(
                 new WordsFromBytes(new RsAnalyzed(
-                    run(builder().cmdReadRegister(0x100B+channel()-1)),
+                    run(builder().cmdReadRegister(0x100B+ chanNumber()-1)),
                     new RqInfo(device().id(), RsParsed.cmdRead, 2)
                 ))
             );
@@ -56,13 +55,13 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
      * value 0 mean OK
      */
     @Override
-    public Values fails() throws InvalidModBusResponse, SerialPortException {
-        return channel()==0
+    public Values failsRaw() throws InvalidModBusResponse, SerialPortException {
+        return chanNumber()==0
             ? new Values.Multiple(
                 new ArrayFromIntBits((~getFailAll())&0b1111,4)
         )
             : new Values.Single(
-                (~getFailAll()) >> (channel()-1) & 0b1
+                (~getFailAll()) >> (chanNumber()-1) & 0b1
         );
     }
 

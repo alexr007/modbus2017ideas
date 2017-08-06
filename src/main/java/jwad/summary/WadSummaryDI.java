@@ -21,7 +21,7 @@ final public class WadSummaryDI extends WadSummaryBase {
 
     //@Override
     protected Map<Integer, ValuePresented> map_OLD() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        Values ch_fails = device.channel(0).fails();
+        Values ch_fails = device.channel(0).failsRaw();
         Values ch_values = device.channel(0).getRaw();
         return new HashMap<Integer, ValuePresented>() {{
             for (int key=1; key<=ch_fails.count(); key++) {
@@ -32,7 +32,7 @@ final public class WadSummaryDI extends WadSummaryBase {
 
     @Override
     protected Map<Integer, ValuePresented> map() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        Values ch_fails = device.channel(0).fails();
+        Values ch_fails = device.channel(0).failsRaw();
         Values ch_values = device.channel(0).getRaw();
         return IntStream.range(1, ch_fails.count() + 1).boxed()
             .collect(Collectors.toMap(

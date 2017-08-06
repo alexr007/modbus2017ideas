@@ -14,49 +14,43 @@ import java.util.stream.Stream;
 
 /**
  * Created by alexr on 21.01.2017.
+ * Interface to represent WAD_BUS Device channel
  */
 public interface WAD_Channel {
     /**
      * single channel / multiple channels
-     * this query make 1 query / response for All Channel types AI, DI, AO, DO
-     * only DATA retrieved
-     *
+     * Values mapped to ValuesMapped<ChanValue>
+     * retrieved Data + Fail Signal (if available) in one variable
+     * runs 2 query / response for DI, DI14 Channel types (see Values getRaw())
+     * runs 1 query / response for AIK, DOS, AO, AO6 Channel types
      * already implemented in WadAbstractChannel
-     * not need to be implement in concrete class WAD-xxx-BUS
      */
     ValuesMapped<ChanValue> get();
     /**
      * single channel / multiple channels
-     * this query make 1 query / response for All Channel types AI, DI, AO, DO
-     * only DATA retrieved
-     *
-     * present as abstract in WadAbstractChannel
-     * should be implemented in concrete class WAD-xxx-BUS
+     * by default call getWoFailRaw()
+     * need to implement if channel supports Fail Signal (DI, DI14)
      */
     Values getRaw();
     /**
      * single channel / multiple channels
-     * this query make 2 query / response for DI, DI14, AIK Channel types
-     * this query make 1 query / response for DOS, AO, AO6 Channel types
-     * retrieved DATA and FAIL status (if available)
-     *
-     * default implementation here
-     * need to be implement only in WAD-DI-BUS, WAD-DI14-BUS
-     * where we want to hold Signal+Fail status in one Variable
+     * Values mapped to ValuesMapped<ChanValue>
+     * retrieved Data ONLY (w/o Fail Signal)
+     * runs 1 query / response for all channel types
+     * already implemented in WadAbstractChannel
      */
-    ValuesMapped<ChanValue> getWFails();
-    /**
-     * if you want to use getWFails
-     * you just need to override getWFailsRaw
-     */
-    Values getWFailsRaw();
+    ValuesMapped<ChanValue> getWoFail();
     /**
      * single channel / multiple channels
-     * this query make 1 query / response for DI, DI14 Channel types
-     * all other Channel types just call bytes()
+     * must implement for any type concrete channel
+     */
+    Values getWoFailRaw();
+    /**
+     * single channel / multiple channels
+     * runs 1 query / response for DI, DI14 channel types
      * only FAIL status retrieved
      */
-    default Values fails() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
+    default Values failsRaw() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
         throw new InvalidModBusFunction();
     }
     /**
@@ -81,14 +75,14 @@ public interface WAD_Channel {
         throw new InvalidModBusFunction();
     }
     /**
-     * single channel only
+     * single / multiple (?) channels
      * Channel types: DOS
      */
     default void on() throws InvalidModBusFunction, SerialPortException {
         throw new InvalidModBusFunction();
     }
     /**
-     * single channel only
+     * single / multiple (?) channels
      * Channel types: DOS
      */
     default void off() throws InvalidModBusFunction, SerialPortException {
@@ -122,7 +116,16 @@ public interface WAD_Channel {
     default void set(Stream<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
         throw new InvalidModBusFunction();
     }
+    /**
+     * @return device type :AIK, AO, AO6, DI, DI14, DOS
+     */
     WadDevType type();
-    int channel();
+    /**
+     * @return channel number integer 1..chanCount
+     */
+    int chanNumber();
+    /**
+     * @return link to parent device
+     */
     WadAbstractDevice device();
 }

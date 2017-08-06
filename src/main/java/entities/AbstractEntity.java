@@ -15,7 +15,7 @@ public class AbstractEntity {
     }
 /*
 
-    public boolean fails() throws InvalidEntityFunction, InvalidModBusResponse, ModBusInvalidFunction, SerialPortException {
+    public boolean failsRaw() throws InvalidEntityFunction, InvalidModBusResponse, ModBusInvalidFunction, SerialPortException {
         throw new InvalidEntityFunction();
     };
     public boolean opened() throws InvalidEntityFunction, InvalidModBusResponse, SerialPortException, ModBusInvalidFunction {

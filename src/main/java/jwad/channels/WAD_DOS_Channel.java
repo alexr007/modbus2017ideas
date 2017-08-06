@@ -25,9 +25,9 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public Values getRaw() {
+    public Values getWoFailRaw() {
         try {
-            return channel()==0
+            return chanNumber()==0
                 ? getMultiple()
                 : getSingle();
         } catch (SerialPortException e) {
@@ -53,34 +53,34 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
         return
             new Values.Single(
                 new RsAnalyzed(
-                    device().run(device().builder().cmdReadRegister(0x2002+channel()-1)),
+                    device().run(device().builder().cmdReadRegister(0x2002+ chanNumber()-1)),
                     new RqInfo(device().id(),RsParsed.cmdRead,2)
                 ).get(1)
             );
     }
 
     @Override
-    public Values fails() throws InvalidModBusFunction {
+    public Values failsRaw() throws InvalidModBusFunction {
         throw new InvalidModBusFunction();
     }
 
     @Override
     public boolean opened() throws InvalidModBusResponse, SerialPortException {
         // support only SINGLE port
-        assert channel()>0;
-        return (getRaw().get()==0);
+        assert chanNumber()>0;
+        return (getWoFailRaw().get()==0);
     }
 
     @Override
     public boolean closed() throws InvalidModBusResponse, SerialPortException {
         // support only SINGLE port
-        assert channel()>0;
-        return (getRaw().get()==1);
+        assert chanNumber()>0;
+        return (getWoFailRaw().get()==1);
     }
 
     @Override
     public void on() throws SerialPortException {
-        if (channel()==0) {
+        if (chanNumber()==0) {
             onAll();
         } else
             onSingle();
@@ -88,7 +88,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
 
     private void onSingle() throws SerialPortException {
         device().run(
-            device().builder().cmdWriteRegister(0x2002+channel()-1,
+            device().builder().cmdWriteRegister(0x2002+ chanNumber()-1,
                 new MbData(new byte[]{0,1})
             )
         );
@@ -100,7 +100,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
 
     @Override
     public void off() throws SerialPortException {
-        if (channel()==0) {
+        if (chanNumber()==0) {
             offAll();
         } else
             offSingle();
@@ -108,7 +108,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
 
     private void offSingle() throws SerialPortException {
         device().run(
-            device().builder().cmdWriteRegister(0x2002+channel()-1,
+            device().builder().cmdWriteRegister(0x2002+ chanNumber()-1,
                 new MbData(new byte[]{0,0}))
         );
     }
@@ -119,7 +119,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
 
     @Override
     public void set(int val) throws SerialPortException {
-        if (channel()==0) {
+        if (chanNumber()==0) {
             setAll(val);
         } else
             setSingle(val);
@@ -127,7 +127,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
 
     private void setSingle(int val) throws SerialPortException {
         run(
-            builder().cmdWriteRegister(0x2002+channel()-1,
+            builder().cmdWriteRegister(0x2002+ chanNumber()-1,
                 new MbData(new byte[]{0, (byte) (val==0?0:1)})
             )
         );
@@ -144,8 +144,8 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     @Override
     public void set(int[] val) throws SerialPortException {
         // only if channel = 0
-        assert (channel()==0);
-        if (channel()==0) {
+        assert (chanNumber()==0);
+        if (chanNumber()==0) {
             setAll(val);
         }
     }

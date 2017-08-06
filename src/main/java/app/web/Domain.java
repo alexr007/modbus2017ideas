@@ -10,27 +10,27 @@ public interface Domain {
     /**
      * Owner of it.
      * @return The owner's GitHub handle
-     * @throws IOException If fails
+     * @throws IOException If failsRaw
      */
     String owner() throws IOException;
 
     /**
      * Name.
      * @return The name
-     * @throws IOException If fails
+     * @throws IOException If failsRaw
      */
     String name() throws IOException;
 
     /**
      * Delete it.
-     * @throws IOException If fails
+     * @throws IOException If failsRaw
      */
     void delete() throws IOException;
 
     /**
      * Usage.
      * @return Usage
-     * @throws IOException If fails
+     * @throws IOException If failsRaw
      */
     Usage usage() throws IOException;
 

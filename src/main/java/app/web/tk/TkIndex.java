@@ -59,7 +59,7 @@ final class TkIndex implements Take {
      * Convert event to Xembly.
      * @param domain The event
      * @return Xembly
-     * @throws IOException If fails
+     * @throws IOException If failsRaw
      */
     private static XeSource source(final Triplet triplet) throws IOException {
         return new XeDirectives(

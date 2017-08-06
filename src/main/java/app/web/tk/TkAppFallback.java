@@ -67,7 +67,7 @@ public class TkAppFallback extends TkWrap {
      * Make fatal error page.
      * @param req Request
      * @return Response
-     * @throws IOException If fails
+     * @throws IOException If failsRaw
      */
     private static Response fatal(final RqFallback req) throws IOException {
         return new RsWithStatus(

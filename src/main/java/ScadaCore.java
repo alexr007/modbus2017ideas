@@ -23,9 +23,8 @@ public class ScadaCore {
             //new rxTest1().test0();
 
             BIOcore core = new BIOcore(args[0]);
-            ChanSet cs = new ChanSet(core.channels(), EnumSet.allOf(ChanName.class));
-
 /*
+            ChanSet cs = new ChanSet(core.channels(), EnumSet.allOf(ChanName.class));
             System.out.println( cs.getAllChannelFromSameDevice(ChanName.SM_AIR1) );
             System.out.println( cs.getAllChannelFromSameDevice(ChanName.SM_GATE_4) );
             System.out.println( cs.getDeviceSet() );
@@ -75,6 +74,7 @@ public class ScadaCore {
                 System.out.println("All threads finished");
             }};
 */
+            core.finish();
         }
     }
     // todo timeout while send packed to module;

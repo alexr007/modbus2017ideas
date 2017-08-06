@@ -12,7 +12,6 @@ import org.javatuples.Pair;
 import org.javatuples.Quartet;
 
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -63,7 +62,7 @@ public final class ModBusChannels {
         this.channelMap = channels;
         this.channelMap.forEach(
             (chanName, wad_channel) -> {
-                Pair<Integer, Integer> pair = new Pair<>(wad_channel.device().id(), wad_channel.channel());
+                Pair<Integer, Integer> pair = new Pair<>(wad_channel.device().id(), wad_channel.chanNumber());
                 // fill the channelMapByDevChan
                 channelMapByDevChan.put(pair, wad_channel);
                 // fill the channelMapPairChan
@@ -106,7 +105,7 @@ public final class ModBusChannels {
 
     public Pair<Integer, Integer> getDC(ChanName channelName) {
         WAD_Channel channel = get(channelName);
-        return new Pair<>(channel.device().id(),channel.channel());
+        return new Pair<>(channel.device().id(),channel.chanNumber());
     }
 
     /** try to catch Exception if possible */
@@ -171,7 +170,7 @@ public final class ModBusChannels {
     public ChanName getNameVerbose(WAD_Channel channel) throws Exception {
         if (!channelMapChanName.containsKey(channel)) {
             throw new Exception(String.format(ERROR_GET,
-                String.format("dev:%s, chan:%d", new HexFromByte(channel.device().id()).toString(), channel.channel())));
+                String.format("dev:%s, chan:%d", new HexFromByte(channel.device().id()).toString(), channel.chanNumber())));
         }
         return channelMapChanName.get(channel);
     }
@@ -218,7 +217,7 @@ public final class ModBusChannels {
             channelMap.entrySet().stream()
                 .map(ent -> String.format("chan.name: %-14s, chan.id:%2s, dev.name: %s, dev.prop:%s\n",
                     ent.getKey().toString(), // enum key from HashMap
-                    ent.getValue().channel(), // chan id
+                    ent.getValue().chanNumber(), // chan id
                     ent.getValue().device().toString(), // dev name(AIK, DOS), modbus id
                     ent.getValue().device().properties().toString() // dev.prop: signalType, portType, chanCount
                 ))
@@ -253,7 +252,7 @@ public final class ModBusChannels {
             list.add(new Quartet<ChanName, WadDevType, Integer, CharSequence>(
                 key,
                 chan.type(),
-                chan.channel(),
+                chan.chanNumber(),
                 new HexFromByte(chan.device().id()).toString()
             ));
         });

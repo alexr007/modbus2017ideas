@@ -5,8 +5,6 @@ import jbus.modbus.command.MbMerged;
 import jbus.modbus.response.*;
 import jbase.primitives.Word;
 import jssc.SerialPortException;
-import jwad.chanvalue.ChanValue;
-import jwad.chanvalue.ChanValueFromInt;
 import jwad.modules.WadAbstractDevice;
 
 /**
@@ -25,9 +23,9 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public Values getRaw() {
+    public Values getWoFailRaw() {
         try {
-            return channel()==0
+            return chanNumber()==0
                 ? getMultiple()
                 : getSingle();
         } catch (SerialPortException e) {
@@ -54,7 +52,7 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
             new Values.Single(
                 new WordsFromBytes(
                     new RsAnalyzed(
-                        run(builder().cmdReadRegister(0x2010+channel()-1)),
+                        run(builder().cmdReadRegister(0x2010+ chanNumber()-1)),
                         new RqInfo(device().id(), RsParsed.cmdRead, 2)
                     )
                 )
@@ -63,10 +61,10 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
 
     @Override
     public void set(int val) throws SerialPortException {
-        assert (channel()>0);
+        assert (chanNumber()>0);
         run(
             builder().cmdWriteRegister(
-                0x2010+channel()-1,
+                0x2010+ chanNumber()-1,
                 new MbData(new Word(val))
             )
         );
@@ -74,10 +72,10 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
 
     @Override
     public void set(int[] val) throws SerialPortException {
-        assert (channel()==0)&&(val.length==device().properties().chanCount());
+        assert (chanNumber()==0)&&(val.length==device().properties().chanCount());
         run(
             builder().cmdWriteRegister(
-                0x2010+channel()-1,0x0006,
+                0x2010+ chanNumber()-1,0x0006,
                 new MbMerged(
                     new Word(val[0]).toBytes(),
                     new Word(val[1]).toBytes(),

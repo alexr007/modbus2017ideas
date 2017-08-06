@@ -9,7 +9,7 @@ import jssc.SerialPortException;
  *
  */
 public interface ISensorDigital {
-    // cable fails
+    // cable failsRaw
     boolean fail() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
     // normal state
     boolean opened() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;

@@ -6,11 +6,8 @@ import jwad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class ChanSet {
     private final ModBusChannels modBusChannels;
@@ -81,7 +78,7 @@ public class ChanSet {
             .map(key -> modBusChannels.channelMap().get(key)) // map chanId -> channel
             .collect(
                 Collectors.groupingBy(chan -> chan.device().id(),
-                    Collectors.mapping(chan -> chan.channel(),
+                    Collectors.mapping(chan -> chan.chanNumber(),
                         Collectors.toSet())
                 )
             );
@@ -164,9 +161,9 @@ public class ChanSet {
             .collect(Collectors.toMap(
                 key -> key,
                 // this is real reading
-                key -> devMap.get(key).channel(0).getWFails().list()
+                key -> devMap.get(key).channel(0).get().list()
                 // this is fake reader
-                //key -> IntStream.rangeClosed(1, devMap.get(key).properties().chanCount()).boxed().collect(Collectors.toList())
+                //key -> IntStream.rangeClosed(1, devMap.getWoFail(key).properties().chanCount()).boxed().collect(Collectors.toList())
             ))
             // Map<Dev, List<Values>>
             .entrySet()

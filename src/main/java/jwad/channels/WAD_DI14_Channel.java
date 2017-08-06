@@ -4,12 +4,8 @@ import jbase.arr.ArrayFromIntBits;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.*;
 import jssc.SerialPortException;
-import jwad.chanvalue.ChanValue;
 import jwad.modules.WadAbstractDevice;
-import jwad.summary.ValuePresentedDI;
 
-import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -28,9 +24,9 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
     }
 
     @Override
-    public Values getRaw()  {
+    public Values getWoFailRaw()  {
         try {
-            return channel()==0
+            return chanNumber()==0
                 ? getMultiple()
                 : getSingle();
         } catch (SerialPortException e) {
@@ -45,7 +41,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
         int[] data = new RsAnalyzed(
                 run(builder().cmdReadRegister(0x1FFE)),
                 new RqInfo(device().id(), RsParsed.cmdRead, 2)
-        ).get();
+        ).getWoFail();
 //                    (data[0] & 0xFF) << 8 | data[1] & 0xFF,
 */
         return
@@ -71,16 +67,16 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
         return
             new Values.Single(
                 new RsAnalyzed(
-                    run(builder().cmdReadRegister(0x2001+channel()-1)),
+                    run(builder().cmdReadRegister(0x2001+ chanNumber()-1)),
                     new RqInfo(device().id(), RsParsed.cmdRead, 2)
                 ).get(1)
             );
     }
 
     @Override
-    public Values getWFailsRaw() {
-        Values ch_fails = fails();
-        Values ch_values = getRaw();
+    public Values getRaw() {
+        Values ch_fails = failsRaw();
+        Values ch_values = getWoFailRaw();
         return new Values.Multiple(
             IntStream.range(1, ch_fails.count() + 1).boxed()
                 .mapToInt(index -> ch_values.get(index) + 2 * ch_fails.get(index))
@@ -96,9 +92,9 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
      * 0 - все ОК
      *
      */
-    public Values fails() {
+    public Values failsRaw() {
         try {
-            return channel()==0
+            return chanNumber()==0
                 ? failMultiple()
                 : failSingle();
         } catch (InvalidModBusResponse e) {
@@ -118,7 +114,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
     private Values failSingle() throws InvalidModBusResponse, SerialPortException {
         return
             new Values.Single(
-                (failAll()>>(channel()-1))&0b1
+                (failAll()>>(chanNumber()-1))&0b1
             );
     }
 
@@ -132,14 +128,14 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
 
     @Override
     public boolean opened() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        return channel()==0
+        return chanNumber()==0
             ? (getMultiple().get()&0b0111111111111111)==0x0
             : getSingle().get()==0;
     }
 
     @Override
     public boolean closed() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        return channel()==0
+        return chanNumber()==0
             ? (getMultiple().get()&0b0111111111111111)==0b0111111111111111
             : getSingle().get()==1;
     }

@@ -17,9 +17,9 @@ import jwad.modules.WadAbstractDevice;
  */
 public abstract class WadAbstractChannel {
     /**
-     * channel ID on ModBus device
+     * channel number on ModBus device
      */
-    private final int channelId;
+    private final int chanNumber;
     /**
      * parent ModBus device for current channel
      */
@@ -42,7 +42,7 @@ public abstract class WadAbstractChannel {
             throw new IllegalArgumentException(
                 String.format("channel must be 0..%s, given:%s", device.properties().chanCount(), channel));
         }
-        this.channelId = channel;
+        this.chanNumber = channel;
         this.device = device;
         this.mapper = new ChanValueFromInt(this);
     }
@@ -51,27 +51,49 @@ public abstract class WadAbstractChannel {
         return device.type();
     }
 
-    public int channel() {
-        return channelId;
+    public int chanNumber() {
+        return chanNumber;
     }
 
     public WadAbstractDevice device() {
         return device;
     }
 
-    public abstract Values getRaw();
-
-    public Values getWFailsRaw() {
-        return getRaw();
-    };
-
+    /**
+     * get value with Fail Signal mapped to
+     * ValuesMapped<ChanValue>
+     */
     public  ValuesMapped<ChanValue> get() {
         return new ValuesMapped<ChanValue>(getRaw(), mapper);
     }
 
-    public  ValuesMapped<ChanValue> getWFails() {
-        return new ValuesMapped<ChanValue>(getWFailsRaw(), mapper);
+    /**
+     * get value with Fail Signal
+     *
+     * single channel / multiple channels
+     * this query make 1 query / response for All Channel types AI, DI, AO, DO
+     * only DATA retrieved
+     *
+     * present as abstract in WadAbstractChannel
+     * should be implemented in concrete class WAD-xxx-BUS
+     */
+    public Values getRaw() {
+        return getWoFailRaw();
     }
+
+    /**
+     * get clean value without Fail Signal mapped to
+     * ValuesMapped<ChanValue>
+     */
+    public  ValuesMapped<ChanValue> getWoFail() {
+        return new ValuesMapped<ChanValue>(getWoFailRaw(), mapper);
+    }
+
+    /**
+     * get clean value without Fail Signal
+     * must me implemented in all concrete classes
+     */
+    public abstract Values getWoFailRaw();
 
     protected ModBusRequestBuilder builder() {
         return device.builder();
@@ -83,13 +105,13 @@ public abstract class WadAbstractChannel {
 
     @Override
     public String toString() {
-        return String.format("Channel: id:%2s, Device: %s ",channel(),device());
+        return String.format("Channel: id:%2s, Device: %s ", chanNumber(),device());
     }
 
     @Override
     public boolean equals(Object obj) {
         return obj instanceof WadAbstractChannel
-            && this.channelId == WadAbstractChannel.class.cast(obj).channelId
+            && this.chanNumber == WadAbstractChannel.class.cast(obj).chanNumber
             && this.device.equals(WadAbstractChannel.class.cast(obj).device);
     }
 }
