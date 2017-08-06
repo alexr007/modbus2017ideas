@@ -6,6 +6,7 @@ import jbus.modbus.response.Values;
 import jbus.modbus.response.ValuesMapped;
 import jssc.SerialPortException;
 import jwad.chanvalue.ChanValue;
+import jwad.chanvalue.IntFromChanValue;
 import jwad.modules.WadAbstractDevice;
 import jwad.WadDevType;
 
@@ -92,8 +93,14 @@ public interface WAD_Channel {
      * single channel only
      * Channel types: AO, AO6, DOS
      */
-    default void set(int val) throws InvalidModBusFunction, SerialPortException {
-        throw new InvalidModBusFunction();
+    default void set(ChanValue val) {
+        throw new IllegalArgumentException("Not implemented");
+    }
+    default void set(IntFromChanValue val) {
+        throw new IllegalArgumentException("Not implemented");
+    }
+    default void set(int val) {
+        throw new IllegalArgumentException("Not implemented");
     }
     /**
      * multiple channels: int[]

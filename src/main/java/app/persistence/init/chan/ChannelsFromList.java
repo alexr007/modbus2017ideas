@@ -33,21 +33,17 @@ public class ChannelsFromList implements EnumMapFrom<ChanName, WAD_Channel> {
                 // pair.getValue0() - device Name
                 // pair.getValue1() - chanlist
                 pair.getValue1().list().forEach(
-                        (Pair<ChanName, Integer> chanItem) -> {
-                            // iteration by each pair <chan_name, chan_id>
-                            // chanItem.getValue0() - chan_name
-                            // chanItem.getValue1() - chan_id
-                            try {
-                                map.put(
-                                    chanItem.getValue0(),
-                                    devices.get(pair.getValue0())
-                                        .channel(chanItem.getValue1())
-                                );
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    );
+                    (Pair<ChanName, Integer> chanItem) -> {
+                        // iteration by each pair <chan_name, chan_id>
+                        // chanItem.getValue0() - chan_name
+                        // chanItem.getValue1() - chan_id
+                        map.put(
+                            chanItem.getValue0(),
+                            devices.get(pair.getValue0())
+                                .channel(chanItem.getValue1())
+                        );
+                    }
+                );
             }
         );
         return map;

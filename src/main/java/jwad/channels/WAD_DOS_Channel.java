@@ -118,7 +118,25 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public void set(int val) throws SerialPortException {
+    public void set(ChanValue val) {
+        set(new IntFromChanValue(val));
+    }
+
+    @Override
+    public void set(IntFromChanValue val) {
+        set(val.get());
+    }
+
+    @Override
+    public void set(int val) {
+        try {
+            setUnSafe(val);
+        } catch (SerialPortException e) {
+            throw new IllegalArgumentException("ModBus Error Happens");
+        }
+    }
+
+    public void setUnSafe(int val) throws SerialPortException {
         if (chanNumber()==0) {
             setAll(val);
         } else

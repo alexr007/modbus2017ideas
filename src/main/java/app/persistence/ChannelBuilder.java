@@ -193,8 +193,8 @@ public class ChannelBuilder {
                     )),
                 new Pair<>(DOS1,
                     new ChannelList(
-                        new Pair<>(R1, n1),
-                        new Pair<>(R2, n2),
+                        new Pair<>(R1, n2),
+                        new Pair<>(R2, n1),
                         new Pair<>(R3, n3),
                         new Pair<>(R4, n4),
                         new Pair<>(R5, n5),

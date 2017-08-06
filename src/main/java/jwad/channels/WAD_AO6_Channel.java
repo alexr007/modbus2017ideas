@@ -66,7 +66,15 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public void set(int val) throws SerialPortException {
+    public void set(int val) {
+        try {
+            setUnSafe(val);
+        } catch (SerialPortException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setUnSafe(int val) throws SerialPortException {
         assert (chanNumber()>0);
         run(
             builder().cmdWriteRegister(

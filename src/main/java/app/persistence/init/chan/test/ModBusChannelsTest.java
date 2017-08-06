@@ -9,6 +9,7 @@ import jssc.SerialPortException;
 import jwad.channels.WAD_Channel;
 import jwad.chanvalue.ChanValue;
 import jwad.chanvalue.IntFromChanValue;
+import jwad.chanvalue.TypeDI;
 import jwad.chanvalue.TypeDO;
 import org.javatuples.Pair;
 import org.takes.rs.xe.XeDirectives;
@@ -72,7 +73,7 @@ public class ModBusChannelsTest {
         System.out.println(
 //            new ChanSet(core.channels(), EnumSet.range(ChanName.R1,ChanName.R8)).values()
 //              new ChanSet(core.channels(), EnumSet.range(ChanName.V10_1,ChanName.V10_3)).values()
-            new ChanSet(core.channels(), EnumSet.range(ChanName.DC1,ChanName.DC15)).values()
+            new ChanSet(core.channels(), EnumSet.range(ChanName.R1,ChanName.R8)).values()
         );
         System.out.println(
             core.dev(DevName.DOS1).summaryTxt()
@@ -84,12 +85,20 @@ public class ModBusChannelsTest {
         );
 */
         WAD_Channel ch = core.dev(DevName.DOS1).channel(0);
+
         EnumMap<ChanName, ChanValue> wr = new EnumMap<>(ChanName.class);
-        wr.put(ChanName.R1, ChanValue.DO(TypeDO.ON));
+        wr.put(ChanName.R4, ChanValue.DO(TypeDO.OFF));
+/*
+        wr.put(ChanName.R1, ChanValue.DO(TypeDO.OFF));
+        wr.put(ChanName.R8, ChanValue.DO(TypeDO.ON));
         wr.put(ChanName.R2, ChanValue.DO(TypeDO.OFF));
         wr.put(ChanName.R3, ChanValue.DO(TypeDO.ON));
-        wr.put(ChanName.R4, ChanValue.DO(TypeDO.OFF));
-        new ChanSet(core.channels(), EnumSet.range(ChanName.R1,ChanName.R4)).write(wr);
+        wr.put(ChanName.R5, ChanValue.DO(TypeDO.ON));
+        wr.put(ChanName.R6, ChanValue.DO(TypeDO.ON));
+        wr.put(ChanName.R7, ChanValue.DO(TypeDO.ON));
+*/
+        //wr.put(ChanName.DC1, ChanValue.DI(TypeDI.OPENED));
+        new ChanSet(core.channels()).write(wr);
 /*
         new ChanSet(core.channels(), wr).write(wr);
         new ChanSet(core.channels(), EnumSet.range(ChanName.R1,ChanName.R1)).write(wr);
