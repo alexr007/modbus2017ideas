@@ -267,7 +267,7 @@ public class ChanSet {
                 // this is real reading
                 key -> devMap.get(key).channel(0).get().list()
                 // this is fake reader
-                // TODO написать FAKE READER
+                // TODO написать правильный FAKE READER соответственно каждому типу устройства
                 //key -> IntStream.rangeClosed(1, devMap.getWoFail(key).properties().chanCount()).boxed().collect(Collectors.toList())
             ))
             // Map<Dev, List<Values>>
