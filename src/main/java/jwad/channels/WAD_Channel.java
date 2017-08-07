@@ -11,6 +11,7 @@ import jwad.modules.WadAbstractDevice;
 import jwad.WadDevType;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /**
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
  * Interface to represent WAD_BUS Device channel
  */
 public interface WAD_Channel {
+    String ERROR = "Not implemented";
     /**
      * single channel / multiple channels
      * Values mapped to ValuesMapped<ChanValue>
@@ -94,35 +96,36 @@ public interface WAD_Channel {
      * Channel types: AO, AO6, DOS
      */
     default void set(ChanValue val) {
-        throw new IllegalArgumentException("Not implemented");
+        throw new IllegalArgumentException(ERROR);
     }
     default void set(IntFromChanValue val) {
-        throw new IllegalArgumentException("Not implemented");
+        throw new IllegalArgumentException(ERROR);
     }
     default void set(int val) {
-        throw new IllegalArgumentException("Not implemented");
+        throw new IllegalArgumentException(ERROR);
     }
     /**
      * multiple channels: int[]
      * Channel types: AO, AO6, DOS
      */
-    default void set(int[] val) throws InvalidModBusFunction, SerialPortException {
-        throw new InvalidModBusFunction();
+    default void set(int[] val) {
+        throw new IllegalArgumentException(ERROR);
     }
     /**
      * multiple channels: List<ChanValue>
      * Channel types: AO, AO6, DOS
      */
-    default void set(List<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
-        throw new InvalidModBusFunction();
+    default void set(List<ChanValue> values) {
+        throw new IllegalArgumentException(ERROR);
     }
     /**
      * multiple channels: Stream<ChanValue>
      * Channel types: AO, AO6, DOS
      */
-    default void set(Stream<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
-        throw new InvalidModBusFunction();
+    default void set(Stream<ChanValue> values) {
+        throw new IllegalArgumentException(ERROR);
     }
+    default void set(Map<Integer, ChanValue> values) { throw new IllegalArgumentException(ERROR);}
     /**
      * @return device type :AIK, AO, AO6, DI, DI14, DOS
      */

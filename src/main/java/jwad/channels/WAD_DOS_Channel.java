@@ -13,7 +13,9 @@ import jwad.chanvalue.TypeDO;
 import jwad.modules.WadAbstractDevice;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -159,13 +161,25 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
         setAll(0x00);
     }
 
+    /**
+     * set(Map) -> set(List) -> set(Stream) -> set(int[])
+     */
     @Override
-    public void set(List<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
+    public void set(Map<Integer, ChanValue> values) {
+        set(values.entrySet().stream()
+                .sorted((o1, o2) -> o1.getKey().compareTo(o2.getKey()))
+                .map(entry -> entry.getValue())
+                .collect(Collectors.toList())
+        );
+    }
+
+    @Override
+    public void set(List<ChanValue> values) {
         set(values.stream());
     }
 
     @Override
-    public void set(Stream<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
+    public void set(Stream<ChanValue> values) {
         set(values.
             mapToInt(value -> new IntFromChanValue(value).get())
             .toArray()
@@ -173,15 +187,16 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public void set(int[] val) throws SerialPortException {
-        // only if channel = 0
-        assert (chanNumber()==0);
-        if (chanNumber()==0) {
+    public void set(int[] val) {
+        try {
             setAll(val);
+        } catch (SerialPortException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 
     private void setAll(int[] val) throws SerialPortException {
+        checkForGroupWrite(val.length);
         setAll(new IntBitsFromArray(val).toByte());
     }
 

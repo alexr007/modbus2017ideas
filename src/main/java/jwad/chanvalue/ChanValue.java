@@ -54,6 +54,12 @@ public interface ChanValue<T> {
         public String toString() {
             return String.format("A:%s",this.value.toString());
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return obj instanceof ChanValue.A
+            && value.equals(((A) obj).value);
+        }
     }
 
     class DI implements ChanValue {
@@ -89,6 +95,12 @@ public interface ChanValue<T> {
         public String toString() {
             return String.format("DI:%s",this.value.toString());
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return obj instanceof ChanValue.DI
+                && value.equals(((DI) obj).value);
+        }
     }
 
     class DO implements ChanValue {
@@ -121,6 +133,13 @@ public interface ChanValue<T> {
         @Override
         public String toString() {
             return String.format("DO:%s",this.value.toString());
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return obj instanceof ChanValue.DO
+                && value.equals(((DO) obj).value);
+
         }
     }
 

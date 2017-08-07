@@ -87,16 +87,15 @@ public class ModBusChannelsTest {
         WAD_Channel ch = core.dev(DevName.DOS1).channel(0);
 
         EnumMap<ChanName, ChanValue> wr = new EnumMap<>(ChanName.class);
-        wr.put(ChanName.R4, ChanValue.DO(TypeDO.OFF));
-/*
-        wr.put(ChanName.R1, ChanValue.DO(TypeDO.OFF));
-        wr.put(ChanName.R8, ChanValue.DO(TypeDO.ON));
-        wr.put(ChanName.R2, ChanValue.DO(TypeDO.OFF));
+        wr.put(ChanName.R1, ChanValue.DO(TypeDO.ON));
+        wr.put(ChanName.R2, ChanValue.DO(TypeDO.ON));
         wr.put(ChanName.R3, ChanValue.DO(TypeDO.ON));
+        wr.put(ChanName.R4, ChanValue.DO(TypeDO.ON));
         wr.put(ChanName.R5, ChanValue.DO(TypeDO.ON));
         wr.put(ChanName.R6, ChanValue.DO(TypeDO.ON));
+        wr.put(ChanName.R6, ChanValue.DO(TypeDO.ON));
         wr.put(ChanName.R7, ChanValue.DO(TypeDO.ON));
-*/
+        wr.put(ChanName.R8, ChanValue.DO(TypeDO.ON));
         //wr.put(ChanName.DC1, ChanValue.DI(TypeDI.OPENED));
         new ChanSet(core.channels()).write(wr);
 /*

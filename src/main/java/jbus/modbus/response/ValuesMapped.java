@@ -1,7 +1,10 @@
 package jbus.modbus.response;
 
+import java.util.AbstractMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * This is mapped values:
@@ -25,6 +28,20 @@ public class ValuesMapped<T> {
         return origin.stream()
             .mapToObj(mapper::map)
             .collect(Collectors.toList());
+    }
+
+    private AbstractMap.SimpleEntry<Integer, T> mapKeyToEntry(int index) {
+        return new AbstractMap.SimpleEntry<>(index, mapper.map(origin.get(index)));
+    }
+
+    public Map<Integer, T> map() {
+        return
+            IntStream.rangeClosed(1,origin.count())
+            .mapToObj(this::mapKeyToEntry)
+            .collect(Collectors.toMap(
+                AbstractMap.SimpleEntry::getKey,
+                AbstractMap.SimpleEntry::getValue
+            ));
     }
 
     /**

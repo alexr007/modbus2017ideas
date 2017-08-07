@@ -11,6 +11,8 @@ import jwad.chanvalue.IntFromChanValue;
 import jwad.modules.WadAbstractDevice;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -85,12 +87,21 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public void set(List<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
+    public void set(Map<Integer, ChanValue> values) {
+        set(values.entrySet().stream()
+            .sorted((o1, o2) -> o1.getKey().compareTo(o2.getKey()))
+            .map(entry -> entry.getValue())
+            .collect(Collectors.toList())
+        );
+    }
+
+    @Override
+    public void set(List<ChanValue> values) {
         set(values.stream());
     }
 
     @Override
-    public void set(Stream<ChanValue> values) throws InvalidModBusFunction, SerialPortException {
+    public void set(Stream<ChanValue> values) {
         set(values.
                 mapToInt(value -> new IntFromChanValue(value).get())
                 .toArray()
@@ -98,20 +109,24 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public void set(int[] val) throws SerialPortException {
-        assert (chanNumber()==0)&&(val.length==device().properties().chanCount());
-        run(
-            builder().cmdWriteRegister(
-                0x2010+ chanNumber(),0x0006,
-                new MbMerged(
-                    new Word(val[0]).toBytes(),
-                    new Word(val[1]).toBytes(),
-                    new Word(val[2]).toBytes(),
-                    new Word(val[3]).toBytes(),
-                    new Word(val[4]).toBytes(),
-                    new Word(val[5]).toBytes()
+    public void set(int[] val) {
+        checkForGroupWrite(val.length);
+        try {
+            run(
+                builder().cmdWriteRegister(
+                    0x2010+ chanNumber(),0x0006,
+                    new MbMerged(
+                        new Word(val[0]).toBytes(),
+                        new Word(val[1]).toBytes(),
+                        new Word(val[2]).toBytes(),
+                        new Word(val[3]).toBytes(),
+                        new Word(val[4]).toBytes(),
+                        new Word(val[5]).toBytes()
+                    )
                 )
-            )
-        );
+            );
+        } catch (SerialPortException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }

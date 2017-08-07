@@ -8,7 +8,6 @@ import jwad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -130,85 +129,63 @@ public class ChanSet {
     /**
      * check if selected device available to write
      */
-    private boolean checkIsDevWritable(WadAbstractDevice dev) {
+    private void isDeviceWritable(WadAbstractDevice dev) {
         if (!wadWritable.contains(dev.type())) {
-            throw new IllegalArgumentException(String.format("Non writable device selected to write: %s, modbus id:%s",
-                dev.type(), new HexFromByte(dev.id())));
-        }
-        else {
-            return true;
+            throw new IllegalArgumentException(
+                String.format("Non writable device selected to write: %s, modbus id:%s",
+                dev.type(), new HexFromByte(dev.id()))
+            );
         }
     }
 
-    private WadAbstractDevice chanNameToDevId(ChanName chanName) {
-        return modBusChannels.channelMap().get(chanName).device();
+    private Integer entryToChannelId(Map.Entry<ChanName, ChanValue> ent) {
+        return modBusChannels.channelMap().get(ent.getKey()).chanNumber();
+    }
+
+    private WadAbstractDevice groupFunction(Map.Entry<ChanName, ChanValue> entry) {
+        return modBusChannels.channelMap().get(entry.getKey()).device();
+    }
+
+    private void writeSingleDevice(WadAbstractDevice d, Map<Integer, ChanValue> valuesMap) {
+        isDeviceWritable(d);
+        if (valuesMap.size() == 1) {
+            // write SINGLE channel
+            Map.Entry<Integer, ChanValue> ent1 = valuesMap.entrySet().stream().findFirst().get();
+            d.channel(ent1.getKey()).set(ent1.getValue());
+        } else if (valuesMap.size() == d.properties().chanCount()) {
+            // write ALL channels
+            d.channel(0).set(valuesMap);
+        } else {
+            // write M of N channels ( read / replace / check / write )
+            Map<Integer, ChanValue> readed = d.channel(0).get().map();
+            Map<Integer, ChanValue> toWrite = new HashMap<>(readed);
+            toWrite.replaceAll(valuesMap::getOrDefault);
+            if (!readed.equals(toWrite))
+                d.channel(0).set(toWrite);
+        }
     }
 
     /**
      * Writes EnumMap<ChanName, ChanValue> to device
-     * @param mapToWrite
+     * @param origin
      */
-    public void write(Map<ChanName, ChanValue> mapToWrite) {
-        checkIdentically(mapToWrite);
-        // devices to Write: Map<id, WadDevice>
-        Map<Integer, WadAbstractDevice> devsToWrite = mapToWrite.keySet().stream()
-            .map(this::chanNameToDevId)
-            .distinct()
-            // check devices able to write or throw the exception
-            .filter(this::checkIsDevWritable)
-            .collect(Collectors.toMap(
-                dev -> dev.id(),
-                dev -> dev
-            ));
-        // now need convert Map<ChanName, ChanValue> to:
-        // Map<DevId, Map<ChanId, ChanValue>> for future traverse it.
-        Map<Integer, Map<Integer, ChanValue>> collect = mapToWrite.entrySet().stream()
+    public void write(Map<ChanName, ChanValue> origin) {
+        checkIdentically(origin);
+        origin.entrySet().stream()
             .collect(
-                Collectors.groupingBy(ent1-> modBusChannels.channelMap().get(ent1.getKey()).device().id(),
+                Collectors.groupingBy(this::groupFunction, // WadDevice
                     Collectors.toMap(
-                        ent -> modBusChannels.channelMap().get(ent.getKey()).chanNumber(),
-                        ent -> ent.getValue()
+                        this::entryToChannelId, // channel id
+                        Map.Entry::getValue // ChanValue
                     ))
-            );
-
-        System.out.println("Data to write Map<Dev, Map<Chan, Val>>");
-        System.out.println(collect);
-        // now writing
-        devsToWrite.entrySet().stream()
-            .forEach(new Consumer<Map.Entry<Integer, WadAbstractDevice>>() {
-                @Override
-                public void accept(Map.Entry<Integer, WadAbstractDevice> ent) {
-                    // ModBus Device ID
-                    int devId = ent.getKey();
-                    // ModBus Device
-                    WadAbstractDevice dev = ent.getValue();
-                    Map<Integer, ChanValue> deviceEntry = collect.get(devId);
-
-                    int mapSize = deviceEntry.size();
-                    if (mapSize==1) {
-                        // one channel write
-                        System.out.println("writing 1 channel");
-                        Map.Entry<Integer, ChanValue> entry = deviceEntry.entrySet().stream().findFirst().get();
-                        dev.channel(entry.getKey()).set(entry.getValue());
-                        // one channel write - done
-                    } else if (mapSize==dev.properties().chanCount()) {
-                        // write all channels
-                        System.out.println(String.format("writing ALL %s channels", dev.properties().chanCount()));
-                    } else {
-                        // M from N channel write
-                        System.out.println(String.format("writing %s of %s channels", mapSize, dev.properties().chanCount()));
-                        // read all channels
-                        // replace new channels
-                        // write all channels
-                    }
-                }
-            });
+            )
+            .forEach(this::writeSingleDevice);
     }
 
     /**
      * read version for emulate read
      */
-    public Map<ChanName, Integer> values_v0_work_ok_with () {
+    public Map<ChanName, Integer> values_Integer () {
         Map<Integer, WadAbstractDevice> devMap = devMap();
         Set<Pair<Integer, Integer>> setPairDC = setPairDC();
         // Map<Dev, Set<Channels>>
@@ -247,6 +224,40 @@ public class ChanSet {
      * reads values from Device to set
      * @return
      */
+    public Map<ChanName, ChanValue> values_ChanValue() {
+        Map<Integer, WadAbstractDevice> devMap = devMap();
+        Set<Pair<Integer, Integer>> setPairDC = setPairDC();
+        return getMapDeviceChanList().keySet().stream() // Set<Dev>
+            .collect(Collectors.toMap(
+                key -> key,
+                // this is real reading
+                key -> devMap.get(key).channel(0).get().list()
+                // this is fake reader
+                // TODO написать FAKE READER
+                //key -> IntStream.rangeClosed(1, devMap.getWoFail(key).properties().chanCount()).boxed().collect(Collectors.toList())
+            ))
+            // Map<Dev, List<Values>>
+            .entrySet()
+            // Set<Dev>
+            .stream()
+            .map(ent -> IntStream.range(0, ent.getValue().size())
+                .mapToObj(index -> new AbstractMap.SimpleEntry<>(
+                    new Pair<>(ent.getKey(), index + 1), //
+                    ent.getValue().get(index)
+                ))
+                .filter(item -> setPairDC.contains(item.getKey())) // filter to exclude non requested channels from device
+                .collect(Collectors.toMap(
+                    pair -> modBusChannels.getName(pair.getKey()), // name
+                    Map.Entry::getValue // value
+                ))
+            )
+            .flatMap(map -> map.entrySet().stream())
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue
+            ));
+    }
+
     public Map<ChanName, ChanValue> values() {
         Map<Integer, WadAbstractDevice> devMap = devMap();
         Set<Pair<Integer, Integer>> setPairDC = setPairDC();

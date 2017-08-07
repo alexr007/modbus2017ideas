@@ -103,6 +103,21 @@ public abstract class WadAbstractChannel {
         return device.run(request);
     }
 
+    protected void checkForGroupWrite(int length) {
+        if (chanNumber()!=0) {
+            throw new IllegalArgumentException(String.format("%s Device: for group Write channel must be 0, given:(%d)",
+                device.name(),
+                chanNumber));
+        }
+        if (length!=device.properties().chanCount()) {
+            throw new IllegalArgumentException(String.format("%s Device: for group Write channel count must be equals dev.chanCount(%d), given:(%d)",
+                device.name(),
+                device.properties().chanCount(),
+                length));
+        }
+
+    }
+
     @Override
     public String toString() {
         return String.format("Channel: id:%2s, Device: %s ", chanNumber(),device());
