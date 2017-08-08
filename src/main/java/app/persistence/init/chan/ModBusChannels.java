@@ -10,6 +10,7 @@ import jwad.channels.WAD_Channel;
 import jssc.SerialPortException;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
+import org.javatuples.Triplet;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -120,6 +121,14 @@ public final class ModBusChannels {
     public ChanName getName(int dev, int chan)  {
         try {
             return getNameVerbose(dev, chan);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public ChanName getName(Triplet<Integer, Integer, ?> trip)  {
+        try {
+            return getNameVerbose(new Pair<>(trip.getValue0(), trip.getValue1()));
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

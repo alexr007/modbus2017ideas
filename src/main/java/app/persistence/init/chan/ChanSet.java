@@ -6,10 +6,10 @@ import jwad.WadDevType;
 import jwad.chanvalue.ChanValue;
 import jwad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static jwad.WadDevType.*;
 
@@ -108,12 +108,6 @@ public class ChanSet {
             ));
     }
 
-    public Set<Pair<Integer, Integer>>setPairDC() {
-        return chanSet.stream()
-            .map(item -> modBusChannels.getDC(item))
-            .collect(Collectors.toSet());
-    }
-
     /**
      * check origin Set equals mapToWrite
      */
@@ -182,113 +176,37 @@ public class ChanSet {
             .forEach(this::writeSingleDevice);
     }
 
-    /**
-     * read version for emulate read
-     */
-    public Map<ChanName, Integer> values_Integer () {
-        Map<Integer, WadAbstractDevice> devMap = devMap();
-        Set<Pair<Integer, Integer>> setPairDC = setPairDC();
-        // Map<Dev, Set<Channels>>
-        return getMapDeviceChanList().keySet().stream() // Set<Dev>
-            .collect(Collectors.toMap(
-                key -> key,
-                // this is real reading
-                //key -> devMap.get(key).channel(0).get().list())
-                // this is fake reader
-                key -> IntStream.rangeClosed(1, devMap.get(key).properties().chanCount()).boxed().collect(Collectors.toList())
-            ))
-            // Map<Dev, List<Values>>
-            .entrySet()
-            // Set<Dev>
-            .stream()
-            .map(ent -> IntStream.range(0, ent.getValue().size())
-                .mapToObj(index -> new AbstractMap.SimpleEntry<>(
-                    new Pair<>(ent.getKey(), index + 1), //
-                    ent.getValue().get(index)
-                ))
-                // Map.Entry<Pair<>, Value> - this is filter to exclude non requested channels from device
-                .filter(item -> setPairDC.contains(item.getKey()))
-                // Map<Name, Value>
-                .collect(Collectors.toMap(
-                    pair -> modBusChannels.getName(pair.getKey()),
-                    Map.Entry::getValue
-                ))
-            )
-            .flatMap(map -> map.entrySet().stream())
-            .collect(Collectors.toMap(
-                Map.Entry::getKey,
-                Map.Entry::getValue
-            ));
-    }
-    /**
-     * reads values from Device to set
-     * @return
-     */
-    public Map<ChanName, ChanValue> values_ChanValue() {
-        Map<Integer, WadAbstractDevice> devMap = devMap();
-        Set<Pair<Integer, Integer>> setPairDC = setPairDC();
-        return getMapDeviceChanList().keySet().stream() // Set<Dev>
-            .collect(Collectors.toMap(
-                key -> key,
-                // this is real reading
-                key -> devMap.get(key).channel(0).get().list()
-                // this is fake reader
-                // TODO написать FAKE READER
-                //key -> IntStream.rangeClosed(1, devMap.getWoFail(key).properties().chanCount()).boxed().collect(Collectors.toList())
-            ))
-            // Map<Dev, List<Values>>
-            .entrySet()
-            // Set<Dev>
-            .stream()
-            .map(ent -> IntStream.range(0, ent.getValue().size())
-                .mapToObj(index -> new AbstractMap.SimpleEntry<>(
-                    new Pair<>(ent.getKey(), index + 1), //
-                    ent.getValue().get(index)
-                ))
-                .filter(item -> setPairDC.contains(item.getKey())) // filter to exclude non requested channels from device
-                .collect(Collectors.toMap(
-                    pair -> modBusChannels.getName(pair.getKey()), // name
-                    Map.Entry::getValue // value
-                ))
-            )
-            .flatMap(map -> map.entrySet().stream())
-            .collect(Collectors.toMap(
-                Map.Entry::getKey,
-                Map.Entry::getValue
-            ));
+    private class DCPairs {
+        private final Set<Pair<Integer, Integer>> origin;
+
+        DCPairs() {
+            this.origin = chanSet.stream()
+                .map(item -> modBusChannels.getDC(item))
+                .collect(Collectors.toSet());
+        }
+
+        boolean contains (Pair<Integer, Integer> pair) {
+            return origin.contains(pair);
+        }
+
+        boolean contains (Triplet<Integer, Integer, ChanValue> trip) {
+            return contains(new Pair<>(trip.getValue0(), trip.getValue1()));
+        }
     }
 
     public Map<ChanName, ChanValue> values() {
-        Map<Integer, WadAbstractDevice> devMap = devMap();
-        Set<Pair<Integer, Integer>> setPairDC = setPairDC();
-        return getMapDeviceChanList().keySet().stream() // Set<Dev>
+        DCPairs pairs = new DCPairs();
+        return chanSet.stream()
+            .map(ent -> modBusChannels.channelMap().get(ent).device())
+            .distinct()
+            .map(d -> d.channel(0).get().stream() // TODO написать правильный FAKE READER соответственно каждому типу устройства
+                .map(cv -> new Triplet<>(d.id(), cv.getKey(), cv.getValue()))
+                .collect(Collectors.toSet()))
+            .flatMap(Collection::stream)
+            .filter(pairs::contains)
             .collect(Collectors.toMap(
-                key -> key,
-                // this is real reading
-                key -> devMap.get(key).channel(0).get().list()
-                // this is fake reader
-                // TODO написать правильный FAKE READER соответственно каждому типу устройства
-                //key -> IntStream.rangeClosed(1, devMap.getWoFail(key).properties().chanCount()).boxed().collect(Collectors.toList())
-            ))
-            // Map<Dev, List<Values>>
-            .entrySet()
-            // Set<Dev>
-            .stream()
-            .map(ent -> IntStream.range(0, ent.getValue().size())
-                .mapToObj(index -> new AbstractMap.SimpleEntry<>(
-                    new Pair<>(ent.getKey(), index + 1), //
-                    ent.getValue().get(index)
-                ))
-                .filter(item -> setPairDC.contains(item.getKey())) // filter to exclude non requested channels from device
-                .collect(Collectors.toMap(
-                    pair -> modBusChannels.getName(pair.getKey()), // name
-                    Map.Entry::getValue // value
-                ))
-            )
-            .flatMap(map -> map.entrySet().stream())
-            .collect(Collectors.toMap(
-                Map.Entry::getKey,
-                Map.Entry::getValue
+                modBusChannels::getName,
+                Triplet::getValue2
             ));
     }
 }
