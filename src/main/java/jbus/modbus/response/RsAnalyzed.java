@@ -20,7 +20,7 @@ public class RsAnalyzed {
     public int get(int index) throws InvalidModBusResponse {
         return get()[index];
     }
-    // contain array int[] only REAL response;
+    // contain array iface[] only REAL response;
     public int[] get() throws InvalidModBusResponse {
         int[] ret = new int[]{};
         if (response.has()) {

@@ -6,14 +6,14 @@ import java.util.stream.IntStream;
  * Created by mac on 18.05.2017.
  *
  */
-public class WordsFromBytes {
+public class WordsFrom2Bytes {
     private final int[] origin;
 
-    public WordsFromBytes(RsAnalyzed analyzed) throws InvalidModBusResponse {
+    public WordsFrom2Bytes(RsAnalyzed analyzed) throws InvalidModBusResponse {
         this(analyzed.get());
     }
 
-    public WordsFromBytes(int[] origin) {
+    public WordsFrom2Bytes(int[] origin) {
         this.origin = origin;
     }
 
@@ -25,9 +25,9 @@ public class WordsFromBytes {
             .map(index -> (origin[index*2] & 0xFF) << 8 | origin[index*2+1] & 0xFF)
             .toArray();
 /*
-        int newLength = origin.length / 2;
-        int[] res = new int[newLength];
-        for (int i = 0 ; i < newLength ; i++) {
+        iface newLength = origin.length / 2;
+        iface[] res = new iface[newLength];
+        for (iface i = 0 ; i < newLength ; i++) {
             res[i]=(origin[i*2] & 0xFF) << 8 | origin[i*2+1] & 0xFF;
         }
         return res;

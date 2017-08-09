@@ -30,22 +30,14 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
         return
             new Values.Multiple(
-                new WordsFromBytes(
-                    new RsAnalyzed(
-                        run(builder().cmdReadRegister(0x100B, 0x0004)),
-                        new RqInfo(device().id(), RsParsed.cmdRead, 8)
-                    )
-                )
+                new WordsFrom2Bytes( device().read_(0x100B, 0x0004))
             );
     }
 
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {
         return
             new Values.Single(
-                new WordsFromBytes(new RsAnalyzed(
-                    run(builder().cmdReadRegister(0x100B+ chanNumber()-1)),
-                    new RqInfo(device().id(), RsParsed.cmdRead, 2)
-                ))
+                new WordsFrom2Bytes( device().read_(0x100B+ chanNumber()-1))
             );
     }
 
@@ -73,10 +65,6 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
      * bit = 0 - no link with channel CPU
      */
     private int getFailAll() throws SerialPortException, InvalidModBusResponse {
-        return
-            new RsAnalyzed(
-                run(builder().cmdReadRegister(0x100A)),
-                new RqInfo(device().id(),RsParsed.cmdRead,2)
-            ).get(1);
+        return device().read_(0x100A).get(1);
     }
 }

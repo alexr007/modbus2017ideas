@@ -23,6 +23,7 @@ final public class WAD_DOS_BUS extends WadAbstractDevice {
         return new WAD_DOS_Channel(chan, this);
     }
 
+/*
     @Override
     public int temperature() throws SerialPortException, InvalidModBusResponse {
         return
@@ -30,6 +31,11 @@ final public class WAD_DOS_BUS extends WadAbstractDevice {
                 run(builder().cmdReadRegister(0x200A)),
                 new RqInfo(id(),RsParsed.cmdRead,2)
             ).get(1);
+    }
+*/
+    @Override
+    public int temperature() throws SerialPortException, InvalidModBusResponse {
+        return read_(0x200A).get(1);
     }
 /*
 

@@ -13,7 +13,7 @@ public class Test_Percentage {
         System.out.println(percentage.get(25));
 /*
         Values.Single single = new Values.Single(1);
-        Values.Multiple multiple = new Values.Multiple(new int[]{1, 2, 3});
+        Values.Multiple multiple = new Values.Multiple(new iface[]{1, 2, 3});
         System.out.println(single);
         System.out.println(multiple);
 */

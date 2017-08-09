@@ -1,4 +1,4 @@
-package entities;
+package entities.iface;
 
 /**
  * Created by alexr on 07.02.2017.

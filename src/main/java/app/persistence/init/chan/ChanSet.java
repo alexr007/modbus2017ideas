@@ -1,6 +1,7 @@
 package app.persistence.init.chan;
 
 import constants.ChanName;
+import jbase.HashMapBuilder;
 import jbase.hex.HexFromByte;
 import jwad.WadDevType;
 import jwad.chanvalue.ChanValue;
@@ -15,34 +16,37 @@ import static jwad.WadDevType.*;
 
 public class ChanSet {
     private final ModBusChannels modBusChannels;
-    private final Set<ChanName> chanSet;
+    //private final Set<ChanName> chanSet;
     private final Set<WadDevType> wadWritable = new HashSet<>(Arrays.asList(DOS, AO, AO6));
-
 
     public ChanSet(ModBusChannels modBusChannels) {
         this.modBusChannels = modBusChannels;
-        this.chanSet = Collections.emptySet();
+//        this.chanSet = Collections.emptySet();
     }
 
+/*
     public ChanSet(ModBusChannels modBusChannels, EnumMap<ChanName, ChanValue> chanSet) {
         this(modBusChannels, new HashSet<>(chanSet.keySet()));
     }
 
-    public ChanSet(ModBusChannels modBusChannels, Set<ChanName> chanSet) {
-        this.modBusChannels = modBusChannels;
-        this.chanSet = chanSet;
+    public ChanSet(ModBusChannels modBusChannels, ChanName... chanSet) {
+        this(modBusChannels, Arrays.asList(chanSet));
     }
 
-    /**
-     *
-     * Find all Channels on same device
-     *
-     * @param chan ChanName
-     * @return EnumSet<ChanName>
-     */
+    public ChanSet(ModBusChannels modBusChannels, List<ChanName> chanSet) {
+        this(modBusChannels, new HashSet<>(chanSet));
+    }
+
+    public ChanSet(ModBusChannels modBusChannels, Set<ChanName> chanSet) {
+        this.modBusChannels = modBusChannels;
+        //this.chanSet = chanSet;
+    }
+*/
+
+/*
     public Set<ChanName> getAllChannelFromSameDevice(ChanName chan) {
         // device Id just for more verbose code while learning streams
-        int deviceId = modBusChannels.channelMap().get(chan).device().id();
+        iface deviceId = modBusChannels.channelMap().get(chan).device().id();
         return
             // Really don'tests.t know about real difference between Set<ChanName> and EnumSet<ChanName>
             // TODO: need to real benchmark later
@@ -54,10 +58,6 @@ public class ChanSet {
             );
     }
 
-    /**
-     * converts: Set<ChanName> to Set<WadAbstractDevice>
-     * @return Set<WadAbstractDevice>
-     */
     public Set<WadAbstractDevice> getDeviceSet() {
         return chanSet.stream()
             .map(c -> modBusChannels.channelMap().get(c).device())
@@ -65,10 +65,6 @@ public class ChanSet {
             .collect(Collectors.toSet());
     }
 
-    /**
-     * converts: Set<ChanName> to Set<DeviceId, UsedChanCount>
-     * @return Map<Integer, Long> means Set<DeviceId, UsedChanCount>
-     */
     public Map<Integer, Long> getMapDeviceChanCount() {
         return chanSet.stream()
             .map(key -> modBusChannels.channelMap().get(key).device()) // map chanId -> device
@@ -79,10 +75,6 @@ public class ChanSet {
             );
     }
 
-    /**
-     * converts: Set<ChanName> to Set<Dev, Set<Channels>>
-     * @return Map<Integer, Set<Integer>> mean Map<Dev, Set<Channels>>
-     */
     public Map<Integer, Set<Integer>> getMapDeviceChanList () {
         return chanSet.stream()
             .map(ent->modBusChannels.channelMap().get(ent)) // map chanId -> channel
@@ -94,10 +86,6 @@ public class ChanSet {
             );
     }
 
-    /**
-     * converts: Set<ChanName> to Map<Integer, WadAbstractDevice>
-     * @return Map<Integer, WadAbstractDevice> mean Map<devId, WadAbstractDevice>
-     */
     public Map<Integer, WadAbstractDevice> devMap() {
         return chanSet.stream()
             .map(chanName -> modBusChannels.channelMap().get(chanName).device())
@@ -108,9 +96,6 @@ public class ChanSet {
             ));
     }
 
-    /**
-     * check origin Set equals mapToWrite
-     */
     private void checkIdentically(Map<ChanName, ChanValue> mapToWrite) {
         Set<ChanName> toWrite = new HashSet<>(mapToWrite.keySet());
         if (!chanSet.isEmpty() && !chanSet.equals(toWrite)) {
@@ -119,10 +104,8 @@ public class ChanSet {
                 chanSet, toWrite));
         }
     }
+*/
 
-    /**
-     * check if selected device available to write
-     */
     private void isDeviceWritable(WadAbstractDevice dev) {
         if (!wadWritable.contains(dev.type())) {
             throw new IllegalArgumentException(
@@ -159,12 +142,12 @@ public class ChanSet {
         }
     }
 
-    /**
-     * Writes EnumMap<ChanName, ChanValue> to device
-     * @param origin
-     */
+    public void write(HashMapBuilder<ChanName, ChanValue> origin) {
+        write(origin.map());
+    }
+
     public void write(Map<ChanName, ChanValue> origin) {
-        checkIdentically(origin);
+        //checkIdentically(origin);
         origin.entrySet().stream()
             .collect(
                 Collectors.groupingBy(this::groupFunction, // WadDevice
@@ -179,7 +162,7 @@ public class ChanSet {
     private class DCPairs {
         private final Set<Pair<Integer, Integer>> origin;
 
-        DCPairs() {
+        DCPairs(Set<ChanName> chanSet) {
             this.origin = chanSet.stream()
                 .map(item -> modBusChannels.getDC(item))
                 .collect(Collectors.toSet());
@@ -194,8 +177,16 @@ public class ChanSet {
         }
     }
 
-    public Map<ChanName, ChanValue> values() {
-        DCPairs pairs = new DCPairs();
+    public Map<ChanName, ChanValue> read(ChanName... chanList) {
+        return read(Arrays.asList(chanList));
+    }
+
+    public Map<ChanName, ChanValue> read(List<ChanName> chanList) {
+        return read(new HashSet<>(chanList));
+    }
+
+    public Map<ChanName, ChanValue> read(Set<ChanName> chanSet) {
+        DCPairs pairs = new DCPairs(chanSet);
         return chanSet.stream()
             .map(ent -> modBusChannels.channelMap().get(ent).device())
             .distinct()

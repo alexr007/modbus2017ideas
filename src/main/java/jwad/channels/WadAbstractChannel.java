@@ -25,7 +25,7 @@ public abstract class WadAbstractChannel {
      */
     private final WadAbstractDevice device;
     /**
-     * mapper for map int to value for future human using
+     * mapper for map iface to value for future human using
      */
     private final MappedTo mapper;
 
@@ -99,10 +99,12 @@ public abstract class WadAbstractChannel {
         return device.builder();
     }
 
+/*
     protected MbResponse run(MbRequest request) throws SerialPortException {
         return device.run(request);
     }
 
+*/
     protected void checkForGroupWrite(int length) {
         if (chanNumber()!=0) {
             throw new IllegalArgumentException(String.format("%s Device: for group Write channel must be 0, given:(%d)",

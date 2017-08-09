@@ -3,14 +3,14 @@ package entities;
 /**
  * Created by mac on 25.07.2017.
  */
-public enum EntityType {
+public enum TypeEn {
     DI, // DI, DI14
     DO, // DOS
     AI, // AIK
     AO, // AO, AO6
 
     // DI based
-    SensorSwitch,
+    Switch,
 
     // DOS based
     Relay,

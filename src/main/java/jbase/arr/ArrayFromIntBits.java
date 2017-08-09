@@ -28,8 +28,8 @@ public class ArrayFromIntBits {
 
     public int[] get() {
 /*
-        int[] result = new int[count];
-        for (int i = 0; i < count; i++) {
+        iface[] result = new iface[count];
+        for (iface i = 0; i < count; i++) {
             result[i]=(values>>i)&0b1;
         }
         return result;

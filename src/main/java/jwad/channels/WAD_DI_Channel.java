@@ -31,13 +31,8 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
 
     private Values getMultiple()  {
         try {
-            return
-                new Values.Multiple(
-                    new ArrayFromIntBits(
-                        new RsAnalyzed(
-                            run(builder().cmdReadRegister(0x200D)),
-                            new RqInfo(device().id(), RsParsed.cmdRead, 2)
-                        ).get(1),
+            return new Values.Multiple(
+                    new ArrayFromIntBits( device().read_(0x200D).get(1),
                         8
                     )
                 );
@@ -58,10 +53,7 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
         try {
             return
                 new Values.Single(
-                    new RsAnalyzed(
-                        run(builder().cmdReadRegister(0x2004+ chanNumber()-1)),
-                        new RqInfo(device().id(), RsParsed.cmdRead, 2)
-                    ).get(1)
+                    device().read_(0x2004+ chanNumber()-1).get(1)
                 );
         } catch (InvalidModBusResponse e) {
             throw new IllegalArgumentException(e);
@@ -124,11 +116,7 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
     }
 
     private int failAll() throws SerialPortException, InvalidModBusResponse {
-        return
-            new RsAnalyzed(
-                run(builder().cmdReadRegister(0x200E)),
-                new RqInfo(device().id(), RsParsed.cmdRead, 2)
-            ).get(1);
+        return device().read_(0x200E).get(1);
     }
 
     @Override

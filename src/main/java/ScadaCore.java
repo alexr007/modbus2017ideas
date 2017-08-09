@@ -1,4 +1,5 @@
 import app.*;
+import app.decision.test.rx.rxTest1;
 import app.persistence.BIOcore;
 import app.persistence.init.chan.ChanSet;
 import app.persistence.init.chan.test.ModBusChannelsTest;
@@ -20,9 +21,9 @@ public class ScadaCore {
         } else {
             //SortedSetTest.test33();
             //new ChanValueTest().test3();
-            //new rxTest1().test0();
-
             BIOcore core = new BIOcore(args[0]);
+            new rxTest1().test0(core);
+
 /*
             ChanSet cs = new ChanSet(core.channels(), EnumSet.allOf(ChanName.class));
             System.out.println( cs.getAllChannelFromSameDevice(ChanName.SM_AIR1) );
@@ -32,10 +33,15 @@ public class ScadaCore {
             System.out.println( cs.getMapDeviceChanList()  );
 */
 
+/*
             System.out.println(core.devices().toString());
             System.out.println(core.channels().toString());
+*/
 
-            new ModBusChannelsTest().test1(core);
+
+/*
+            new ModBusChannelsTest().test3(core);
+*/
             //new ChanValueTest().test3();
 
 /*

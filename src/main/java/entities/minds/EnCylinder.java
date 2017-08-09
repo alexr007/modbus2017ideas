@@ -1,4 +1,7 @@
-package entities;
+package entities.minds;
+
+import entities.EntityAbstract;
+import entities.TypeEn;
 
 /**
  * Created by alexr on 07.02.2017.
@@ -11,12 +14,12 @@ package entities;
  * один - на открытие
  *
  */
-public class EnCylinder extends AbstractEntity {
+public class EnCylinder extends EntityAbstract {
     private final EnValve valveToOpen;
     private final EnValve valveToClose;
 
     public EnCylinder(EnValve valveToOpen, EnValve valveToClose) {
-        super(EntityType.Cylinder);
+        super(TypeEn.Cylinder);
         this.valveToOpen = valveToOpen;
         this.valveToClose = valveToClose;
     }

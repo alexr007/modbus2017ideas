@@ -31,11 +31,7 @@ final public class WAD_DI_BUS extends WadAbstractDevice {
 
     @Override
     public int temperature() throws SerialPortException, InvalidModBusResponse {
-        return
-            new RsAnalyzed(
-                run(builder().cmdReadRegister(0x200C)),
-                new RqInfo(id(), RsParsed.cmdRead,2)
-            ).get(1);
+        return read_(0x200C).get(1);
     }
 /*
 

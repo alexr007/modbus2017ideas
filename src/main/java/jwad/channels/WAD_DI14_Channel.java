@@ -40,11 +40,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
         return
             new Values.Multiple(
                 new ArrayFromIntBits(
-                    new WordsFromBytes(
-                        new RsAnalyzed(
-                            run(builder().cmdReadRegister(0x1FFE)),
-                            new RqInfo(device().id(), RsParsed.cmdRead, 2)
-                        )).get0(),
+                    new WordsFrom2Bytes(device().read_(0x1FFE)).get0(),
                     15
                 )
             );
@@ -59,10 +55,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {
         return
             new Values.Single(
-                new RsAnalyzed(
-                    run(builder().cmdReadRegister(0x2001+ chanNumber()-1)),
-                    new RqInfo(device().id(), RsParsed.cmdRead, 2)
-                ).get(1)
+                device().read_(0x2001+ chanNumber()-1).get(1)
             );
     }
 
@@ -117,10 +110,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
 
     private int failAll() throws SerialPortException, InvalidModBusResponse {
         return
-            new WordsFromBytes(new RsAnalyzed(
-                run(builder().cmdReadRegister(0x1FFF)),
-                new RqInfo(device().id(), RsParsed.cmdRead, 2)
-            )).get0();
+            new WordsFrom2Bytes(device().read_(0x1FFF)).get0();
     }
 
     @Override

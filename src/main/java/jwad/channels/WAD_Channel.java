@@ -105,7 +105,7 @@ public interface WAD_Channel {
         throw new IllegalArgumentException(ERROR);
     }
     /**
-     * multiple channels: int[]
+     * multiple channels: iface[]
      * Channel types: AO, AO6, DOS
      */
     default void set(int[] val) {

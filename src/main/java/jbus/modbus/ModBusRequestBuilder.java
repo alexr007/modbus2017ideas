@@ -7,10 +7,10 @@ import jbase.primitives.Bytes;
  *
  * functions to read/write ModBus registers
  *
- * cmdReadRegister(int base)
- * cmdReadRegister(int base, int count)
- * cmdWriteRegister(int base, Bytes content)
- * cmdWriteRegister(int base, Bytes content)
+ * cmdReadRegister(iface base)
+ * cmdReadRegister(iface base, iface count)
+ * cmdWriteRegister(iface base, Bytes content)
+ * cmdWriteRegister(iface base, Bytes content)
  *
  */
 public final class ModBusRequestBuilder {

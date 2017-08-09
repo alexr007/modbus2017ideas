@@ -32,6 +32,12 @@ public interface ChanValue<T> {
     static ChanValue.DO DO(TypeDO val) {
         return new ChanValue.DO(val);
     }
+    static ChanValue.DO DO_ON() {
+        return new ChanValue.DO(TypeDO.ON);
+    }
+    static ChanValue.DO DO_OFF() {
+        return new ChanValue.DO(TypeDO.OFF);
+    }
 
     class A implements ChanValue {
         private final Integer value;

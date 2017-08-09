@@ -4,11 +4,10 @@ import app.persistence.BIOcore;
 import jbase.Branch;
 import jbase.Decision;
 import jbase.Solution;
-import jbase.hex.HexFromByte;
 import jbase.hex.HexFromWords;
-import jbus.modbus.response.WordsFromBytes;
+import jbus.modbus.response.WordsFrom2Bytes;
 import org.javatuples.Quartet;
-import org.javatuples.Triplet;
+
 import java.util.ArrayList;
 
 /**
@@ -46,7 +45,7 @@ public class MainTest {
     public void test2() {
         System.out.println(
             new HexFromWords(
-                new WordsFromBytes(
+                new WordsFrom2Bytes(
                     new int[] {1,1}
                 ).get()
             )

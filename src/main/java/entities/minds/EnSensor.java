@@ -1,5 +1,8 @@
-package entities;
+package entities.minds;
 
+import entities.EntityAbstract;
+import entities.TypeEn;
+import entities.iface.ISensorAnalog;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.InvalidModBusResponse;
 import jbus.modbus.response.Values;
@@ -9,11 +12,11 @@ import jssc.SerialPortException;
 /**
  * Created by alexr on 17.02.2017.
  */
-public class EnSensor extends AbstractEntity implements ISensorAnalog {
+public class EnSensor extends EntityAbstract implements ISensorAnalog {
     private final WAD_Channel channel;
 
     public EnSensor(WAD_Channel channel) {
-        super(EntityType.Sensor);
+        super(TypeEn.Sensor);
         this.channel = channel;
     }
 

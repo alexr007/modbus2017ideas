@@ -77,7 +77,15 @@ public class BIOcore {
         return channels.quartet();
     }
 
-    public void finish() throws SerialPortException {
+    public void finish()  {
+        try {
+            bus().finish();
+        } catch (SerialPortException e) {
+            throw new IllegalArgumentException("BUS ERROR");
+        }
+    }
+
+    public void finishUnsafe() throws SerialPortException {
         bus().finish();
     }
 

@@ -13,7 +13,7 @@ public class FakeReader implements PortReader {
         );
         return null;
 /*
-        return new Values.Single((int) (Math.random()*10+10));
+        return new Values.Single((iface) (Math.random()*10+10));
 */
     }
 }

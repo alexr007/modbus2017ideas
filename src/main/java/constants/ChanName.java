@@ -146,7 +146,7 @@ public enum ChanName {
     //x35p7 = "not used 4";
     //x35p8 = "not used 5";
     ,
-    R1,R2,R3,R4,R5,R6,R7,R8,
     DC1,DC2,DC3,DC4,DC5,DC6,DC7,DC8,DC9,DC10,DC11,DC12,DC13,DC14,DC15,
+    R1,R2,R3,R4,R5,R6,R7,R8,
     V10_1, V10_2, V10_3
 }

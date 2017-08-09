@@ -1,5 +1,8 @@
-package entities;
+package entities.minds;
 
+import entities.EntityAbstract;
+import entities.TypeEn;
+import entities.iface.ISensorDigital;
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.InvalidModBusResponse;
 import jwad.channels.WAD_Channel;
@@ -11,11 +14,11 @@ import jssc.SerialPortException;
  * Концевик
  *
  */
-public class EnSensorSwitch extends AbstractEntity implements ISensorDigital{
+public class EnSensorSwitch extends EntityAbstract implements ISensorDigital {
     private final WAD_Channel channel;
 
     public EnSensorSwitch(WAD_Channel channel) {
-        super(EntityType.SensorSwitch);
+        super(TypeEn.Switch);
         this.channel = channel;
     }
 

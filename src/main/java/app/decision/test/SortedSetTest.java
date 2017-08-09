@@ -166,7 +166,7 @@ public class SortedSetTest {
     public static void test27() {
 /*
         System.out.println(
-            new Values.Multiple(new int[]{9,8,7,6})
+            new Values.Multiple(new iface[]{9,8,7,6})
         );
 */
     }
@@ -187,7 +187,7 @@ public class SortedSetTest {
 
     public static void test29() {
 /*
-        Values.Multiple ints = new Values.Multiple(new int[]{10, 20, 30, 40, 50, 60, 70});
+        Values.Multiple ints = new Values.Multiple(new iface[]{10, 20, 30, 40, 50, 60, 70});
 */
 /*
         List<Integer> set = new ArrayList<Integer>() {{

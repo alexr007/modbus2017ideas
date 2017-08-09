@@ -1,4 +1,4 @@
-package entities;
+package entities.iface;
 
 import jbus.modbus.InvalidModBusFunction;
 import jbus.modbus.response.InvalidModBusResponse;

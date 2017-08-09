@@ -44,7 +44,7 @@ public class RosterTest {
     // Approach 1: Create Methods that Search for Persons that Match One
     // Characteristic
 
-    public static void printPersonsOlderThan(List<PersonTest> roster, int age) {
+    public static void printPersonsOlderThan(List<PersonTest> roster, iface age) {
         for (PersonTest p : roster) {
             if (p.getAge() >= age) {
                 p.printPerson();
@@ -55,7 +55,7 @@ public class RosterTest {
     // Approach 2: Create More Generalized Search Methods
 
     public static void printPersonsWithinAgeRange(
-            List<PersonTest> roster, int low, int high) {
+            List<PersonTest> roster, iface low, iface high) {
         for (PersonTest p : roster) {
             if (low <= p.getAge() && p.getAge() < high) {
                 p.printPerson();

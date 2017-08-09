@@ -50,23 +50,12 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
         return
             new Values.Multiple(
-                new ArrayFromIntBits(
-                    new RsAnalyzed(
-                        device().run(device().builder().cmdReadRegister(0x200B)),
-                        new RqInfo(device().id(),RsParsed.cmdRead,2)
-                    ).get(1)
-                )
-            );
+                new ArrayFromIntBits( device().read_(0x200B).get(1)));
     }
 
     private Values getSingle() throws SerialPortException, InvalidModBusResponse {
         return
-            new Values.Single(
-                new RsAnalyzed(
-                    device().run(device().builder().cmdReadRegister(0x2002+ chanNumber()-1)),
-                    new RqInfo(device().id(),RsParsed.cmdRead,2)
-                ).get(1)
-            );
+            new Values.Single( device().read_(0x2002+ chanNumber()-1).get(1));
     }
 
     @Override
@@ -97,11 +86,9 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     private void onSingle() throws SerialPortException {
-        device().run(
-            device().builder().cmdWriteRegister(0x2002+ chanNumber()-1,
-                new MbData(new byte[]{0,1})
-            )
-        );
+        device().write_(
+            0x2002+ chanNumber()-1,
+            new MbData(new byte[]{0,1}));
     }
 
     @Override
@@ -113,10 +100,8 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     private void offSingle() throws SerialPortException {
-        device().run(
-            device().builder().cmdWriteRegister(0x2002+ chanNumber()-1,
-                new MbData(new byte[]{0,0}))
-        );
+        device().write_(0x2002+ chanNumber()-1,
+            new MbData(new byte[]{0,0}));
     }
 
     @Override
@@ -146,11 +131,9 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     private void setSingle(int val) throws SerialPortException {
-        run(
-            builder().cmdWriteRegister(0x2002+ chanNumber()-1,
-                new MbData(new byte[]{0, (byte) (val==0?0:1)})
-            )
-        );
+        device().
+            write_(0x2002+ chanNumber()-1,
+            new MbData(new byte[]{0, (byte) (val==0?0:1)}));
     }
 
     private void onAll() throws SerialPortException {
@@ -162,7 +145,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     /**
-     * set(Map) -> set(List) -> set(Stream) -> set(int[])
+     * set(Map) -> set(List) -> set(Stream) -> set(iface[])
      */
     @Override
     public void set(Map<Integer, ChanValue> values) {
@@ -201,11 +184,7 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     private void setAll(int val) throws SerialPortException {
-        device().run(
-            device().builder().cmdWriteRegister(0x200B,
-                new MbData(new byte[]{0, (byte)val})
-            )
-        );
+        device().write_(0x200B, new MbData(new byte[]{0, (byte)val}));
     }
 
 }

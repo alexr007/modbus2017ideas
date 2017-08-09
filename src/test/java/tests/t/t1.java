@@ -38,7 +38,7 @@ public class t1 {
 
 
 /*
-        int[] ints = ByteBuffer.wrap(bytess)
+        iface[] ints = ByteBuffer.wrap(bytess)
             .order(ByteOrder.BIG_ENDIAN)
             .asIntBuffer().array();
 */

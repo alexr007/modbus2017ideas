@@ -24,8 +24,8 @@ public class IntBitsFromArray {
     public int get() {
         assert (origin.length<=16);
 /*
-        int result = 0;
-        for (int i = 0; i < origin.length ; i++) {
+        iface result = 0;
+        for (iface i = 0; i < origin.length ; i++) {
             result += (origin[i]<<i);
         }
         return result;

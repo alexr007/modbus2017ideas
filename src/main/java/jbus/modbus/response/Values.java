@@ -52,7 +52,7 @@ public interface Values {
     class Single implements  Values {
         private final int value;
 
-        public Single(WordsFromBytes origin) {
+        public Single(WordsFrom2Bytes origin) {
             this(origin.get0());
         }
 
@@ -99,7 +99,7 @@ public interface Values {
     class Multiple implements Values {
         private final int[] values;
 
-        public Multiple(WordsFromBytes origin) {
+        public Multiple(WordsFrom2Bytes origin) {
             this(origin.get());
         }
 

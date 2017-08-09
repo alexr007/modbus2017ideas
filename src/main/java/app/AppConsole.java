@@ -14,11 +14,7 @@ public class AppConsole implements Runnable{
     }
 
     private void finish() {
-        try {
-            core.finish();
-        } catch (SerialPortException e) {
-            e.printStackTrace();
-        }
+       core.finish();
     }
 
     @Override

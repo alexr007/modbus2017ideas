@@ -1,9 +1,9 @@
 package jwad.channels;
 
+import jbase.primitives.Word;
 import jbus.modbus.command.MbData;
 import jbus.modbus.command.MbMerged;
 import jbus.modbus.response.*;
-import jbase.primitives.Word;
 import jssc.SerialPortException;
 import jwad.chanvalue.ChanValue;
 import jwad.chanvalue.IntFromChanValue;
@@ -14,10 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * Created by alexr on 22.01.2017.
- */
-final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Channel {
+abstract class WAD_AO_ extends WadAbstractChannel implements WAD_Channel {
     /**
      * @param channel modbus channel id
      *                1..N - mean single channel
@@ -25,7 +22,7 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
      *                not all functions supports group operation
      * @param device  modbus real device
      */
-    public WAD_AO6_Channel(int channel, WadAbstractDevice device) {
+    public WAD_AO_(int channel, WadAbstractDevice device) {
         super(channel, device);
     }
 
@@ -42,19 +39,9 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
         }
     }
 
-    private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
-        return
-            new Values.Multiple(
-                new WordsFrom2Bytes( device().read_(0x2010,0x0006))
-            );
-    }
+    protected abstract Values getMultiple() throws SerialPortException, InvalidModBusResponse;
 
-    private Values getSingle() throws SerialPortException, InvalidModBusResponse {
-        return
-            new Values.Single(
-                new WordsFrom2Bytes( device().read_(0x2010+ chanNumber()-1))
-            );
-    }
+    protected abstract Values getSingle() throws SerialPortException, InvalidModBusResponse;
 
     @Override
     public void set(ChanValue val) {
@@ -75,10 +62,7 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
         }
     }
 
-    public void setUnSafe(int val) throws SerialPortException {
-        assert (chanNumber()>0);
-        device().write_(0x2010 + chanNumber()-1, new MbData(new Word(val)));
-    }
+    public abstract void setUnSafe(int val) throws SerialPortException;
 
     @Override
     public void set(Map<Integer, ChanValue> values) {
@@ -97,26 +81,12 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     @Override
     public void set(Stream<ChanValue> values) {
         set(values.
-                mapToInt(value -> new IntFromChanValue(value).get())
-                .toArray()
+            mapToInt(value -> new IntFromChanValue(value).get())
+            .toArray()
         );
     }
 
     @Override
-    public void set(int[] val) {
-        checkForGroupWrite(val.length);
-        try {
-            device().write_(0x2010+ chanNumber(),0x0006,
-                new MbMerged(
-                    new Word(val[0]).toBytes(),
-                    new Word(val[1]).toBytes(),
-                    new Word(val[2]).toBytes(),
-                    new Word(val[3]).toBytes(),
-                    new Word(val[4]).toBytes(),
-                    new Word(val[5]).toBytes()
-                ));
-        } catch (SerialPortException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
+    public abstract void set(int[] val);
+
 }

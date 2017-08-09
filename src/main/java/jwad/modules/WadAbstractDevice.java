@@ -1,6 +1,11 @@
 package jwad.modules;
 
 import com.google.common.base.Joiner;
+import jbase.primitives.Bytes;
+import jbus.modbus.command.MbData;
+import jbus.modbus.response.RqInfo;
+import jbus.modbus.response.RsAnalyzed;
+import jbus.modbus.response.RsParsed;
 import jssc.SerialPortException;
 import jbase.hex.HexFromByte;
 import jbus.modbus.*;
@@ -69,7 +74,7 @@ public abstract class WadAbstractDevice {
         return properties;
     }
 
-    public MbResponse run(MbRequest req) throws SerialPortException {
+    protected MbResponse run(MbRequest req) throws SerialPortException {
         return modbus.run(req);
     }
 
@@ -153,5 +158,25 @@ public abstract class WadAbstractDevice {
             default: throw new Exception (String.format(ERROR_UNKNOWN_TYPE, type));
         }
         return device;
+    }
+
+    public void write_(int baseReg, Bytes data) throws SerialPortException {
+        write_(baseReg, 1, data);
+    }
+
+    public void write_(int baseReg, int count, Bytes data) throws SerialPortException {
+        run( builder().cmdWriteRegister(baseReg, count, data ) );
+    }
+
+    public RsAnalyzed read_(int baseReg) throws SerialPortException {
+        return read_(baseReg, 1);
+    }
+
+    public RsAnalyzed read_(int baseReg, int regCount) throws SerialPortException {
+        return
+            new RsAnalyzed(
+                run(builder().cmdReadRegister(baseReg,regCount)),
+                new RqInfo(id(), RsParsed.cmdRead, regCount*2)
+            );
     }
 }
