@@ -1,10 +1,9 @@
 package tests.some;
 
-import jbus.comport.COMPort;
-import jbus.comport.COMPortProperties;
-import jbus.modbus.ModBus;
-import jwad.modules.WAD_DOS_BUS;
-import jwad.WadDevType;
+import j2bus.comport.COMPort;
+import j2bus.comport.COMPortProperties;
+import j2bus.modbus.ModBus;
+import j3wad.modules.WAD_DOS_BUS;
 import jssc.SerialPortException;
 
 import java.util.concurrent.CountDownLatch;

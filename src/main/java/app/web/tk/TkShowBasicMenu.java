@@ -1,7 +1,7 @@
 package app.web.tk;
 
 import app.web.rs.RsPageMenu;
-import app.persistence.BIOcore;
+import j4core.BIOcore;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;

@@ -1,7 +1,7 @@
 package app;
 
 import app.web.tk.TkApp;
-import app.persistence.BIOcore;
+import j4core.BIOcore;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
 import java.io.IOException;

@@ -1,7 +1,6 @@
 package app;
 
-import app.persistence.BIOcore;
-import jssc.SerialPortException;
+import j4core.BIOcore;
 
 /**
  * Created by alexr on 01.05.2017.
@@ -43,8 +42,8 @@ public class AppConsole implements Runnable{
 
 /*
         System.out.println(new COMPortList());
-            core.devSet().forEach(item -> {
-                    System.out.println(core.dev(item).summaryTxt());
+            j4core.devSet().forEach(item -> {
+                    System.out.println(j4core.dev(item).summaryTxt());
                 }
             );
 */
@@ -52,10 +51,10 @@ public class AppConsole implements Runnable{
 /*
         try {
             ArrayList<WadAbstractDevice> set = new ArrayList<WadAbstractDevice>(){{
-                add(core.dev("DEV11"));
-                add(core.dev("DEV21"));
-                add(core.dev("DEV31"));
-                add(core.dev("DEV41"));
+                add(j4core.dev("DEV11"));
+                add(j4core.dev("DEV21"));
+                add(j4core.dev("DEV31"));
+                add(j4core.dev("DEV41"));
             }};
 
             set.forEach(item ->
@@ -66,7 +65,7 @@ public class AppConsole implements Runnable{
             e.printStackTrace();
         }
 */
-        //new FindComPorts().run();
+        //new AppFindComPorts().run();
         //new ModBusDevicesTest().core_test();
         //new ModBusChannelsTest().core_test();
         //new ChanValueTest().test2();
@@ -79,7 +78,7 @@ public class AppConsole implements Runnable{
 /*
         if (args.length < 1 ) {
             System.out.println(new AppDefaultMessage().toString());
-            new FindComPorts().run();
+            new AppFindComPorts().run();
         } else {
             new AppConsoleSpeedTest().run(args[0]);
             //new Test_DOS_31().run(args[0]);

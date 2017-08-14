@@ -1,6 +1,6 @@
 package app.web;
 
-import jwad.WadDevType;
+import j3wad.WadDevType;
 
 /**
  * Created by alexr on 02.05.2017.

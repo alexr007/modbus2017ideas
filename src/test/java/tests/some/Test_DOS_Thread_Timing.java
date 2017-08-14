@@ -1,8 +1,8 @@
 package tests.some;
 
-import jbus.modbus.InvalidModBusFunction;
-import jbus.modbus.response.InvalidModBusResponse;
-import jwad.modules.WadAbstractDevice;
+import j2bus.modbus.InvalidModBusFunction;
+import j2bus.modbus.response.InvalidModBusResponse;
+import j3wad.modules.WadAbstractDevice;
 import jssc.SerialPortException;
 
 import java.util.concurrent.CountDownLatch;

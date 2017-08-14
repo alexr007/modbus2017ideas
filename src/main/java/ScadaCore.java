@@ -1,19 +1,12 @@
 import app.*;
-import app.decision.test.rx.rxTest1;
-import app.persistence.BIOcore;
-import app.persistence.init.chan.ChanSet;
-import app.persistence.init.chan.test.ModBusChannelsTest;
-import constants.ChanName;
-import jwad.chanvalue.test.ChanValueTest;
-import org.javatuples.Pair;
-
-import java.util.EnumSet;
+import _IDEAS_.decision.test.rx.rxTest1;
+import j4core.BIOcore;
 
 public class ScadaCore {
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
-            new FindComPorts().run();
-            //new app.decision.core_test.MainTest().core_test();
+            new AppFindComPorts().run();
+            //new _IDEAS_.jdesign.decision.core_test.MainTest().core_test();
             //new t1().run();
         } else
         if ((args.length == 2)&&(args[1].equals("core_test"))) {
@@ -25,7 +18,7 @@ public class ScadaCore {
             new rxTest1().test0(core);
 
 /*
-            ChanSet cs = new ChanSet(core.channels(), EnumSet.allOf(ChanName.class));
+            ChannelsSet cs = new ChannelsSet(j4core.channels(), EnumSet.allOf(ChanName.class));
             System.out.println( cs.getAllChannelFromSameDevice(ChanName.SM_AIR1) );
             System.out.println( cs.getAllChannelFromSameDevice(ChanName.SM_GATE_4) );
             System.out.println( cs.getDeviceSet() );
@@ -34,35 +27,35 @@ public class ScadaCore {
 */
 
 /*
-            System.out.println(core.devices().toString());
-            System.out.println(core.channels().toString());
+            System.out.println(j4core.devices().toString());
+            System.out.println(j4core.channels().toString());
 */
 
 
 /*
-            new ModBusChannelsTest().test3(core);
+            new ModBusChannelsTest().test3(j4core);
 */
             //new ChanValueTest().test3();
 
 /*
-            WAD_Channel chan = core.chan(ChanName.S_A_CRUSH);
+            WAD_Channel chan = j4core.chan(ChanName.S_A_CRUSH);
             System.out.println(
-                core.channelMap().getAllChannelFromSameDevice(ChanName.S_A_CRUSH)
+                j4core.channelMap().getAllChannelFromSameDevice(ChanName.S_A_CRUSH)
             );
             System.out.println(
-                core.channelMap().getAllChannelFromSameDevice(ChanName.M_AIR1)
+                j4core.channelMap().getAllChannelFromSameDevice(ChanName.M_AIR1)
             );
 */
 
 
-            //BIOcore core = new BIOcore(Dv.COM26);
+            //BIOcore j4core = new BIOcore(Dv.COM26);
 
 /*
             new ArrayList<Runnable>() {{
                 // создаем массив Runnable
-                add(new AppConsole(core));
-                //add(new AppDecision(core));
-                add(new AppWebServer(core));
+                add(new AppConsole(j4core));
+                //add(new AppDecision(j4core));
+                add(new AppWebServer(j4core));
 
                 // массив Thread
                 ArrayList<Thread> th = new ArrayList<Thread>();

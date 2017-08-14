@@ -22,5 +22,4 @@ public class Ch {
     public static final int n13 = 13;
     public static final int n14 = 14;
     public static final int n15 = 15;
-
 }

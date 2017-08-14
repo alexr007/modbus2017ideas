@@ -1,15 +1,5 @@
 package app.web.test;
 
-import app.web.ParsedDeviceData;
-import app.web.ValueValidated;
-import jbus.modbus.InvalidModBusFunction;
-import jwad.modules.WadAbstractDevice;
-import app.persistence.BIOcore;
-import jssc.SerialPortException;
-import org.takes.Request;
-
-import java.io.IOException;
-
 /**
  * Created by alexr on 02.05.2017.
  */
@@ -33,13 +23,13 @@ public class ParsedDeviceDataTest {
             );
     }
 
-    public CharSequence testDeviceRead(final BIOcore core) throws IOException {
-        return core.dev(parsed.device()).summaryTxt();
+    public CharSequence testDeviceRead(final BIOcore j4core) throws IOException {
+        return j4core.dev(parsed.device()).summaryTxt();
     }
 
-    public void testDeviceWrite(final BIOcore core) throws IOException, InvalidModBusFunction, SerialPortException {
+    public void testDeviceWrite(final BIOcore j4core) throws IOException, InvalidModBusFunction, SerialPortException {
         if (parsed.hasEnoughParams()){
-            WadAbstractDevice dev = core.dev(parsed.device());
+            WadAbstractDevice dev = j4core.dev(parsed.device());
             dev.channel(Integer.valueOf(parsed.channel()))
                 .set( new ValueValidated(dev.type()).value(parsed.value()) );
         }

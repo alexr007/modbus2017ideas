@@ -1,6 +1,6 @@
 package app.web.tk;
 
-import app.persistence.BIOcore;
+import j4core.BIOcore;
 import org.takes.facets.fork.*;
 import org.takes.tk.*;
 

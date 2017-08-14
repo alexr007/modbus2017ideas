@@ -1,7 +1,5 @@
 package constants;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-
 /**
  * Created by mac on 22.07.2017.
  */

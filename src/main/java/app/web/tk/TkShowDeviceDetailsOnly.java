@@ -1,11 +1,7 @@
 package app.web.tk;
 
-import app.persistence.BIOcore;
-import app.web.ParsedDeviceData;
+import j4core.BIOcore;
 import app.web.rs.RsPageDevice;
-import jbus.modbus.InvalidModBusFunction;
-import jbus.modbus.response.InvalidModBusResponse;
-import jssc.SerialPortException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -33,7 +29,7 @@ public class TkShowDeviceDetailsOnly implements Take {
                 "/xsl/device.xsl",
                 request,
                 new XeDirectives( core.dev( "DI1" ).summaryXml() )
-                //new XeDirectives( core.dev( parsed.device() ).summaryDetailsXml() )
+                //new XeDirectives( j4core.dev( parsed.device() ).summaryDetailsXml() )
             );
         } catch (Exception e) {
             e.printStackTrace();

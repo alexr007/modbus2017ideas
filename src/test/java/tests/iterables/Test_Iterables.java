@@ -2,6 +2,7 @@ package tests.iterables;
 
 import com.google.common.collect.Iterables;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -21,15 +22,23 @@ public class Test_Iterables {
                 ))
         );
 
-        // auto
+        // auto stream
         System.out.println(
             StreamSupport.stream(words.spliterator(), false)
-                .map(item -> String.format("%s%s",
-                    item.substring(0, 1).toUpperCase(),
+                .map(item ->
+                    item.substring(0, 1).toUpperCase()+
                     item.substring(1)
-            )).collect(Collectors.toList())
+            ).collect(Collectors.toList())
         );
 
+        List<String> words1 = Arrays.asList("abc", "cde", "fxp", "qwer", "asdf", "zxcv");
+        System.out.println(
+            words1.stream()
+                .map(item ->
+                    item.substring(0, 1).toUpperCase()+
+                        item.substring(1))
+                .collect(Collectors.toList())
+        );
 
     }
 }
