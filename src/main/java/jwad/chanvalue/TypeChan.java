@@ -6,5 +6,6 @@ package jwad.chanvalue;
  * Value Type (TypeChan)
  */
 public enum TypeChan {
-    DI, DO, A
+    DI, DO, A,
+    None
 }

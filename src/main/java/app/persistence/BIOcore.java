@@ -21,6 +21,7 @@ import java.util.Set;
  * Created by alexr on 27.04.2017.
  */
 public class BIOcore {
+    private final Persistence persistence;
     private final ModBusDevices devices;
     private final ModBusChannels channels;
     private final ModBus bus;
@@ -33,12 +34,15 @@ public class BIOcore {
                 new COMPortProperties(SerialPort.BAUDRATE_57600)
             )
         );
-/*
-        this.devices = DeviceBuilder.buildEcoAlliance(this.bus);
-        this.channels = ChannelBuilder.buildEcoAlliance(this.devices);
-*/
+//        this.devices = DeviceBuilder.buildEcoAlliance(this.bus);
         this.devices = DeviceBuilder.buildTestEnvironment(this.bus);
-        this.channels = ChannelBuilder.buildTestEnvironment(this.devices);
+        this.channels = new ModBusChannels(
+            devices,
+            ChannelBuilder.list()
+        );
+        this.persistence = new Persistence(
+            ChannelBuilder.mapChanCount()
+        );
     }
 
     public ModBus bus() {
@@ -51,6 +55,10 @@ public class BIOcore {
 
     public ModBusChannels channels() {
         return channels;
+    }
+
+    public Persistence persistence() {
+        return persistence;
     }
 
     public WadAbstractDevice dev(DevName name) {

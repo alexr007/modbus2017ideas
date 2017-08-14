@@ -1,12 +1,9 @@
 package app.persistence.init.chan;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.List;
 
-import app.persistence.init.EnumMapFrom;
+import app.persistence.init.MapFrom;
 import jwad.channels.WAD_Channel;
 import org.javatuples.Pair;
 import app.persistence.init.dev.ModBusDevices;
@@ -16,31 +13,30 @@ import constants.DevName;
 /**
  * Created by alexr on 27.04.2017.
  */
-public class ChannelsFromList implements EnumMapFrom<ChanName, WAD_Channel> {
+public class ChannelsFromList implements MapFrom<ChanName, WAD_Channel> {
     private final ModBusDevices devices;
-    private final ArrayList<Pair<DevName, ChannelList>> channelsList;
+    private final List<Pair<DevName, ChannelList>> channelsList;
 
-    public ChannelsFromList(ModBusDevices devices, ArrayList<Pair<DevName, ChannelList>> channelsList) {
+    public ChannelsFromList(ModBusDevices devices, List<Pair<DevName, ChannelList>> channelsList) {
         this.devices = devices;
         this.channelsList = channelsList;
     }
 
-    public EnumMap<ChanName, WAD_Channel> enumMap() throws Exception {
+    public EnumMap<ChanName, WAD_Channel> map() throws Exception {
         EnumMap<ChanName, WAD_Channel> map = new EnumMap<>(ChanName.class);
         channelsList.forEach(
-            (Pair<DevName, ChannelList> pair) -> {
-                // iteration by each pair <dev, chan_list>
-                // pair.getValue0() - device Name
-                // pair.getValue1() - chanlist
-                pair.getValue1().list().forEach(
-                    (Pair<ChanName, Integer> chanItem) -> {
-                        // iteration by each pair <chan_name, chan_id>
-                        // chanItem.getValue0() - chan_name
-                        // chanItem.getValue1() - chan_id
+            (Pair<DevName, ChannelList> pairDevChanList) -> {
+                // iteration by each pairDevChanList <dev, chan_list>
+                // pairDevChanList.getValue0() - device Name
+                // pairDevChanList.getValue1() - chanlist
+                pairDevChanList.getValue1().list().forEach(
+                    (ent) -> {
+                        // iteration by each pairDevChanList <chan_name, chan_id>
+                        // ent.getValue0() - chan_name
+                        // ent.getValue1() - chan_id
                         map.put(
-                            chanItem.getValue0(),
-                            devices.get(pair.getValue0())
-                                .channel(chanItem.getValue1())
+                            ent.name(),
+                            devices.get(pairDevChanList.getValue0()).channel(ent.chanId())
                         );
                     }
                 );

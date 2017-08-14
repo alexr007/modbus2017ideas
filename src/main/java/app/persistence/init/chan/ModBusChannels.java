@@ -1,6 +1,6 @@
 package app.persistence.init.chan;
 
-import app.persistence.init.EnumMapFrom;
+import app.persistence.init.MapFrom;
 import app.persistence.init.dev.ModBusDevices;
 import constants.ChanName;
 import constants.DevName;
@@ -11,7 +11,6 @@ import jssc.SerialPortException;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,7 @@ public final class ModBusChannels {
 
     private final ModBusDevices devices;
     /** Map to hold pairs <ChanName, WAD_Channel> */
-    private final EnumMap<ChanName, WAD_Channel> channelMap;
+    private final Map<ChanName, WAD_Channel> channelMap;
 
     /** Map to hold pairs <pair<dev,chan>, WAD_Channel> */
     private final Map<Pair<Integer,Integer>, WAD_Channel> channelMapByDevChan = new HashMap<>();
@@ -48,17 +47,17 @@ public final class ModBusChannels {
     }
 
     /** ctor 3 - ArrayList<Pair<WadAbstractDevice, ChannelList>> */
-    public ModBusChannels (ModBusDevices devices, ArrayList<Pair<DevName, ChannelList>> channels) throws Exception {
+    public ModBusChannels (ModBusDevices devices, List<Pair<DevName, ChannelList>> channels) throws Exception {
         this(devices, new ChannelsFromList(devices, channels));
     }
 
-    /** ctor 4 - EnumMapFrom */
-    public ModBusChannels(ModBusDevices devices, EnumMapFrom<ChanName, WAD_Channel> channels) throws Exception {
-        this(devices, channels.enumMap());
+    /** ctor 4 - MapFrom */
+    public ModBusChannels(ModBusDevices devices, MapFrom<ChanName, WAD_Channel> channels) throws Exception {
+        this(devices, channels.map());
     }
 
     /** ctor 5 - plain assignment */
-    public ModBusChannels(ModBusDevices devices, EnumMap<ChanName, WAD_Channel> channels) {
+    public ModBusChannels(ModBusDevices devices, Map<ChanName, WAD_Channel> channels) {
         this.devices = devices;
         this.channelMap = channels;
         this.channelMap.forEach(
@@ -74,7 +73,7 @@ public final class ModBusChannels {
         );
     }
 
-    public EnumMap<ChanName, WAD_Channel> channelMap() {
+    public Map<ChanName, WAD_Channel> channelMap() {
         return channelMap;
     }
 
@@ -250,10 +249,6 @@ public final class ModBusChannels {
      *     chan.device().properties().portType()
      *     chan.device().properties().signalType()
      *     chan.device().properties().chanCount()
-     *
-     *
-     * new HexFromByte(
-     *
      */
     public ArrayList<Quartet> quartet() {
         ArrayList<Quartet> list = new ArrayList<>();

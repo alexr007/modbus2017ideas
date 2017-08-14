@@ -1,6 +1,6 @@
 package app.persistence.init.dev;
 
-import app.persistence.init.EnumMapFrom;
+import app.persistence.init.MapFrom;
 import constants.DevName;
 import jbase.hex.HexFromByte;
 import jbus.modbus.ModBus;
@@ -10,7 +10,6 @@ import jssc.SerialPortException;
 import org.javatuples.Triplet;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -22,8 +21,8 @@ public final class ModBusDevices {
     private final String ERROR_ADD_V = "Duplicate ModBus Device:%s id:%s";
 
     private final ModBus modBus;
-    private final EnumMap<DevName, WadAbstractDevice> devices;
-    private final HashMap<Integer, WadAbstractDevice> devicesById = new HashMap<>();
+    private final Map<DevName, WadAbstractDevice> devices;
+    private final Map<Integer, WadAbstractDevice> devicesById = new HashMap<>();
 
     /** ctor 1 - empty set */
     public ModBusDevices(final ModBus modBus) throws Exception {
@@ -40,17 +39,17 @@ public final class ModBusDevices {
         this(modBus, new DevicesFromList(modBus, devices));
     }
 
-    /** ctor 4 - EnumMapFrom */
-    public ModBusDevices(final ModBus modBus, final EnumMapFrom<DevName, WadAbstractDevice> devices) throws Exception {
-        this(modBus, devices.enumMap());
+    /** ctor 4 - MapFrom */
+    public ModBusDevices(final ModBus modBus, final MapFrom<DevName, WadAbstractDevice> devices) throws Exception {
+        this(modBus, devices.map());
     }
 
     /** ctor 5 - plain assignment */
-    public ModBusDevices(final ModBus modBus, final EnumMap<DevName, WadAbstractDevice> devices) throws Exception {
+    public ModBusDevices(final ModBus modBus, final Map<DevName, WadAbstractDevice> devices) throws Exception {
         this.modBus = modBus;
         this.devices = devices;
         /**
-         * one more enumMap for access to WADdevice by ModBusId
+         * one more map for access to WADdevice by ModBusId
          */
         this.devices.forEach(
             (k,v) -> devicesById.put(v.id(), v)

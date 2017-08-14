@@ -3,8 +3,6 @@ package jtools.ranges.test;
 import jtools.ranges.RandomFromRange;
 import jtools.ranges.RangeValues;
 import jtools.validator.ValidValues;
-import jtools.filters.ValueBuffer;
-import jtools.filters.ValueItem;
 
 import java.util.*;
 
@@ -53,6 +51,7 @@ public class Test_Ranges {
 
     public void test_buffer()
     {
+/*
         ValueBuffer buffer = new ValueBuffer(3);
         buffer.print();
         buffer.add(new ValueItem(1));
@@ -69,6 +68,7 @@ public class Test_Ranges {
         buffer.print();
         buffer.add(new ValueItem(6));
         buffer.print();
+*/
     }
 
     public void test_random()

@@ -66,7 +66,7 @@ public abstract class WadAbstractDevice {
         return this.getClass().getSimpleName();
     }
 
-    public ModBusRequestBuilder builder() {
+    private ModBusRequestBuilder builder() {
         return builder;
     }
 
@@ -128,10 +128,6 @@ public abstract class WadAbstractDevice {
         }
         return base.append(details);
     }
-/*
-    public abstract CharSequence summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
-    public abstract Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
-*/
 
     @Override
     public boolean equals(Object obj) {

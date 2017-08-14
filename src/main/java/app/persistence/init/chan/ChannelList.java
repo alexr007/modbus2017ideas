@@ -1,21 +1,21 @@
 package app.persistence.init.chan;
 
-import constants.ChanName;
-import org.javatuples.Pair;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by mac on 21.07.2017.
+ * used just to more verbose
+ * array declaration
  */
 public class ChannelList {
-    private final ArrayList<Pair<ChanName, Integer>> items = new ArrayList<>();
+    private List<ChanEntry> items;
 
-    public ChannelList(Pair<ChanName, Integer>... channels) {
-        items.addAll(Arrays.asList(channels));
+    public ChannelList(ChanEntry... entries) {
+        this.items = Arrays.asList(entries);
     }
 
-    public ArrayList<Pair<ChanName, Integer>> list() {
+    public List<ChanEntry> list() {
         return items;
     }
 }

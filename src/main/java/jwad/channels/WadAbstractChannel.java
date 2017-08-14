@@ -95,16 +95,6 @@ public abstract class WadAbstractChannel {
      */
     public abstract Values getWoFailRaw();
 
-    protected ModBusRequestBuilder builder() {
-        return device.builder();
-    }
-
-/*
-    protected MbResponse run(MbRequest request) throws SerialPortException {
-        return device.run(request);
-    }
-
-*/
     protected void checkForGroupWrite(int length) {
         if (chanNumber()!=0) {
             throw new IllegalArgumentException(String.format("%s Device: for group Write channel must be 0, given:(%d)",

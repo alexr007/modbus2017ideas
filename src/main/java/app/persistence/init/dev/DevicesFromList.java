@@ -1,6 +1,6 @@
 package app.persistence.init.dev;
 
-import app.persistence.init.EnumMapFrom;
+import app.persistence.init.MapFrom;
 import constants.DevName;
 import jbus.modbus.ModBus;
 import jwad.modules.WadAbstractDevice;
@@ -14,7 +14,7 @@ import java.util.EnumMap;
 /**
  * Created by alexr on 26.04.2017.
  */
-public class DevicesFromList implements EnumMapFrom<DevName, WadAbstractDevice> {
+public class DevicesFromList implements MapFrom<DevName, WadAbstractDevice> {
     private final ModBus modBus;
     private final ArrayList<Triplet<DevName, WadDevType, Integer>> devicesList;
 
@@ -28,7 +28,7 @@ public class DevicesFromList implements EnumMapFrom<DevName, WadAbstractDevice> 
     }
 
     @Override
-    public EnumMap<DevName, WadAbstractDevice> enumMap() throws Exception {
+    public EnumMap<DevName, WadAbstractDevice> map() throws Exception {
         final EnumMap<DevName, WadAbstractDevice> map = new EnumMap<>(DevName.class);
         for (Triplet<DevName, WadDevType, Integer> item : devicesList) {
             if (map.containsKey(item.getValue0())) {

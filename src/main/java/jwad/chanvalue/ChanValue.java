@@ -20,6 +20,7 @@ public interface ChanValue<T> {
     default T get() {
         throw new IllegalStateException("unsupported operation on interface ChanValue");
     }
+    default boolean has() {return false;}
 
     static ChanValue.A A(int val) {
         return new ChanValue.A(val);
@@ -39,6 +40,10 @@ public interface ChanValue<T> {
         return new ChanValue.DO(TypeDO.OFF);
     }
 
+    static ChanValue.None None() {
+        return new ChanValue.None();
+    }
+
     class A implements ChanValue {
         private final Integer value;
 
@@ -54,6 +59,11 @@ public interface ChanValue<T> {
         @Override
         public Integer get() {
             return this.value;
+        }
+
+        @Override
+        public boolean has() {
+            return true;
         }
 
         @Override
@@ -98,6 +108,11 @@ public interface ChanValue<T> {
         }
 
         @Override
+        public boolean has() {
+            return true;
+        }
+
+        @Override
         public String toString() {
             return String.format("DI:%s",this.value.toString());
         }
@@ -137,6 +152,11 @@ public interface ChanValue<T> {
         }
 
         @Override
+        public boolean has() {
+            return true;
+        }
+
+        @Override
         public String toString() {
             return String.format("DO:%s",this.value.toString());
         }
@@ -148,5 +168,13 @@ public interface ChanValue<T> {
 
         }
     }
+
+    class None implements ChanValue{
+        @Override
+        public TypeChan type() {
+            return TypeChan.None;
+        }
+    }
+
 
 }

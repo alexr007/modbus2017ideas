@@ -1,22 +1,26 @@
 package app.decision.test.rx;
 
 import app.persistence.BIOcore;
+import app.persistence.Persistence;
+import app.persistence.ValuesTail;
 import constants.ChanName;
 import entities.EnRelay;
 import io.reactivex.*;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.observables.GroupedObservable;
-import jbus.modbus.response.ValuesMapped;
 import jwad.chanvalue.ChanValue;
+import org.javatuples.Pair;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.*;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collectors;
+
+import static constants.ChanName.*;
 
 /**
  * Created by mac on 29.07.2017.
@@ -394,33 +398,156 @@ public class rxTest1 {
 */
     }
 
-    private static ObservableSource<?> apply(Integer i) {
-        return Observable.just(i).delay(1000, TimeUnit.MILLISECONDS);
+    private static ObservableSource<Integer> applyDelay(Integer i) {
+        return Observable.just(i)
+            .delay(1000, TimeUnit.MILLISECONDS);
     }
 
-    public void test0(BIOcore core) throws ExecutionException, InterruptedException {
+    public void test21_time_real(BIOcore core) {
         long startTime = System.currentTimeMillis();
+        Date date = new Date();
+        Instant now = Instant.now();
+        System.out.printf("starttime: %d\nDate: %d\nInstant:%d",
+        startTime, date.getTime(), now.toEpochMilli());
+    }
 
-        Consumer<Object> consumer = new Consumer<Object>() {
+    public void test22(BIOcore core) throws ExecutionException, InterruptedException {
+        long startTime = System.currentTimeMillis();
+        Consumer<Integer> consumer = new Consumer<Integer>() {
             @Override
-            public void accept(Object o) throws Exception {
+            public void accept(Integer o) throws Exception {
                 System.out.printf("Item: %d , Time: %dms\n", o, System.currentTimeMillis() - startTime);
                 EnRelay r1 = new EnRelay(core.channels().get(ChanName.R1));
-                if ((Integer)o % 2 ==0) {r1.on();} else
-                {r1.off();}
+                if (o%2==0) r1.on(); else r1.off();
             }
         };
 
-        Observable<?> observable = Observable.range(1, 10)
-            .concatMap(rxTest1::apply)
-/*
-            .doOnNext(i -> {
-            })
-*/
-            ;
+        Observable<Integer> observable = Observable.range(1, 10)
+            .concatMap(rxTest1::applyDelay);
 
         observable.blockingSubscribe(consumer);
+/*
+        Phaser p = new Phaser();
+        CountDownLatch cdl = new CountDownLatch();
+        CyclicBarrier cb = new CyclicBarrier();
+        Semaphore s = new Semaphore();
+        CompletableFuture<Object> cf = new CompletableFuture<>();
+        new CountedCompleter<>();
+        new Exchanger<>();
+        new Future<>();
+        new FutureTask<>();
+        new ThreadLocalRandom()
+*/
+    }
 
+
+    public void test23(BIOcore core) throws ExecutionException, InterruptedException {
+/*
+        Observable<Pair> o = Observable.create((ObservableEmitter<Pair> s) ->
+        {
+            s.onNext(new Pair<>(1, "a"));
+            s.onNext(new Pair<>(2, "b"));
+            s.onNext(new Pair<>(1, "c"));
+            s.onNext(new Pair<>(2, "d"));
+            s.onComplete();
+        });
+
+        o
+            .filter(new Predicate<Pair>() {
+                @Override
+                public boolean test(Pair pair) throws Exception {
+                    return (int)pair.getValue0()==1;
+                }
+            })
+            .groupBy(pair -> (Integer) pair.getValue0())
+            .subscribe(
+                g -> {
+                    System.out.println(g.getKey());
+                    System.out.println(g);
+                }
+            );
+*/
+
+/*
+        o.map(v->"Item: "+v.toString())
+            .subscribe(s-> System.out.println(s));
+*/
+
+        Observable<Object> o1 = Observable.create(s -> {
+                s.onNext(new Pair<>(1, "1a"));
+                s.onNext(new Pair<>(2, "1b"));
+                s.onNext(new Pair<>(1, "1c"));
+                s.onNext(new Pair<>(2, "1d"));
+                s.onComplete();
+        });
+        Observable<Object> o2 = Observable.create(s -> {
+                s.onNext(new Pair<>(1, "2a"));
+                s.onNext(new Pair<>(2, "2b"));
+                s.onNext(new Pair<>(1, "2c"));
+                s.onNext(new Pair<>(2, "2d"));
+                s.onComplete();
+        });
+
+        Observable<Object> o = Observable.merge(o1, o2);
+
+        o
+            .skip(1)
+            .subscribe(item->{
+            System.out.printf("Item:%s, try:1, thread:%s\n",item,  Thread.currentThread().getName());
+        });
+    }
+
+    public void test0(BIOcore core) {
+        Persistence p = core.persistence();
+        System.out.println(p);
+
+        p.write(V10_2, ChanValue.A(10));
+        p.write(V10_2, ChanValue.A(11));
+        p.write(V10_2, ChanValue.A(12));
+        p.write(V10_2, ChanValue.A(13));
+
+        System.out.println(p.read(V10_2));
+
+
+
+        ValuesTail vt = new ValuesTail(3);
+        vt.add(ChanValue.A(10));
+        vt.add(ChanValue.A(20));
+        vt.add(ChanValue.A(30));
+        System.out.println(vt.list());
+        System.out.println(vt.size());
+        vt.add(ChanValue.A(40));
+        System.out.println(vt.list());
+        System.out.println(vt.size());
+
+/*
+        ArrayList<String> l = new ArrayList<>();
+        l.add("1st");
+        l.add("2nd");
+        l.add("3rd");
+        System.out.println(l);
+        l.add("4th");
+        l.remove(0);
+        System.out.println(l);
+        IntStream.range(0,l.size())
+            .forEach( index -> {
+                System.out.printf("Index:%d, Value:%s\n", index, l.get(l.size()-index-1));
+            });
+
+*/
+    }
+
+    public String test77 (Set<String> set) {
+        return set.
+            stream()
+            .reduce((t, u) -> t + " " + u)
+            .orElse("");
+    }
+
+    public String test78 (Set<String> set) {
+        return set.
+            stream()
+            .collect(Collectors.joining(" "));
     }
 
 }
