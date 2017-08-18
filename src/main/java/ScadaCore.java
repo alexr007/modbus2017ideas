@@ -1,6 +1,6 @@
 import app.*;
-import _IDEAS_.decision.test.rx.rxTest1;
 import j4core.BIOcore;
+import stackoverflow.OOPStest;
 
 public class ScadaCore {
     public static void main(String[] args) throws Exception {
@@ -12,10 +12,11 @@ public class ScadaCore {
         if ((args.length == 2)&&(args[1].equals("core_test"))) {
             new AppConsoleSpeedTest(args[0]).run();
         } else {
+            //OOPStest.main(args);
             //SortedSetTest.test33();
             //new ChanValueTest().test3();
             BIOcore core = new BIOcore(args[0]);
-            new rxTest1().test0(core);
+            //new rxTest1().test0(core);
 
 /*
             ChannelsSet cs = new ChannelsSet(j4core.channels(), EnumSet.allOf(ChanName.class));

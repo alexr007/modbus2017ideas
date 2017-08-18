@@ -37,7 +37,7 @@ public class BIOcore {
             )
         );
         this.devices = new ModBusDevices(this.bus, new DeviceBuilded().devices());
-        ChannelBuilded cb = new ChannelBuilded();
+        final ChannelBuilded cb = new ChannelBuilded();
         this.channels = new ModBusChannels(devices, cb.list());
         this.persistence = new Persistence(cb.mapChanCount());
     }
@@ -84,7 +84,7 @@ public class BIOcore {
 
     public void finish()  {
         try {
-            bus().finish();
+            finishUnsafe();
         } catch (SerialPortException e) {
             throw new IllegalArgumentException("BUS ERROR");
         }
@@ -93,6 +93,5 @@ public class BIOcore {
     public void finishUnsafe() throws SerialPortException {
         bus().finish();
     }
-
 
 }
