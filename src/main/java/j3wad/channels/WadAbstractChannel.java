@@ -106,6 +106,10 @@ public abstract class WadAbstractChannel {
 
     }
 
+    public <T extends WadAbstractChannel> T cast() {
+        return (T)this;
+    }
+
     @Override
     public String toString() {
         return String.format("Channel: id:%2s, Device: %s ", chanNumber(),device());

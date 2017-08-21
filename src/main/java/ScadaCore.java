@@ -1,6 +1,5 @@
 import app.*;
 import j4core.BIOcore;
-import stackoverflow.OOPStest;
 
 public class ScadaCore {
     public static void main(String[] args) throws Exception {

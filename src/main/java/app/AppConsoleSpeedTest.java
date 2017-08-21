@@ -9,6 +9,8 @@ import constants.Id;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
+import java.io.IOException;
+
 /**
  * Created by alexr on 11.04.2017.
  */
@@ -19,7 +21,7 @@ public class AppConsoleSpeedTest {
         this.portName = portName;
     }
 
-    public void run() throws SerialPortException, InterruptedException {
+    public void run() throws IOException {
         ModBus modBus = new ModBus(
             new COMPort(
                 portName,
@@ -39,12 +41,10 @@ public class AppConsoleSpeedTest {
                 for (int i = 1; i <= count; i++) {
                     t += device.temperature();
                 }
-            } catch (SerialPortException e) {
+            } catch (SerialPortException | InvalidModBusResponse e) {
                 e.printStackTrace();
-            } catch (InvalidModBusResponse invalidModBusResponse) {
-                invalidModBusResponse.printStackTrace();
             }
-            //System.out.println(tests.t);
+        //System.out.println(tests.t);
 
         delta = System.currentTimeMillis() - millis;
         System.out.println(

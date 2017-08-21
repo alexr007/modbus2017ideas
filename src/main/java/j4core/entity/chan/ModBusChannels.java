@@ -11,6 +11,8 @@ import jssc.SerialPortException;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
+
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -233,7 +235,7 @@ public final class ModBusChannels {
         );
     }
 
-    public void finish() throws SerialPortException {
+    public void finish() throws IOException {
         devices.finish();
     }
 

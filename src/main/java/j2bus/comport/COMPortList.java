@@ -1,11 +1,13 @@
 package j2bus.comport;
 
 import com.google.common.base.Joiner;
+import com.jcabi.aspects.Timeable;
 import jssc.SerialPortList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 /**
@@ -34,6 +36,7 @@ public class COMPortList {
         return Joiner.on("").join(count(),PREFIX,Joiner.on(DELIM).join(get()),POSTFIX);
     }
 
+    //@Timeable(limit = 500, unit = TimeUnit.MILLISECONDS)
     private void doRead() {
         if (!ready) {
             list.addAll(Arrays.asList(SerialPortList.getPortNames(

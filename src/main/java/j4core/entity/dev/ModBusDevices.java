@@ -9,6 +9,7 @@ import j3wad.WadDevType;
 import jssc.SerialPortException;
 import org.javatuples.Triplet;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -124,7 +125,7 @@ public final class ModBusDevices {
         return devices.get(deviceName);
     }
 
-    public void finish() throws SerialPortException {
+    public void finish() throws IOException {
         modBus.finish();
     }
 

@@ -20,74 +20,66 @@ public class COMPort implements COMPortBaseInterface {
     // locker for multithreading
     private final Object locker = new Object();
 
-    /**
-     *
-     * @param portName
-     * @throws SerialPortException
-     */
-    public COMPort(String portName) throws SerialPortException {
+    public COMPort(String portName) throws IOException {
         this(portName,
             new COMPortProperties(57600)
         );
     }
 
-    /**
-     *
-     * @param portName
-     * @param properties
-     * @throws SerialPortException
-     */
-    public COMPort(String portName, COMPortProperties properties) throws SerialPortException {
+    public COMPort(String portName, COMPortProperties properties) throws IOException {
         this.port = new SerialPort(portName);
-        port.openPort();
-        port.setParams(
-            properties.baudRate(),
-            properties.dataBits(),
-            properties.stopBits(),
-            properties.parity()
-        );
-        port.setFlowControlMode(
-            SerialPort.FLOWCONTROL_NONE
-            //| SerialPort.FLOWCONTROL_RTSCTS_IN
-            //| SerialPort.FLOWCONTROL_RTSCTS_OUT
-        );
-        this.port.addEventListener(listener, SerialPort.MASK_RXCHAR);
-    }
-
-    /**
-     * We need the close port after use it
-     */
-    @Override
-    public void close() throws SerialPortException {
-        port.closePort();
+        try {
+            port.openPort();
+            port.setParams(
+                properties.baudRate(),
+                properties.dataBits(),
+                properties.stopBits(),
+                properties.parity()
+            );
+            port.setFlowControlMode(
+                SerialPort.FLOWCONTROL_NONE
+                //| SerialPort.FLOWCONTROL_RTSCTS_IN
+                //| SerialPort.FLOWCONTROL_RTSCTS_OUT
+            );
+            this.port.addEventListener(listener, SerialPort.MASK_RXCHAR);
+        } catch (SerialPortException e) {
+            throw new IOException("COM Port. can't open",e);
+        }
     }
 
     @Override
-    public void write(Bytes buffer) throws SerialPortException {
-        port.writeBytes(buffer.bytes());
+    public void close() throws IOException {
+        try {
+            port.closePort();
+        } catch (SerialPortException e) {
+            throw new IOException("COM Port. can't close",e);
+        }
     }
 
-    /*
-     * just write byte[] to buffer
-     */
     @Override
-    public void write(byte[] buffer) throws SerialPortException {
-        port.writeBytes(buffer);
-    }
-
-    /**
-     * write byte[] to buffer
-     * and wait byte[] from buffer
-     */
-    @Override
-    public byte[] writeRead(byte[] buffer) throws SerialPortException, InterruptedException {
-        synchronized (locker) {
-            received = false;
+    public void write(byte[] buffer) throws IOException {
+        try {
             port.writeBytes(buffer);
-            while (!received) {
-                locker.wait();
+        } catch (SerialPortException e) {
+            throw new IOException("COM Port. can't write",e);
+        }
+    }
+
+    @Override
+    public byte[] writeRead(byte[] buffer) throws IOException {
+        try {
+            synchronized (locker) {
+                received = false;
+                port.writeBytes(buffer);
+                while (!received) {
+                    locker.wait();
+                }
+                return readed;
             }
-            return readed;
+        } catch (SerialPortException e) {
+            throw new IOException("COM Port. can't write",e);
+        } catch (InterruptedException e) {
+            throw new IOException("COM Port. InterruptedException",e);
         }
     }
 
@@ -102,24 +94,19 @@ public class COMPort implements COMPortBaseInterface {
     }
 
     /**
-     * Inner class to implement read from serial DRPort
+     * Inner class to implement read from serial port
      * in different thread
-     *
      */
-
     class Listener implements SerialPortEventListener {
         @Override
         public void serialEvent(SerialPortEvent event) {
             synchronized (locker) {
                 if (event.isRXCHAR() & event.getEventValue()>0) {
                     try {
-                        // readed = port.readBytes(event.getEventValue(),100);
-                        // System.currentTimeMillis - startTime < timeout)
                         readed = port.readBytes(event.getEventValue());
                         received = true;
-                    } catch (SerialPortException e1) {
-                        System.out.println("COM port error");
-                        e1.printStackTrace();
+                    } catch (SerialPortException ex) {
+                        throw new IllegalArgumentException("COM port error", ex);
                     }
                 }
                 locker.notify();

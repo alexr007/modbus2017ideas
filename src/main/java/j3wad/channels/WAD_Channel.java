@@ -138,4 +138,5 @@ public interface WAD_Channel {
      * @return link to parent device
      */
     WadAbstractDevice device();
+    <T extends WadAbstractChannel> T cast();
 }

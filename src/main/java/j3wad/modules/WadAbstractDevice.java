@@ -135,6 +135,10 @@ public abstract class WadAbstractDevice {
             && this.modbus.equals(WadAbstractDevice.class.cast(obj).modbus);
     }
 
+    public <T extends WadAbstractDevice> T cast() {
+        return (T)this;
+    }
+
     public static WadAbstractDevice build(ModBus modBus, WadDevType type, int modbusId) {
         WadAbstractDevice device;
         switch (type) {

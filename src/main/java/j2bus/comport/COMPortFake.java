@@ -10,27 +10,22 @@ import java.io.IOException;
  */
 public class COMPortFake implements COMPortBaseInterface {
 
-    public COMPortFake(String portName) throws SerialPortException {
+    public COMPortFake(String portName) throws IOException {
         this(portName,
             new COMPortProperties(57600)
         );
     }
 
-    public COMPortFake(String portName, COMPortProperties properties) throws SerialPortException {
+    public COMPortFake(String portName, COMPortProperties properties) throws IOException {
     }
 
     @Override
-    public void write(byte[] buffer) throws SerialPortException {
+    public void write(byte[] buffer) throws IOException {
         throw new IllegalArgumentException("Serial port in fake mode (for testing purposes)");
     }
 
     @Override
-    public void write(Bytes buffer) throws SerialPortException {
-        throw new IllegalArgumentException("Serial port in fake mode (for testing purposes)");
-    }
-
-    @Override
-    public byte[] writeRead(byte[] buffer) throws SerialPortException, InterruptedException {
+    public byte[] writeRead(byte[] buffer) throws IOException {
         throw new IllegalArgumentException("Serial port in fake mode (for testing purposes)");
     }
 
@@ -40,6 +35,6 @@ public class COMPortFake implements COMPortBaseInterface {
     }
 
     @Override
-    public void close() throws SerialPortException {
+    public void close() throws IOException {
     }
 }

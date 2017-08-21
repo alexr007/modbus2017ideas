@@ -1,5 +1,6 @@
 package j4core;
 
+import j2bus.comport.COMPortTimed;
 import j4core.build.ChannelBuilded;
 import j4core.build.DeviceBuilded;
 import j4core.entity.chan.ModBusChannels;
@@ -17,6 +18,7 @@ import jssc.SerialPortException;
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,9 +33,12 @@ public class BIOcore {
     public BIOcore(String comName) throws Exception {
         this.bus = new ModBus(
             //new COMPortFake(
+            new COMPortTimed(
             new COMPort(
                 comName,
                 new COMPortProperties(SerialPort.BAUDRATE_57600)
+            ),
+                12
             )
         );
         this.devices = new ModBusDevices(this.bus, new DeviceBuilded().devices());
@@ -85,12 +90,12 @@ public class BIOcore {
     public void finish()  {
         try {
             finishUnsafe();
-        } catch (SerialPortException e) {
-            throw new IllegalArgumentException("BUS ERROR");
+        } catch (IOException e) {
+            throw new IllegalArgumentException("ModBus: Can't close Serial port", e);
         }
     }
 
-    public void finishUnsafe() throws SerialPortException {
+    public void finishUnsafe() throws IOException {
         bus().finish();
     }
 

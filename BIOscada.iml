@@ -17,9 +17,6 @@
     <orderEntry type="library" name="Maven: org.takes:takes:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.jcabi:jcabi-http:1.16" level="project" />
     <orderEntry type="library" name="Maven: com.jcabi:jcabi-immutable:1.4" level="project" />
-    <orderEntry type="library" name="Maven: com.jcabi:jcabi-aspects:0.22.2" level="project" />
-    <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.8.4" level="project" />
-    <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: com.jcabi:jcabi-log:0.17" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.5" level="project" />
     <orderEntry type="library" name="Maven: com.jcabi:jcabi-manifests:1.1" level="project" />
@@ -32,5 +29,8 @@
     <orderEntry type="library" name="Maven: org.javatuples:javatuples:1.2" level="project" />
     <orderEntry type="library" name="Maven: io.reactivex.rxjava2:rxjava:2.1.2" level="project" />
     <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jcabi:jcabi-aspects:0.22.6" level="project" />
+    <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.aspectj:aspectjrt:1.8.10" level="project" />
   </component>
 </module>

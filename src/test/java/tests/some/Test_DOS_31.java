@@ -6,13 +6,14 @@ import j2bus.modbus.ModBus;
 import j3wad.modules.WAD_DOS_BUS;
 import jssc.SerialPortException;
 
+import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by alexr on 08.04.2017.
  */
 public class Test_DOS_31 {
-    public void run(String portName) throws SerialPortException, InterruptedException {
+    public void run(String portName) throws IOException, InterruptedException {
         ModBus modBus = new ModBus(
             new COMPort(
                 portName,
