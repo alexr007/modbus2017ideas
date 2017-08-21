@@ -1,4 +1,4 @@
-package stackoverflow;
+package stackoverflow.oo1;
 
 import java.util.HashMap;
 import java.util.Map;

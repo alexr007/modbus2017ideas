@@ -1,4 +1,4 @@
-package stackoverflow;
+package stackoverflow.oo1;
 
 public class OOPStest {
     public static void main(String[] args)  {
