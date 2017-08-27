@@ -25,8 +25,8 @@ public class AppConsoleSpeedTest {
         ModBus modBus = new ModBus(
             new COMPort(
                 portName,
-                new COMPortProperties(SerialPort.BAUDRATE_57600)
-            )
+                new COMPortProperties(SerialPort.BAUDRATE_57600),
+                500)
         );
 
         System.out.println("port opened");

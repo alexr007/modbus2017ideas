@@ -4,7 +4,6 @@ import j2bus.comport.COMPort;
 import j2bus.comport.COMPortProperties;
 import j2bus.modbus.ModBus;
 import j3wad.modules.WAD_DOS_BUS;
-import jssc.SerialPortException;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
@@ -17,8 +16,8 @@ public class Test_DOS_31 {
         ModBus modBus = new ModBus(
             new COMPort(
                 portName,
-                new COMPortProperties(57600)
-            )
+                new COMPortProperties(57600),
+                500)
         );
         System.out.println("port opened");
         long delta;

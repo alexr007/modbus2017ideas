@@ -1,9 +1,9 @@
 package j2bus.comport;
 
-import j1base.primitives.Bytes;
 import jssc.*;
-
 import java.io.IOException;
+
+import static java.lang.Math.toIntExact;
 
 /**
  * Created by alexr on 02.12.2016.
@@ -17,17 +17,25 @@ public class COMPort implements COMPortBaseInterface {
     private boolean received;
     // readed bytes
     private byte[] readed;
-    // locker for multithreading
+    // locker for multithreaded
     private final Object locker = new Object();
+    // timeout, milliseconds
+    private final long timeout;
+    // executor for timeout
 
     public COMPort(String portName) throws IOException {
-        this(portName,
-            new COMPortProperties(57600)
-        );
+        this(portName, 1_000L); // default timeout = 1 second
     }
 
-    public COMPort(String portName, COMPortProperties properties) throws IOException {
+    public COMPort(String portName, long timeout) throws IOException {
+        this(portName,
+            new COMPortProperties(57600),
+            timeout); // default timeout
+    }
+
+    public COMPort(String portName, COMPortProperties properties, long timeout) throws IOException {
         this.port = new SerialPort(portName);
+        this.timeout = timeout;
         try {
             port.openPort();
             port.setParams(
@@ -43,7 +51,7 @@ public class COMPort implements COMPortBaseInterface {
             );
             this.port.addEventListener(listener, SerialPort.MASK_RXCHAR);
         } catch (SerialPortException e) {
-            throw new IOException("COM Port. can't open",e);
+            throw new IOException("COM Port. can't open @ CTOR",e);
         }
     }
 
@@ -61,8 +69,19 @@ public class COMPort implements COMPortBaseInterface {
         try {
             port.writeBytes(buffer);
         } catch (SerialPortException e) {
-            throw new IOException("COM Port. can't write",e);
+            throw new IOException("COM Port. Write error");
         }
+    }
+
+    private byte[] waitAndRead() throws InterruptedException, IOException {
+        final long start = System.nanoTime();
+        while (!received) {
+            locker.wait(timeout);
+            if ( System.nanoTime()-start > timeout*1_000_000) {
+                throw new IOException("COM Port. TimeoutException");
+            }
+        }
+        return readed;
     }
 
     @Override
@@ -70,14 +89,9 @@ public class COMPort implements COMPortBaseInterface {
         try {
             synchronized (locker) {
                 received = false;
-                port.writeBytes(buffer);
-                while (!received) {
-                    locker.wait();
-                }
-                return readed;
+                this.write(buffer);
+                return waitAndRead();
             }
-        } catch (SerialPortException e) {
-            throw new IOException("COM Port. can't write",e);
         } catch (InterruptedException e) {
             throw new IOException("COM Port. InterruptedException",e);
         }
@@ -94,8 +108,7 @@ public class COMPort implements COMPortBaseInterface {
     }
 
     /**
-     * Inner class to implement read from serial port
-     * in different thread
+     * Inner class to implement read from serial port in different thread
      */
     class Listener implements SerialPortEventListener {
         @Override
@@ -103,10 +116,11 @@ public class COMPort implements COMPortBaseInterface {
             synchronized (locker) {
                 if (event.isRXCHAR() & event.getEventValue()>0) {
                     try {
-                        readed = port.readBytes(event.getEventValue());
+                        readed = port.readBytes(event.getEventValue(), toIntExact(timeout));
+                    } catch (SerialPortTimeoutException| SerialPortException ex) {
+                        readed = new byte[0];
+                    } finally {
                         received = true;
-                    } catch (SerialPortException ex) {
-                        throw new IllegalArgumentException("COM port error", ex);
                     }
                 }
                 locker.notify();

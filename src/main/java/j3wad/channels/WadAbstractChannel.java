@@ -43,6 +43,7 @@ public abstract class WadAbstractChannel {
         this.mapper = new ChanValueFromInt(this);
     }
 
+    // just delegate
     public WadDevType type() {
         return device.type();
     }

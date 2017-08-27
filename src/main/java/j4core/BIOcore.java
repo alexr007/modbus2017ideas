@@ -1,6 +1,5 @@
 package j4core;
 
-import j2bus.comport.COMPortTimed;
 import j4core.build.ChannelBuilded;
 import j4core.build.DeviceBuilded;
 import j4core.entity.chan.ModBusChannels;
@@ -14,7 +13,6 @@ import j2bus.modbus.ModBus;
 import j3wad.modules.WadAbstractDevice;
 import j3wad.channels.WAD_Channel;
 import jssc.SerialPort;
-import jssc.SerialPortException;
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 
@@ -33,13 +31,10 @@ public class BIOcore {
     public BIOcore(String comName) throws Exception {
         this.bus = new ModBus(
             //new COMPortFake(
-            new COMPortTimed(
             new COMPort(
                 comName,
-                new COMPortProperties(SerialPort.BAUDRATE_57600)
-            ),
-                12
-            )
+                new COMPortProperties(SerialPort.BAUDRATE_57600),
+                100)
         );
         this.devices = new ModBusDevices(this.bus, new DeviceBuilded().devices());
         final ChannelBuilded cb = new ChannelBuilded();
