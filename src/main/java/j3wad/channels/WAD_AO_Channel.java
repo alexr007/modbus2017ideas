@@ -7,6 +7,8 @@ import j2bus.modbus.command.MbMerged;
 import j2bus.modbus.response.*;
 import j3wad.modules.WadAbstractDevice;
 
+import java.io.IOException;
+
 /**
  * Created by alexr on 22.01.2017.
  */
@@ -23,7 +25,7 @@ final public class WAD_AO_Channel extends WAD_AO_ implements WAD_Channel {
     }
 
     @Override
-    protected Values getMultiple() throws SerialPortException, InvalidModBusResponse {
+    protected Values getMultiple() {
         return
             new Values.Multiple(
                 new WordsFrom2Bytes( device().read_(0x200C,0x0004))
@@ -31,7 +33,7 @@ final public class WAD_AO_Channel extends WAD_AO_ implements WAD_Channel {
     }
 
     @Override
-    protected Values getSingle() throws SerialPortException, InvalidModBusResponse {
+    protected Values getSingle() {
         return
             new Values.Single(
                 new WordsFrom2Bytes( device().read_(0x200C+ chanNumber()-1))
@@ -39,7 +41,7 @@ final public class WAD_AO_Channel extends WAD_AO_ implements WAD_Channel {
     }
 
     @Override
-    public void setUnSafe(int val) throws SerialPortException {
+    public void setUnSafe(int val) throws IOException {
         assert (chanNumber()>0);
         device().write_(0x200C+ chanNumber()-1, new MbData(new Word(val)));
     }
@@ -55,7 +57,7 @@ final public class WAD_AO_Channel extends WAD_AO_ implements WAD_Channel {
                     new Word(val[2]).toBytes(),
                     new Word(val[3]).toBytes()
                 ));
-        } catch (SerialPortException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
     }

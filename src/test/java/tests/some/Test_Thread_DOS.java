@@ -1,6 +1,5 @@
 package tests.some;
 
-import j2bus.modbus.InvalidModBusFunction;
 import j3wad.modules.WadAbstractDevice;
 import jssc.SerialPortException;
 

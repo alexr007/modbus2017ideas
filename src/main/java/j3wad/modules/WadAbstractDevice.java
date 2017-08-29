@@ -9,24 +9,25 @@ import jssc.SerialPortException;
 import j1base.hex.HexFromByte;
 import j2bus.modbus.*;
 import j2bus.modbus.device.DeviceProperties;
-import j2bus.modbus.response.InvalidModBusResponse;
 import j3wad.WadDevType;
 import j3wad.channels.WAD_Channel;
 import j3wad.summary.WadSummary;
 import org.xembly.Directives;
 
+import java.io.IOException;
+
 public abstract class WadAbstractDevice {
     private static final String ERROR_MESSAGE_MODBUS = "Something ModBus error occurred";
     private static final String ERROR_UNKNOWN_TYPE = "Unknown ModBus device type: %s";
 
-    private final ModBus modbus;
+    private final ModBusInterface modbus;
     private final int deviceId;
     private final WadDevType type;
     private final DeviceProperties properties;
     private final ModBusRequestBuilder builder;
     protected WadSummary summary;
 
-    public WadAbstractDevice(ModBus modbus, int deviceId, WadDevType type, DeviceProperties properties) {
+    public WadAbstractDevice(ModBusInterface modbus, int deviceId, WadDevType type, DeviceProperties properties) {
         this.modbus = modbus;
         this.deviceId = deviceId;
         this.type = type;
@@ -49,7 +50,9 @@ public abstract class WadAbstractDevice {
     /**
      * @return device temperature in celsius
      */
-    public abstract int temperature() throws SerialPortException, InvalidModBusResponse, InvalidModBusFunction;
+    public int temperature() throws IOException {
+        throw new IllegalArgumentException("Method temperature not implemented on this device type");
+    }
 
     /**
      * @return ModBus device id: 1..255
@@ -73,17 +76,12 @@ public abstract class WadAbstractDevice {
         return properties;
     }
 
-    protected MbResponse run(MbRequest req) throws SerialPortException {
-        return modbus.run(req);
-    }
-
     @Override
     public String toString() {
-        return
-            String.format("%-13s id: %s",
-                name(),
-                new HexFromByte(deviceId).toString()
-            );
+        return String.format("%-13s id: %s",
+            name(),
+            new HexFromByte(deviceId).toString()
+        );
     }
 
     public CharSequence summaryTxt() {
@@ -159,23 +157,22 @@ public abstract class WadAbstractDevice {
         return device;
     }
 
-    public void write_(int baseReg, Bytes data) throws SerialPortException {
+    public void write_(int baseReg, Bytes data) throws IOException {
         write_(baseReg, 1, data);
     }
 
-    public void write_(int baseReg, int count, Bytes data) throws SerialPortException {
-        run( builder().cmdWriteRegister(baseReg, count, data ) );
+    public void write_(int baseReg, int count, Bytes data) throws IOException {
+        modbus.run( builder().cmdWriteRegister(baseReg, count, data ) );
     }
 
-    public RsAnalyzed read_(int baseReg) throws SerialPortException {
+    public RsAnalyzed read_(int baseReg) throws IOException {
         return read_(baseReg, 1);
     }
 
-    public RsAnalyzed read_(int baseReg, int regCount) throws SerialPortException {
-        return
-            new RsAnalyzed(
-                run(builder().cmdReadRegister(baseReg,regCount)),
-                new RqInfo(id(), RsParsed.cmdRead, regCount*2)
-            );
+    public RsAnalyzed read_(int baseReg, int regCount) throws IOException {
+        return new RsAnalyzed(
+            modbus.run(builder().cmdReadRegister(baseReg,regCount)),
+            new RqInfo(id(), RsParsed.cmdRead, regCount*2)
+        );
     }
 }

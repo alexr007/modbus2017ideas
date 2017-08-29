@@ -19,7 +19,7 @@ public final class DevMapFromList implements MapFrom<DevName, WadAbstractDevice>
     private final List<Triplet<DevName, WadDevType, Integer>> devicesList;
 
     public DevMapFromList(final ModBus modBus, final Triplet<DevName, WadDevType, Integer>... list) {
-        this(modBus, new ArrayList<>(Arrays.asList(list)));
+        this(modBus, Arrays.asList(list));
     }
 
     public DevMapFromList(final ModBus modBus, final List<Triplet<DevName, WadDevType, Integer>> list) {

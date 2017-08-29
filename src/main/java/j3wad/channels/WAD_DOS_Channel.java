@@ -2,7 +2,6 @@ package j3wad.channels;
 
 import j1base.arr.IntBitsFromArray;
 import j1base.arr.ArrayFromIntBits;
-import j2bus.modbus.InvalidModBusFunction;
 import j2bus.modbus.command.MbData;
 import j2bus.modbus.response.*;
 import jssc.SerialPortException;
@@ -10,6 +9,7 @@ import j3wad.chanvalue.ChanValue;
 import j3wad.chanvalue.IntFromChanValue;
 import j3wad.modules.WadAbstractDevice;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,66 +37,64 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
             return chanNumber()==0
                 ? getMultiple()
                 : getSingle();
-        } catch (SerialPortException e) {
-            throw new IllegalArgumentException(e);
-        } catch (InvalidModBusResponse e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
+    private Values getMultiple() throws IOException {
         return
             new Values.Multiple(
                 new ArrayFromIntBits( device().read_(0x200B).get(1)));
     }
 
-    private Values getSingle() throws SerialPortException, InvalidModBusResponse {
+    private Values getSingle() throws IOException {
         return
             new Values.Single( device().read_(0x2002+ chanNumber()-1).get(1));
     }
 
     @Override
-    public Values failsRaw() throws InvalidModBusFunction {
-        throw new InvalidModBusFunction();
+    public Values failsRaw()  {
+        throw new IllegalArgumentException();
     }
 
     @Override
-    public boolean opened() throws InvalidModBusResponse, SerialPortException {
+    public boolean opened()  {
         // support only SINGLE port
         assert chanNumber()>0;
         return (getWoFailRaw().get()==0);
     }
 
     @Override
-    public boolean closed() throws InvalidModBusResponse, SerialPortException {
+    public boolean closed()  {
         // support only SINGLE port
         assert chanNumber()>0;
         return (getWoFailRaw().get()==1);
     }
 
     @Override
-    public void on() throws SerialPortException {
+    public void on() throws IOException {
         if (chanNumber()==0) {
             onAll();
         } else
             onSingle();
     }
 
-    private void onSingle() throws SerialPortException {
+    private void onSingle() throws IOException {
         device().write_(
             0x2002+ chanNumber()-1,
             new MbData(new byte[]{0,1}));
     }
 
     @Override
-    public void off() throws SerialPortException {
+    public void off() throws IOException {
         if (chanNumber()==0) {
             offAll();
         } else
             offSingle();
     }
 
-    private void offSingle() throws SerialPortException {
+    private void offSingle() throws IOException {
         device().write_(0x2002+ chanNumber()-1,
             new MbData(new byte[]{0,0}));
     }
@@ -115,29 +113,29 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     public void set(int val) {
         try {
             setUnSafe(val);
-        } catch (SerialPortException e) {
-            throw new IllegalArgumentException("ModBus Error Happens");
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 
-    public void setUnSafe(int val) throws SerialPortException {
+    public void setUnSafe(int val) throws IOException {
         if (chanNumber()==0) {
             setAll(val);
         } else
             setSingle(val);
     }
 
-    private void setSingle(int val) throws SerialPortException {
+    private void setSingle(int val) throws IOException {
         device().
             write_(0x2002+ chanNumber()-1,
             new MbData(new byte[]{0, (byte) (val==0?0:1)}));
     }
 
-    private void onAll() throws SerialPortException {
+    private void onAll() throws IOException {
         setAll(0xFF);
     }
 
-    private void offAll() throws SerialPortException {
+    private void offAll() throws IOException {
         setAll(0x00);
     }
 
@@ -170,17 +168,17 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     public void set(int[] val) {
         try {
             setAll(val);
-        } catch (SerialPortException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    private void setAll(int[] val) throws SerialPortException {
+    private void setAll(int[] val) throws IOException {
         checkForGroupWrite(val.length);
         setAll(new IntBitsFromArray(val).toByte());
     }
 
-    private void setAll(int val) throws SerialPortException {
+    private void setAll(int val) throws IOException {
         device().write_(0x200B, new MbData(new byte[]{0, (byte)val}));
     }
 

@@ -5,6 +5,8 @@ import j2bus.modbus.response.ValuesMapped;
 import j3wad.channels.WAD_Channel;
 import j3wad.chanvalue.ChanValue;
 
+import java.io.IOException;
+
 /**
  * Created by alexr on 17.02.2017.
  */
@@ -27,7 +29,7 @@ public class EnRelay extends EntityAbstract implements ISwitch {
     }
 
     @Override
-    public ValuesMapped<ChanValue> get() {
+    public ValuesMapped<ChanValue> get() throws IOException {
         return channel.get();
     }
 }

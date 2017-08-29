@@ -8,6 +8,8 @@ import j3wad.chanvalue.ChanValue;
 import j3wad.chanvalue.ChanValueFromInt;
 import j3wad.modules.WadAbstractDevice;
 
+import java.io.IOException;
+
 /**
  * Created by alexr on 12.05.2017.
  */
@@ -82,7 +84,7 @@ public abstract class WadAbstractChannel {
      * get clean value without Fail Signal mapped to
      * ValuesMapped<ChanValue>
      */
-    public  ValuesMapped<ChanValue> getWoFail() {
+    public ValuesMapped<ChanValue> getWoFail() {
         return new ValuesMapped<ChanValue>(getWoFailRaw(), mapper);
     }
 

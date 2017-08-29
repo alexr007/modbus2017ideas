@@ -2,6 +2,8 @@ package j2bus.modbus.response;
 
 import j2bus.modbus.MbResponse;
 
+import java.io.IOException;
+
 /**
  * Created by alexr on 22.01.2017.
  *
@@ -17,24 +19,12 @@ public class RsAnalyzed {
         this.rqInfo = rqInfo;
     }
 
-    public int get(int index) throws InvalidModBusResponse {
+    public int get(int index) throws IOException {
         return get()[index];
     }
-    // contain array iface[] only REAL response;
-    public int[] get() throws InvalidModBusResponse {
-        int[] ret = new int[]{};
-        if (response.has()) {
-            RsParsed parsed = new RsParsed(response.get());
-            if (parsed.valid())
-                if (parsed.device() == rqInfo.deviceId())
-                    if (parsed.command() == rqInfo.command())
-                        if (parsed.length() == rqInfo.length())
-                            ret = parsed.data();
-        }
-        else
-            throw new InvalidModBusResponse("Invalid ModBus Response");
 
-        return ret;
+    public int[] get() throws IOException {
+        return new RsParsed(response, rqInfo).data();
     }
 
 }

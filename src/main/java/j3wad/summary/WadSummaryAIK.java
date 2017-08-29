@@ -1,11 +1,10 @@
 package j3wad.summary;
 
-import j2bus.modbus.InvalidModBusFunction;
-import j2bus.modbus.response.InvalidModBusResponse;
 import j2bus.modbus.response.Values;
 import jssc.SerialPortException;
 import j3wad.modules.WadAbstractDevice;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +18,7 @@ final public class WadSummaryAIK  extends WadSummaryBase {
         super(device);
     }
 
-    protected Map<Integer, ValuePresented> map_OLD() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    protected Map<Integer, ValuePresented> map_OLD() throws IOException {
         Values ch_values = device.channel(0).getRaw();
         return
             new HashMap<Integer, ValuePresented>() {{
@@ -30,7 +29,7 @@ final public class WadSummaryAIK  extends WadSummaryBase {
     }
 
     @Override
-    protected Map<Integer, ValuePresented> map() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    protected Map<Integer, ValuePresented> map() throws IOException {
         Values ch_values = device.channel(0).getRaw();
         return IntStream.range(1, ch_values.count() + 1).boxed()
             .collect(Collectors.toMap(

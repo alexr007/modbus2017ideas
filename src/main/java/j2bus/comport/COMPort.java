@@ -9,6 +9,8 @@ import static java.lang.Math.toIntExact;
  * Created by alexr on 02.12.2016.
  */
 public class COMPort implements COMPortBaseInterface {
+    // properties
+    private final COMPortProperties properties;
     // SerialPort instance, that wrapped
     private final SerialPort port;
     // listener for comport read
@@ -33,9 +35,14 @@ public class COMPort implements COMPortBaseInterface {
             timeout); // default timeout
     }
 
-    public COMPort(String portName, COMPortProperties properties, long timeout) throws IOException {
+    public COMPort(String portName, COMPortProperties properties, long timeout) {
         this.port = new SerialPort(portName);
+        this.properties = properties;
         this.timeout = timeout;
+    }
+
+    @Override
+    public void open() throws IOException {
         try {
             port.openPort();
             port.setParams(
@@ -51,7 +58,7 @@ public class COMPort implements COMPortBaseInterface {
             );
             this.port.addEventListener(listener, SerialPort.MASK_RXCHAR);
         } catch (SerialPortException e) {
-            throw new IOException("COM Port. can't open @ CTOR",e);
+            throw new IOException("COM Port. can't open",e);
         }
     }
 
@@ -97,7 +104,6 @@ public class COMPort implements COMPortBaseInterface {
         }
     }
 
-    @Override
     public void cancelWrite() throws IOException {
         try {
             port.purgePort(SerialPort.PURGE_TXABORT);

@@ -22,14 +22,9 @@ public class IntBitsFromArray {
     }
 
     public int get() {
-        assert (origin.length<=16);
-/*
-        iface result = 0;
-        for (iface i = 0; i < origin.length ; i++) {
-            result += (origin[i]<<i);
+        if (origin.length>16) {
+            throw new IllegalArgumentException(String.format("IntBitsFromArray. length mustme <=16 found:%d",origin.length));
         }
-        return result;
-*/
         return IntStream.range(0, origin.length)
             .map(index -> origin[index]<<index)
             .sum();

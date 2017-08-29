@@ -20,9 +20,4 @@ public class Byte {
         return new HexFromByte(origin).toString();
     }
 
-    public Bytes toBytes() {
-        return
-            new MbWrap(origin);
-    }
-
 }

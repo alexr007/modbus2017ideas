@@ -11,6 +11,8 @@ import j3wad.channels.WAD_AIK_Channel;
 import j3wad.channels.WAD_Channel;
 import j3wad.summary.WadSummaryAIK;
 
+import java.io.IOException;
+
 /**
  * Created by alexr on 22.01.2017.
  */
@@ -22,7 +24,7 @@ public final class WAD_AIK_BUS extends WadAbstractDevice {
     }
 
     @Override
-    public int temperature() throws SerialPortException, InvalidModBusResponse {
+    public int temperature() throws IOException {
         return read_(0x100F).get(1);
     }
 

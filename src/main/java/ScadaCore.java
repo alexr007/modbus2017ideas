@@ -1,14 +1,10 @@
-import _IDEAS_.decision.test.SortedSetTest;
-import _IDEAS_.decision.test.rx.rxTest1;
 import app.*;
 import constants.DevName;
-import j2bus.modbus.InvalidModBusFunction;
-import j2bus.modbus.response.InvalidModBusResponse;
-import j3wad.chanvalue.test.ChanValueTest;
 import j3wad.modules.WAD_DOS_BUS;
-import j3wad.modules.WadAbstractDevice;
 import j4core.BIOcore;
 import jssc.SerialPortException;
+
+import java.io.IOException;
 
 public class ScadaCore {
     public static void main(String[] args)  {
@@ -40,12 +36,8 @@ public class ScadaCore {
                 System.out.printf("Time:%dns\n",delta);
                 System.out.printf("Time:%dms\n",delta/1000000);
 
-            } catch (InvalidModBusFunction invalidModBusFunction) {
-                invalidModBusFunction.printStackTrace();
-            } catch (SerialPortException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
-            } catch (InvalidModBusResponse invalidModBusResponse) {
-                invalidModBusResponse.printStackTrace();
             }
             //System.out.println(core.devListTriplet());
 

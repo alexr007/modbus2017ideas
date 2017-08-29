@@ -2,7 +2,6 @@ package j4core;
 
 import j4core.entity.chan.ModBusChannels;
 import constants.ChanName;
-import j1base.HashMapFrom;
 import j1base.hex.HexFromByte;
 import j3wad.WadDevType;
 import j3wad.chanvalue.ChanValue;
@@ -10,6 +9,7 @@ import j3wad.modules.WadAbstractDevice;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 

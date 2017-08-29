@@ -1,7 +1,5 @@
 package _IDEAS_.entities.iface;
 
-import j2bus.modbus.InvalidModBusFunction;
-import j2bus.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
 
 /**
@@ -10,9 +8,9 @@ import jssc.SerialPortException;
  */
 public interface ISensorDigital {
     // cable failsRaw
-    boolean fail() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
+    boolean fail();
     // normal state
-    boolean opened() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
+    boolean opened();
     // shorted state
-    boolean closed() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
+    boolean closed();
 }

@@ -27,13 +27,6 @@ public class ArrayFromIntBits {
     }
 
     public int[] get() {
-/*
-        iface[] result = new iface[count];
-        for (iface i = 0; i < count; i++) {
-            result[i]=(values>>i)&0b1;
-        }
-        return result;
-*/
         return IntStream.range(0, count)
             .map(index -> (values>>index)&0b1)
             .toArray();

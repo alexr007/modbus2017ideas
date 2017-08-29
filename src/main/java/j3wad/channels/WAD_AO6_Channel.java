@@ -9,6 +9,7 @@ import j3wad.chanvalue.ChanValue;
 import j3wad.chanvalue.IntFromChanValue;
 import j3wad.modules.WadAbstractDevice;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,21 +36,19 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
             return chanNumber()==0
                 ? getMultiple()
                 : getSingle();
-        } catch (SerialPortException e) {
-            throw new IllegalArgumentException(e);
-        } catch (InvalidModBusResponse e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
+    private Values getMultiple() throws IOException {
         return
             new Values.Multiple(
                 new WordsFrom2Bytes( device().read_(0x2010,0x0006))
             );
     }
 
-    private Values getSingle() throws SerialPortException, InvalidModBusResponse {
+    private Values getSingle() throws IOException {
         return
             new Values.Single(
                 new WordsFrom2Bytes( device().read_(0x2010+ chanNumber()-1))
@@ -70,12 +69,12 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
     public void set(int val) {
         try {
             setUnSafe(val);
-        } catch (SerialPortException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 
-    public void setUnSafe(int val) throws SerialPortException {
+    public void setUnSafe(int val) throws IOException {
         assert (chanNumber()>0);
         device().write_(0x2010 + chanNumber()-1, new MbData(new Word(val)));
     }
@@ -115,7 +114,7 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
                     new Word(val[4]).toBytes(),
                     new Word(val[5]).toBytes()
                 ));
-        } catch (SerialPortException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
     }

@@ -1,7 +1,5 @@
 package j3wad.channels;
 
-import j2bus.modbus.InvalidModBusFunction;
-import j2bus.modbus.response.InvalidModBusResponse;
 import j2bus.modbus.response.Values;
 import j2bus.modbus.response.ValuesMapped;
 import jssc.SerialPortException;
@@ -10,6 +8,7 @@ import j3wad.chanvalue.IntFromChanValue;
 import j3wad.modules.WadAbstractDevice;
 import j3wad.WadDevType;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -19,7 +18,7 @@ import java.util.stream.Stream;
  * Interface to represent WAD_BUS Device channel
  */
 public interface WAD_Channel {
-    String ERROR = "Not implemented";
+    String ERROR = "Called function not supported (not implemented) in this channel";
     /**
      * single channel / multiple channels
      * Values mapped to ValuesMapped<ChanValue>
@@ -53,43 +52,43 @@ public interface WAD_Channel {
      * runs 1 query / response for DI, DI14 channel types
      * only FAIL status retrieved
      */
-    default Values failsRaw() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        throw new InvalidModBusFunction();
+    default Values failsRaw() throws IOException {
+        throw new IllegalArgumentException(ERROR);
     }
     /**
      * single channel only
      * Channel types: DI, DOS
      */
-    default boolean opened() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        throw new InvalidModBusFunction();
+    default boolean opened() throws IOException {
+        throw new IllegalArgumentException(ERROR);
     }
     /**
      * single channel only
      * Channel types: DI, DOS
      */
-    default boolean closed() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        throw new InvalidModBusFunction();
+    default boolean closed() throws IOException {
+        throw new IllegalArgumentException(ERROR);
     }
     /**
      * single channel only
      * Channel types: DI, AIK
      */
-    default boolean failed() throws InvalidModBusFunction, InvalidModBusResponse, SerialPortException {
-        throw new InvalidModBusFunction();
+    default boolean failed() {
+        throw new IllegalArgumentException(ERROR);
     }
     /**
      * single / multiple (?) channels
      * Channel types: DOS
      */
-    default void on() throws InvalidModBusFunction, SerialPortException {
-        throw new InvalidModBusFunction();
+    default void on() throws IOException {
+        throw new IllegalArgumentException(ERROR);
     }
     /**
      * single / multiple (?) channels
      * Channel types: DOS
      */
-    default void off() throws InvalidModBusFunction, SerialPortException {
-        throw new InvalidModBusFunction();
+    default void off() throws IOException {
+        throw new IllegalArgumentException(ERROR);
     }
     /**
      * single channel only

@@ -3,13 +3,14 @@ package j3wad.modules;
 import j2bus.modbus.device.DeviceProperties;
 import j2bus.modbus.device.PortType;
 import j2bus.modbus.device.SignalType;
-import j2bus.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
 import j2bus.modbus.ModBus;
 import j3wad.WadDevType;
 import j3wad.channels.WAD_Channel;
 import j3wad.channels.WAD_DI_Channel;
 import j3wad.summary.WadSummaryDI;
+
+import java.io.IOException;
 
 /**
  * Created by alexr on 22.01.2017.
@@ -27,18 +28,18 @@ final public class WAD_DI_BUS extends WadAbstractDevice {
     }
 
     @Override
-    public int temperature() throws SerialPortException, InvalidModBusResponse {
+    public int temperature() throws IOException {
         return read_(0x200C).get(1);
     }
 /*
 
     @Override
-    public CharSequence summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    public CharSequence summaryDetailsTxt() throws ModBusInvalidResponse, SerialPortException, InvalidModBusFunction {
         return new WadSummaryDI(this).txt();
     }
 
     @Override
-    public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    public Directives summaryDetailsXml() throws ModBusInvalidResponse, SerialPortException, InvalidModBusFunction {
         return new WadSummaryDI(this).xmlDir();
     }
 */

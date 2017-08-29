@@ -8,22 +8,18 @@ import java.io.IOException;
 /**
  * Created by alexr on 15.01.2017.
  */
-public class ModBus {
+public final class ModBus implements ModBusInterface{
     private final COMPortBaseInterface comPort;
 
-    public ModBus(COMPortBaseInterface comPort) {
-        this.comPort = comPort;
+    public ModBus(COMPortBaseInterface comPort) throws IOException {
+        this.comPort=comPort;
+        this.comPort.open();
     }
 
-    private void close() throws IOException {
-        this.comPort.close();
-    }
-
-    public synchronized MbResponse run(MbRequest req)  {
-        return doRequest(req);
-    }
-
-    private MbResponse doRequest(MbRequest req)  {
+    @Override
+    public synchronized MbResponse run(MbRequest req) throws IOException {
+        return new MbResponse.Data(comPort.writeRead(req.bytes()));
+/*
         MbResponse response;
         try {
             response = new MbResponse.Data(
@@ -33,10 +29,12 @@ public class ModBus {
             response = new MbResponse.Empty();
         }
         return response;
+*/
     }
 
+    @Override
     public void finish() throws IOException {
-       this.close();
+        comPort.close();
     }
 
     @Override

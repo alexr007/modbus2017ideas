@@ -11,6 +11,8 @@ import j3wad.channels.WAD_AO_Channel;
 import j3wad.channels.WAD_Channel;
 import j3wad.summary.WadSummaryAO;
 
+import java.io.IOException;
+
 /**
  * Created by alexr on 22.01.2017.
  */
@@ -22,7 +24,7 @@ final public class WAD_AO_BUS extends WadAbstractDevice {
     }
 
     @Override
-    public int temperature() throws SerialPortException, InvalidModBusResponse {
+    public int temperature() throws IOException {
         return read_(0x200B).get(1);
     }
 
@@ -33,12 +35,12 @@ final public class WAD_AO_BUS extends WadAbstractDevice {
 
 /*
     @Override
-    public CharSequence summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    public CharSequence summaryDetailsTxt() throws ModBusInvalidResponse, SerialPortException, InvalidModBusFunction {
         return new WadSummaryAO(this).txt();
     }
 
     @Override
-    public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    public Directives summaryDetailsXml() throws ModBusInvalidResponse, SerialPortException, InvalidModBusFunction {
         return new WadSummaryAO(this).xmlDir();
     }
 */

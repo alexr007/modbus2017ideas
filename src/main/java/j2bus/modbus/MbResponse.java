@@ -7,10 +7,10 @@ import j1base.hex.HexFromBytes;
  */
 public interface MbResponse {
 
-    public boolean has();
-    public byte[] get();
+    boolean has();
+    byte[] get();
 
-    public class Data implements MbResponse {
+    class Data implements MbResponse {
         private final byte[] data;
 
         public Data(byte[] data) {
@@ -33,7 +33,7 @@ public interface MbResponse {
         }
     }
 
-    public class Empty implements MbResponse  {
+    class Empty implements MbResponse  {
 
         @Override
         public boolean has() {

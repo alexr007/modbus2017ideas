@@ -11,6 +11,8 @@ import j3wad.channels.WAD_Channel;
 import j3wad.channels.WAD_DOS_Channel;
 import j3wad.summary.WadSummaryDOS;
 
+import java.io.IOException;
+
 final public class WAD_DOS_BUS extends WadAbstractDevice {
     public WAD_DOS_BUS(ModBus modbus, int deviceId) {
         super(modbus, deviceId, WadDevType.DOS,
@@ -23,30 +25,8 @@ final public class WAD_DOS_BUS extends WadAbstractDevice {
         return new WAD_DOS_Channel(chan, this);
     }
 
-/*
     @Override
-    public int temperature() throws SerialPortException, InvalidModBusResponse {
-        return
-            new RsAnalyzed(
-                run(builder().cmdReadRegister(0x200A)),
-                new RqInfo(id(),RsParsed.cmdRead,2)
-            ).get(1);
-    }
-*/
-    @Override
-    public int temperature() throws SerialPortException, InvalidModBusResponse {
+    public int temperature() throws IOException {
         return read_(0x200A).get(1);
     }
-/*
-
-    @Override
-    public CharSequence summaryDetailsTxt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return new WadSummaryDOS(this).txt();
-    }
-
-    @Override
-    public Directives summaryDetailsXml() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
-        return new WadSummaryDOS(this).xmlDir();
-    }
-*/
 }

@@ -1,10 +1,10 @@
 package j3wad.summary;
 
-import j2bus.modbus.InvalidModBusFunction;
-import j2bus.modbus.response.InvalidModBusResponse;
 import jssc.SerialPortException;
 import j3wad.modules.WadAbstractDevice;
 import org.xembly.Directives;
+
+import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -18,9 +18,9 @@ abstract public class WadSummaryBase implements WadSummary {
         this.device = device;
     }
 
-    abstract protected Map<Integer, ValuePresented> map() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction;
+    abstract protected Map<Integer, ValuePresented> map() throws IOException;
 
-    public Directives xmlDir() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    public Directives xmlDir() throws IOException {
         Directives dirs = new Directives();
         map().forEach((k, v) ->
             dirs.add("channel")
@@ -31,7 +31,7 @@ abstract public class WadSummaryBase implements WadSummary {
         return dirs;
     }
 
-    public String txt() throws InvalidModBusResponse, SerialPortException, InvalidModBusFunction {
+    public String txt() throws IOException {
         return String.format("details:\n%s",
             map().entrySet().stream()
                 .map(ent->String.format("Channel %2d: %s\n", ent.getKey(), ent.getValue()))

@@ -5,6 +5,8 @@ import j2bus.modbus.response.*;
 import jssc.SerialPortException;
 import j3wad.modules.WadAbstractDevice;
 
+import java.io.IOException;
+
 /**
  * Created by alexr on 22.01.2017.
  */
@@ -20,21 +22,19 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
             return chanNumber()==0
                 ? getMultiple()
                 : getSingle();
-        } catch (SerialPortException e) {
-            throw new IllegalArgumentException(e);
-        } catch (InvalidModBusResponse e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    private Values getMultiple() throws SerialPortException, InvalidModBusResponse {
+    private Values getMultiple() throws IOException {
         return
             new Values.Multiple(
                 new WordsFrom2Bytes( device().read_(0x100B, 0x0004))
             );
     }
 
-    private Values getSingle() throws SerialPortException, InvalidModBusResponse {
+    private Values getSingle() throws IOException {
         return
             new Values.Single(
                 new WordsFrom2Bytes( device().read_(0x100B+ chanNumber()-1))
@@ -47,7 +47,7 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
      * value 0 mean OK
      */
     @Override
-    public Values failsRaw() throws InvalidModBusResponse, SerialPortException {
+    public Values failsRaw() throws IOException {
         return chanNumber()==0
             ? new Values.Multiple(
                 new ArrayFromIntBits((~getFailAll())&0b1111,4)
@@ -64,7 +64,7 @@ final public class WAD_AIK_Channel extends WadAbstractChannel implements WAD_Cha
      * bit = 1 - link OK
      * bit = 0 - no link with channel CPU
      */
-    private int getFailAll() throws SerialPortException, InvalidModBusResponse {
+    private int getFailAll() throws IOException {
         return device().read_(0x100A).get(1);
     }
 }

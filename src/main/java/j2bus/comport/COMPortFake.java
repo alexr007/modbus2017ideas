@@ -1,8 +1,5 @@
 package j2bus.comport;
 
-import j1base.primitives.Bytes;
-import jssc.SerialPortException;
-
 import java.io.IOException;
 
 /**
@@ -10,13 +7,14 @@ import java.io.IOException;
  */
 public class COMPortFake implements COMPortBaseInterface {
 
-    public COMPortFake(String portName) throws IOException {
+    public COMPortFake(String portName, long timeout) throws IOException {
         this(portName,
-            new COMPortProperties(57600)
+            new COMPortProperties(57600),
+            timeout
         );
     }
 
-    public COMPortFake(String portName, COMPortProperties properties) throws IOException {
+    public COMPortFake(String portName, COMPortProperties properties, long timeout) throws IOException {
     }
 
     @Override
@@ -30,11 +28,13 @@ public class COMPortFake implements COMPortBaseInterface {
     }
 
     @Override
-    public void cancelWrite() throws IOException {
+    public void open() throws IOException {
         throw new IllegalArgumentException("Serial port in fake mode (for testing purposes)");
     }
 
     @Override
     public void close() throws IOException {
+        throw new IllegalArgumentException("Serial port in fake mode (for testing purposes)");
     }
+
 }

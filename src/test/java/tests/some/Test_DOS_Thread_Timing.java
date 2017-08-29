@@ -1,7 +1,5 @@
 package tests.some;
 
-import j2bus.modbus.InvalidModBusFunction;
-import j2bus.modbus.response.InvalidModBusResponse;
 import j3wad.modules.WadAbstractDevice;
 import jssc.SerialPortException;
 
@@ -31,7 +29,7 @@ public class Test_DOS_Thread_Timing implements Runnable {
                 }
             } catch (SerialPortException e) {
                 e.printStackTrace();
-            } catch (InvalidModBusResponse e) {
+            } catch (ModBusInvalidResponse e) {
                 e.printStackTrace();
             } catch (InvalidModBusFunction e) {
                 e.printStackTrace();

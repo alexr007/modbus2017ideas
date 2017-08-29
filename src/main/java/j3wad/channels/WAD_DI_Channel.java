@@ -5,6 +5,7 @@ import j2bus.modbus.response.*;
 import jssc.SerialPortException;
 import j3wad.modules.WadAbstractDevice;
 
+import java.io.IOException;
 import java.util.stream.IntStream;
 
 /**
@@ -36,9 +37,7 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
                         8
                     )
                 );
-        } catch (InvalidModBusResponse e) {
-            throw new IllegalArgumentException(e);
-        } catch (SerialPortException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
     }
@@ -55,9 +54,7 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
                 new Values.Single(
                     device().read_(0x2004+ chanNumber()-1).get(1)
                 );
-        } catch (InvalidModBusResponse e) {
-            throw new IllegalArgumentException(e);
-        } catch (SerialPortException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
     }
@@ -96,38 +93,36 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
             return chanNumber()==0
                 ? failMultiple()
                 : failSingle();
-        } catch (InvalidModBusResponse e) {
-            throw new IllegalArgumentException("ModBusError");
-        } catch (SerialPortException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException("ModBusError");
         }
     }
 
-    private Values failMultiple() throws InvalidModBusResponse, SerialPortException {
+    private Values failMultiple() throws IOException {
         return new Values.Multiple(
             new ArrayFromIntBits(failAll(),8)
         );
     }
 
-    private Values failSingle() throws InvalidModBusResponse, SerialPortException {
+    private Values failSingle() throws IOException {
         return new Values.Single(
             (failAll()>>(chanNumber()-1))&0b1
         );
     }
 
-    private int failAll() throws SerialPortException, InvalidModBusResponse {
+    private int failAll() throws IOException {
         return device().read_(0x200E).get(1);
     }
 
     @Override
-    public boolean opened() throws InvalidModBusResponse, SerialPortException {
+    public boolean opened() {
         return chanNumber()==0
         ? (getMultiple().get()&0b11111111)==0x0
         : getSingle().get()==0;
     }
 
     @Override
-    public boolean closed() throws InvalidModBusResponse, SerialPortException {
+    public boolean closed() {
         return chanNumber()==0
             ? (getMultiple().get()&0b11111111)==0b11111111
             : getSingle().get()==1;

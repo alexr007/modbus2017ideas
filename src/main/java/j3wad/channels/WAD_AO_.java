@@ -6,6 +6,7 @@ import j3wad.chanvalue.ChanValue;
 import j3wad.chanvalue.IntFromChanValue;
 import j3wad.modules.WadAbstractDevice;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,21 +25,15 @@ abstract class WAD_AO_ extends WadAbstractChannel implements WAD_Channel {
     }
 
     @Override
-    public Values getWoFailRaw() {
-        try {
-            return chanNumber()==0
-                ? getMultiple()
-                : getSingle();
-        } catch (SerialPortException e) {
-            throw new IllegalArgumentException(e);
-        } catch (InvalidModBusResponse e) {
-            throw new IllegalArgumentException(e);
-        }
+    public Values getWoFailRaw()  {
+        return chanNumber()==0
+            ? getMultiple()
+            : getSingle();
     }
 
-    protected abstract Values getMultiple() throws SerialPortException, InvalidModBusResponse;
+    protected abstract Values getMultiple();
 
-    protected abstract Values getSingle() throws SerialPortException, InvalidModBusResponse;
+    protected abstract Values getSingle();
 
     @Override
     public void set(ChanValue val) {
@@ -54,12 +49,12 @@ abstract class WAD_AO_ extends WadAbstractChannel implements WAD_Channel {
     public void set(int val) {
         try {
             setUnSafe(val);
-        } catch (SerialPortException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public abstract void setUnSafe(int val) throws SerialPortException;
+    public abstract void setUnSafe(int val) throws IOException;
 
     @Override
     public void set(Map<Integer, ChanValue> values) {

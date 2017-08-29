@@ -1,5 +1,6 @@
 package j2bus.modbus.response;
 
+import java.io.IOException;
 import java.util.stream.IntStream;
 
 /**
@@ -9,7 +10,7 @@ import java.util.stream.IntStream;
 public class WordsFrom2Bytes {
     private final int[] origin;
 
-    public WordsFrom2Bytes(RsAnalyzed analyzed) throws InvalidModBusResponse {
+    public WordsFrom2Bytes(RsAnalyzed analyzed) throws IOException {
         this(analyzed.get());
     }
 
@@ -24,14 +25,6 @@ public class WordsFrom2Bytes {
         return IntStream.range(0, origin.length / 2)
             .map(index -> (origin[index*2] & 0xFF) << 8 | origin[index*2+1] & 0xFF)
             .toArray();
-/*
-        iface newLength = origin.length / 2;
-        iface[] res = new iface[newLength];
-        for (iface i = 0 ; i < newLength ; i++) {
-            res[i]=(origin[i*2] & 0xFF) << 8 | origin[i*2+1] & 0xFF;
-        }
-        return res;
-*/
     }
 
     public int get0() {

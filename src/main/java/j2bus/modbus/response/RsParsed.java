@@ -2,77 +2,45 @@ package j2bus.modbus.response;
 
 import j2bus.modbus.command.MbCRC;
 import j2bus.modbus.MbResponse;
+import java.io.IOException;
+import java.util.stream.IntStream;
 
 /**
  * Created by alexr on 21.01.2017.
  */
 public class RsParsed {
     private final byte[] response;
-    private final int length;
-    private boolean crcChecked = false;
-    private boolean crcValid = false;
-    private boolean lengthChecked = false;
-    private boolean lengthValid = false;
-    private final int byteID = 0; // 1st byte of response
-    private final int byteCMD = 1; // 2nd byte of response
-    private final int byteLEN = 2; // 3rd byte of response
-    private final int byteDATA = 3; // 4rd byte of response
-    public static int cmdRead = 0x03;
-    public static int cmdWrite = 0x10;
+    private final RqInfo rqInfo;
 
-    public RsParsed(MbResponse response) {
-        this(response.get());
+    private final static int byteID = 0; // 1st byte of response
+    private final static int byteCMD = 1; // 2nd byte of response
+    private final static int byteLEN = 2; // 3rd byte of response
+    private final static int byteDATA = 3; // 4rd byte of response
+    public final static int cmdRead = 0x03;
+    public final static int cmdWrite = 0x10;
+
+    public RsParsed(MbResponse response, RqInfo rqInfo) {
+        this(response.get(), rqInfo);
     }
 
-    public RsParsed(byte[] response) {
+    public RsParsed(byte[] response, RqInfo rqInfo) {
         this.response = response;
-        this.length=response.length;
+        this.rqInfo=rqInfo;
     }
 
-    public boolean valid() throws InvalidModBusResponse {
-        if (!crcChecked) {
-            crcValid =new MbCRC(response).valid();
-            crcChecked =true;
+    public int[] data() throws IOException {
+        if (new MbCRC(response).valid()                      // packet CRC
+            && (response.length == (3+response[byteLEN]+2))  // packet total length
+            && response[byteID] == rqInfo.deviceId()         // packet 1st byte - device id
+            && response[byteCMD] == rqInfo.command()         // packet 2nd byte - modbus command
+            && response[byteLEN] == rqInfo.length() )        // packet 3rd byte - answer length
+            {
+                return IntStream.range(byteDATA, byteDATA+response[byteLEN])
+                    .map(i->response[i])
+                    .toArray();
         }
-        if (!lengthChecked) {
-            lengthValid=(length==(3+response[byteLEN]+2));
-            lengthChecked =true;
+        else {
+            throw new IOException("ModBus. Invalid response");
         }
-        if (crcValid&&lengthValid) return true;
-        else if (!crcValid) throw new InvalidModBusResponse("Invalid ModBus Response CRC");
-        else throw new InvalidModBusResponse("Invalid ModBus Response Length");
-    }
-
-    public int device() throws InvalidModBusResponse {
-        if (valid()) {
-            return response[byteID];
-        }
-        else return 0;
-    }
-
-    public int command() throws InvalidModBusResponse {
-        if (valid()) {
-            return response[byteCMD];
-        }
-        else return 0;
-    }
-
-    public int length() throws InvalidModBusResponse {
-        if (valid()) {
-            return response[byteLEN];
-        }
-        else return 0;
-    }
-
-    public int[] data() throws InvalidModBusResponse {
-        if (valid()) {
-            int[] result = new int[length()];
-            for (int i = byteDATA; i < byteDATA+length(); i++) {
-                result[i-byteDATA]=response[i];
-            }
-            return result;
-            //return Arrays.copyOfRange(response, 3, 3+length());
-        }
-        else return new int[]{};
     }
 }

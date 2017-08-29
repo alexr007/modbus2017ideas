@@ -8,6 +8,6 @@ import java.io.IOException;
 public interface COMPortBaseInterface {
     void write(byte[] buffer) throws IOException;
     byte[] writeRead(byte[] buffer) throws IOException;
-    void cancelWrite() throws IOException;
+    void open() throws IOException;
     void close() throws IOException;
 }
