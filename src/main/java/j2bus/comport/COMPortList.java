@@ -20,7 +20,7 @@ public class COMPortList {
     {
         return Arrays.stream(SerialPortList.getPortNames(
             "/dev/",
-            //"tty.(serial|usbserial|usbmodem).*"
+            // "tty.(serial|usbserial|usbmodem).*"
             Pattern.compile("(tty.*UART*|tty.*serial*)")
             ))
             .collect(Collectors.toList());
