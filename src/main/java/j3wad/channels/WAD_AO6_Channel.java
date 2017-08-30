@@ -41,14 +41,14 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
         }
     }
 
-    private Values getMultiple() throws IOException {
+    private Values getMultiple() {
         return
             new Values.Multiple(
                 new WordsFrom2Bytes( device().read_(0x2010,0x0006))
             );
     }
 
-    private Values getSingle() throws IOException {
+    private Values getSingle() {
         return
             new Values.Single(
                 new WordsFrom2Bytes( device().read_(0x2010+ chanNumber()-1))
@@ -74,7 +74,7 @@ final public class WAD_AO6_Channel extends WadAbstractChannel implements WAD_Cha
         }
     }
 
-    public void setUnSafe(int val) throws IOException {
+    public void setUnSafe(int val) {
         assert (chanNumber()>0);
         device().write_(0x2010 + chanNumber()-1, new MbData(new Word(val)));
     }

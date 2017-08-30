@@ -19,11 +19,11 @@ public class RsAnalyzed {
         this.rqInfo = rqInfo;
     }
 
-    public int get(int index) throws IOException {
+    public int get(int index)  {
         return get()[index];
     }
 
-    public int[] get() throws IOException {
+    public int[] get()  {
         return new RsParsed(response, rqInfo).data();
     }
 

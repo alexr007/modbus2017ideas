@@ -42,13 +42,13 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
         }
     }
 
-    private Values getMultiple() throws IOException {
+    private Values getMultiple() {
         return
             new Values.Multiple(
                 new ArrayFromIntBits( device().read_(0x200B).get(1)));
     }
 
-    private Values getSingle() throws IOException {
+    private Values getSingle() {
         return
             new Values.Single( device().read_(0x2002+ chanNumber()-1).get(1));
     }
@@ -73,28 +73,28 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
     }
 
     @Override
-    public void on() throws IOException {
+    public void on() {
         if (chanNumber()==0) {
             onAll();
         } else
             onSingle();
     }
 
-    private void onSingle() throws IOException {
+    private void onSingle() {
         device().write_(
             0x2002+ chanNumber()-1,
             new MbData(new byte[]{0,1}));
     }
 
     @Override
-    public void off() throws IOException {
+    public void off() {
         if (chanNumber()==0) {
             offAll();
         } else
             offSingle();
     }
 
-    private void offSingle() throws IOException {
+    private void offSingle() {
         device().write_(0x2002+ chanNumber()-1,
             new MbData(new byte[]{0,0}));
     }
@@ -118,24 +118,24 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
         }
     }
 
-    public void setUnSafe(int val) throws IOException {
+    public void setUnSafe(int val) {
         if (chanNumber()==0) {
             setAll(val);
         } else
             setSingle(val);
     }
 
-    private void setSingle(int val) throws IOException {
+    private void setSingle(int val) {
         device().
             write_(0x2002+ chanNumber()-1,
             new MbData(new byte[]{0, (byte) (val==0?0:1)}));
     }
 
-    private void onAll() throws IOException {
+    private void onAll() {
         setAll(0xFF);
     }
 
-    private void offAll() throws IOException {
+    private void offAll() {
         setAll(0x00);
     }
 
@@ -173,12 +173,12 @@ final public class WAD_DOS_Channel extends WadAbstractChannel implements WAD_Cha
         }
     }
 
-    private void setAll(int[] val) throws IOException {
+    private void setAll(int[] val) {
         checkForGroupWrite(val.length);
         setAll(new IntBitsFromArray(val).toByte());
     }
 
-    private void setAll(int val) throws IOException {
+    private void setAll(int val) {
         device().write_(0x200B, new MbData(new byte[]{0, (byte)val}));
     }
 

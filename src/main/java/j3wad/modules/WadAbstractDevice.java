@@ -157,19 +157,19 @@ public abstract class WadAbstractDevice {
         return device;
     }
 
-    public void write_(int baseReg, Bytes data) throws IOException {
+    public void write_(int baseReg, Bytes data)  {
         write_(baseReg, 1, data);
     }
 
-    public void write_(int baseReg, int count, Bytes data) throws IOException {
+    public void write_(int baseReg, int count, Bytes data)  {
         modbus.run( builder().cmdWriteRegister(baseReg, count, data ) );
     }
 
-    public RsAnalyzed read_(int baseReg) throws IOException {
+    public RsAnalyzed read_(int baseReg)  {
         return read_(baseReg, 1);
     }
 
-    public RsAnalyzed read_(int baseReg, int regCount) throws IOException {
+    public RsAnalyzed read_(int baseReg, int regCount)  {
         return new RsAnalyzed(
             modbus.run(builder().cmdReadRegister(baseReg,regCount)),
             new RqInfo(id(), RsParsed.cmdRead, regCount*2)

@@ -98,19 +98,19 @@ final public class WAD_DI_Channel extends WadAbstractChannel implements WAD_Chan
         }
     }
 
-    private Values failMultiple() throws IOException {
+    private Values failMultiple() {
         return new Values.Multiple(
             new ArrayFromIntBits(failAll(),8)
         );
     }
 
-    private Values failSingle() throws IOException {
+    private Values failSingle() {
         return new Values.Single(
             (failAll()>>(chanNumber()-1))&0b1
         );
     }
 
-    private int failAll() throws IOException {
+    private int failAll() {
         return device().read_(0x200E).get(1);
     }
 

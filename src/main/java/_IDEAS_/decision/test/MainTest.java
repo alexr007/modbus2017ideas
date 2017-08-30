@@ -1,9 +1,9 @@
 package _IDEAS_.decision.test;
 
 import j4core.BIOcore;
-import _IDEAS_.fork.Branch;
-import _IDEAS_.fork.Decision;
-import _IDEAS_.fork.Solution;
+import ideas.fork.Branch;
+import ideas.fork.Decision;
+import ideas.fork.Solution;
 import j1base.hex.HexFromWords;
 import j2bus.modbus.response.WordsFrom2Bytes;
 import org.javatuples.Quartet;

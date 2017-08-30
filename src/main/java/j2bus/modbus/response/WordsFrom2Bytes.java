@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class WordsFrom2Bytes {
     private final int[] origin;
 
-    public WordsFrom2Bytes(RsAnalyzed analyzed) throws IOException {
+    public WordsFrom2Bytes(RsAnalyzed analyzed) {
         this(analyzed.get());
     }
 

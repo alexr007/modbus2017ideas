@@ -41,7 +41,7 @@ final public class WAD_AO_Channel extends WAD_AO_ implements WAD_Channel {
     }
 
     @Override
-    public void setUnSafe(int val) throws IOException {
+    public void setUnSafe(int val) {
         assert (chanNumber()>0);
         device().write_(0x200C+ chanNumber()-1, new MbData(new Word(val)));
     }

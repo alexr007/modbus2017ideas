@@ -47,14 +47,10 @@ abstract class WAD_AO_ extends WadAbstractChannel implements WAD_Channel {
 
     @Override
     public void set(int val) {
-        try {
-            setUnSafe(val);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        setUnSafe(val);
     }
 
-    public abstract void setUnSafe(int val) throws IOException;
+    public abstract void setUnSafe(int val);
 
     @Override
     public void set(Map<Integer, ChanValue> values) {

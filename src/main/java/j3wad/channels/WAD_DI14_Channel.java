@@ -34,7 +34,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
         }
     }
 
-    private Values getMultiple() throws IOException {
+    private Values getMultiple() {
         return
             new Values.Multiple(
                 new ArrayFromIntBits(
@@ -50,7 +50,7 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
     * 0 - channel is OPEN
     * 2 - channel is FAIL
     */
-    private Values getSingle() throws IOException {
+    private Values getSingle() {
         return
             new Values.Single(
                 device().read_(0x2001+ chanNumber()-1).get(1)
@@ -90,34 +90,34 @@ final public class WAD_DI14_Channel extends WadAbstractChannel implements WAD_Ch
         }
     }
 
-    private Values failMultiple() throws IOException {
+    private Values failMultiple() {
         return
             new Values.Multiple(
                 new ArrayFromIntBits(failAll(),15)
             );
     }
 
-    private Values failSingle() throws IOException {
+    private Values failSingle() {
         return
             new Values.Single(
                 (failAll()>>(chanNumber()-1))&0b1
             );
     }
 
-    private int failAll() throws IOException {
+    private int failAll() {
         return
             new WordsFrom2Bytes(device().read_(0x1FFF)).get0();
     }
 
     @Override
-    public boolean opened() throws IOException {
+    public boolean opened() {
         return chanNumber()==0
             ? (getMultiple().get()&0b0111111111111111)==0x0
             : getSingle().get()==0;
     }
 
     @Override
-    public boolean closed() throws IOException {
+    public boolean closed() {
         return chanNumber()==0
             ? (getMultiple().get()&0b0111111111111111)==0b0111111111111111
             : getSingle().get()==1;

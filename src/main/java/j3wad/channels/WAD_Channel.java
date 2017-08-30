@@ -52,21 +52,21 @@ public interface WAD_Channel {
      * runs 1 query / response for DI, DI14 channel types
      * only FAIL status retrieved
      */
-    default Values failsRaw() throws IOException {
+    default Values failsRaw() {
         throw new IllegalArgumentException(ERROR);
     }
     /**
      * single channel only
      * Channel types: DI, DOS
      */
-    default boolean opened() throws IOException {
+    default boolean opened() {
         throw new IllegalArgumentException(ERROR);
     }
     /**
      * single channel only
      * Channel types: DI, DOS
      */
-    default boolean closed() throws IOException {
+    default boolean closed() {
         throw new IllegalArgumentException(ERROR);
     }
     /**
@@ -80,14 +80,14 @@ public interface WAD_Channel {
      * single / multiple (?) channels
      * Channel types: DOS
      */
-    default void on() throws IOException {
+    default void on() {
         throw new IllegalArgumentException(ERROR);
     }
     /**
      * single / multiple (?) channels
      * Channel types: DOS
      */
-    default void off() throws IOException {
+    default void off() {
         throw new IllegalArgumentException(ERROR);
     }
     /**

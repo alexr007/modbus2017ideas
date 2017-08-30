@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
  * Created by alexr on 21.01.2017.
  */
 public class RsParsed {
-    private final byte[] response;
+    private final MbResponse mbResponse;
     private final RqInfo rqInfo;
 
     private final static int byteID = 0; // 1st byte of response
@@ -20,16 +20,14 @@ public class RsParsed {
     public final static int cmdWrite = 0x10;
 
     public RsParsed(MbResponse response, RqInfo rqInfo) {
-        this(response.get(), rqInfo);
-    }
-
-    public RsParsed(byte[] response, RqInfo rqInfo) {
-        this.response = response;
+        this.mbResponse = response;
         this.rqInfo=rqInfo;
     }
 
     public int[] data() throws IOException {
-        if (new MbCRC(response).valid()                      // packet CRC
+        final byte[] response=mbResponse.get();
+        if (mbResponse.has()
+            && new MbCRC(response).valid()                      // packet CRC
             && (response.length == (3+response[byteLEN]+2))  // packet total length
             && response[byteID] == rqInfo.deviceId()         // packet 1st byte - device id
             && response[byteCMD] == rqInfo.command()         // packet 2nd byte - modbus command

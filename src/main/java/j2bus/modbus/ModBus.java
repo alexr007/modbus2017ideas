@@ -17,19 +17,14 @@ public final class ModBus implements ModBusInterface{
     }
 
     @Override
-    public synchronized MbResponse run(MbRequest req) throws IOException {
-        return new MbResponse.Data(comPort.writeRead(req.bytes()));
-/*
-        MbResponse response;
+    public synchronized MbResponse run(MbRequest req)  {
+        MbResponse resp;
         try {
-            response = new MbResponse.Data(
-                comPort.writeRead(req.bytes())
-            );
+            resp = new MbResponse.Data(comPort.writeRead(req));
         } catch (IOException e) {
-            response = new MbResponse.Empty();
+            resp = new MbResponse.Empty();
         }
-        return response;
-*/
+        return resp;
     }
 
     @Override
